@@ -76,6 +76,7 @@ public class Save_Load : MonoBehaviour
         };
 
         binarySaveLoad.Save(filename, savedata);
+       
     }
 
     public void ClickButtonLoad()

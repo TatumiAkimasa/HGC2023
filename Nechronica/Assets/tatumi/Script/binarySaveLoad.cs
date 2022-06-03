@@ -17,7 +17,7 @@ public class binarySaveLoad : MonoBehaviour
     /// <summary>
     /// true .. perform simple encryption
     /// </summary>
-    public static bool IsSimpleEncryption = false;
+    public static bool IsSimpleEncryption = true;
     /// <summary>
     ///  user encrypt method
     /// </summary>
