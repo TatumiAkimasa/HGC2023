@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-public class Input_data_Button : MonoBehaviour
+
+public class Input_data_ClassButton : Input_data_Button
 {
     [SerializeField]
-    private Text input_text,output_text;
+    private GameObject PA_Maneger;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,8 +20,8 @@ public class Input_data_Button : MonoBehaviour
         
     }
 
-    public void Push_button()
+    public void Push_button_Class(bool MtoS)
     {
-        output_text.text = input_text.text;
+        PA_Maneger.GetComponent<WeponManeger>().Setparts(Push_button_class(),MtoS);
     }
 }
