@@ -5,12 +5,18 @@ using UnityEngine.UI;
 
 public class WeponManeger : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject Cskils;
 
+    private GameObject[] ChildObject;
 
     [SerializeField]
     private Text wepon_text, bio_text,mac_text;
 
     public int[] parts=new int[6];
+
+    private string keyword,keyword2 = "X";
+    private int    Mword,Sword = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +34,11 @@ public class WeponManeger : MonoBehaviour
         
     }
 
+    public void SetSkill(string skill)
+    {
+
+    }
+
     public void Setparts(int[] Parts,bool MorS)
     {
         if(MorS)
@@ -35,12 +46,18 @@ public class WeponManeger : MonoBehaviour
             parts[0] = Parts[0];
             parts[1] = Parts[1];
             parts[2] = Parts[2];
+
+            //mainskill
+            Mword = Parts[3];
         }
         else
         {
             parts[3] = Parts[0];
             parts[4] = Parts[1];
             parts[5] = Parts[2];
+
+            //subskill
+            Sword = Parts[3];
         }
        
         wepon_text.text = (parts[0]+parts[3]).ToString();
@@ -50,5 +67,44 @@ public class WeponManeger : MonoBehaviour
 
        
         mac_text.text = (parts[2]+parts[5]).ToString();
+
+        for (int i = 0; i < Cskils.transform.childCount; i++)
+        {
+            //Žæ“¾
+            GameObject test = Cskils.transform.GetChild(i).gameObject;
+
+           if(Mword==i)
+           {
+                keyword = test.name;
+           }
+           if(Sword==i)
+           {
+                keyword2 = test.name;
+           }
+
+            Debug.Log(keyword);
+            Debug.Log(keyword2);
+
+            //‘I‘ð‹–‰Â–½—ß
+            if (test.name.Contains(keyword) && test.name.Contains(keyword2))
+            {
+                test.GetComponent<Button>().interactable = true;
+            }
+            else if (test.name.Contains(keyword)||test.name.Contains(keyword2))
+            {
+                test.GetComponent<Button>().interactable = true;
+
+                //¯ƒXƒLƒ‹••ˆó
+                if(i>Cskils.transform.childCount-8)
+                    test.GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                test.GetComponent<Button>().interactable = false;
+            }
+
+           
+
+        }
     }
 }

@@ -23,5 +23,6 @@ public class Input_data_ClassButton : Input_data_Button
     public void Push_button_Class(bool MtoS)
     {
         PA_Maneger.GetComponent<WeponManeger>().Setparts(Push_button_class(),MtoS);
+
     }
 }
