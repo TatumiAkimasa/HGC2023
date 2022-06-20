@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeponManeger : MonoBehaviour
+public class WeponManeger : ClassData_
 {
     [SerializeField]
-    private GameObject Cskils;
+    private GameObject Cskils,CS_Maneger;
 
     private GameObject[] ChildObject;
 
@@ -16,7 +16,9 @@ public class WeponManeger : MonoBehaviour
     public int[] parts=new int[6];
 
     private string keyword,keyword2 = "X";
-    private int    Mword,Sword = -1;
+    private int    Button_num = 0;
+
+    Button[] buttons = new Button[3];
 
     // Start is called before the first frame update
     void Start()
@@ -34,30 +36,51 @@ public class WeponManeger : MonoBehaviour
         
     }
 
-    public void SetSkill(string skill)
+    public void SetPSKill(Button a)
     {
+        //MainSkill
+        if(a.GetComponentInChildren<Text>().text.Contains(keyword))
+        {
+            if (Button_num == 1)
+                Button_num = 0;
 
+
+            a.interactable = true;
+            ColorBlock cb = a.colors;
+            cb.disabledColor = Color.yellow;
+            a.colors = cb;
+
+            buttons[Button_num] = a;
+
+            Button_num++;
+        }
+        //SubSkill
+        else if(a.GetComponentInChildren<Text>().text.Contains(keyword2))
+        {
+
+        }
+        
     }
 
-    public void Setparts(int[] Parts,bool MorS)
+    public void Setparts(ClassData a,bool MorS)
     {
         if(MorS)
         {
-            parts[0] = Parts[0];
-            parts[1] = Parts[1];
-            parts[2] = Parts[2];
+            parts[0] = a.parts[0];
+            parts[1] = a.parts[1];
+            parts[2] = a.parts[2];
 
             //mainskill
-            Mword = Parts[3];
+            keyword = Classname_JtoE(a.name);
         }
         else
         {
-            parts[3] = Parts[0];
-            parts[4] = Parts[1];
-            parts[5] = Parts[2];
+            parts[3] = a.parts[0];
+            parts[4] = a.parts[1];
+            parts[5] = a.parts[2];
 
             //subskill
-            Sword = Parts[3];
+            keyword2 = Classname_JtoE(a.name);
         }
        
         wepon_text.text = (parts[0]+parts[3]).ToString();
@@ -72,18 +95,6 @@ public class WeponManeger : MonoBehaviour
         {
             //Žæ“¾
             GameObject test = Cskils.transform.GetChild(i).gameObject;
-
-           if(Mword==i)
-           {
-                keyword = test.name;
-           }
-           if(Sword==i)
-           {
-                keyword2 = test.name;
-           }
-
-            Debug.Log(keyword);
-            Debug.Log(keyword2);
 
             //‘I‘ð‹–‰Â–½—ß
             if (test.name.Contains(keyword) && test.name.Contains(keyword2))
@@ -102,8 +113,6 @@ public class WeponManeger : MonoBehaviour
             {
                 test.GetComponent<Button>().interactable = false;
             }
-
-           
 
         }
     }

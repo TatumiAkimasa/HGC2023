@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class Input_data_Button : MonoBehaviour
+public class Input_data_Button : ClassData_
 {
     //定数
     const int ARMAMENT = 0;     //武装
@@ -11,6 +11,8 @@ public class Input_data_Button : MonoBehaviour
 
     [SerializeField]
     private Text input_text,output_text;
+
+    ClassData data;
 
     // Start is called before the first frame update
     void Start()
@@ -50,77 +52,73 @@ public class Input_data_Button : MonoBehaviour
 ;
     }
 
-    public int[] Push_button_class()
+    public ClassData Push_button_class()
     {
         output_text.text = input_text.text;
 
-        int[] Class_num = new int[4];
+        //ClassData data;
 
         if (input_text.text == "ステーシー")
         {
-            Class_num[0] = 1;
-            Class_num[1] = 1;
-            Class_num[2] = 0;
-            Class_num[3] = 0;
-            return Class_num;
+            data.parts[ARMAMENT] = 1;
+            data.parts[VARIANT] = 1;
+            data.parts[ALTER] = 0;
+            
         }
         else if (input_text.text == "タナトス")
         {
-            Class_num[0] = 1;
-            Class_num[1] = 0;
-            Class_num[2] = 1;
-            Class_num[3] = 1;
-            return Class_num;
+            data.parts[ARMAMENT] = 1;
+            data.parts[VARIANT] = 0;
+            data.parts[ALTER] = 1;
+            
         }
         else if (input_text.text == "ゴシック")
         {
-            Class_num[0] = 0;
-            Class_num[1] = 1;
-            Class_num[2] = 1;
-            Class_num[3] = 2;
-            return Class_num;
+            data.parts[ARMAMENT] = 0;
+            data.parts[VARIANT] = 1;
+            data.parts[ALTER] = 1;
+           
         }
         else if (input_text.text == "レクイエム")
         {
-            Class_num[0] = 2;
-            Class_num[1] = 0;
-            Class_num[2] = 0;
-            Class_num[3] = 3;
-            return Class_num;
+            data.parts[ARMAMENT] = 2;
+            data.parts[VARIANT] = 0;
+            data.parts[ALTER] = 0;
+            
         }
         else if (input_text.text == "バロック")
         {
-            Class_num[0] = 0;
-            Class_num[1] = 2;
-            Class_num[2] = 0;
-            Class_num[3] = 4;
-            return Class_num;
+            data.parts[ARMAMENT] = 0;
+            data.parts[VARIANT] = 2;
+            data.parts[ALTER] = 0;
+          
         }
         else if (input_text.text == "ロマネスク")
         {
-            Class_num[0] = 0;
-            Class_num[1] = 0;
-            Class_num[2] = 2;
-            Class_num[3] = 5;
-            return Class_num;
+            data.parts[ARMAMENT] = 0;
+            data.parts[VARIANT] = 0;
+            data.parts[ALTER] = 2;
+         
         }
         else if (input_text.text == "サイケデリック")
         {
-            Class_num[0] = 0;
-            Class_num[1] = 0;
-            Class_num[2] = 1;
-            Class_num[3] = 6;
-            return Class_num;
+            data.parts[ARMAMENT] = 0;
+            data.parts[VARIANT] = 0;
+            data.parts[ALTER] = 1;
+           
         }
         else
         {
-            Class_num[0] = 0;
-            Class_num[1] = 0;
-            Class_num[2] = 0;
-            Class_num[3] = 0;
-            return Class_num;
+            data.parts[ARMAMENT] = 0;
+            data.parts[VARIANT] = 0;
+            data.parts[ALTER] = 0;
         }
-        
+
+        data.name = input_text.text;
+        return data;
     }
+
+   
+
 }
 
