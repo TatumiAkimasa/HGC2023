@@ -11,8 +11,8 @@ public class Input_data_Button : ClassData_
 
     [SerializeField]
     private Text input_text,output_text;
-
-    ClassData data;
+  
+    private ClassData data;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +23,7 @@ public class Input_data_Button : ClassData_
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void Push_button()
@@ -33,6 +33,7 @@ public class Input_data_Button : ClassData_
 
     public string Push_button_pos()
     {
+       
         output_text.text = input_text.text;
 
         if (input_text.text == "ÉAÉäÉX")
@@ -54,6 +55,7 @@ public class Input_data_Button : ClassData_
 
     public ClassData Push_button_class()
     {
+        data.parts = new int[3];
         output_text.text = input_text.text;
 
         //ClassData data;

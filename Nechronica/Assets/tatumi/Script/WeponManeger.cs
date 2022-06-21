@@ -6,19 +6,26 @@ using UnityEngine.UI;
 public class WeponManeger : ClassData_
 {
     [SerializeField]
-    private GameObject Cskils,CS_Maneger;
+    private GameObject Cskils;
 
     private GameObject[] ChildObject;
 
     [SerializeField]
-    private Text wepon_text, bio_text,mac_text;
+    private Text wepon_text, bio_text,mac_text,Output_text2,Output_text3,Output_text;
 
     public int[] parts=new int[6];
 
-    private string keyword,keyword2 = "X";
+   
+    private string keyword = "x";
+    private string keyword2 = "X";
+
+    [SerializeField]
     private int    Button_num = 0;
 
+    [SerializeField]
     Button[] buttons = new Button[3];
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +35,12 @@ public class WeponManeger : ClassData_
         {
             parts[i] = 0;
         }
+        for (int i = 0; i != 3; i++)
+        {
+            buttons[i] = this.gameObject.GetComponent<Button>();
+        }
+
+        keyword = "x";
     }
 
     // Update is called once per frame
@@ -38,28 +51,136 @@ public class WeponManeger : ClassData_
 
     public void SetPSKill(Button a)
     {
-        //MainSkill
-        if(a.GetComponentInChildren<Text>().text.Contains(keyword))
+
+        if (buttons[Button_num] != null)
         {
-            if (Button_num == 1)
-                Button_num = 0;
-
-
-            a.interactable = true;
+            //選択色
             ColorBlock cb = a.colors;
-            cb.disabledColor = Color.yellow;
-            a.colors = cb;
 
-            buttons[Button_num] = a;
+            //同一職
+            if (a.name.Contains(keyword)&& a.name.Contains(keyword2))
+            {
+                if (a.name != buttons[Button_num - Button_num].name)
+                {
+                    cb.normalColor = Color.yellow;
+                    cb.selectedColor = Color.yellow;
+                    a.colors = cb;
 
-            Button_num++;
+                    //既存元に戻す
+                    cb.normalColor = Color.white;
+                    cb.selectedColor = Color.white;
+                    buttons[Button_num].colors = cb;
+
+                    //代入
+                    buttons[Button_num] = a;
+
+                    //出力
+                    if (Button_num == 0)
+                        Output_text.text = a.GetComponentInChildren<Text>().text;
+                    else if(Button_num==1)
+                        Output_text2.text = a.GetComponentInChildren<Text>().text;
+                    else
+                        Output_text3.text = a.GetComponentInChildren<Text>().text;
+
+                    Button_num++;
+
+                    if (Button_num == 3)
+                        Button_num = 0;
+
+                }
+                //同じもの選択
+                else
+                {
+                    //既存元に戻す
+                    cb.normalColor = Color.white;
+                    cb.selectedColor = Color.white;
+                    buttons[Button_num - Button_num].colors = cb;
+
+                    buttons[Button_num - Button_num] = this.gameObject.GetComponent<Button>();
+
+                    //出力
+                    if (Button_num == 0)
+                        Output_text.text = "None";
+                    else if (Button_num == 1)
+                        Output_text2.text = "None";
+                    else
+                        Output_text3.text = "None";
+                }
+            }
+            //MainSkill
+            else if (a.name.Contains(keyword))
+            {
+                if (a.name != buttons[Button_num-Button_num].name)
+                {
+                    cb.normalColor = Color.yellow;
+                    cb.selectedColor = Color.yellow;
+                    a.colors = cb;
+
+                    //既存元に戻す
+                    cb.normalColor = Color.white;
+                    cb.selectedColor = Color.white;
+                    buttons[Button_num].colors = cb;
+
+                    //代入
+                    buttons[Button_num] = a;
+
+                    //出力
+                    if (Button_num == 0)
+                        Output_text.text = a.GetComponentInChildren<Text>().text;
+                    else
+                        Output_text2.text = a.GetComponentInChildren<Text>().text;
+
+                    Button_num++;
+
+                    if (Button_num >= 2)
+                        Button_num = 0;
+
+                }
+                //同じもの選択
+                else
+                {
+                    //既存元に戻す
+                    cb.normalColor = Color.white;
+                    cb.selectedColor = Color.white;
+                    buttons[Button_num-Button_num].colors = cb;
+
+                    buttons[Button_num - Button_num] = this.gameObject.GetComponent<Button>();
+
+                    //出力
+                    if (Button_num == 0)
+                        Output_text.text = "None";
+                    else
+                        Output_text2.text = "None";
+                }
+
+            }
+            //SubSkill
+            else if (a.name.Contains(keyword2))
+            {
+                if (buttons[2] != null)
+                {
+                    if (a.name != buttons[2].name)
+                    {
+                        cb.normalColor = Color.yellow;
+                        cb.selectedColor = Color.yellow;
+                        a.colors = cb;
+
+                        //既存元に戻す
+                        cb.normalColor = Color.white;
+                        cb.selectedColor = Color.white;
+                        buttons[2].colors = cb;
+
+                        //代入
+                        buttons[2] = a;
+
+                        //出力
+                        Output_text3.text = a.GetComponentInChildren<Text>().text;
+
+                    }
+                }
+            }
+
         }
-        //SubSkill
-        else if(a.GetComponentInChildren<Text>().text.Contains(keyword2))
-        {
-
-        }
-        
     }
 
     public void Setparts(ClassData a,bool MorS)
@@ -106,12 +227,68 @@ public class WeponManeger : ClassData_
                 test.GetComponent<Button>().interactable = true;
 
                 //星スキル封印
-                if(i>Cskils.transform.childCount-8)
+                if (i > Cskils.transform.childCount - 8)
+                {
                     test.GetComponent<Button>().interactable = false;
+                    //skill初期化
+                    for (int k = 0; k != 3; k++)
+                    {
+                        if (test.name.Contains(buttons[k].name))
+                        {
+                            //選択色
+                            ColorBlock cb = buttons[k].colors;
+                            cb.normalColor = Color.white;
+                            cb.selectedColor = Color.white;
+                            buttons[k].colors = cb;
+
+                            if (k == 0)
+                            {
+                                Output_text.text = "None";
+
+                            }
+                            else if (k == 1)
+                            {
+                                Output_text2.text = "None";
+                            }
+                            else
+                            {
+
+                                Output_text3.text = "None";
+                            }
+                        }
+                    }
+                }
             }
             else
             {
                 test.GetComponent<Button>().interactable = false;
+                //skill初期化
+                for (int k = 0; k != 3; k++)
+                {
+                    if (test.name.Contains(buttons[k].name))
+                    {
+                        //選択色
+                        ColorBlock cb = buttons[k].colors;
+                        cb.normalColor = Color.white;
+                        cb.selectedColor = Color.white;
+                        buttons[k].colors = cb;
+
+                        if (k == 0)
+                        {
+                            Output_text.text = "None";
+                            
+                        }
+                        else if (k == 1)
+                        {
+                            Output_text2.text = "None";
+                        }
+                        else
+                        {
+                            
+                            Output_text3.text = "None";
+                        }
+                    }
+                }
             }
 
         }

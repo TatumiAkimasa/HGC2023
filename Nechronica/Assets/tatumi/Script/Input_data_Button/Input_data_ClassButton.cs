@@ -7,7 +7,7 @@ public class Input_data_ClassButton : Input_data_Button
     [SerializeField]
     private GameObject PA_Maneger;
 
-
+  
     // Start is called before the first frame update
     void Start()
     {

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ClassData_ : MonoBehaviour
 {
-    public class ClassData
+    public struct ClassData 
     {
+        
         public string name;
-        public int[] parts = new int[3];
+        public int[] parts;
     }
 
     public string Classname_JtoE(string a)
