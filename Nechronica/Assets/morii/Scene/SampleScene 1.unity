@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 78894893}
   - component: {fileID: 78894892}
   - component: {fileID: 78894891}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ Transform:
   m_GameObject: {fileID: 78894890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.001, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 2}
+  m_LocalScale: {x: 10, y: 1, z: 4.56}
   m_Children:
   - {fileID: 1204618581}
   - {fileID: 508611869}
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 508611868}
   - component: {fileID: 508611867}
   - component: {fileID: 508611866}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 508611865}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0.001, z: 0}
-  m_LocalScale: {x: 0.42, y: 1, z: 0.98}
+  m_LocalScale: {x: 0.9, y: 1, z: 0.98}
   m_Children: []
   m_Father: {fileID: 78894894}
   m_RootOrder: 1
@@ -335,7 +335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &687892221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,8 +643,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -684,13 +684,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.17991829, y: 0, z: 0, w: 0.98368156}
-  m_LocalPosition: {x: 0, y: 4.32, z: -11.88}
+  m_LocalRotation: {x: 0.13878287, y: -0, z: -0, w: 0.9903229}
+  m_LocalPosition: {x: -0.1, y: 4.71, z: -26.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 20.73, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.955, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,7 +698,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
@@ -723,7 +723,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 963194228}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 64
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
@@ -778,7 +778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1033974400}
   - component: {fileID: 1033974399}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 8c0e220869c516c48b25a9e65e6cf239, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 32b786928a70133488be6043384cd12d, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -828,7 +828,7 @@ GameObject:
   - component: {fileID: 1204618584}
   - component: {fileID: 1204618583}
   - component: {fileID: 1204618582}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -842,13 +842,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204618580}
-  m_LocalRotation: {x: 0.09219675, y: 0, z: 0, w: 0.99574083}
-  m_LocalPosition: {x: -0.009000001, y: 24.9, z: 9.675799}
-  m_LocalScale: {x: 8.798, y: 50.66062, z: 0.53368473}
+  m_LocalRotation: {x: 0.03925978, y: 0, z: 0, w: 0.9992291}
+  m_LocalPosition: {x: -0.009000001, y: 30.3, z: 6.91}
+  m_LocalScale: {x: 10.5, y: 62.25, z: 0.53368473}
   m_Children: []
   m_Father: {fileID: 78894894}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 10.58, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.5, y: 0, z: 0}
 --- !u!64 &1204618582
 MeshCollider:
   m_ObjectHideFlags: 0
