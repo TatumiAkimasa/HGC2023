@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Field_change : MonoBehaviour
 {
     [SerializeField]
-    private GameObject Field;
+    private GameObject[] Field;
 
     // Start is called before the first frame update
     void Start()
@@ -19,14 +19,18 @@ public class Field_change : MonoBehaviour
         
     }
 
-    public void InputField()
+    public void InputField(Dropdown DD)
     {
-        Field.SetActive(true);
+        int a = DD.value;
+
+        for(int i=0;i!=3;i++)
+        {
+            if (i == a)
+                Field[i].SetActive(true);
+            else
+                Field[i].SetActive(false);
+        }
     }
 
-    public void BackField()
-    {
-        Field.SetActive(false);
-    }
 
 }
