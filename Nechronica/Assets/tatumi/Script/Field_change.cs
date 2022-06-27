@@ -7,6 +7,8 @@ public class Field_change : MonoBehaviour
     [SerializeField]
     private GameObject[] Field;
 
+    private int Wepon,level = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,16 +23,51 @@ public class Field_change : MonoBehaviour
 
     public void InputField(Dropdown DD)
     {
-        int a = DD.value;
+        level = DD.value;
 
+        //武器種類＆レベル
         for(int i=0;i!=3;i++)
         {
-            if (i == a)
-                Field[i].SetActive(true);
+            //指定武具ON
+            if (i == level)
+                Field[Wepon].transform.GetChild(i).gameObject.SetActive(true);
             else
-                Field[i].SetActive(false);
+                Field[Wepon].transform.GetChild(i).gameObject.SetActive(false);
+
+            //その他OFF
+            for(int k=0;k!=3;k++)
+            {
+                if (k != Wepon)
+                    Field[k].transform.GetChild(i).gameObject.SetActive(false);
+            }
+            
         }
     }
 
+    private void InputField(int DD)
+    {
+        //武器種類＆レベル
+        for (int i = 0; i != 3; i++)
+        {
+            //指定武具ON
+            if (i == level)
+                Field[Wepon].transform.GetChild(i).gameObject.SetActive(true);
+            else
+                Field[Wepon].transform.GetChild(i).gameObject.SetActive(false);
 
+            //その他OFF
+            for (int k = 0; k != 3; k++)
+            {
+                if (k != Wepon)
+                    Field[k].transform.GetChild(i).gameObject.SetActive(false);
+            }
+
+        }
+    }
+
+    public void WeponChange(Dropdown DD)
+    {
+        Wepon = DD.value;
+        InputField(level);
+    }
 }
