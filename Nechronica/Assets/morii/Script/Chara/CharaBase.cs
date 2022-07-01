@@ -6,38 +6,41 @@ public class CharaBase : MonoBehaviour
 {
     //ゲッター
     public int GetNowCount()  => NowCount;
-    public int GetWeight() => Weight;
+    public int GetWeight() => AllWeight;
 
-    List<CharaManeuver> HeadParts;      //頭のパーツ
-    List<CharaManeuver> ArmParts;       //腕のパーツ
-    List<CharaManeuver> BodyParts;      //胴のパーツ
-    List<CharaManeuver> LegParts;       //脚のパーツ
+    public List<CharaManeuver> HeadParts;      //頭のパーツ
+    public List<CharaManeuver> ArmParts;       //腕のパーツ
+    public List<CharaManeuver> BodyParts;      //胴のパーツ
+    public List<CharaManeuver> LegParts;       //脚のパーツ
 
-    int MaxCount;                       //カウント最大値
-    int NowCount;                       //現在のカウント
+    public int MaxCount;                       //カウント最大値
+    public int NowCount;                       //現在のカウント
 
-    int Weight;                         //重さ
+    public int AllWeight;                         //重さ
 }
 
 public class CharaManeuver
 {
-    string Name;            //パーツ名
-    int EffectNum;          //効果値
-    int Cost;               //コスト
-    int Timing;             //発動タイミング
-    int MinRange;           //射程の最小値
-    int MaxRange;           //射程の最大値
-    bool isUse;             //使用したかどうか
-    bool isDmage;           //破損したかどうか
-    ManeuverEffectsAtk Atk; //攻撃系
+    public string Name;            //パーツ名
+    public int EffectNum;          //効果値
+    public int Cost;               //コスト
+    public int Timing;             //発動タイミング
+    public int MinRange;           //射程の最小値
+    public int MaxRange;           //射程の最大値
+    public int Weight;             //重さ
+    public bool isUse;             //使用したかどうか
+    public bool isDmage;           //破損したかどうか
+    public ManeuverEffectsAtk Atk; //攻撃系
 }
 
 public class ManeuverEffectsAtk
 {
-    int  AtkType;       //攻撃属性
-    bool isExplosion;   //爆発攻撃かどうか
-    bool isCotting;     //切断攻撃かどうか
-    bool isAllAttack;   //全体攻撃かどうか
-    bool isSuccession;  //連撃かどうか
-    int  Num_per_Action;//連撃回数
+    public int AtkType;       //攻撃属性
+    public  bool isExplosion;   //爆発攻撃かどうか
+    public bool isCotting;     //切断攻撃かどうか
+    public bool isAllAttack;   //全体攻撃かどうか
+    public bool isSuccession;  //連撃かどうか
+    public int Num_per_Action;//連撃回数
 }
+
+
