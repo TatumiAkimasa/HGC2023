@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharaManeuver))]
+
 public class Doll_blueprint : CharaBase
 {
     public string Name;                    //ƒh[ƒ‹–¼
@@ -17,7 +19,8 @@ public class Doll_blueprint : CharaBase
 
     private int Treasure_num;
 
-    private CharaManeuver Treasure,backTrasure;
+    private CharaManeuver Treasure=new CharaManeuver { };
+    private CharaManeuver backTreasure = new CharaManeuver { };
 
     private void Start()
     {
@@ -39,16 +42,16 @@ public class Doll_blueprint : CharaBase
         switch (Treasure_num)
         {
             case 1:
-                parts.HeadParts.Remove(Treasure);
+                parts.HeadParts.Remove(backTreasure);
                 break;
             case 2:
-                parts.ArmParts.Remove(Treasure);
+                parts.ArmParts.Remove(backTreasure);
                 break;
             case 3:
-                parts.BodyParts.Remove(Treasure);
+                parts.BodyParts.Remove(backTreasure);
                 break;
             case 4:
-                parts.LegParts.Remove(Treasure);
+                parts.LegParts.Remove(backTreasure);
                 break;
                 //‰Šúİ’è
             case -1:
@@ -75,7 +78,7 @@ public class Doll_blueprint : CharaBase
                 break;
         }
 
-        backTrasure = Treasure;
+        backTreasure = Treasure;
         Treasure_num = i;
     }
 }
