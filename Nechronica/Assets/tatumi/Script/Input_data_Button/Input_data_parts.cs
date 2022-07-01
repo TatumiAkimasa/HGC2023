@@ -20,14 +20,8 @@ public class Input_data_parts : MonoBehaviour
         
     }
 
-    public void OK_signal_Wepon(int a)
+    public void Add_Wepon(Toggle add)
     {
-        int result = a / 3;
-        int resilt_child = a % 3;
-
-        for(int i=0;i!=3;i++)
-        {
-
-        }
+       
     }
 }
