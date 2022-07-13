@@ -8,16 +8,16 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField]
     private GameObject clickedGameObject;
 
-    private CinemachineVirtualCamera CharaCamera;
+    private CinemachineVirtualCamera CharaCamera;   //
 
     [SerializeField]
-    private new Camera camera;
+    private new Camera camera;                      // メインカメラ
 
     [SerializeField]
-    private CinemachineVirtualCamera cinemaCamera;
+    private CinemachineVirtualCamera cinemaCamera;  // クローン生成元のシネマカメラ
 
     [SerializeField]
-    private CinemachineVirtualCamera MainCamera;
+    private CinemachineVirtualCamera MainCamera;    // 全体を映すシネマカメラ
 
 
     void Update()
@@ -38,20 +38,26 @@ public class GetClickedGameObject : MonoBehaviour
                 clickedGameObject = hit.collider.gameObject;
             }
 
-            Vector3 clickedObjPos = clickedGameObject.transform.position;
-            clickedObjPos.z -= 10.0f;
-            clickedObjPos.x -= 2.5f;
+            if(clickedGameObject.CompareTag("PlayableChara"))
+            {
+                // クリックしたオブジェクトの座標情報を取得
+                Vector3 clickedObjPos = clickedGameObject.transform.position;
+                // 取得した座標情報から少し離れた位置に座標を変更
+                clickedObjPos.z -= 10.0f;
+                clickedObjPos.x -= 2.5f;
 
+                // シネマカメラのプレハブを生成しクリックしたオブジェクトを親オブジェクトにする
+                CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity);
+                CharaCamera.transform.parent = clickedGameObject.transform;
 
-            CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity);
-            CharaCamera.transform.parent = clickedGameObject.transform;
-
-            CharaCamera.Priority = MainCamera.Priority;
-
-            Debug.Log(clickedGameObject);
+                // 生成したプレハブカメラのプライオリティをメインカメラに設定
+                CharaCamera.Priority = MainCamera.Priority;
+            }
         }
+        // 右クリックで
         else if(Input.GetMouseButtonDown(1) && CharaCamera != null)
         {
+            // 
             cinemaCamera.Priority = MainCamera.Priority;
 
             StartCoroutine(DstroyCamera());

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class CharaBase : MonoBehaviour
 {
     //ゲッター
@@ -14,11 +15,16 @@ public class CharaBase : MonoBehaviour
     List<CharaManeuver> LegParts;       //脚のパーツ
 
     int MaxCount;                       //カウント最大値
+
+
+    [SerializeField]
     int NowCount;                       //現在のカウント
 
+    [SerializeField]
     int Weight;                         //重さ
 }
 
+[System.Serializable]
 public class CharaManeuver
 {
     string Name;            //パーツ名
@@ -32,6 +38,7 @@ public class CharaManeuver
     ManeuverEffectsAtk Atk; //攻撃系
 }
 
+[System.Serializable]
 public class ManeuverEffectsAtk
 {
     int  AtkType;       //攻撃属性
