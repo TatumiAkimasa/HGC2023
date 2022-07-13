@@ -13,8 +13,8 @@ public class WeponData_Set : CharaBase
     [SerializeField]
     private bool isExplosion, isCotting, isAllAttack, isSuccession;//Žg—p‚µ‚½‚©‚Ç‚¤‚©
 
-    public CharaManeuver Set_Parts;
-    public ManeuverEffectsAtk Set_Eff;
+    public CharaManeuver Set_Parts = new CharaManeuver { };
+    public ManeuverEffectsAtk Set_Eff = new ManeuverEffectsAtk { };
 
 
     private void Start()

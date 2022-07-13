@@ -11,6 +11,11 @@ public class ClassData_ : MonoBehaviour
         public int[] parts;
     }
 
+    //定数
+    public const int ARMAMENT = 0;     //武装
+    public const int VARIANT = 1;      //変異
+    public const int ALTER = 2;        //改造
+
     public string Classname_JtoE(string a)
     {
         if (a == "ステーシー")

@@ -4,10 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Input_data_Button : ClassData_
 {
-    //’è”
-    const int ARMAMENT = 0;     //•‘•
-    const int VARIANT = 1;      //•ÏˆÙ
-    const int ALTER = 2;        //‰ü‘¢
+    
 
     [SerializeField]
     private Text input_text,output_text;

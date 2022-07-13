@@ -13,9 +13,11 @@ public class CharaBase : MonoBehaviour
     public List<CharaManeuver> BodyParts;      //胴のパーツ
     public List<CharaManeuver> LegParts;       //脚のパーツ
 
+    [System.NonSerialized]
     public int MaxCount;                       //カウント最大値
+    [System.NonSerialized]
     public int NowCount;                       //現在のカウント
-
+    [System.NonSerialized]
     public int AllWeight;                         //重さ
 }
 
