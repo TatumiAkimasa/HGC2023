@@ -6,9 +6,9 @@ using Cinemachine;
 public class GetClickedGameObject : MonoBehaviour
 {
     [SerializeField]
-    private GameObject clickedGameObject;
+    private GameObject clickedGameObject;           // クリックしたゲームオブジェクト
 
-    private CinemachineVirtualCamera CharaCamera;   //
+    private CinemachineVirtualCamera CharaCamera;   // キャラに持たせるプレハブのクローンのカメラ
 
     [SerializeField]
     private new Camera camera;                      // メインカメラ
@@ -38,6 +38,7 @@ public class GetClickedGameObject : MonoBehaviour
                 clickedGameObject = hit.collider.gameObject;
             }
 
+            //クリックしたゲームオブジェクトがプレイアブルキャラなら
             if(clickedGameObject.CompareTag("PlayableChara"))
             {
                 // クリックしたオブジェクトの座標情報を取得
