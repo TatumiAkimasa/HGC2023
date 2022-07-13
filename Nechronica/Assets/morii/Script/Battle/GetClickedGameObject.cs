@@ -20,10 +20,6 @@ public class GetClickedGameObject : MonoBehaviour
     private CinemachineVirtualCamera MainCamera;
 
 
-    private void Start()
-    {
-    }
-
     void Update()
     {
         //¶ƒNƒŠƒbƒN‚Å
