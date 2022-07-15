@@ -27,7 +27,7 @@ public class SkillManeger : ClassData_
 
     Button[] Parent_Skill = new Button[2];
 
-    
+    public Wepon_Maneger wepon_Maneger;
 
     // Start is called before the first frame update
     void Start()
@@ -258,14 +258,19 @@ public class SkillManeger : ClassData_
             //subskill
             keyword2 = Classname_JtoE(a.name);
         }
+
        
+
+
         wepon_text.text = (parts[0]+parts[3]).ToString();
+        wepon_Maneger.Wepon_limit[0] = parts[0] + parts[3];
 
-       
+
         bio_text.text = (parts[1]+parts[4]).ToString();
+        wepon_Maneger.Wepon_limit[1] = parts[1] + parts[4];
 
-       
         mac_text.text = (parts[2]+parts[5]).ToString();
+        wepon_Maneger.Wepon_limit[2] = parts[2] + parts[5];
 
         for (int i = 0; i < Cskils.transform.childCount; i++)
         {

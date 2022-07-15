@@ -13,6 +13,10 @@ public class Wepon_Maneger : ClassData_
 
     public int[] Wepon_limit = new int[3];
 
+    public int Reset_num = 0;
+
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +29,45 @@ public class Wepon_Maneger : ClassData_
         
     }
 
-    public void Add_Wepon(Toggle add)
+    public void Add_Wepon(Toggle add,int Type,int Level)
     {
-        int parts_num = Wepon_limit[ARMAMENT] / 3;
-        int parts_num_add = Wepon_limit[ARMAMENT] % 3;
+        if (Wepon_limit[Type] == 0)
+        {
+            add.isOn = false;
+            return;
+        }
+           
+
+        int Max_Wepon_num = Wepon_limit[Type] / 3;
+
+        int parts_num_add = Wepon_limit[Type] % 3;
+         
+        for (int i = 0; i != Max_Wepon_num + (1-(Max_Wepon_num / 3)); i++)
+        {
+            //データなしの場合
+            if (Wepon[Type, Level, i] == null)
+            {
+                Wepon[Type, Level, i] = add;
+                return;
+            }
+            //2回目の時情報を抜く
+            else if(Wepon[Type, Level, i]==add)
+            {
+                Wepon[Type, Level, i].isOn = false;
+                Wepon[Type, Level, i] = null;
+                return;
+            }
+           
+        }
+
+        if (Max_Wepon_num + (1 - (Max_Wepon_num / 3)) == Reset_num)
+            Reset_num = 0;
+
+        //もし限度数かつ＋で追加したら
+        Wepon[Type, Level, Reset_num].isOn = false;
+        Wepon[Type, Level, Reset_num] = null;
+
+        Reset_num++;
+
     }
 }
