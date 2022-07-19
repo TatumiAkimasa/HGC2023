@@ -60,12 +60,15 @@ public class Wepon_Maneger : ClassData_
            
         }
 
+       
+
         if (Max_Wepon_num + (1 - (Max_Wepon_num / 3)) == Reset_num)
             Reset_num = 0;
 
         //Ç‡Çµå¿ìxêîÇ©Ç¬Å{Ç≈í«â¡ÇµÇΩÇÁ
         Wepon[Type, Level, Reset_num].isOn = false;
         Wepon[Type, Level, Reset_num] = null;
+        Wepon[Type, Level, Reset_num] = add;
 
         Reset_num++;
 
