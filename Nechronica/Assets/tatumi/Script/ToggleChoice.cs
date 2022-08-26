@@ -12,6 +12,7 @@ public class ToggleChoice : MonoBehaviour
     string[] Add_names=new string[3];
 
     private int Max;
+
     // Start is called before the first frame update
     void Start()
     {

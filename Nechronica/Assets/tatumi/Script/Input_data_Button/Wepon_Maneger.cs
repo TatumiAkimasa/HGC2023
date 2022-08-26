@@ -41,6 +41,16 @@ public class Wepon_Maneger : ClassData_
         int Max_Wepon_num = Wepon_limit[Type] / 3;
 
         int parts_num_add = Wepon_limit[Type] % 3;
+
+        if(Max_Wepon_num==0)
+        {
+            if (parts_num_add < Level+1)
+            {
+                add.isOn = false;
+                return;
+            }
+                
+        }
          
         for (int i = 0; i != Max_Wepon_num + (1-(Max_Wepon_num / 3)); i++)
         {
