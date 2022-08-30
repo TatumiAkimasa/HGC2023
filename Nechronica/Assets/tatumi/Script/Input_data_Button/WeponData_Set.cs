@@ -46,4 +46,9 @@ public class WeponData_Set : CharaBase
     {
         Wepon_maneger.Add_Wepon(this.GetComponent<Toggle>(), Type,level);
     }
+
+    public string Get_Wepon_Text()
+    {
+        return Name.text;
+    }
 }
