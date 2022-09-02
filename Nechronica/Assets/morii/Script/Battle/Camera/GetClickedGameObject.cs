@@ -5,6 +5,10 @@ using Cinemachine;
 
 public class GetClickedGameObject : MonoBehaviour
 {
+    // 定数-----------------------------------------------------
+    const int CharaPriority = 20;       //シネマカメラの優先度用定数。キャラをズームする用のカメラの優先度を最優先にする
+    //----------------------------------------------------------
+
     [SerializeField]
     private GameObject clickedGameObject;           // クリックしたゲームオブジェクト
 
@@ -52,15 +56,16 @@ public class GetClickedGameObject : MonoBehaviour
                 CharaCamera.transform.parent = clickedGameObject.transform;
 
                 // 生成したプレハブカメラのプライオリティをメインカメラに設定
-                CharaCamera.Priority = MainCamera.Priority;
+                CharaCamera.Priority = CharaPriority;
             }
         }
         // 右クリックで
         else if(Input.GetMouseButtonDown(1) && CharaCamera != null)
         {
-            // 
-            cinemaCamera.Priority = MainCamera.Priority;
+            // 全体を表示させるカメラを優先にする。
+            CharaCamera.Priority = 0;
 
+            // 複製したプレハブカメラを消す。
             StartCoroutine(DstroyCamera());
         }
 

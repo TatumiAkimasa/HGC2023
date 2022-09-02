@@ -6,6 +6,7 @@ public class BattleSystem : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] CharaObjectsBuffer;
+
     [SerializeField]
     private List<CharaBase> CharaObject = new List<CharaBase>();
 
