@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharaManeuver))]
-
+[System.Serializable]
 public class Doll_blueprint : CharaBase
 {
     public string Name;                    //ƒh[ƒ‹–¼

@@ -30,14 +30,11 @@ public class MultiSite2
 public class Wepon_Maneger : ClassData_
 {
     [SerializeField, Header("‘½ŸŒ³”z—ñ-•”ˆÊ")]
-    private MultiSite2[] Site_;
+    public MultiSite2[] Site_;
 
     [SerializeField]
     //•Šíí—Ş/ƒŒƒxƒ‹/‚Ä‚éŒÀ“xŒÂ”
     Toggle[,,] Wepon = new Toggle[3,3,3];
-
-    [SerializeField]
-    GameObject Content_Wepons;
 
     public int[] Wepon_limit = new int[3];
 
