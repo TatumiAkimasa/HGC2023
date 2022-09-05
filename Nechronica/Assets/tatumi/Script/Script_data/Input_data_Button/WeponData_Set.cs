@@ -13,13 +13,19 @@ public class WeponData_Set : CharaBase
     [SerializeField]
     private bool isExplosion, isCotting, isAllAttack, isSuccession;//égópÇµÇΩÇ©Ç«Ç§Ç©
 
+    [SerializeField]
+    private Sprite[] sprites;
+    [SerializeField]
+    private Image change_image;
+
     public CharaManeuver Set_Parts = new CharaManeuver { };
     public ManeuverEffectsAtk Set_Eff = new ManeuverEffectsAtk { };
 
     public Wepon_Maneger Wepon_maneger;
     public int Type,level;
 
-
+    private int nowType=0;
+  
     private void Start()
     {
         Set_Parts.Cost = Cost;
@@ -41,6 +47,7 @@ public class WeponData_Set : CharaBase
 
     }
 
+    
     //à¯êî2å¬èoóàÇÒÇΩÇﬂÇ±Ç¡ÇøÇ≈êßå‰
     public void Wepon_add()
     {
@@ -51,4 +58,54 @@ public class WeponData_Set : CharaBase
     {
         return Name.text;
     }
+
+    public void poti_change()
+    {
+        if (change_image != null)
+        {
+            if (Input.GetMouseButton(1))
+            {
+                    string now_name = this.gameObject.name.Substring(0, this.gameObject.name.Length - 1);
+
+                    switch (nowType)
+                    {
+                        case 1:
+                            {
+                                this.gameObject.name = now_name + "A";
+                                change_image.sprite = sprites[nowType];
+                                break;
+                            }
+                        case 2:
+                            {
+                                this.gameObject.name = now_name + "B";
+                                change_image.sprite = sprites[nowType];
+                                break;
+                            }
+                        case 3:
+                            {
+                                this.gameObject.name = now_name + "L";
+                                change_image.sprite = sprites[nowType];
+                                break;
+                            }
+                        case 0:
+                            {
+                                this.gameObject.name = now_name + "H";
+                                change_image.sprite = sprites[nowType];
+                                break;
+                            }
+                    }
+                    nowType++;
+                   
+                    if (nowType == 4)
+                        nowType = 0;
+               
+            }
+           
+               
+        }
+
+
+
+    }
+
 }

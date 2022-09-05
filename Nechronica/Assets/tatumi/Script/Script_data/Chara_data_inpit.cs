@@ -29,15 +29,24 @@ public class Chara_data_inpit : MonoBehaviour
 
     public void input()
     {
+        //‰Šú‰»
+        chara.HeadParts.Clear();
+        chara.ArmParts.Clear();
+        chara.BodyParts.Clear();
+        chara.LegParts.Clear();
+
+        //‰Šú•‘•’Ç‹L
+
+        //’Ç‰Á•‘•’Ç‹L
         for (int SITE = 0; SITE != 4; SITE++)
         {
             for (int i = 0; i != 2; i++)
             {
                 for (int k = 0; k != 3; k++)
                 {
-                    if (WE_Maneger.Site_[SITE].Step[i].Text[k] != null) 
+                    if (WE_Maneger.Site_[SITE].Step[i].Text[k] != null)
                     {
-                        if(SITE==HEAD)
+                        if (SITE == HEAD)
                         {
                             chara.HeadParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<WeponData_Set>().Set_Parts);
                         }
