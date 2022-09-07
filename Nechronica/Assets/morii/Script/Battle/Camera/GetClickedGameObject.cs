@@ -47,7 +47,7 @@ public class GetClickedGameObject : MonoBehaviour
             {
                 // クリックしたオブジェクトの座標情報を取得
                 Vector3 clickedObjPos = clickedGameObject.transform.position;
-                // 取得した座標情報から少し離れた位置に座標を変更
+                // 取得した座標情報から少し離れた位置に座標を調整
                 clickedObjPos.z -= 10.0f;
                 clickedObjPos.x -= 2.5f;
 
@@ -55,7 +55,7 @@ public class GetClickedGameObject : MonoBehaviour
                 CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity);
                 CharaCamera.transform.parent = clickedGameObject.transform;
 
-                // 生成したプレハブカメラのプライオリティをメインカメラに設定
+                // 生成したプレハブのバーチャルカメラがメインカメラになるようプライオリティを設定
                 CharaCamera.Priority = CharaPriority;
             }
         }
@@ -69,6 +69,7 @@ public class GetClickedGameObject : MonoBehaviour
             StartCoroutine(DstroyCamera());
         }
 
+        // カメラが完全に離れてから消すためのコルーチン
         IEnumerator DstroyCamera()
         {
             for(int i=0;i<2;i++)
