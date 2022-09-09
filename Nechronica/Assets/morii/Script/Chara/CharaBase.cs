@@ -33,6 +33,7 @@ public class CharaManeuver
     public int MinRange;           //射程の最小値
     public int MaxRange;           //射程の最大値
     public int Weight;             //重さ
+    public int Moving;             //移動量(0で移動しない)
     public bool isUse;             //使用したかどうか
     public bool isDmage;           //破損したかどうか
     public ManeuverEffectsAtk Atk; //攻撃系

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ActiveCharaSort : MonoBehaviour
 {
-    Image cloneImg;
+   Image cloneImg;
     
 
 
