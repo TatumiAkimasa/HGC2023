@@ -16,6 +16,9 @@ public class WeponData_Set : CharaBase
     public CharaManeuver Set_Parts = new CharaManeuver { };
     public ManeuverEffectsAtk Set_Eff = new ManeuverEffectsAtk { };
 
+    public Wepon_Maneger Wepon_maneger;
+    public int Type,level;
+
 
     private void Start()
     {
@@ -36,5 +39,16 @@ public class WeponData_Set : CharaBase
         Set_Eff.isSuccession = isSuccession;
         Set_Eff.Num_per_Action = Num_per_Action;
 
+    }
+
+    //ˆø”2ŒÂo—ˆ‚ñ‚½‚ß‚±‚Á‚¿‚Å§Œä
+    public void Wepon_add()
+    {
+        Wepon_maneger.Add_Wepon(this.GetComponent<Toggle>(), Type,level);
+    }
+
+    public string Get_Wepon_Text()
+    {
+        return Name.text;
     }
 }
