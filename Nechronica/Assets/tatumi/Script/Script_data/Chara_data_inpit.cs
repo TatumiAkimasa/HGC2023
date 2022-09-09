@@ -10,11 +10,10 @@ public class Chara_data_inpit : MonoBehaviour
     const int BODY = 2;
     const int LEG = 3;
 
-    new CharaBase chara;
-
     public Wepon_Maneger WE_Maneger;
     public SkillManeger SK_Maneger;
-   
+    public Doll_blueprint DOLL_Maneger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,10 +29,10 @@ public class Chara_data_inpit : MonoBehaviour
     public void input()
     {
         //‰Šú‰»
-        chara.HeadParts.Clear();
-        chara.ArmParts.Clear();
-        chara.BodyParts.Clear();
-        chara.LegParts.Clear();
+        DOLL_Maneger.parts.HeadParts.Clear();
+        DOLL_Maneger.parts.ArmParts.Clear();
+        DOLL_Maneger.parts.BodyParts.Clear();
+        DOLL_Maneger.parts.LegParts.Clear();
 
         //‰Šú•‘•’Ç‹L
 
@@ -48,24 +47,31 @@ public class Chara_data_inpit : MonoBehaviour
                     {
                         if (SITE == HEAD)
                         {
-                            chara.HeadParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<WeponData_Set>().Set_Parts);
+                            DOLL_Maneger.parts.HeadParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().Set_Parts);
                         }
                         if (SITE == ARM)
                         {
-                            chara.ArmParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<WeponData_Set>().Set_Parts);
+                            DOLL_Maneger.parts.ArmParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().Set_Parts);
                         }
                         if (SITE == BODY)
                         {
-                            chara.BodyParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<WeponData_Set>().Set_Parts);
+                            DOLL_Maneger.parts.BodyParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().Set_Parts);
                         }
                         if (SITE == LEG)
                         {
-                            chara.LegParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<WeponData_Set>().Set_Parts);
+                            DOLL_Maneger.parts.LegParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().Set_Parts);
                         }
                     }
 
                 }
             }
         }
+
+        DOLL_Maneger.MainClass = SK_Maneger.GetKeyWord_main();
+        DOLL_Maneger.SubClass = SK_Maneger.GetKeyWord_sub();
+
+        DOLL_Maneger.Armament = (short)SK_Maneger.GetArmament();
+       // DOLL_Maneger.Variant = (short)SK_Maneger.GetArmament();
+       // DOLL_Maneger.Alter=
     }
 }

@@ -15,7 +15,7 @@ public class SkillManeger : ClassData_
 
     public int[] parts=new int[6];
 
-   
+
     private string keyword = "x";
     private string keyword2 = "X";
 
@@ -357,5 +357,30 @@ public class SkillManeger : ClassData_
             }
 
         }
+    }
+
+    public string GetKeyWord_main()
+    {
+        return keyword;
+    }
+
+    public string GetKeyWord_sub()
+    {
+        return keyword2;
+    }
+
+    public int GetArmament()
+    {
+        return int.Parse(wepon_text.text);
+    }
+
+    public int GetVariantt()
+    {
+        return int.Parse(bio_text.text);
+    }
+
+    public int GetAlter()
+    {
+        return int.Parse(mac_text.text);
     }
 }

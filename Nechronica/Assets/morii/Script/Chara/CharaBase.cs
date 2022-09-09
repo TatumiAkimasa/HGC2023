@@ -13,6 +13,7 @@ public class CharaBase : MonoBehaviour
     public List<CharaManeuver> ArmParts;       //腕のパーツ
     public List<CharaManeuver> BodyParts;      //胴のパーツ
     public List<CharaManeuver> LegParts;       //脚のパーツ
+   
 
     [System.NonSerialized]
     public int MaxCount;                       //カウント最大値
@@ -20,9 +21,11 @@ public class CharaBase : MonoBehaviour
     public int NowCount;                       //現在のカウント
     [System.NonSerialized]
     public int AllWeight;                         //重さ
+
+
 }
 
-public class CharaManeuver
+public class CharaManeuver 
 {
     public string Name;            //パーツ名
     public int EffectNum;          //効果値
@@ -36,7 +39,7 @@ public class CharaManeuver
     public ManeuverEffectsAtk Atk; //攻撃系
 }
 
-public class ManeuverEffectsAtk
+public class ManeuverEffectsAtk 
 {
     public int AtkType;       //攻撃属性
     public  bool isExplosion;   //爆発攻撃かどうか
