@@ -5,20 +5,23 @@ using UnityEngine;
 public class CharaBase : MonoBehaviour
 {
     //ゲッター
-    public int GetNowCount()  => NowCount;
+    public int GetMaxCount() => MaxCount;
+    public int GetNowCount() => NowCount;
     public int GetWeight() => AllWeight;
+
+    public List<CharaManeuver> GetHeadParts() => HeadParts; //頭パーツ参照
+    public List<CharaManeuver> GetArmParts() => ArmParts;   //腕パーツ参照
+    public List<CharaManeuver> GetBodygParts() => BodyParts;//胴体パーツ参照
+    public List<CharaManeuver> GetLegParts() => LegParts;   //脚パーツ参照
 
     public List<CharaManeuver> HeadParts;      //頭のパーツ
     public List<CharaManeuver> ArmParts;       //腕のパーツ
     public List<CharaManeuver> BodyParts;      //胴のパーツ
     public List<CharaManeuver> LegParts;       //脚のパーツ
 
-    [System.NonSerialized]
-    public int MaxCount;                       //カウント最大値
-    [System.NonSerialized]
-    public int NowCount;                       //現在のカウント
-    [System.NonSerialized]
-    public int AllWeight;                         //重さ
+    private int MaxCount;                       //カウント最大値
+    private int NowCount;                       //現在のカウント
+    private int AllWeight;                      //重さ
 }
 
 public class CharaManeuver
