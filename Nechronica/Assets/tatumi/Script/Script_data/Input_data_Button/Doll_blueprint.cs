@@ -11,12 +11,14 @@ public class Doll_blueprint : CharaBase
     public string Death_year;              //享年
     public string temper;                  //ポジション
     public short[] Memory;                 //記憶のかけら
-    //---------------------------------------------------↑完了↓未完
-    public short potition;                 //初期配置
-    public string MainClass, SubClass;     //職業(skill)
-    public short Armament, Variant, Alter; //武装,変異,改造(Skill)
-    public List<CharaManeuver> Skll;              //スキル
+    public string MainClass, SubClass;     //職業
+    public short Armament, Variant, Alter; //武装,変異,改造
     public CharaBase parts;                       //パーツ類
+    public string potition;                 //初期配置
+    //---------------------------------------------------↑完了↓未完
+  
+    public List<CharaManeuver> Skll;              //スキル
+  
 
     private int Treasure_num;
 

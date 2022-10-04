@@ -21,6 +21,14 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     {
         Name = this.GetComponent<WeponData_Set>().Get_Wepon_Text();
 
+        Reset();
+
+    }
+
+    public CharaManeuver GetPrats() => Set_Parts;
+
+    public void Reset()
+    {
         Set_Parts.Cost = Cost;
         Set_Parts.EffectNum = EffectNum;
         Set_Parts.isDmage = false;
@@ -39,10 +47,6 @@ public class Wepon_Data_SaveSet : MonoBehaviour
         Set_Parts.Atk.isExplosion = isExplosion;
         Set_Parts.Atk.isSuccession = isSuccession;
         Set_Parts.Atk.Num_per_Action = Num_per_Action;
-
     }
-
-    public CharaManeuver GetPrats() => Set_Parts;
-
 
 }

@@ -18,6 +18,7 @@ public class SkillManeger : ClassData_
 
     private string keyword = "x";
     private string keyword2 = "X";
+    public string position_kewword = "";
 
     [SerializeField]
     private int    Button_num = 0;
@@ -28,6 +29,7 @@ public class SkillManeger : ClassData_
     Button[] Parent_Skill = new Button[2];
 
     public Wepon_Maneger wepon_Maneger;
+    public Chara_data_input Chara_intpu_cs;
 
     // Start is called before the first frame update
     void Start()
@@ -118,9 +120,12 @@ public class SkillManeger : ClassData_
                         Output_text3.text = a.GetComponentInChildren<Text>().text;
 
                     Button_num++;
+                   
 
                     if (Button_num == 3)
                         Button_num = 0;
+
+                    Chara_intpu_cs.DOLL_Maneger.Skll.Add(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
 
                 }
                 //同じもの選択
@@ -141,6 +146,8 @@ public class SkillManeger : ClassData_
                         Output_text2.text = "None";
                     else
                         Output_text3.text = "None";
+
+                    Chara_intpu_cs.DOLL_Maneger.Skll.Remove(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
                 }
             }
             //MainSkill
@@ -173,6 +180,8 @@ public class SkillManeger : ClassData_
                     if (Button_num >= 2)
                         Button_num = 0;
 
+                    Chara_intpu_cs.DOLL_Maneger.Skll.Add(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
+
                 }
                 //同じもの選択
                 else
@@ -190,6 +199,8 @@ public class SkillManeger : ClassData_
                         Output_text.text = "None";
                     else
                         Output_text2.text = "None";
+
+                    Chara_intpu_cs.DOLL_Maneger.Skll.Remove(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
                 }
 
             }
@@ -217,6 +228,8 @@ public class SkillManeger : ClassData_
                         //出力
                         Output_text3.text = a.GetComponentInChildren<Text>().text;
 
+                        Chara_intpu_cs.DOLL_Maneger.Skll.Add(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
+
                     }
                     //同じもの選択
                     else
@@ -231,6 +244,8 @@ public class SkillManeger : ClassData_
 
                         //出力
                         Output_text3.text = "None";
+
+                        Chara_intpu_cs.DOLL_Maneger.Skll.Remove(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
                     }
                 }
             }

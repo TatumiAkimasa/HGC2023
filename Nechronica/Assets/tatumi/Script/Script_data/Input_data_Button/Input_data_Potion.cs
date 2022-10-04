@@ -12,6 +12,8 @@ public class Input_data_Potion : Input_data_Button
 
     private string keyword="";
 
+    public SkillManeger S_Maneger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,8 @@ public class Input_data_Potion : Input_data_Button
     public void Push_Position_button()
     {
         keyword=Push_button_pos();
+
+        S_Maneger.position_kewword = keyword;
 
         ChildObject = new GameObject[Pskils.transform.childCount];
 
@@ -49,4 +53,6 @@ public class Input_data_Potion : Input_data_Button
           
         }
     }
+
+    
 }

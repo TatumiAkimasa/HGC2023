@@ -165,6 +165,7 @@ public class Wepon_Maneger : ClassData_
                     if (Site_[SITE].Step[i].Text[k].text == "None")
                     {
                         Site_[SITE].Step[i].Text[k].text = wepon.GetComponent<WeponData_Set>().Get_Wepon_Text();
+                        Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().Set_Parts = wepon.GetComponent<Wepon_Data_SaveSet>().GetPrats();
                         return;
                     }
                     //あればするー。
@@ -176,6 +177,7 @@ public class Wepon_Maneger : ClassData_
                     if (Site_[SITE].Step[i].Text[k].text == wepon.GetComponent<WeponData_Set>().Get_Wepon_Text())
                     {
                         Site_[SITE].Step[i].Text[k].text = "None";
+                        Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().Reset();
                         return;
                     }
                     //なければするー。
