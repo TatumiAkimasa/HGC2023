@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class CharaBase : MonoBehaviour
 {
     //ゲッター
@@ -24,6 +25,7 @@ public class CharaBase : MonoBehaviour
     private int AllWeight;                      //重さ
 }
 
+[System.Serializable]
 public class CharaManeuver
 {
     public string Name;            //パーツ名
@@ -39,6 +41,7 @@ public class CharaManeuver
     public ManeuverEffectsAtk Atk; //攻撃系
 }
 
+[System.Serializable]
 public class ManeuverEffectsAtk
 {
     public int AtkType;       //攻撃属性
