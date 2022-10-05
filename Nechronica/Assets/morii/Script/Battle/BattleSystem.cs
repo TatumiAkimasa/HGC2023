@@ -9,7 +9,7 @@ public class BattleSystem : MonoBehaviour
     private GameObject[] CharaObjectsBuffer;
 
     [SerializeField]
-    private List<CharaBase> CharaObject = new List<CharaBase>();
+    private List<Doll_blu_Nor> CharaObject = new List<Doll_blu_Nor>();
 
     private List<CharaBase> MoveChara = new List<CharaBase>();
 
@@ -23,7 +23,7 @@ public class BattleSystem : MonoBehaviour
         for (int i = 0; i < CharaObjectsBuffer.Length; i++) 
         {
             // ƒLƒƒƒ‰
-            CharaObject.Add(CharaObjectsBuffer[i].GetComponent<CharaBase>());
+            CharaObject.Add(CharaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
 
         for(int i=0;i<CharaObject.Count;i++)
