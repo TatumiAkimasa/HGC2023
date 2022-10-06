@@ -14,11 +14,13 @@ public class CharaBase : MonoBehaviour
     public List<CharaManeuver> GetArmParts() => ArmParts;   //腕パーツ参照
     public List<CharaManeuver> GetBodygParts() => BodyParts;//胴体パーツ参照
     public List<CharaManeuver> GetLegParts() => LegParts;   //脚パーツ参照
+    public List<CharaManeuver> GetSkillParts()=>Skill;      //SKILLのパーツ
 
     public List<CharaManeuver> HeadParts;      //頭のパーツ
     public List<CharaManeuver> ArmParts;       //腕のパーツ
     public List<CharaManeuver> BodyParts;      //胴のパーツ
     public List<CharaManeuver> LegParts;       //脚のパーツ
+    public List<CharaManeuver> Skill;          //SKILLのパーツ
 
     private int MaxCount;                       //カウント最大値
     private int NowCount;                       //現在のカウント

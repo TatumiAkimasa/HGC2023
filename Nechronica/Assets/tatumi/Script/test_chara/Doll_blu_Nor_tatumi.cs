@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Doll_blu_Nor : kihonnpatu
+public class Doll_blu_Nor_tatumi : kihonnpatu
 {
     public string Name="test";                    //ÉhÅ[Éãñº 
     public string hide_hint="test";              //à√é¶
