@@ -108,6 +108,9 @@ public class SkillManeger : ClassData_
                     cb.selectedColor = Color.white;
                     buttons[Button_num].colors = cb;
 
+                    if(buttons[Button_num].GetComponent<Wepon_Data_SaveSet>()!=null)
+                    Chara_intpu_cs.DOLL_Maneger.Skill.Remove(buttons[Button_num].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
                     //代入
                     buttons[Button_num] = a;
 
@@ -125,7 +128,7 @@ public class SkillManeger : ClassData_
                     if (Button_num == 3)
                         Button_num = 0;
 
-                    Chara_intpu_cs.DOLL_Maneger.Skll.Add(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
+                    Chara_intpu_cs.DOLL_Maneger.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
 
                 }
                 //同じもの選択
@@ -137,6 +140,8 @@ public class SkillManeger : ClassData_
                     cb.selectedColor = Color.white;
                     buttons[Button_num - Button_num].colors = cb;
 
+                    Chara_intpu_cs.DOLL_Maneger.Skill.Remove(buttons[Button_num - Button_num].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
                     buttons[Button_num - Button_num] = this.gameObject.GetComponent<Button>();
 
                     //出力
@@ -147,7 +152,7 @@ public class SkillManeger : ClassData_
                     else
                         Output_text3.text = "None";
 
-                    Chara_intpu_cs.DOLL_Maneger.Skll.Remove(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
+                    
                 }
             }
             //MainSkill
@@ -166,6 +171,9 @@ public class SkillManeger : ClassData_
                     cb.selectedColor = Color.white;
                     buttons[Button_num].colors = cb;
 
+                    if (buttons[Button_num].GetComponent<Wepon_Data_SaveSet>()!=null)
+                        Chara_intpu_cs.DOLL_Maneger.Skill.Remove(buttons[Button_num].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
                     //代入
                     buttons[Button_num] = a;
 
@@ -180,7 +188,7 @@ public class SkillManeger : ClassData_
                     if (Button_num >= 2)
                         Button_num = 0;
 
-                    Chara_intpu_cs.DOLL_Maneger.Skll.Add(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
+                    Chara_intpu_cs.DOLL_Maneger.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
 
                 }
                 //同じもの選択
@@ -190,7 +198,9 @@ public class SkillManeger : ClassData_
                     cb.normalColor = Color.white;
                     cb.highlightedColor = Color.white;
                     cb.selectedColor = Color.white;
-                    buttons[Button_num-Button_num].colors = cb;
+                    buttons[Button_num - Button_num].colors = cb;
+
+                    Chara_intpu_cs.DOLL_Maneger.Skill.Remove(buttons[Button_num - Button_num].GetComponent<Wepon_Data_SaveSet>().GetParts());
 
                     buttons[Button_num - Button_num] = this.gameObject.GetComponent<Button>();
 
@@ -200,7 +210,7 @@ public class SkillManeger : ClassData_
                     else
                         Output_text2.text = "None";
 
-                    Chara_intpu_cs.DOLL_Maneger.Skll.Remove(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
+                   
                 }
 
             }
@@ -222,13 +232,16 @@ public class SkillManeger : ClassData_
                         cb.selectedColor = Color.white;
                         buttons[2].colors = cb;
 
+                        if (buttons[2].GetComponent<Wepon_Data_SaveSet>()!=null)
+                            Chara_intpu_cs.DOLL_Maneger.Skill.Remove(buttons[2].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
                         //代入
                         buttons[2] = a;
 
                         //出力
                         Output_text3.text = a.GetComponentInChildren<Text>().text;
 
-                        Chara_intpu_cs.DOLL_Maneger.Skll.Add(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
+                        Chara_intpu_cs.DOLL_Maneger.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
 
                     }
                     //同じもの選択
@@ -240,12 +253,13 @@ public class SkillManeger : ClassData_
                         cb.selectedColor = Color.white;
                         buttons[2].colors = cb;
 
+                        Chara_intpu_cs.DOLL_Maneger.Skill.Remove(buttons[2].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
                         buttons[2] = this.gameObject.GetComponent<Button>();
 
                         //出力
                         Output_text3.text = "None";
 
-                        Chara_intpu_cs.DOLL_Maneger.Skll.Remove(a.GetComponent<Wepon_Data_SaveSet>().Set_Parts);
                     }
                 }
             }
@@ -386,7 +400,8 @@ public class SkillManeger : ClassData_
 
     public int GetArmament()
     {
-        return int.Parse(wepon_text.text);
+        int i= int.Parse(wepon_text.text);
+        return i;
     }
 
     public int GetVariantt()

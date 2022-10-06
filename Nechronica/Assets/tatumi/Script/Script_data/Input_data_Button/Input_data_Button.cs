@@ -32,7 +32,7 @@ public class Input_data_Button : ClassData_
 
         //ポジションSKILLパターン
         if (this.GetComponent<Wepon_Data_SaveSet>() != null)
-            Chara_intput_data_cs.Potition_Skill = this.GetComponent<Wepon_Data_SaveSet>().Set_Parts;
+            Chara_intput_data_cs.Potition_Skill = this.GetComponent<Wepon_Data_SaveSet>().GetParts();
     }
 
     public void Push_button(short pos)

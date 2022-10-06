@@ -10,8 +10,9 @@ public class Input_data : MonoBehaviour
     public Text text;
 
     [SerializeField]
-    Doll_blueprint Doll_Script;
+    Chara_data_input Chara_data_input_cs;
 
+    public int Treasure_pos_num=0;
    
     void Start()
     {
@@ -26,19 +27,22 @@ public class Input_data : MonoBehaviour
         switch (ID)
         {
             case 1:
-                Doll_Script.Name = inputField.text;
+                Chara_data_input_cs.name_ = inputField.text;
                 break;
             case 2:
-                Doll_Script.Death_year = inputField.text;
+                Chara_data_input_cs.death_year_ = inputField.text;
                 break;
             case 3:
                 //入力手段用意（対応パーツ選択）
-                int i = 1;
-                Doll_Script.SetTreasure(inputField.text, i);
+                Chara_data_input_cs.SetTreasure(inputField.text, Treasure_pos_num);
                 break;
         }
         
     }
 
-   
+   public void Get_Treasure_pos(Dropdown pos)
+    {
+        Treasure_pos_num = pos.value;
+    }
+
 }
