@@ -14,12 +14,10 @@ public class Doll_blueprint : CharaBase
     public string MainClass, SubClass;     //職業
     public short Armament, Variant, Alter; //武装,変異,改造
     public CharaBase parts;                       //パーツ類
-    public string potition;                 //初期配置
+    public short potition;                 //初期配置
+     public List<CharaManeuver> Skll;              //スキル
     //---------------------------------------------------↑完了↓未完
   
-    public List<CharaManeuver> Skll;              //スキル
-  
-
     private int Treasure_num;
 
     private CharaManeuver Treasure=new CharaManeuver { };

@@ -13,12 +13,11 @@ public class SkillManeger : ClassData_
     [SerializeField]
     private Text wepon_text, bio_text,mac_text,Output_text2,Output_text3,Output_text;
 
-    public int[] parts=new int[6];
+    public int[] parts=new int[9];
 
 
     private string keyword = "x";
     private string keyword2 = "X";
-    public string position_kewword = "";
 
     [SerializeField]
     private int    Button_num = 0;
@@ -35,9 +34,10 @@ public class SkillManeger : ClassData_
     void Start()
     {
         //èâä˙âª
-        for(int i=0;i!=6;i++)
+        for(int i=0;i!=9;i++)
         {
             parts[i] = 0;
+
         }
         for (int i = 0; i != 3; i++)
         {
@@ -277,15 +277,15 @@ public class SkillManeger : ClassData_
        
 
 
-        wepon_text.text = (parts[0]+parts[3]).ToString();
-        wepon_Maneger.Wepon_limit[0] = parts[0] + parts[3];
+        wepon_text.text = (parts[0]+parts[3]+parts[6]).ToString();
+        wepon_Maneger.Wepon_limit[0] = parts[0] + parts[3] + parts[6];
 
 
-        bio_text.text = (parts[1]+parts[4]).ToString();
-        wepon_Maneger.Wepon_limit[1] = parts[1] + parts[4];
+        bio_text.text = (parts[1]+parts[4] + parts[7]).ToString();
+        wepon_Maneger.Wepon_limit[1] = parts[1] + parts[4] + parts[7];
 
-        mac_text.text = (parts[2]+parts[5]).ToString();
-        wepon_Maneger.Wepon_limit[2] = parts[2] + parts[5];
+        mac_text.text = (parts[2]+parts[5] + parts[8]).ToString();
+        wepon_Maneger.Wepon_limit[2] = parts[2] + parts[5] + parts[8];
 
         for (int i = 0; i < Cskils.transform.childCount; i++)
         {

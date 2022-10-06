@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Chara_data_inpit : MonoBehaviour
+public class Chara_data_input : MonoBehaviour
 {
     const int HEAD = 0;
     const int ARM = 1;
@@ -13,6 +13,13 @@ public class Chara_data_inpit : MonoBehaviour
     public Wepon_Maneger WE_Maneger;
     public SkillManeger SK_Maneger;
     public Doll_blueprint DOLL_Maneger;
+
+    public CharaManeuver Potition_Skill;
+
+    [System.NonSerialized]
+    public string temper_name;
+    [System.NonSerialized]
+    public short position;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +31,12 @@ public class Chara_data_inpit : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Skill_Reset()
+    {
+        DOLL_Maneger.Skll.Remove(Potition_Skill);
+        Potition_Skill = null;
     }
 
     public void input()
@@ -71,7 +84,10 @@ public class Chara_data_inpit : MonoBehaviour
         DOLL_Maneger.SubClass = SK_Maneger.GetKeyWord_sub();
 
         DOLL_Maneger.Armament = (short)SK_Maneger.GetArmament();
-       // DOLL_Maneger.Variant = (short)SK_Maneger.GetArmament();
-       // DOLL_Maneger.Alter=
+        DOLL_Maneger.Variant = (short)SK_Maneger.GetVariantt();
+        DOLL_Maneger.Alter= (short)SK_Maneger.GetAlter();
+
+        DOLL_Maneger.temper = temper_name;
+        DOLL_Maneger.Skll.Add(Potition_Skill);
     }
 }

@@ -10,7 +10,7 @@ public class Input_data_Button : ClassData_
     private Text input_text,output_text;
 
     [SerializeField]
-    private Chara_data_input Chara_intput_data_cs;
+    protected Chara_data_input Chara_intput_data_cs;
 
     private ClassData data;
 
@@ -30,14 +30,17 @@ public class Input_data_Button : ClassData_
     {
         output_text.text = input_text.text;
 
+        //ポジションSKILLパターン
+        if (this.GetComponent<Wepon_Data_SaveSet>() != null)
+            Chara_intput_data_cs.Potition_Skill = this.GetComponent<Wepon_Data_SaveSet>().Set_Parts;
+    }
 
+    public void Push_button(short pos)
+    {
+        output_text.text = input_text.text;
 
         //positionパターン
-        if (this.GetComponent<Wepon_Data_SaveSet>() == null)
-            Chara_intput_data_cs.poti_name = input_text.text;
-        //ポジションSKILLパターン
-        else
-            Chara_intput_data_cs.Potition_Skill = this.GetComponent<Wepon_Data_SaveSet>().Set_Parts;
+        Chara_intput_data_cs.position = pos;
     }
 
     public string Push_button_pos()
