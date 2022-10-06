@@ -37,5 +37,8 @@ public class Doll_blu_Nor : PartsList
         LegParts.Add(hone2_L);
         LegParts.Add(hone_L);
         LegParts.Add(asi_L);
+
+        MaxCountCal();
+        Debug.Log(MaxCount);
     }
 }

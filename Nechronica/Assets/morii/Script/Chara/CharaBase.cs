@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class CharaBase : MonoBehaviour
 {
+    //タイミングの定数
+    protected const int COUNT  = -1;
+    protected const int AUTO   = 0;
+    protected const int ACTION = 1;
+    protected const int RAPID  = 2;
+    protected const int JUDGE  = 3;
+    protected const int DAMAGE = 4;
+
     //ゲッター
     public int GetMaxCount() => MaxCount;
     public int GetNowCount() => NowCount;
@@ -20,11 +29,53 @@ public class CharaBase : MonoBehaviour
     public List<CharaManeuver> BodyParts;      //胴のパーツ
     public List<CharaManeuver> LegParts;       //脚のパーツ
 
-    private int MaxCount;                       //カウント最大値
-    private int NowCount;                       //現在のカウント
-    private int AllWeight;                      //重さ
-}
+    //最大行動値計算
+    public void MaxCountCal()
+    {
+        for(int i=0;i<HeadParts.Count;i++)
+        {
+            //最大行動値加算パーツが破損していなければ最大行動値加算
+            if(!HeadParts[i].isDmage&& HeadParts[i].Timing==COUNT)
+            {
+                MaxCount += HeadParts[i].EffectNum;
+            }
+        }
+        for (int i = 0; i < ArmParts.Count; i++)
+        {
+            //最大行動値加算パーツが破損していなければ最大行動値加算
+            if (!ArmParts[i].isDmage && ArmParts[i].Timing == COUNT)
+            {
+                MaxCount += ArmParts[i].EffectNum;
+            }
+        }
+        for (int i = 0; i < BodyParts.Count; i++)
+        {
+            //最大行動値加算パーツが破損していなければ最大行動値加算
+            if (!BodyParts[i].isDmage && BodyParts[i].Timing == COUNT)
+            {
+                MaxCount += BodyParts[i].EffectNum;
+            }
+        }
+        for (int i = 0; i < LegParts.Count; i++)
+        {
+            //最大行動値加算パーツが破損していなければ最大行動値加算
+            if (!LegParts[i].isDmage && LegParts[i].Timing == COUNT)
+            {
+                MaxCount += LegParts[i].EffectNum;
+            }
+        }
+    }
 
+    protected int MaxCount = 6;                   //カウント最大値 ルール上もともと最大行動値は6あるので6で初期化
+    protected int NowCount;                       //現在のカウント
+    protected int AllWeight;                      //重さ
+
+    [SerializeField]
+    protected Image CharaImg;
+    [SerializeField]
+    protected Text CharaName;
+}   
+    
 [System.Serializable]
 public class CharaManeuver
 {
