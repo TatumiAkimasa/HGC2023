@@ -11,14 +11,14 @@ public class Save_Load_data : MonoBehaviour
     [SerializeField]
     public Chara_data_input Chara_data_input_cs;
 
-    [SerializeField]
-    public Text test;
-
+  
     const string filename = "Nechronica_savedata";
+
+    [SerializeField]
+    public Doll_blueprint aa;
 
     void Awake()
     {
-        test.text=(Path.Combine(Application.persistentDataPath, filename));
        
         //‰Šúİ’è
         binarySaveLoad.IsZipArchive = true;
@@ -49,6 +49,8 @@ public class Save_Load_data : MonoBehaviour
         {
             Debug.Log("LOAD-OK_savedata");
         }
+
+        aa=loaddata;
     }
 
     public void ClickButtonDelete()
