@@ -12,15 +12,20 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private List<Doll_blu_Nor> CharaObject = new List<Doll_blu_Nor>();
 
-    private List<CharaBase> MoveChara = new List<CharaBase>();
+    private List<Doll_blu_Nor> MoveChara = new List<Doll_blu_Nor>();
 
     private int NowCount = 20;
 
+    [SerializeField]
+    private Text CountText;
+
     //カウントの所にキャラを表示するためのプレハブ
     [SerializeField]
-    private IndiCountChara PrefubcountChara;
-    [SerializeField]
-    private IndiCountChara CloneCountChara;
+    private GameObject OriginCntPrefab;    //生成の元となるプレハブ
+
+    private List<GameObject> CloneCntPrefab = new List<GameObject>();  
+
+    
 
     //クローンしたプレハブの親となる存在
     [SerializeField]
@@ -29,23 +34,74 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CountText.text = NowCount.ToString();
         // Charaというタグがついたキャラをすべて取得
         CharaObjectsBuffer = GameObject.FindGameObjectsWithTag("PlayableChara");
-        for (int i = 0; i < CharaObjectsBuffer.Length; i++) 
+        for (int i = 0; i < CharaObjectsBuffer.Length; i++)
         {
             // キャラ
             CharaObject.Add(CharaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
 
+        // デバッグ用にスタートに書く。本当はTurnStartに配置。
         for (int i = 0; i < CharaObject.Count; i++)
         {
-            Vector3 pos = parent.transform.position;
-            PrefubcountChara.Name.text = CharaObject[i].Name;
-            //CloneCountChara = Instantiate<IndiCountChara>(PrefubcountChara, parent.transform);
+            CharaObject[i].IncreaseNowCount();
+            Debug.Log(CharaObject[i].GetNowCount());
         }
     }
 
-    void ButtleStart()
+    /// <summary>
+    /// ターン開始時に入るメソッド
+    /// </summary>
+    public void TurnStart()
+    {
+        
+        CountText.text = NowCount.ToString();
+        IndicateMoveChara();
+    }
+
+    /// <summary>
+    /// ターン終了時に入るメソッド
+    /// </summary>
+    public void TurnLast()
+    {
+        NowCount--;
+        if(NowCount==0)
+        {
+            NowCount += 20;
+        }
+        TurnStart();
+    }
+
+    /// <summary>
+    /// 表示カウントで行動できるキャラを表示
+    /// </summary>
+    public void IndicateMoveChara()
+    {
+        for (int i = 0; i < CharaObject.Count; i++)
+        {
+            if(NowCount==CharaObject[i].GetNowCount())
+            {
+                // クローン生成用GameObject
+                GameObject Instance;
+
+                Instance = Instantiate(OriginCntPrefab);
+                Instance.GetComponent<IndiCountChara>();
+                IndiCountChara clone = Instance.GetComponent<IndiCountChara>();
+                clone.SetName(CharaObject[i].GetName());
+                clone.transform.parent = parent.transform;
+
+                //リストに保存
+                CloneCntPrefab.Add(Instance);
+            }
+        }
+    }
+
+    /// <summary>
+    /// バトルが始まったときに呼び出されるメソッド（Startでいい感じしてる）
+    /// </summary>
+    public void ButtleStart()
     {
         for (int i = 0; i < CharaObject.Count; i++)
         {
@@ -61,16 +117,4 @@ public class BattleSystem : MonoBehaviour
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-}
-
-//仮クラス。キャラ画像と名前のクラスが必要なのでいったんここに作る。
-class IndiCountChara
-{
-    public Text Name;
-    public Image Img;
 }

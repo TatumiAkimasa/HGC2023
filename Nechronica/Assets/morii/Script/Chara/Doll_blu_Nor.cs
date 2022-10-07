@@ -9,6 +9,9 @@ public class Doll_blu_Nor : PartsList
     public string Death_year="10";              //享年
     public string temper="アリス";                  //ポジション
     public short[] Memory= {1,2 };                 //記憶のかけら
+
+    public string GetName() => Name;
+
                                            //---------------------------------------------------↑完了↓未完
     public short potition=3;                 //初期配置(煉獄)
     public string MainClass="Stacy", SubClass="Stacy";     //職業(skill)

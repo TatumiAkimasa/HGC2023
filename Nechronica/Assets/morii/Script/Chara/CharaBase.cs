@@ -66,6 +66,11 @@ public class CharaBase : MonoBehaviour
         }
     }
 
+    public void IncreaseNowCount()
+    {
+        NowCount += MaxCount;
+    }
+
     protected int MaxCount = 6;                   //カウント最大値 ルール上もともと最大行動値は6あるので6で初期化
     protected int NowCount;                       //現在のカウント
     protected int AllWeight;                      //重さ
