@@ -41,12 +41,6 @@ public class Wepon_Maneger : ClassData_
     public int Reset_num = 0;
 
    
-    
-
-    const int HEAD = 0;
-    const int ARM = 1;
-    const int BODY = 2;
-    const int LEG = 3;
 
     // Start is called before the first frame update
     void Start()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 public class Input_data_random : MonoBehaviour
 {
     [SerializeField]
@@ -10,7 +11,7 @@ public class Input_data_random : MonoBehaviour
     protected string[] memory_datas = new string[10];
 
     [SerializeField]
-    Doll_blueprint Doll_Script;
+    Chara_data_input Chara_data_input_cs;
 
     // Start is called before the first frame update
     void Start()
@@ -37,19 +38,21 @@ public class Input_data_random : MonoBehaviour
 
     public void RandData()
     {
-        int value = Random.Range(0, 10);
+        int value = UnityEngine.Random.Range(0, 10);
         short M1, M2;
 
         anothertext.text = memory_datas[value];
-        Doll_Script.hide_hint = memory_datas[value];
+        Chara_data_input_cs.hide_hint_ = memory_datas[value];
 
-        M1 = (short)Random.Range(0, 100);
-        M2 = (short)Random.Range(0, 100);
+        M1 = (short)UnityEngine.Random.Range(0, 100);
+        M2 = (short)UnityEngine.Random.Range(0, 100);
 
         memorytext1.text = "No." + M1.ToString();
         memorytext2.text = "No." + M2.ToString();
 
-        Doll_Script.Memory[0] = M1;
-        Doll_Script.Memory[1] = M2;
+        //èâä˙âªå„ì¸óÕ
+        Array.Clear(Chara_data_input_cs.Memory_,0, Chara_data_input_cs.Memory_.Length);
+        Chara_data_input_cs.Memory_[0]=M1;
+        Chara_data_input_cs.Memory_[1]=M2;
     }
 }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Input_data : MonoBehaviour
+public class Input_data : ClassData_
 {
     [SerializeField]
     public InputField inputField;
-    public Text text;
+    public Text text,Tre_pos_text;
 
     [SerializeField]
     Chara_data_input Chara_data_input_cs;
@@ -43,6 +43,23 @@ public class Input_data : MonoBehaviour
    public void Get_Treasure_pos(Dropdown pos)
     {
         Treasure_pos_num = pos.value;
+        if(pos.value==HEAD)
+        {
+            Tre_pos_text.text = "“ª";
+        }
+        else if(pos.value == ARM)
+        {
+            Tre_pos_text.text = "˜r";
+        }
+        else if (pos.value == BODY)
+        {
+            Tre_pos_text.text = "“·";
+        }
+        else if (pos.value == LEG)
+        {
+            Tre_pos_text.text = "‹r";
+        }
+
     }
 
 }

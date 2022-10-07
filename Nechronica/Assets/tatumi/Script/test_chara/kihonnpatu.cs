@@ -8,7 +8,7 @@ public class kihonnpatu : CharaBase
     protected CharaManeuver noumiso_H, medama_H, ago_H,
                             kobusi_A, ude_A, kata_A,
                             sebone_B, harawata_B, harawata2_B,
-                            hone_L, hone2_L, asi_L;
+                            hone_L, hone2_L, asi_L,Treasure;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +27,7 @@ public class kihonnpatu : CharaBase
         hone_L.Name = "ほね";
         hone2_L.Name = "ほね";
         asi_L.Name = "あし";
+        Treasure.Name = "";
 
         //ダメージ値----------------------
         ago_H.EffectNum = 1;
@@ -41,6 +42,7 @@ public class kihonnpatu : CharaBase
         hone_L.EffectNum = 1;
         hone2_L.EffectNum = 1;
         asi_L.EffectNum = 1;
+        Treasure.EffectNum = 0;
 
         //COST-------------
         ago_H.Cost = 2;
@@ -55,6 +57,7 @@ public class kihonnpatu : CharaBase
         medama_H.Cost = 0;
         harawata_B.Cost = 0;
         harawata2_B.Cost = 0;
+        Treasure.Cost = 0;
 
         //TIMING------------------^p^
         //0=オート,1=アクション,2=ラピッド,3=ジャッジ,4=ダメージ(処理順でわける)
@@ -70,6 +73,7 @@ public class kihonnpatu : CharaBase
         hone_L.Timing = 1;
         hone2_L.Timing = 1;
         asi_L.Timing = 3;
+        Treasure.Timing = 0;
 
         //攻撃範囲-------------------------------
         //最小(10=自身)
@@ -85,6 +89,7 @@ public class kihonnpatu : CharaBase
         hone_L.MinRange = 10;
         hone2_L.MinRange = 10;
         asi_L.MinRange = 0;
+        Treasure.MinRange = 10;
         //最最大(10=自身)
         ago_H.MaxRange = 0;
         noumiso_H.MaxRange = 10;
@@ -98,6 +103,7 @@ public class kihonnpatu : CharaBase
         hone_L.MaxRange = 10;
         hone2_L.MaxRange = 10;
         asi_L.MaxRange = 0;
+        Treasure.MaxRange = 10;
 
         //重さ------------------------------------
         //(基礎は今のところ1で固定)
@@ -113,7 +119,7 @@ public class kihonnpatu : CharaBase
         hone_L.Weight = 1;
         hone2_L.Weight = 1;
         asi_L.Weight = 1;
-
+        Treasure.Weight = 1;
     }
 
 

@@ -40,7 +40,7 @@ public class Input_data_Button : ClassData_
         output_text.text = input_text.text;
 
         //positionƒpƒ^[ƒ“
-        Chara_intput_data_cs.position = pos;
+        Chara_intput_data_cs.position_ = pos;
     }
 
     public string Push_button_pos()

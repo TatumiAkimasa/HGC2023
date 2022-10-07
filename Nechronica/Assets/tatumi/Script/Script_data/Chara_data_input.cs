@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
-public class Chara_data_input : CharaBase
+public class Chara_data_input : CharaBase 
 {
     const int HEAD = 0;
     const int ARM = 1;
@@ -16,7 +17,8 @@ public class Chara_data_input : CharaBase
 
     public Wepon_Maneger WE_Maneger;
     public SkillManeger SK_Maneger;
-    public Doll_blueprint DOLL_Maneger;
+   
+    public Doll_blueprint Doll_data;
 
     public CharaManeuver Potition_Skill;
     [SerializeField]
@@ -25,12 +27,17 @@ public class Chara_data_input : CharaBase
     [System.NonSerialized]
     public string temper_name;
     [System.NonSerialized]
-    public short position;
+    public short position_;
+    [System.NonSerialized]
+    public string hide_hint_;              //暗示
+
+    public short[] Memory_=new short[6];                 //記憶のかけら
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //参照渡しでいったん解決（Copyがうまくいかない...）
+        Doll_data.Memory = Memory_;
     }
 
     // Update is called once per frame
@@ -41,19 +48,20 @@ public class Chara_data_input : CharaBase
 
     public void Skill_Reset()
     {
-        DOLL_Maneger.Skill.Remove(Potition_Skill);
+        Doll_data.CharaBase_data.Skill.Remove(Potition_Skill);
         Potition_Skill = null;
     }
 
     public void input()
     {
         //初期化
-        DOLL_Maneger.HeadParts.Clear();
-        DOLL_Maneger.ArmParts.Clear();
-        DOLL_Maneger.BodyParts.Clear();
-        DOLL_Maneger.LegParts.Clear();
+        Doll_data.CharaBase_data.HeadParts.Clear();
+        Doll_data.CharaBase_data.ArmParts.Clear();
+        Doll_data.CharaBase_data.BodyParts.Clear();
+        Doll_data.CharaBase_data.LegParts.Clear();
 
         //初期武装追記
+        //もうちょいねろか
 
         //追加武装追記
         for (int SITE = 0; SITE != 4; SITE++)
@@ -66,19 +74,19 @@ public class Chara_data_input : CharaBase
                     {
                         if (SITE == HEAD)
                         {
-                            DOLL_Maneger.HeadParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetParts());
+                            Doll_data.CharaBase_data.HeadParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetParts());
                         }
                         if (SITE == ARM)
                         {
-                            DOLL_Maneger.ArmParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetParts());
+                            Doll_data.CharaBase_data.ArmParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetParts());
                         }
                         if (SITE == BODY)
                         {
-                            DOLL_Maneger.BodyParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetParts());
+                            Doll_data.CharaBase_data.BodyParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetParts());
                         }
                         if (SITE == LEG)
                         {
-                            DOLL_Maneger.LegParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetParts());
+                            Doll_data.CharaBase_data.LegParts.Add(WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetParts());
                         }
                     }
 
@@ -87,21 +95,24 @@ public class Chara_data_input : CharaBase
         }
 
         //クラス（メイン、サブ）
-        DOLL_Maneger.MainClass = SK_Maneger.GetKeyWord_main();
-        DOLL_Maneger.SubClass = SK_Maneger.GetKeyWord_sub();
+        Doll_data.MainClass = SK_Maneger.GetKeyWord_main();
+        Doll_data.SubClass = SK_Maneger.GetKeyWord_sub();
 
         //それぞれの武器レベル設定
-        DOLL_Maneger.Armament = (short)SK_Maneger.GetArmament();
-        DOLL_Maneger.Variant = (short)SK_Maneger.GetVariantt();
-        DOLL_Maneger.Alter= (short)SK_Maneger.GetAlter();
+        Doll_data.Armament = (short)SK_Maneger.GetArmament();
+        Doll_data.Variant = (short)SK_Maneger.GetVariantt();
+        Doll_data.Alter= (short)SK_Maneger.GetAlter();
 
         //初期位置、名前等のその他設定
-        DOLL_Maneger.temper = temper_name;
-        DOLL_Maneger.Death_year = death_year_;
-        DOLL_Maneger.Name = name_;
+        Doll_data.temper = temper_name;
+        Doll_data.Death_year = death_year_;
+        Doll_data.Name = name_;
+        Doll_data.potition = position_;
+        Doll_data.hide_hint = hide_hint_;
+        
 
         //positionスキルのみこちらで設定
-        DOLL_Maneger.Skill.Add(Potition_Skill);
+        Doll_data.CharaBase_data.Skill.Add(Potition_Skill);
 
     }
 
@@ -111,16 +122,16 @@ public class Chara_data_input : CharaBase
         switch (Treasure_num)
         {
             case HEAD:
-                DOLL_Maneger.HeadParts.Remove(backTreasure);
+                Doll_data.CharaBase_data.HeadParts.Remove(backTreasure);
                 break;
             case ARM:
-                DOLL_Maneger.ArmParts.Remove(backTreasure);
+                Doll_data.CharaBase_data.ArmParts.Remove(backTreasure);
                 break;
             case BODY:
-                DOLL_Maneger.BodyParts.Remove(backTreasure);
+                Doll_data.CharaBase_data.BodyParts.Remove(backTreasure);
                 break;
             case LEG:
-                DOLL_Maneger.LegParts.Remove(backTreasure);
+                Doll_data.CharaBase_data.LegParts.Remove(backTreasure);
                 break;
             //初期設定
             case -1:
@@ -134,16 +145,16 @@ public class Chara_data_input : CharaBase
         switch (i)
         {
             case HEAD:
-                DOLL_Maneger.HeadParts.Add(Treasure);
+                Doll_data.CharaBase_data.HeadParts.Add(Treasure);
                 break;
             case ARM:
-                DOLL_Maneger.ArmParts.Add(Treasure);
+                Doll_data.CharaBase_data.ArmParts.Add(Treasure);
                 break;
             case BODY:
-                DOLL_Maneger.BodyParts.Add(Treasure);
+                Doll_data.CharaBase_data.BodyParts.Add(Treasure);
                 break;
             case LEG:
-                DOLL_Maneger.LegParts.Add(Treasure);
+                Doll_data.CharaBase_data.LegParts.Add(Treasure);
                 break;
         }
 
