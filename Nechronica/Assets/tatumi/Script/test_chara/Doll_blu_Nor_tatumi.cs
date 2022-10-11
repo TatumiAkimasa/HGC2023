@@ -18,24 +18,17 @@ public class Doll_blu_Nor_tatumi : kihonnpatu
 
     private void Start()
     {
-        //“ª----------------------
-        parts.HeadParts.Add(noumiso_H);
-        parts.HeadParts.Add(medama_H);
-        parts.HeadParts.Add(ago_H);
-
-        //˜r----------------------
-        parts.ArmParts.Add(ude_A);
-        parts.ArmParts.Add(kata_A);
-        parts.ArmParts.Add(kobusi_A);
-
-        //“·----------------------
-        parts.BodyParts.Add(harawata2_B);
-        parts.BodyParts.Add(harawata_B);
-        parts.BodyParts.Add(sebone_B);
-
-        //‹r----------------------
-        parts.LegParts.Add(hone2_L);
-        parts.LegParts.Add(hone_L);
-        parts.LegParts.Add(asi_L);
+        //‰Šú•‘•’Ç‹L
+        for (int i = 0; i != MAX_BASE_PARTS; i++)
+        {
+            //“ª
+            parts.HeadParts.Add(Base_Head_parts[i]);
+            //˜r
+            parts.ArmParts.Add(Base_Arm_parts[i]);
+            //“·
+            parts.BodyParts.Add(Base_Body_parts[i]);
+            //‹r
+            parts.LegParts.Add(Base_Leg_parts[i]);
+        }
     }
 }

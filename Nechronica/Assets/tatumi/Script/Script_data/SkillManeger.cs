@@ -138,6 +138,10 @@ public class SkillManeger : ClassData_
 
                     Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
 
+                    if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                        a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(1);
+                        
+
                 }
                // “¯‚¶‚à‚Ì‘I‘ð
                 else
@@ -149,6 +153,9 @@ public class SkillManeger : ClassData_
                     buttons[item].colors = cb;
 
                     Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[item].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                    if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                        a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(0);
 
                     buttons[item] = this.gameObject.GetComponent<Button>();
 
@@ -198,6 +205,11 @@ public class SkillManeger : ClassData_
 
                     Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
 
+                    if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                    {
+                        a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(1);
+                    }
+
                 }
                 //“¯‚¶‚à‚Ì‘I‘ð
                 else
@@ -209,6 +221,9 @@ public class SkillManeger : ClassData_
                     buttons[item].colors = cb;
 
                     Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[item].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                    if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                        a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(0);
 
                     buttons[item] = this.gameObject.GetComponent<Button>();
 
@@ -251,6 +266,9 @@ public class SkillManeger : ClassData_
 
                         Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
 
+                        if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                            a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(0);
+
                     }
                     //“¯‚¶‚à‚Ì‘I‘ð
                     else
@@ -262,6 +280,9 @@ public class SkillManeger : ClassData_
                         buttons[2].colors = cb;
 
                         Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[2].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                        if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                            a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(1);
 
                         buttons[2] = this.gameObject.GetComponent<Button>();
 
@@ -415,12 +436,14 @@ public class SkillManeger : ClassData_
     {
         wepon_text.text = (parts[0] + parts[3] + parts[6]).ToString();
         wepon_Maneger.Wepon_limit[0] = parts[0] + parts[3] + parts[6];
-
+        wepon_Maneger.Reset_wepon(ARMAMENT);
 
         bio_text.text = (parts[1] + parts[4] + parts[7]).ToString();
         wepon_Maneger.Wepon_limit[1] = parts[1] + parts[4] + parts[7];
+        wepon_Maneger.Reset_wepon(VARIANT);
 
         mac_text.text = (parts[2] + parts[5] + parts[8]).ToString();
         wepon_Maneger.Wepon_limit[2] = parts[2] + parts[5] + parts[8];
+        wepon_Maneger.Reset_wepon(ALTER);
     }
 }

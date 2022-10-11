@@ -16,10 +16,15 @@ public class CharaBase : MonoBehaviour
     public List<CharaManeuver> GetLegParts() => LegParts;   //脚パーツ参照
     public List<CharaManeuver> GetSkillParts()=>Skill;      //SKILLのパーツ
 
+    [System.NonSerialized]
     public List<CharaManeuver> HeadParts;      //頭のパーツ
+    [System.NonSerialized]
     public List<CharaManeuver> ArmParts;       //腕のパーツ
+    [System.NonSerialized]
     public List<CharaManeuver> BodyParts;      //胴のパーツ
+    [System.NonSerialized]
     public List<CharaManeuver> LegParts;       //脚のパーツ
+    [System.NonSerialized]
     public List<CharaManeuver> Skill;          //SKILLのパーツ
 
     private int MaxCount;                       //カウント最大値

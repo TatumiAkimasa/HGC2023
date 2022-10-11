@@ -5,121 +5,135 @@ using UnityEngine;
 public class kihonnpatu : CharaBase
 {
     //基礎パーツ
-    protected CharaManeuver noumiso_H, medama_H, ago_H,
-                            kobusi_A, ude_A, kata_A,
-                            sebone_B, harawata_B, harawata2_B,
-                            hone_L, hone2_L, asi_L,Treasure;
+    public CharaManeuver[] Base_Head_parts;
+    public CharaManeuver[] Base_Arm_parts;
+    public CharaManeuver[] Base_Body_parts;
+    public CharaManeuver[] Base_Leg_parts;
+    public CharaManeuver Treasure_parts;
+
+    protected const int MAX_BASE_PARTS = 3;
+
+    public int GET_MAX_BASE_PARTS() { return MAX_BASE_PARTS; }
+
+    //インスペクター上から弄らんとNullObj判定。
+    //void Awake()
+    //{
+    //    Base_Head_parts = new CharaManeuver[MAX_BASE_PARTS];
+    //    Base_Arm_parts = new CharaManeuver[MAX_BASE_PARTS];
+    //    Base_Body_parts = new CharaManeuver[MAX_BASE_PARTS];
+    //    Base_Leg_parts = new CharaManeuver[MAX_BASE_PARTS];
+    //}
 
     // Start is called before the first frame update
     void Start()
     {
-
         //NAME-------------------
-        ago_H.Name = "あご";
-        noumiso_H.Name = "のうみそ";
-        medama_H.Name = "めだま";
-        kobusi_A.Name = "こぶし";
-        kata_A.Name = "かた";
-        ude_A.Name = "うで";
-        sebone_B.Name = "せぼね";
-        harawata_B.Name = "はらわた";
-        harawata2_B.Name = "はらわた";
-        hone_L.Name = "ほね";
-        hone2_L.Name = "ほね";
-        asi_L.Name = "あし";
-        Treasure.Name = "";
+        Base_Head_parts[0].Name = "あご";
+        Base_Head_parts[1].Name = "のうみそ";
+        Base_Head_parts[2].Name = "めだま";
+        Base_Arm_parts[0].Name = "こぶし";
+        Base_Arm_parts[1].Name = "かた";
+        Base_Arm_parts[2].Name = "うで";
+        Base_Body_parts[0].Name = "せぼね";
+        Base_Body_parts[1].Name = "はらわた";
+        Base_Body_parts[2].Name = "はらわた";
+        Base_Leg_parts[0].Name = "ほね";
+        Base_Leg_parts[1].Name = "ほね";
+        Base_Leg_parts[2].Name = "あし";
+        Treasure_parts.Name = "";
 
         //ダメージ値----------------------
-        ago_H.EffectNum = 1;
-        noumiso_H.EffectNum = 2;
-        medama_H.EffectNum = 1;
-        kobusi_A.EffectNum = 1;
-        kata_A.EffectNum = 1;
-        ude_A.EffectNum = 1;
-        sebone_B.EffectNum = -1;
-        harawata_B.EffectNum = 0;
-        harawata2_B.EffectNum = 0;
-        hone_L.EffectNum = 1;
-        hone2_L.EffectNum = 1;
-        asi_L.EffectNum = 1;
-        Treasure.EffectNum = 0;
+        Base_Head_parts[0].EffectNum = 1;
+        Base_Head_parts[1].EffectNum = 2;
+        Base_Head_parts[2].EffectNum = 1;
+        Base_Arm_parts[0].EffectNum = 1;
+        Base_Arm_parts[1].EffectNum = 1;
+        Base_Arm_parts[2].EffectNum = 1;
+        Base_Body_parts[0].EffectNum = -1;
+        Base_Body_parts[1].EffectNum = 0;
+        Base_Body_parts[2].EffectNum = 0;
+        Base_Leg_parts[0].EffectNum = 1;
+        Base_Leg_parts[1].EffectNum = 1;
+        Base_Leg_parts[2].EffectNum = 1;
+        Treasure_parts.EffectNum = 0;
 
         //COST-------------
-        ago_H.Cost = 2;
-        kobusi_A.Cost = 2;
-        ude_A.Cost = 1;
-        kata_A.Cost = 4;
-        sebone_B.Cost = 2;
-        hone_L.Cost = 3;
-        hone2_L.Cost = 3;
+        Base_Head_parts[0].Cost = 2;
+        Base_Arm_parts[0].Cost = 2;
+        Base_Arm_parts[2].Cost = 1;
+        Base_Arm_parts[1].Cost = 4;
+        Base_Body_parts[0].Cost = 2;
+        Base_Leg_parts[0].Cost = 3;
+        Base_Leg_parts[1].Cost = 3;
         //AUTO
-        noumiso_H.Cost = 0;
-        medama_H.Cost = 0;
-        harawata_B.Cost = 0;
-        harawata2_B.Cost = 0;
-        Treasure.Cost = 0;
+        Base_Head_parts[1].Cost = 0;
+        Base_Head_parts[2].Cost = 0;
+        Base_Body_parts[1].Cost = 0;
+        Base_Body_parts[2].Cost = 0;
+        Base_Leg_parts[2].Cost = 0;
+        Treasure_parts.Cost = 0;
 
         //TIMING------------------^p^
         //0=オート,1=アクション,2=ラピッド,3=ジャッジ,4=ダメージ(処理順でわける)
-        ago_H.Timing = 1;
-        noumiso_H.Timing = 0;
-        medama_H.Timing = 0;
-        kobusi_A.Timing = 1;
-        kata_A.Timing = 1;
-        ude_A.Timing = 3;
-        sebone_B.Timing = 1;
-        harawata_B.Timing = 0;
-        harawata2_B.Timing = 0;
-        hone_L.Timing = 1;
-        hone2_L.Timing = 1;
-        asi_L.Timing = 3;
-        Treasure.Timing = 0;
+        Base_Head_parts[0].Timing = 1;
+        Base_Head_parts[1].Timing = 0;
+        Base_Head_parts[2].Timing = 0;
+        Base_Arm_parts[0].Timing = 1;
+        Base_Arm_parts[1].Timing = 1;
+        Base_Arm_parts[2].Timing = 3;
+        Base_Body_parts[0].Timing = 1;
+        Base_Body_parts[1].Timing = 0;
+        Base_Body_parts[2].Timing = 0;
+        Base_Leg_parts[0].Timing = 1;
+        Base_Leg_parts[1].Timing = 1;
+        Base_Leg_parts[2].Timing = 3;
+        Treasure_parts.Timing = 0;
 
         //攻撃範囲-------------------------------
         //最小(10=自身)
-        ago_H.MinRange = 0;
-        noumiso_H.MinRange = 10;
-        medama_H.MinRange = 10;
-        kobusi_A.MinRange = 0;
-        kata_A.MinRange = 10;
-        ude_A.MinRange = 0;
-        sebone_B.MinRange = 0;
-        harawata_B.MinRange = 10;
-        harawata2_B.MinRange = 10;
-        hone_L.MinRange = 10;
-        hone2_L.MinRange = 10;
-        asi_L.MinRange = 0;
-        Treasure.MinRange = 10;
+        Base_Head_parts[0].MinRange = 0;
+        Base_Head_parts[1].MinRange = 10;
+        Base_Head_parts[2].MinRange = 10;
+        Base_Arm_parts[0].MinRange = 0;
+        Base_Arm_parts[1].MinRange = 10;
+        Base_Arm_parts[2].MinRange = 0;
+        Base_Body_parts[0].MinRange = 0;
+        Base_Body_parts[1].MinRange = 10;
+        Base_Body_parts[2].MinRange = 10;
+        Base_Leg_parts[0].MinRange = 10;
+        Base_Leg_parts[1].MinRange = 10;
+        Base_Leg_parts[2].MinRange = 0;
+        Treasure_parts.MinRange = 10;
         //最最大(10=自身)
-        ago_H.MaxRange = 0;
-        noumiso_H.MaxRange = 10;
-        medama_H.MaxRange = 10;
-        kobusi_A.MaxRange = 0;
-        kata_A.MaxRange = 10;
-        ude_A.MaxRange = 0;
-        sebone_B.MaxRange = 0;
-        harawata_B.MaxRange = 10;
-        harawata2_B.MaxRange = 10;
-        hone_L.MaxRange = 10;
-        hone2_L.MaxRange = 10;
-        asi_L.MaxRange = 0;
-        Treasure.MaxRange = 10;
+        Base_Head_parts[0].MaxRange = 0;
+        Base_Head_parts[1].MaxRange = 10;
+        Base_Head_parts[2].MaxRange = 10;
+        Base_Arm_parts[0].MaxRange = 0;
+        Base_Arm_parts[1].MaxRange = 10;
+        Base_Arm_parts[2].MaxRange = 0;
+        Base_Body_parts[0].MaxRange = 0;
+        Base_Body_parts[1].MaxRange = 10;
+        Base_Body_parts[2].MaxRange = 10;
+        Base_Leg_parts[0].MaxRange = 10;
+        Base_Leg_parts[1].MaxRange = 10;
+        Base_Leg_parts[2].MaxRange = 0;
+        Treasure_parts.MaxRange = 10;
 
         //重さ------------------------------------
         //(基礎は今のところ1で固定)
-        ago_H.Weight = 1;
-        noumiso_H.Weight = 1;
-        medama_H.Weight = 1;
-        kobusi_A.Weight = 1;
-        kata_A.Weight = 1;
-        ude_A.Weight = 1;
-        sebone_B.Weight = 1;
-        harawata_B.Weight = 1;
-        harawata2_B.Weight = 1;
-        hone_L.Weight = 1;
-        hone2_L.Weight = 1;
-        asi_L.Weight = 1;
-        Treasure.Weight = 1;
+        Base_Head_parts[0].Weight = 1;
+        Base_Head_parts[1].Weight = 1;
+        Base_Head_parts[2].Weight = 1;
+        Base_Arm_parts[0].Weight = 1;
+        Base_Arm_parts[1].Weight = 1;
+        Base_Arm_parts[2].Weight = 1;
+        Base_Body_parts[0].Weight = 1;
+        Base_Body_parts[1].Weight = 1;
+        Base_Body_parts[2].Weight = 1;
+        Base_Leg_parts[0].Weight = 1;
+        Base_Leg_parts[1].Weight = 1;
+        Base_Leg_parts[2].Weight = 1;
+        Treasure_parts.Weight = 1;
     }
 
 

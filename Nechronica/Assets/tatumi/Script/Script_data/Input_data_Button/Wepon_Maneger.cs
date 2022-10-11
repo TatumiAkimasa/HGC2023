@@ -38,46 +38,53 @@ public class Wepon_Maneger : ClassData_
 
     public int[] Wepon_limit = new int[3];
 
-    public int Reset_num = 0;
+    private int Reset_num = 0;
 
-   
+    private const int MAX_BONUS_WEPON = 3;
+    private const int MAX_WEPON_NUM = 3;
+
+    public int [] Bonus_Parts_int = new int [MAX_BONUS_WEPON + 1];
+  
 
     // Start is called before the first frame update
     void Start()
     {
-        
+      
     }
 
-    // Update is called once per frame
-    void Update()
+    private int Bounus_Parts(int Level,int Type)
     {
-        
+        if (Level == 2)
+            return Type;
+        else
+            return 3;
     }
 
     public void Add_Wepon(Toggle add,int Type,int Level)
     {
+        int Max_Wepon_num = (Wepon_limit[Type] - 1) / 3;
+        int parts_num_add = (Wepon_limit[Type] - 1) % 3;
+        int Serect_parts = 1;
+
         if (Wepon_limit[Type] == 0)
         {
             add.isOn = false;
             return;
         }
-           
-
-        int Max_Wepon_num = Wepon_limit[Type] / 3;
-
-        int parts_num_add = Wepon_limit[Type] % 3;
-
-        if(Max_Wepon_num==0)
+        //値1の時2,3選んだら排除
+        else if (Wepon_limit[Type] < Level + Max_Wepon_num + 1)
         {
-            if (parts_num_add < Level+1)
-            {
-                add.isOn = false;
-                return;
-            }
-                
+            add.isOn = false;
+            return;
         }
-         
-        for (int i = 0; i != Max_Wepon_num + (1-(Max_Wepon_num / 3)); i++)
+
+        if(parts_num_add>=Level)
+        {
+            Serect_parts += Max_Wepon_num;
+        }
+            
+
+        for (int i = 0; i != Serect_parts + Bonus_Parts_int[Bounus_Parts(Level,Type)]; i++)
         {
             //データなしの場合
             if (Wepon[Type, Level, i] == null)
@@ -101,7 +108,7 @@ public class Wepon_Maneger : ClassData_
 
        
 
-        if (Max_Wepon_num + (1 - (Max_Wepon_num / 3)) == Reset_num)
+        if (Serect_parts + Bonus_Parts_int[Bounus_Parts(Level, Type)] <= Reset_num)
             Reset_num = 0;
 
         //もし限度数かつ＋で追加したら
@@ -116,6 +123,28 @@ public class Wepon_Maneger : ClassData_
 
         Reset_num++;
 
+    }
+
+    public void Reset_wepon(int Type)
+    {
+        //リセット
+        for (int Level = 0; Level != 3; Level++)
+        {
+            
+            for (int i = 0; i != MAX_WEPON_NUM; i++)
+            {
+                if (Wepon[Type, Level, i] != null)
+                {
+                    NameChange(Wepon[Type, Level, i], false);
+                    Wepon[Type, Level, i].isOn = false;
+                    Wepon[Type, Level, i] = null;
+                }
+
+            }
+
+        }
+
+        Reset_num = 0;
     }
 
     private void NameChange(Toggle wepon,bool mode)

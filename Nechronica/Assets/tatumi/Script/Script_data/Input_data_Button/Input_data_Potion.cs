@@ -42,11 +42,11 @@ public class Input_data_Potion : Input_data_Button
             //‘I‘ð‹–‰Â–½—ß
             if(!test.name.Contains(keyword))
             {
-                test.GetComponent<Button>().interactable = false;
+                test.SetActive(false);
             }
             else
             {
-                test.GetComponent<Button>().interactable = true;
+                test.SetActive(true);
             }
           
         }

@@ -17,7 +17,9 @@ public class Chara_data_input : CharaBase
 
     public Wepon_Maneger WE_Maneger;
     public SkillManeger SK_Maneger;
-   
+    [SerializeField]
+    private kihonnpatu ALL_Base_Parts;
+
     public Doll_blueprint Doll_data;
 
     public CharaManeuver Potition_Skill;
@@ -38,6 +40,7 @@ public class Chara_data_input : CharaBase
     {
         //参照渡しでいったん解決（Copyがうまくいかない...）
         Doll_data.Memory = Memory_;
+        Treasure = ALL_Base_Parts.Treasure_parts;
     }
 
     // Update is called once per frame
@@ -61,7 +64,16 @@ public class Chara_data_input : CharaBase
         Doll_data.CharaBase_data.LegParts.Clear();
 
         //初期武装追記
-        //もうちょいねろか
+        for (int i = 0; i != ALL_Base_Parts.GET_MAX_BASE_PARTS(); i++)
+        {
+            Doll_data.CharaBase_data.HeadParts.Add(ALL_Base_Parts.Base_Head_parts[i]);
+
+            Doll_data.CharaBase_data.ArmParts.Add(ALL_Base_Parts.Base_Arm_parts[i]);
+
+            Doll_data.CharaBase_data.BodyParts.Add(ALL_Base_Parts.Base_Body_parts[i]);
+
+            Doll_data.CharaBase_data.LegParts.Add(ALL_Base_Parts.Base_Leg_parts[i]);
+        }
 
         //追加武装追記
         for (int SITE = 0; SITE != 4; SITE++)
@@ -93,6 +105,24 @@ public class Chara_data_input : CharaBase
                 }
             }
         }
+
+        //お宝を対応場所に付与(場所は10枠目固定)
+        switch (Treasure_num)
+        {
+            case HEAD:
+                Doll_data.CharaBase_data.HeadParts.Add(Treasure);
+                break;
+            case ARM:
+                Doll_data.CharaBase_data.ArmParts.Add(Treasure);
+                break;
+            case BODY:
+                Doll_data.CharaBase_data.BodyParts.Add(Treasure);
+                break;
+            case LEG:
+                Doll_data.CharaBase_data.LegParts.Add(Treasure);
+                break;
+        }
+
 
         //クラス（メイン、サブ）
         Doll_data.MainClass = SK_Maneger.GetKeyWord_main();
@@ -141,24 +171,8 @@ public class Chara_data_input : CharaBase
 
         Treasure.Name = name;
 
-        //対応場所に付与
-        switch (i)
-        {
-            case HEAD:
-                Doll_data.CharaBase_data.HeadParts.Add(Treasure);
-                break;
-            case ARM:
-                Doll_data.CharaBase_data.ArmParts.Add(Treasure);
-                break;
-            case BODY:
-                Doll_data.CharaBase_data.BodyParts.Add(Treasure);
-                break;
-            case LEG:
-                Doll_data.CharaBase_data.LegParts.Add(Treasure);
-                break;
-        }
-
         backTreasure = Treasure;
         Treasure_num = i;
     }
+
 }
