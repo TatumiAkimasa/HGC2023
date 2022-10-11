@@ -14,6 +14,7 @@ public class GetClickedGameObject : MonoBehaviour
 
     private CinemachineVirtualCamera CharaCamera;   // キャラに持たせるプレハブのクローンのカメラ
 
+
     [SerializeField]
     private new Camera camera;                      // メインカメラ
 
@@ -23,11 +24,14 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera MainCamera;    // 全体を映すシネマカメラ
 
-
-    void Update()
+    /// <summary>
+    /// キャラが選択されるまで再起する関数
+    /// </summary>
+    /// <returns></returns>
+    public void CharaSelectStandby()
     {
         //左クリックで
-        if (Input.GetMouseButtonDown(0) && CharaCamera==null)
+        if (Input.GetMouseButtonDown(0) && CharaCamera == null)
         {
             //下記変数を初期化
             clickedGameObject = null;
@@ -43,7 +47,7 @@ public class GetClickedGameObject : MonoBehaviour
             }
 
             //クリックしたゲームオブジェクトがプレイアブルキャラなら
-            if(clickedGameObject.CompareTag("PlayableChara"))
+            if (clickedGameObject.CompareTag("PlayableChara"))
             {
                 // クリックしたオブジェクトの座標情報を取得
                 Vector3 clickedObjPos = clickedGameObject.transform.position;
@@ -60,7 +64,7 @@ public class GetClickedGameObject : MonoBehaviour
             }
         }
         // 右クリックで
-        else if(Input.GetMouseButtonDown(1) && CharaCamera != null)
+        else if (Input.GetMouseButtonDown(1) && CharaCamera != null)
         {
             // 全体を表示させるカメラを優先にする。
             CharaCamera.Priority = 0;
@@ -68,13 +72,17 @@ public class GetClickedGameObject : MonoBehaviour
             // 複製したプレハブカメラを消す。
             StartCoroutine(DstroyCamera());
         }
+        else
+        {
+            CharaSelectStandby();
+        }
 
         // カメラが完全に離れてから消すためのコルーチン
         IEnumerator DstroyCamera()
         {
-            for(int i=0;i<2;i++)
+            for (int i = 0; i < 2; i++)
             {
-                if(i==0)
+                if (i == 0)
                 {
                     yield return new WaitForSeconds(0.75f);
                 }
@@ -86,5 +94,9 @@ public class GetClickedGameObject : MonoBehaviour
                 }
             }
         }
+    }
+    void Update()
+    {
+        
     }
 }

@@ -66,6 +66,9 @@ public class CharaBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 行動力回復メソッド
+    /// </summary>
     public void IncreaseNowCount()
     {
         NowCount += MaxCount;

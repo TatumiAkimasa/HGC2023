@@ -5,14 +5,21 @@ using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour
 {
-    // キャラのオブジェクトがどれだけあるか数える変数
+    // 定数
+    const int ACTION = 0;
+
+    // キャラのオブジェクトを取得する変数
     [SerializeField]
     private GameObject[] CharaObjectsBuffer;
 
+    // 実際に使用するクラス
     [SerializeField]
     private List<Doll_blu_Nor> CharaObject = new List<Doll_blu_Nor>();
 
-    private List<Doll_blu_Nor> MoveChara = new List<Doll_blu_Nor>();
+
+    private GameObject MoveChara;
+
+    // カウント関連-----------------------------------------------------
 
     private int NowCount = 20;
 
@@ -25,11 +32,15 @@ public class BattleSystem : MonoBehaviour
 
     private List<GameObject> CloneCntPrefab = new List<GameObject>();  
 
-    
-
-    //クローンしたプレハブの親となる存在
+    //クローンしたカウント表示のプレハブの親となる存在
     [SerializeField]
     private GameObject parent;
+
+    //-----------------------------------------------------------------
+
+    // アクセサー------------------------------------------------------
+    
+    //-----------------------------------------------------------------
 
     // Start is called before the first frame update
     void Start()
@@ -56,9 +67,7 @@ public class BattleSystem : MonoBehaviour
     /// </summary>
     public void TurnStart()
     {
-        
         CountText.text = NowCount.ToString();
-        IndicateMoveChara();
     }
 
     /// <summary>
@@ -77,25 +86,19 @@ public class BattleSystem : MonoBehaviour
     /// <summary>
     /// 表示カウントで行動できるキャラを表示
     /// </summary>
-    public void IndicateMoveChara()
+    public void IndicateMoveChara(Doll_blu_Nor indichara)
     {
-        for (int i = 0; i < CharaObject.Count; i++)
-        {
-            if(NowCount==CharaObject[i].GetNowCount())
-            {
-                // クローン生成用GameObject
-                GameObject Instance;
+        // クローン生成用GameObject
+        GameObject Instance;
 
-                Instance = Instantiate(OriginCntPrefab);
-                Instance.GetComponent<IndiCountChara>();
-                IndiCountChara clone = Instance.GetComponent<IndiCountChara>();
-                clone.SetName(CharaObject[i].GetName());
-                clone.transform.parent = parent.transform;
+        Instance = Instantiate(OriginCntPrefab);
+        Instance.GetComponent<IndiCountChara>();
+        IndiCountChara clone = Instance.GetComponent<IndiCountChara>();
+        clone.SetName(indichara.GetName());
+        clone.transform.parent = parent.transform;
 
-                //リストに保存
-                CloneCntPrefab.Add(Instance);
-            }
-        }
+        //リストに保存
+        CloneCntPrefab.Add(Instance);
     }
 
     /// <summary>
@@ -107,14 +110,55 @@ public class BattleSystem : MonoBehaviour
         {
             if(NowCount==CharaObject[i].GetNowCount())
             {
-                //if(ここでプレイアブルキャラかどうか判断)
+                IndicateMoveChara(CharaObject[i]);
+                if (CharaObject[i].gameObject.CompareTag("PlayableChara"))
+                {
+                    //ここでクリック待機してますよって処理をしたい
+
+                    //クリックされたら、ここでコマンド待機してますよって処理をしたい。
+                }
                 //else if(ここで敵NPCかどうか判断)
-                //else //ここまで来たら味方NPC
+                //else (ここまで来たら味方NPC)
+                
             }
-            else
+        }
+    }
+    
+
+    /// <summary>
+    /// ClickedGameObjectメソッドで呼び出される。クリックされたキャラのコマンドを表示するためのメソッド
+    /// </summary>
+    /// <param name="move">クリックされたキャラ</param>
+    void StandbyChara(GameObject move)
+    {
+        Transform childCommand;
+        childCommand = move.transform.GetChild(ACTION);
+        StartCoroutine(MoveStandby(childCommand));
+    }
+
+    /// <summary>
+    /// カメラが近づいてからコマンドを表示するメソッド
+    /// </summary>
+    /// <param name="charaCommand">クリックされたキャラの子オブジェクト（コマンド）</param>
+    /// <returns></returns>
+    public IEnumerator MoveStandby(Transform charaCommand)
+    {
+        while(true)
+        {
+            for (int i = 0; i < 2; i++)
             {
-                NowCount--;
+                //カメラがクリックしたキャラに近づくまで待つ
+                if (i == 0)
+                {
+                    yield return new WaitForSeconds(0.75f);
+                }
+                else
+                {
+                    //技コマンドもろもろを表示
+                    charaCommand.gameObject.SetActive(true);
+                }
             }
         }
     }
 }
+
