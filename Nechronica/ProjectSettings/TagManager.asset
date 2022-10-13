@@ -43,3 +43,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Message
+    uniqueID: 1542581601
+    locked: 0

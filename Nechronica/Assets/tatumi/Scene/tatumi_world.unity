@@ -27444,10 +27444,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7358934617723011684, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358934617723011684, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_MotionVectors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358934617723011684, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1542581601
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358934617723011684, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7358934617965957120, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 351219454}
+    - target: {fileID: 7358934617965957120, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7358934617965957121, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -27535,6 +27555,26 @@ PrefabInstance:
     - target: {fileID: 7358934617965957125, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
       propertyPath: m_Name
       value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358934617990871702, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358934618418980520, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_geometrySortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358934618418980521, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358934618418980521, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358934618418980521, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1542581601
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71046781de6ba8c428594ba080183f9b, type: 3}
