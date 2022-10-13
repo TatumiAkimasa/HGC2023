@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Cinemachine;
 
 public class GetClickedGameObject : MonoBehaviour
 {
     // 定数-----------------------------------------------------
-    const int CharaPriority = 20;       //シネマカメラの優先度用定数。キャラをズームする用のカメラの優先度を最優先にする
+    const int CharaPriority = 20;       // シネマカメラの優先度用定数。キャラをズームする用のカメラの優先度を最優先にする
+    const int ACTION = 0;               // 子オブジェクト取得のための定数
     //----------------------------------------------------------
 
     [SerializeField]
@@ -28,8 +30,9 @@ public class GetClickedGameObject : MonoBehaviour
     /// キャラが選択されるまで再起する関数
     /// </summary>
     /// <returns></returns>
-    public void CharaSelectStandby()
+    public Task<int> CharaSelectStandby()
     {
+        Debug.Log("ここ通ってる？");
         //左クリックで
         if (Input.GetMouseButtonDown(0) && CharaCamera == null)
         {
@@ -44,6 +47,7 @@ public class GetClickedGameObject : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 clickedGameObject = hit.collider.gameObject;
+                Debug.Log("キャラ取得したよ");
             }
 
             //クリックしたゲームオブジェクトがプレイアブルキャラなら
@@ -61,40 +65,101 @@ public class GetClickedGameObject : MonoBehaviour
 
                 // 生成したプレハブのバーチャルカメラがメインカメラになるようプライオリティを設定
                 CharaCamera.Priority = CharaPriority;
+
+                StandbyChara(clickedGameObject);
+                return Task.FromResult(0);
             }
         }
+        
+        return Task.Run(()=> CharaSelectStandby());
+    }
+
+    public void SkillSelectStandby()
+    {
+        //技を発動した時点でこのメソッドを抜けたい感じある。
+        //選択した技コマンドを取得する必要ありか…
+
+        // ここでコマンド出現
+        // StandbyChara(clickedGameObject)
+
         // 右クリックで
-        else if (Input.GetMouseButtonDown(1) && CharaCamera != null)
+        if (Input.GetMouseButtonDown(1) && CharaCamera != null)
         {
             // 全体を表示させるカメラを優先にする。
             CharaCamera.Priority = 0;
 
             // 複製したプレハブカメラを消す。
             StartCoroutine(DstroyCamera());
-        }
-        else
-        {
+
+            // キャラセレクト大気に戻る
             CharaSelectStandby();
         }
+        // else if(技コマンド選択で…
+        //{
+        //    BattleSystem.BattleProcess(選んだ技コマンド);
+        //}
+        else
+        {
+            SkillSelectStandby();
+        }
+    }
 
-        // カメラが完全に離れてから消すためのコルーチン
-        IEnumerator DstroyCamera()
+    // カメラが完全に離れてから消すためのコルーチン
+    IEnumerator DstroyCamera()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (i == 0)
+            {
+                yield return new WaitForSeconds(0.75f);
+            }
+            else
+            {
+                Destroy(CharaCamera.gameObject);
+                //priorityを元の数値にする
+                cinemaCamera.Priority = 10;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// カメラが近づいてからコマンドを表示するメソッド
+    /// </summary>
+    /// <param name="charaCommand">クリックされたキャラの子オブジェクト（コマンド）</param>
+    /// <returns></returns>
+    public IEnumerator MoveStandby(Transform charaCommand)
+    {
+        while (true)
         {
             for (int i = 0; i < 2; i++)
             {
+                //カメラがクリックしたキャラに近づくまで待つ
                 if (i == 0)
                 {
                     yield return new WaitForSeconds(0.75f);
                 }
                 else
                 {
-                    Destroy(CharaCamera.gameObject);
-                    //priorityを元の数値にする
-                    cinemaCamera.Priority = 10;
+                    //技コマンドもろもろを表示
+                    charaCommand.gameObject.SetActive(true);
                 }
             }
         }
     }
+
+
+    /// <summary>
+    /// ClickedGameObjectメソッドで呼び出される。クリックされたキャラのコマンドを表示するためのメソッド
+    /// </summary>
+    /// <param name="move">クリックされたキャラ</param>
+    void StandbyChara(GameObject move)
+    {
+        Transform childCommand;
+        childCommand = move.transform.GetChild(ACTION);
+        StartCoroutine(MoveStandby(childCommand));
+    }
+
     void Update()
     {
         

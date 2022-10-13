@@ -8,17 +8,29 @@ public class BattleSystem : MonoBehaviour
     // 定数
     const int ACTION = 0;
 
+    // バトルフロー関連-------------------------------------------------
     // キャラのオブジェクトを取得する変数
     [SerializeField]
-    private GameObject[] CharaObjectsBuffer;
+    private GameObject[] charaObjectsBuffer;
 
     // 実際に使用するクラス
     [SerializeField]
-    private List<Doll_blu_Nor> CharaObject = new List<Doll_blu_Nor>();
+    private List<Doll_blu_Nor> charaObject = new List<Doll_blu_Nor>();
 
+    // クリックされたプレイアブルキャラを受け取るようの変数
+    private GameObject clickedChara;
 
-    private GameObject MoveChara;
+    // カウント宙に動くキャラをこのリストに入れる
+    private List<Doll_blu_Nor> CountMoveChara = new List<Doll_blu_Nor>();
 
+    // カウント処理パートに移行するかの成否
+    private bool battleExe = false;
+
+    // キャラ変数のやり取りのマネージャー
+    [SerializeField]
+    private GetClickedGameObject controllManager;
+
+    // -----------------------------------------------------------------
     // カウント関連-----------------------------------------------------
 
     private int NowCount = 20;
@@ -47,18 +59,18 @@ public class BattleSystem : MonoBehaviour
     {
         CountText.text = NowCount.ToString();
         // Charaというタグがついたキャラをすべて取得
-        CharaObjectsBuffer = GameObject.FindGameObjectsWithTag("PlayableChara");
-        for (int i = 0; i < CharaObjectsBuffer.Length; i++)
+        charaObjectsBuffer = GameObject.FindGameObjectsWithTag("PlayableChara");
+        for (int i = 0; i < charaObjectsBuffer.Length; i++)
         {
             // キャラ
-            CharaObject.Add(CharaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+            charaObject.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
 
         // デバッグ用にスタートに書く。本当はTurnStartに配置。
-        for (int i = 0; i < CharaObject.Count; i++)
+        for (int i = 0; i < charaObject.Count; i++)
         {
-            CharaObject[i].IncreaseNowCount();
-            Debug.Log(CharaObject[i].GetNowCount());
+            charaObject[i].IncreaseNowCount();
+            Debug.Log(charaObject[i].GetNowCount());
         }
     }
 
@@ -68,6 +80,20 @@ public class BattleSystem : MonoBehaviour
     public void TurnStart()
     {
         CountText.text = NowCount.ToString();
+        for (int i = 0; i < charaObject.Count; i++)
+        {
+            if (NowCount == charaObject[i].GetNowCount())
+            {
+                IndicateMoveChara(charaObject[i]);
+                CountMoveChara.Add(charaObject[i]);
+                battleExe = true;
+            }
+        }
+        if(battleExe)
+        {
+            BattleStart();
+        }
+        
     }
 
     /// <summary>
@@ -80,7 +106,37 @@ public class BattleSystem : MonoBehaviour
         {
             NowCount += 20;
         }
+
+        // カウント終了時に左の行動表のリストをクリア
+        if(CloneCntPrefab.Count>=0)
+        {
+            CloneCntPrefab.Clear();
+        }
         TurnStart();
+    }
+
+    /// <summary>
+    /// バトルが始まったときに呼び出されるメソッド（Startでいい感じしてる）
+    /// </summary>
+    public void BattleStart()
+    {
+        //for文でweightが小さい順に処理していく
+        //プレイアブルキャラになったら待機状態に移行
+        for(int i=0;i<CountMoveChara.Count;i++)
+        {
+            if (CountMoveChara[i].gameObject.CompareTag("PlayableChara"))
+            {
+                controllManager.CharaSelectStandby();
+            }
+            // else if(敵キャラなら…)
+            // else(味方NPCなら…)
+        }
+    }
+
+    // コマンド選択された時の処理
+    public void BattleProcess(CharaManeuver maneuver)
+    {
+        //技の処理的な
     }
 
     /// <summary>
@@ -92,7 +148,6 @@ public class BattleSystem : MonoBehaviour
         GameObject Instance;
 
         Instance = Instantiate(OriginCntPrefab);
-        Instance.GetComponent<IndiCountChara>();
         IndiCountChara clone = Instance.GetComponent<IndiCountChara>();
         clone.SetName(indichara.GetName());
         clone.transform.parent = parent.transform;
@@ -101,64 +156,5 @@ public class BattleSystem : MonoBehaviour
         CloneCntPrefab.Add(Instance);
     }
 
-    /// <summary>
-    /// バトルが始まったときに呼び出されるメソッド（Startでいい感じしてる）
-    /// </summary>
-    public void ButtleStart()
-    {
-        for (int i = 0; i < CharaObject.Count; i++)
-        {
-            if(NowCount==CharaObject[i].GetNowCount())
-            {
-                IndicateMoveChara(CharaObject[i]);
-                if (CharaObject[i].gameObject.CompareTag("PlayableChara"))
-                {
-                    //ここでクリック待機してますよって処理をしたい
-
-                    //クリックされたら、ここでコマンド待機してますよって処理をしたい。
-                }
-                //else if(ここで敵NPCかどうか判断)
-                //else (ここまで来たら味方NPC)
-                
-            }
-        }
-    }
-    
-
-    /// <summary>
-    /// ClickedGameObjectメソッドで呼び出される。クリックされたキャラのコマンドを表示するためのメソッド
-    /// </summary>
-    /// <param name="move">クリックされたキャラ</param>
-    void StandbyChara(GameObject move)
-    {
-        Transform childCommand;
-        childCommand = move.transform.GetChild(ACTION);
-        StartCoroutine(MoveStandby(childCommand));
-    }
-
-    /// <summary>
-    /// カメラが近づいてからコマンドを表示するメソッド
-    /// </summary>
-    /// <param name="charaCommand">クリックされたキャラの子オブジェクト（コマンド）</param>
-    /// <returns></returns>
-    public IEnumerator MoveStandby(Transform charaCommand)
-    {
-        while(true)
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                //カメラがクリックしたキャラに近づくまで待つ
-                if (i == 0)
-                {
-                    yield return new WaitForSeconds(0.75f);
-                }
-                else
-                {
-                    //技コマンドもろもろを表示
-                    charaCommand.gameObject.SetActive(true);
-                }
-            }
-        }
-    }
 }
 
