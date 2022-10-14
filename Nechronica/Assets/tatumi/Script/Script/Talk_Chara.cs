@@ -8,15 +8,18 @@ using TMPro;
 public class Talk_Chara : MonoBehaviour
 {
     [SerializeField]
-    private GameObject ParentObj;
+    private GameObject ParentObj, EndProText;
+
+   
 
     [SerializeField]
     private TextMeshPro ProText;
 
-    private float FeedTime = 1.0f; // 文字送り時間
+    private float FeedTime = 0.5f; // 文字送り時間
     private int Nowvisual_Len = 0;//今の表示文字数
     private int text_Len = 0;//必要文字数
 
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -26,13 +29,10 @@ public class Talk_Chara : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            StopCoroutine("Talk_Active");
-        }
+       
     }
 
-    public bool talk_Set()
+    public IEnumerator Talk_Set(System.Action<bool> End)
     {
         ParentObj.SetActive(true);
 
@@ -43,32 +43,44 @@ public class Talk_Chara : MonoBehaviour
         
         ProText.maxVisibleCharacters = 0; // 表示文字数を０に
 
-        StartCoroutine(Talk_Active());
+        StartCoroutine(Talk_Active((action=>
+        {
+            ParentObj.SetActive(false);
+            EndProText.SetActive(false);
+            End(false);
+        })));
 
-        ParentObj.SetActive(false);
-        return true;
+        yield return null;
     }
 
-    private IEnumerator Talk_Active()
+   
+
+    private IEnumerator Talk_Active(System.Action<bool> action)
     {
-         while (true)
-        {
+         while (!Input.GetKeyDown(KeyCode.T))
+         {
             if (Nowvisual_Len < text_Len)
             {
                 Nowvisual_Len++;
                 ProText.maxVisibleCharacters = Nowvisual_Len; // 表示を1文字ずつ増やす
                 yield return new WaitForSeconds(FeedTime);
+
             }
-           
-        }
+            //文終了
+            else if (Nowvisual_Len == text_Len)
+            {
+                EndProText.SetActive(true);
+                yield return null;
+            }
+            else
+                yield return null;
+
+         }
+
+        action(true);
+        yield break;
 
     }
 
-    //private IEnumerator Talk_End()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.E))
-    //        yield break;
-    //    else
-    //        yield return null;
-    //}
+   
 }

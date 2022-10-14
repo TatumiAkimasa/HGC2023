@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CheckUp_chara : MonoBehaviour
 {
-    
-    private Talk_Chara talk_cs = null;
+    [SerializeField]
+    private Talk_Chara Talk_cs;
+
+    private GameObject PL;
 
     private bool talk_now=false;
     void Start()
@@ -14,23 +16,40 @@ public class CheckUp_chara : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (PL != null)
+        {
+            if (Input.GetKeyDown(KeyCode.E) && talk_now == false)
+            {
+                talk_now = true;
+
+                StartCoroutine(Talk_cs.Talk_Set((End =>
+                {
+                    talk_now = End;
+                })));
+
+            }
+        }
     }
 
-    private void OnCollisionStay(Collision Item)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit!");
+        Debug.Log(other.name);
 
-        if (Item.gameObject.GetComponent<Talk_Chara>() == null)
-            return;
-        else
-            talk_cs = Item.gameObject.GetComponent<Talk_Chara>();
-
-        if (Input.GetKeyDown(KeyCode.E)&&talk_now==false)
+        if (other.gameObject.tag == "Player")
         {
-            talk_now = talk_cs.talk_Set();
+            PL = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider Item)
+    {
+        Debug.Log(Item.name);
+
+        if (Item.gameObject.tag == "Player")
+        {
+            PL = null;
         }
     }
 }
