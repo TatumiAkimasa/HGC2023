@@ -13,7 +13,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private GameObject[] charaObjectsBuffer;
 
-    // 実際に使用するクラス
+    // キャラのオブジェクトを実際に使用するためのクラス
     [SerializeField]
     private List<Doll_blu_Nor> charaObject = new List<Doll_blu_Nor>();
 
@@ -29,6 +29,15 @@ public class BattleSystem : MonoBehaviour
     // キャラ変数のやり取りのマネージャー
     [SerializeField]
     private GetClickedGameObject controllManager;
+
+    // クリックガード用のオブジェクト
+    [SerializeField]
+    private GameObject clickGuard;
+
+    // レイガード用オブジェクト
+    [SerializeField]
+    private GameObject rayGuard;
+
 
     // -----------------------------------------------------------------
     // カウント関連-----------------------------------------------------
@@ -54,12 +63,11 @@ public class BattleSystem : MonoBehaviour
     
     //-----------------------------------------------------------------
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         CountText.text = NowCount.ToString();
         // Charaというタグがついたキャラをすべて取得
-        charaObjectsBuffer = GameObject.FindGameObjectsWithTag("PlayableChara");
+        charaObjectsBuffer = GameObject.FindGameObjectsWithTag("AllyChara");
         for (int i = 0; i < charaObjectsBuffer.Length; i++)
         {
             // キャラ
@@ -110,6 +118,10 @@ public class BattleSystem : MonoBehaviour
         // カウント終了時に左の行動表のリストをクリア
         if(CloneCntPrefab.Count>=0)
         {
+            for(int i=0;i<CloneCntPrefab.Count;i++)
+            {
+                Destroy(CloneCntPrefab[i]);
+            }
             CloneCntPrefab.Clear();
         }
         TurnStart();
@@ -121,12 +133,12 @@ public class BattleSystem : MonoBehaviour
     public void BattleStart()
     {
         //for文でweightが小さい順に処理していく
-        //プレイアブルキャラになったら待機状態に移行
+        //プレイアブルキャラになったらクリックガードを外す
         for(int i=0;i<CountMoveChara.Count;i++)
         {
-            if (CountMoveChara[i].gameObject.CompareTag("PlayableChara"))
+            if (CountMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
-                controllManager.CharaSelectStandby();
+                rayGuard.SetActive(false);
             }
             // else if(敵キャラなら…)
             // else(味方NPCなら…)

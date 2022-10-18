@@ -26,19 +26,19 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera MainCamera;    // 全体を映すシネマカメラ
 
-    /// <summary>
-    /// キャラが選択されるまで再起する関数
-    /// </summary>
-    /// <returns></returns>
-    public Task<int> CharaSelectStandby()
-    {
-        Debug.Log("ここ通ってる？");
-        //左クリックで
-        if (Input.GetMouseButtonDown(0) && CharaCamera == null)
-        {
-            //下記変数を初期化
-            clickedGameObject = null;
+    [SerializeField]
+    private BattleSystem battleSystem;              // バトルシステムとの変数受け渡し用
 
+    [SerializeField]
+    private Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
+
+    private bool selectedChara = false;
+
+    private void Update()
+    {
+        //左クリックで
+        if (Input.GetMouseButtonDown(0) && CharaCamera == null && !selectedChara)
+        {
             //Clickした箇所にレイを飛ばす。
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
@@ -47,31 +47,50 @@ public class GetClickedGameObject : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 clickedGameObject = hit.collider.gameObject;
-                Debug.Log("キャラ取得したよ");
+                Debug.Log(clickedGameObject.name);
             }
 
             //クリックしたゲームオブジェクトがプレイアブルキャラなら
             if (clickedGameObject.CompareTag("PlayableChara"))
             {
-                // クリックしたオブジェクトの座標情報を取得
-                Vector3 clickedObjPos = clickedGameObject.transform.position;
-                // 取得した座標情報から少し離れた位置に座標を調整
-                clickedObjPos.z -= 10.0f;
-                clickedObjPos.x -= 2.5f;
-
-                // シネマカメラのプレハブを生成しクリックしたオブジェクトを親オブジェクトにする
-                CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity);
-                CharaCamera.transform.parent = clickedGameObject.transform;
-
-                // 生成したプレハブのバーチャルカメラがメインカメラになるようプライオリティを設定
-                CharaCamera.Priority = CharaPriority;
-
-                StandbyChara(clickedGameObject);
-                return Task.FromResult(0);
+                Debug.Log("まさかここ通ってる？");
+                CharaSelect();
+                // ここでコマンド表示
+                StartCoroutine(MoveStandby(clickedGameObject));
             }
+
+            
         }
+        else if(selectedChara)
+        {
+            SkillSelectStandby();
+
+        }
+    }
+
+    /// <summary>
+    /// キャラが選択された後に近づくメソッド
+    /// </summary>
+    /// <returns></returns>
+    public void CharaSelect()
+    {
         
-        return Task.Run(()=> CharaSelectStandby());
+        Debug.Log("どうでしょうか");
+        // クリックしたオブジェクトの座標情報を取得
+        Vector3 clickedObjPos = clickedGameObject.transform.position;
+        // 取得した座標情報から少し離れた位置に座標を調整
+        clickedObjPos.z -= 10.0f;
+        clickedObjPos.x -= 2.5f;
+
+        // シネマカメラのプレハブを生成しクリックしたオブジェクトを親オブジェクトにする
+        CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity);
+        CharaCamera.transform.parent = clickedGameObject.transform;
+
+        // 生成したプレハブのバーチャルカメラがメインカメラになるようプライオリティを設定
+        CharaCamera.Priority = CharaPriority;
+
+        selectedChara = true;
+        return;
     }
 
     public void SkillSelectStandby()
@@ -79,29 +98,24 @@ public class GetClickedGameObject : MonoBehaviour
         //技を発動した時点でこのメソッドを抜けたい感じある。
         //選択した技コマンドを取得する必要ありか…
 
-        // ここでコマンド出現
-        // StandbyChara(clickedGameObject)
-
         // 右クリックで
         if (Input.GetMouseButtonDown(1) && CharaCamera != null)
         {
             // 全体を表示させるカメラを優先にする。
             CharaCamera.Priority = 0;
-
+            // コマンドを消す
+            childCommand.gameObject.SetActive(false);
             // 複製したプレハブカメラを消す。
             StartCoroutine(DstroyCamera());
-
-            // キャラセレクト大気に戻る
-            CharaSelectStandby();
         }
         // else if(技コマンド選択で…
         //{
-        //    BattleSystem.BattleProcess(選んだ技コマンド);
+        //    DestroyCamera();
+        //    battleSystem.BattleProcess(選んだ技コマンド);
+        //    battleSystem.rayGuard.SetActive(true);
+        //    selsectedChara=false;
         //}
-        else
-        {
-            SkillSelectStandby();
-        }
+
     }
 
     // カメラが完全に離れてから消すためのコルーチン
@@ -118,6 +132,9 @@ public class GetClickedGameObject : MonoBehaviour
                 Destroy(CharaCamera.gameObject);
                 //priorityを元の数値にする
                 cinemaCamera.Priority = 10;
+                selectedChara = false;
+                // 必要な情報は取得した後なので初期化しておく
+                clickedGameObject = null;
             }
         }
     }
@@ -128,40 +145,22 @@ public class GetClickedGameObject : MonoBehaviour
     /// </summary>
     /// <param name="charaCommand">クリックされたキャラの子オブジェクト（コマンド）</param>
     /// <returns></returns>
-    public IEnumerator MoveStandby(Transform charaCommand)
+    public IEnumerator MoveStandby(GameObject move)
     {
-        while (true)
+        for (int i = 0; i < 2; i++)
         {
-            for (int i = 0; i < 2; i++)
+            //カメラがクリックしたキャラに近づくまで待つ
+            if (i == 0)
             {
-                //カメラがクリックしたキャラに近づくまで待つ
-                if (i == 0)
-                {
-                    yield return new WaitForSeconds(0.75f);
-                }
-                else
-                {
-                    //技コマンドもろもろを表示
-                    charaCommand.gameObject.SetActive(true);
-                }
+                yield return new WaitForSeconds(0.75f);
+            }
+            else
+            {
+                // 選択したキャラのコマンドのオブジェクトを取得
+                childCommand = move.transform.GetChild(ACTION);
+                //技コマンドもろもろを表示
+                childCommand.gameObject.SetActive(true);
             }
         }
-    }
-
-
-    /// <summary>
-    /// ClickedGameObjectメソッドで呼び出される。クリックされたキャラのコマンドを表示するためのメソッド
-    /// </summary>
-    /// <param name="move">クリックされたキャラ</param>
-    void StandbyChara(GameObject move)
-    {
-        Transform childCommand;
-        childCommand = move.transform.GetChild(ACTION);
-        StartCoroutine(MoveStandby(childCommand));
-    }
-
-    void Update()
-    {
-        
     }
 }
