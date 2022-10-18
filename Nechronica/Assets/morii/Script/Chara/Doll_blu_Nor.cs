@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Doll_blu_Nor : kihonnpatu
+public class Doll_blu_Nor : PartsList
 {
     public string Name="test";                    //ドール名 
     public string hide_hint="test";              //暗示
@@ -13,29 +13,29 @@ public class Doll_blu_Nor : kihonnpatu
     public short potition=3;                 //初期配置(煉獄)
     public string MainClass="Stacy", SubClass="Stacy";     //職業(skill)
     public short Armament=0, Variant=0, Alter=0; //武装,変異,改造(Skill)
-    public List<CharaManeuver> Skll;              //スキル
-    public CharaBase parts;                       //パーツ類
+    
 
     private void Start()
     {
+        InitParts();
         //頭----------------------
-        parts.HeadParts.Add(noumiso_H);
-        parts.HeadParts.Add(medama_H);
-        parts.HeadParts.Add(ago_H);
+        HeadParts.Add(noumiso_H);
+        HeadParts.Add(medama_H);
+        HeadParts.Add(ago_H);
 
         //腕----------------------
-        parts.ArmParts.Add(ude_A);
-        parts.ArmParts.Add(kata_A);
-        parts.ArmParts.Add(kobusi_A);
+        ArmParts.Add(ude_A);
+        ArmParts.Add(kata_A);
+        ArmParts.Add(kobusi_A);
 
         //胴----------------------
-        parts.BodyParts.Add(harawata2_B);
-        parts.BodyParts.Add(harawata_B);
-        parts.BodyParts.Add(sebone_B);
+        BodyParts.Add(harawata2_B);
+        BodyParts.Add(harawata_B);
+        BodyParts.Add(sebone_B);
 
         //脚----------------------
-        parts.LegParts.Add(hone2_L);
-        parts.LegParts.Add(hone_L);
-        parts.LegParts.Add(asi_L);
+        LegParts.Add(hone2_L);
+        LegParts.Add(hone_L);
+        LegParts.Add(asi_L);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Wepon_Data_SaveSet : MonoBehaviour
 {
@@ -13,14 +14,34 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     [SerializeField]
     private bool isExplosion, isCotting, isAllAttack, isSuccession;//使用したかどうか
 
-    //なんかこうしないと作れない😢
-    public CharaManeuver Set_Parts = new CharaManeuver { };
-    public ManeuverEffectsAtk Eff_Parts = new ManeuverEffectsAtk { };
+    //データセット（シリアライズ抜くと機能せず）
+    [SerializeField]
+    private CharaManeuver Set_Parts;
+   
+    //ゲッター,セッター
+    public CharaManeuver GetParts() => Set_Parts;
+    public CharaManeuver SetParts(CharaManeuver item) => Set_Parts = item;
 
     private void Start()
     {
-        Name = this.GetComponent<WeponData_Set>().Get_Wepon_Text();
+        //武器選択
+        if (this.GetComponent<WeponData_Set>() != null)
+            Name = this.GetComponent<WeponData_Set>().Get_Wepon_Text();
+        //Textにデータを入れるとき
+        else if (this.GetComponent<Text>() != null)
+            Name = this.GetComponent<Text>().text;
+        //ClassSKill設定時
+        else
+            Name = this.gameObject.name;
 
+        Reset();
+
+    }
+
+    public CharaManeuver GetPrats() => Set_Parts;
+
+    public void Reset()
+    {
         Set_Parts.Cost = Cost;
         Set_Parts.EffectNum = EffectNum;
         Set_Parts.isDmage = false;
@@ -31,18 +52,12 @@ public class Wepon_Data_SaveSet : MonoBehaviour
         Set_Parts.Timing = Timing;
         Set_Parts.Weight = Weight;
 
-        Set_Parts.Atk = Eff_Parts;
-
         Set_Parts.Atk.AtkType = AtkType;
         Set_Parts.Atk.isAllAttack = isAllAttack;
         Set_Parts.Atk.isCotting = isCotting;
         Set_Parts.Atk.isExplosion = isExplosion;
         Set_Parts.Atk.isSuccession = isSuccession;
         Set_Parts.Atk.Num_per_Action = Num_per_Action;
-
     }
-
-    public CharaManeuver GetPrats() => Set_Parts;
-
 
 }

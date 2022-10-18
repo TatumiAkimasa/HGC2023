@@ -8,7 +8,10 @@ public class Input_data_Button : ClassData_
 
     [SerializeField]
     private Text input_text,output_text;
-  
+
+    [SerializeField]
+    protected Chara_data_input Chara_intput_data_cs;
+
     private ClassData data;
 
     // Start is called before the first frame update
@@ -26,6 +29,18 @@ public class Input_data_Button : ClassData_
     public void Push_button()
     {
         output_text.text = input_text.text;
+
+        //ポジションSKILLパターン
+        if (this.GetComponent<Wepon_Data_SaveSet>() != null)
+            Chara_intput_data_cs.Potition_Skill = this.GetComponent<Wepon_Data_SaveSet>().GetParts();
+    }
+
+    public void Push_button(short pos)
+    {
+        output_text.text = input_text.text;
+
+        //positionパターン
+        Chara_intput_data_cs.position_ = pos;
     }
 
     public string Push_button_pos()

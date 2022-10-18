@@ -12,9 +12,15 @@ public class ClassData_ : MonoBehaviour
     }
 
     //’è”
-    public const int ARMAMENT = 0;     //•‘•
-    public const int VARIANT = 1;      //•ÏˆÙ
-    public const int ALTER = 2;        //‰ü‘¢
+    protected const int ARMAMENT = 0;     //•‘•
+    protected  const int VARIANT = 1;      //•ÏˆÙ
+    protected  const int ALTER = 2;        //‰ü‘¢
+
+    //•”ˆÊ
+    protected const int HEAD = 0;
+    protected const int ARM = 1;
+    protected const int BODY = 2;
+    protected const int LEG = 3;
 
     public string Classname_JtoE(string a)
     {

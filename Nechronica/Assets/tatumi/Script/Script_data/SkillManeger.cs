@@ -13,7 +13,7 @@ public class SkillManeger : ClassData_
     [SerializeField]
     private Text wepon_text, bio_text,mac_text,Output_text2,Output_text3,Output_text;
 
-    public int[] parts=new int[6];
+    public int[] parts=new int[9];
 
 
     private string keyword = "x";
@@ -28,14 +28,16 @@ public class SkillManeger : ClassData_
     Button[] Parent_Skill = new Button[2];
 
     public Wepon_Maneger wepon_Maneger;
+    public Chara_data_input Chara_intpu_cs;
 
     // Start is called before the first frame update
     void Start()
     {
         //初期化
-        for(int i=0;i!=6;i++)
+        for(int i=0;i!=9;i++)
         {
             parts[i] = 0;
+
         }
         for (int i = 0; i != 3; i++)
         {
@@ -85,15 +87,23 @@ public class SkillManeger : ClassData_
     public void SetPSKill(Button a)
     {
 
+        int item = -1;
+
+        for(int i=0;i!=3;i++)
+        {
+            if (buttons[i] == a)
+                item = i;
+        }
+
         if (buttons[Button_num] != null)
         {
             //選択色
             ColorBlock cb = a.colors;
 
             //同一職
-            if (a.name.Contains(keyword)&& a.name.Contains(keyword2))
+            if (a.name.Contains(keyword) && a.name.Contains(keyword2))
             {
-                if (a.name != buttons[Button_num - Button_num].name)
+                if (item == -1)
                 {
                     cb.normalColor = Color.yellow;
                     cb.highlightedColor = Color.yellow;
@@ -106,33 +116,48 @@ public class SkillManeger : ClassData_
                     cb.selectedColor = Color.white;
                     buttons[Button_num].colors = cb;
 
+                    if (buttons[Button_num].GetComponent<Wepon_Data_SaveSet>() != null)
+                        Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[Button_num].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
                     //代入
                     buttons[Button_num] = a;
 
                     //出力
                     if (Button_num == 0)
                         Output_text.text = a.GetComponentInChildren<Text>().text;
-                    else if(Button_num==1)
+                    else if (Button_num == 1)
                         Output_text2.text = a.GetComponentInChildren<Text>().text;
                     else
                         Output_text3.text = a.GetComponentInChildren<Text>().text;
 
                     Button_num++;
 
+
                     if (Button_num == 3)
                         Button_num = 0;
 
+                    Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                    if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                        a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(1);
+                        
+
                 }
-                //同じもの選択
+               // 同じもの選択
                 else
                 {
                     //既存元に戻す
                     cb.normalColor = Color.white;
                     cb.highlightedColor = Color.white;
                     cb.selectedColor = Color.white;
-                    buttons[Button_num - Button_num].colors = cb;
+                    buttons[item].colors = cb;
 
-                    buttons[Button_num - Button_num] = this.gameObject.GetComponent<Button>();
+                    Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[item].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                    if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                        a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(0);
+
+                    buttons[item] = this.gameObject.GetComponent<Button>();
 
                     //出力
                     if (Button_num == 0)
@@ -141,12 +166,14 @@ public class SkillManeger : ClassData_
                         Output_text2.text = "None";
                     else
                         Output_text3.text = "None";
+
+
                 }
             }
             //MainSkill
             else if (a.name.Contains(keyword))
             {
-                if (a.name != buttons[Button_num-Button_num].name)
+                if (item == -1)
                 {
                     cb.normalColor = Color.yellow;
                     cb.highlightedColor = Color.yellow;
@@ -158,6 +185,9 @@ public class SkillManeger : ClassData_
                     cb.highlightedColor = Color.white;
                     cb.selectedColor = Color.white;
                     buttons[Button_num].colors = cb;
+
+                    if (buttons[Button_num].GetComponent<Wepon_Data_SaveSet>() != null)
+                        Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[Button_num].GetComponent<Wepon_Data_SaveSet>().GetParts());
 
                     //代入
                     buttons[Button_num] = a;
@@ -173,6 +203,13 @@ public class SkillManeger : ClassData_
                     if (Button_num >= 2)
                         Button_num = 0;
 
+                    Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                    if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                    {
+                        a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(1);
+                    }
+
                 }
                 //同じもの選択
                 else
@@ -181,15 +218,22 @@ public class SkillManeger : ClassData_
                     cb.normalColor = Color.white;
                     cb.highlightedColor = Color.white;
                     cb.selectedColor = Color.white;
-                    buttons[Button_num-Button_num].colors = cb;
+                    buttons[item].colors = cb;
 
-                    buttons[Button_num - Button_num] = this.gameObject.GetComponent<Button>();
+                    Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[item].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                    if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                        a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(0);
+
+                    buttons[item] = this.gameObject.GetComponent<Button>();
 
                     //出力
                     if (Button_num == 0)
                         Output_text.text = "None";
                     else
                         Output_text2.text = "None";
+
+
                 }
 
             }
@@ -211,11 +255,19 @@ public class SkillManeger : ClassData_
                         cb.selectedColor = Color.white;
                         buttons[2].colors = cb;
 
+                        if (buttons[2].GetComponent<Wepon_Data_SaveSet>() != null)
+                            Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[2].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
                         //代入
                         buttons[2] = a;
 
                         //出力
                         Output_text3.text = a.GetComponentInChildren<Text>().text;
+
+                        Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                        if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                            a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(0);
 
                     }
                     //同じもの選択
@@ -227,10 +279,16 @@ public class SkillManeger : ClassData_
                         cb.selectedColor = Color.white;
                         buttons[2].colors = cb;
 
+                        Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Remove(buttons[2].GetComponent<Wepon_Data_SaveSet>().GetParts());
+
+                        if (a.gameObject.GetComponent<Wepon_Bonus_Add>() != null)
+                            a.gameObject.GetComponent<Wepon_Bonus_Add>().Bounus_Wepon_add(1);
+
                         buttons[2] = this.gameObject.GetComponent<Button>();
 
                         //出力
                         Output_text3.text = "None";
+
                     }
                 }
             }
@@ -259,18 +317,7 @@ public class SkillManeger : ClassData_
             keyword2 = Classname_JtoE(a.name);
         }
 
-       
-
-
-        wepon_text.text = (parts[0]+parts[3]).ToString();
-        wepon_Maneger.Wepon_limit[0] = parts[0] + parts[3];
-
-
-        bio_text.text = (parts[1]+parts[4]).ToString();
-        wepon_Maneger.Wepon_limit[1] = parts[1] + parts[4];
-
-        mac_text.text = (parts[2]+parts[5]).ToString();
-        wepon_Maneger.Wepon_limit[2] = parts[2] + parts[5];
+        ClassPoint_Update();
 
         for (int i = 0; i < Cskils.transform.childCount; i++)
         {
@@ -371,7 +418,8 @@ public class SkillManeger : ClassData_
 
     public int GetArmament()
     {
-        return int.Parse(wepon_text.text);
+        int i= int.Parse(wepon_text.text);
+        return i;
     }
 
     public int GetVariantt()
@@ -382,5 +430,20 @@ public class SkillManeger : ClassData_
     public int GetAlter()
     {
         return int.Parse(mac_text.text);
+    }
+
+    public void ClassPoint_Update()
+    {
+        wepon_text.text = (parts[0] + parts[3] + parts[6]).ToString();
+        wepon_Maneger.Wepon_limit[0] = parts[0] + parts[3] + parts[6];
+        wepon_Maneger.Reset_wepon(ARMAMENT);
+
+        bio_text.text = (parts[1] + parts[4] + parts[7]).ToString();
+        wepon_Maneger.Wepon_limit[1] = parts[1] + parts[4] + parts[7];
+        wepon_Maneger.Reset_wepon(VARIANT);
+
+        mac_text.text = (parts[2] + parts[5] + parts[8]).ToString();
+        wepon_Maneger.Wepon_limit[2] = parts[2] + parts[5] + parts[8];
+        wepon_Maneger.Reset_wepon(ALTER);
     }
 }

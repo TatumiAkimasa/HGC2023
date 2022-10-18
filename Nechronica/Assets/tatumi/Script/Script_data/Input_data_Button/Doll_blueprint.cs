@@ -2,88 +2,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharaManeuver))]
 [System.Serializable]
-public class Doll_blueprint : CharaBase
+public class Doll_blueprint
 {
     public string Name;                    //ドール名 
     public string hide_hint;              //暗示
     public string Death_year;              //享年
     public string temper;                  //ポジション
     public short[] Memory;                 //記憶のかけら
-    //---------------------------------------------------↑完了↓未完
+    public string MainClass, SubClass;     //職業
+    public short Armament, Variant, Alter; //武装,変異,改造
     public short potition;                 //初期配置
-    public string MainClass, SubClass;     //職業(skill)
-    public short Armament, Variant, Alter; //武装,変異,改造(Skill)
-    public List<CharaManeuver> Skll;              //スキル
-    public CharaBase parts;                       //パーツ類
+    public CharaBase_SaveData CharaBase_data;
+   
 
-    private int Treasure_num;
-
-    private CharaManeuver Treasure=new CharaManeuver { };
-    private CharaManeuver backTreasure = new CharaManeuver { };
-
-    private void Start()
-    {
-        //宝初期せってい
-        Treasure.MaxRange = 0;
-        Treasure.MinRange = 0;
-        Treasure.Timing = -1;
-        Treasure.Weight = 1;
-        Treasure.EffectNum = -1;
-        Treasure.Cost = -1;
-        Treasure.Atk = null;
-        Treasure.isDmage = false;
-        Treasure.isUse = false;
-    }
-
-    //宝物入力関数
-    public void SetTreasure(string name,int i)
-    {
-        switch (Treasure_num)
-        {
-            case 1:
-                parts.HeadParts.Remove(backTreasure);
-                break;
-            case 2:
-                parts.ArmParts.Remove(backTreasure);
-                break;
-            case 3:
-                parts.BodyParts.Remove(backTreasure);
-                break;
-            case 4:
-                parts.LegParts.Remove(backTreasure);
-                break;
-                //初期設定
-            case -1:
-                break;
-        }
-
-
-        Treasure.Name = name;
-
-        //対応場所に付与
-        switch (i)
-        {
-            case 1:
-                parts.HeadParts.Add(Treasure);
-                break;
-            case 2:
-                parts.ArmParts.Add(Treasure);
-                break;
-            case 3:
-                parts.BodyParts.Add(Treasure);
-                break;
-            case 4:
-                parts.LegParts.Add(Treasure);
-                break;
-        }
-
-        backTreasure = Treasure;
-        Treasure_num = i;
-    }
-
-    
 }
+
+[System.Serializable]
+public class CharaBase_SaveData
+{
+    //ゲッター
+    public int GetMaxCount() => MaxCount;
+    public int GetNowCount() => NowCount;
+    public int GetWeight() => AllWeight;
+
+    public List<CharaManeuver> GetHeadParts() => HeadParts; //頭パーツ参照
+    public List<CharaManeuver> GetArmParts() => ArmParts;   //腕パーツ参照
+    public List<CharaManeuver> GetBodygParts() => BodyParts;//胴体パーツ参照
+    public List<CharaManeuver> GetLegParts() => LegParts;   //脚パーツ参照
+    public List<CharaManeuver> GetSkillParts() => Skill;      //SKILLのパーツ
+
+    public List<CharaManeuver> HeadParts;      //頭のパーツ
+    public List<CharaManeuver> ArmParts;       //腕のパーツ
+    public List<CharaManeuver> BodyParts;      //胴のパーツ
+    public List<CharaManeuver> LegParts;       //脚のパーツ
+    public List<CharaManeuver> Skill;          //SKILLのパーツ
+
+    private int MaxCount;                       //カウント最大値
+    private int NowCount;                       //現在のカウント
+    private int AllWeight;                      //重さ
+}
+
+[System.Serializable]
+public class CharaManeuver_SaveData
+{
+    public string Name;            //パーツ名
+    public int EffectNum;          //効果値
+    public int Cost;               //コスト
+    public int Timing;             //発動タイミング
+    public int MinRange;           //射程の最小値
+    public int MaxRange;           //射程の最大値
+    public int Weight;             //重さ
+    public int Moving;             //移動量(0で移動しない)
+    public bool isUse;             //使用したかどうか
+    public bool isDmage;           //破損したかどうか
+    public ManeuverEffectsAtk Atk; //攻撃系
+}
+
+[System.Serializable]
+public class ManeuverEffectsAtk_SaveData
+{
+    public int AtkType;       //攻撃属性
+    public bool isExplosion;   //爆発攻撃かどうか
+    public bool isCotting;     //切断攻撃かどうか
+    public bool isAllAttack;   //全体攻撃かどうか
+    public bool isSuccession;  //連撃かどうか
+    public int Num_per_Action;//連撃回数
+}
+
+
+
+
+
 
 

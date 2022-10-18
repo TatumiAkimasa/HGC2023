@@ -619,9 +619,10 @@ GameObject:
   - component: {fileID: 741667017}
   - component: {fileID: 741667016}
   - component: {fileID: 741667015}
-  - component: {fileID: 741667019}
   - component: {fileID: 741667020}
+  - component: {fileID: 741667019}
   - component: {fileID: 741667021}
+  - component: {fileID: 741667022}
   m_Layer: 0
   m_Name: PLChara
   m_TagString: PlayableChara
@@ -743,6 +744,299 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ede7bc87ed29f43b8aada3a2336ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HeadParts: []
+  ArmParts: []
+  BodyParts: []
+  LegParts: []
+--- !u!114 &741667022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741667014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df026921c8baa4c4d99cfde00ffe72f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HeadParts: []
+  ArmParts: []
+  BodyParts: []
+  LegParts: []
+  noumiso_H:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  medama_H:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  ago_H:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  kobusi_A:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  ude_A:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  kata_A:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  sebone_B:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  harawata_B:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  harawata2_B:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  hone_L:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  hone2_L:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  asi_L:
+    Name: 
+    EffectNum: 0
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      AtkType: 0
+      isExplosion: 0
+      isCotting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  Name: test
+  hide_hint: test
+  Death_year: 10
+  temper: "\u30A2\u30EA\u30B9"
+  Memory: 01000200
+  potition: 3
+  MainClass: Stacy
+  SubClass: Stacy
+  Armament: 0
+  Variant: 0
+  Alter: 0
+  Skill: []
+--- !u!1 &766473210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 766473212}
+  - component: {fileID: 766473211}
+  m_Layer: 0
+  m_Name: BattleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &766473211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766473210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95cf72d0a42dba41a9db3a4e432cf4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharaObjectsBuffer: []
+  CharaObject: []
+--- !u!4 &766473212
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766473210}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.011977553, y: -3.809081, z: 4.1247597}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &894323815
 GameObject:
   m_ObjectHideFlags: 0

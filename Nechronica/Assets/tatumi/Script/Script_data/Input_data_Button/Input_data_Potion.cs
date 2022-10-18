@@ -28,6 +28,8 @@ public class Input_data_Potion : Input_data_Button
     {
         keyword=Push_button_pos();
 
+        Chara_intput_data_cs.temper_name = keyword;
+
         ChildObject = new GameObject[Pskils.transform.childCount];
 
         for (int i = 0; i < Pskils.transform.childCount; i++)
@@ -40,13 +42,15 @@ public class Input_data_Potion : Input_data_Button
             //‘I‘ð‹–‰Â–½—ß
             if(!test.name.Contains(keyword))
             {
-                test.GetComponent<Button>().interactable = false;
+                test.SetActive(false);
             }
             else
             {
-                test.GetComponent<Button>().interactable = true;
+                test.SetActive(true);
             }
           
         }
     }
+
+    
 }

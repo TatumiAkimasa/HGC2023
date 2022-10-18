@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class BattleSystem : MonoBehaviour
 {
+    // キャラのオブジェクトがどれだけあるか数える変数
     [SerializeField]
     private GameObject[] CharaObjectsBuffer;
 
     [SerializeField]
-    private List<CharaBase> CharaObject = new List<CharaBase>();
+    private List<Doll_blu_Nor> CharaObject = new List<Doll_blu_Nor>();
 
     private List<CharaBase> MoveChara = new List<CharaBase>();
 
@@ -17,10 +18,17 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CharaObjectsBuffer = GameObject.FindGameObjectsWithTag("Chara");
+        // Charaというタグがついたキャラをすべて取得
+        CharaObjectsBuffer = GameObject.FindGameObjectsWithTag("PlayableChara");
         for (int i = 0; i < CharaObjectsBuffer.Length; i++) 
         {
-            CharaObject.Add(CharaObjectsBuffer[i].GetComponent<CharaBase>());
+            // キャラ
+            CharaObject.Add(CharaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+        }
+
+        for(int i=0;i<CharaObject.Count;i++)
+        {
+            Debug.Log(CharaObject[i].GetHeadParts()[0].Name);
         }
     }
 
