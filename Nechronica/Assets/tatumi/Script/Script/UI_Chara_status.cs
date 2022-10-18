@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Doll_Data : MonoBehaviour
+public class UI_Chara_status : MonoBehaviour
 {
-  
-
     // Start is called before the first frame update
     void Start()
     {
-       
+        
     }
 
     // Update is called once per frame
