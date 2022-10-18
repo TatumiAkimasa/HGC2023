@@ -14,6 +14,7 @@ public class PartsList : CharaBase
 
 
     //TIMING------------------^p^
+   
     //0=オート,1=アクション,2=ラピッド,3=ジャッジ,4=ダメージ(処理順でわける)
     //攻撃範囲-------------------------------
     //最小(10=自身)
@@ -27,7 +28,7 @@ public class PartsList : CharaBase
         ago_H.Name = "あご";
         ago_H.EffectNum = 1;
         ago_H.Cost = 2;
-        ago_H.Timing = 1;
+        ago_H.Timing = ACTION;
         ago_H.MinRange = 0;
         ago_H.MaxRange = 0;
         ago_H.Weight = 1;
@@ -35,7 +36,7 @@ public class PartsList : CharaBase
         noumiso_H.Name = "のうみそ";
         noumiso_H.EffectNum = 2;
         noumiso_H.Cost = 0;
-        noumiso_H.Timing = 0;
+        noumiso_H.Timing = COUNT;
         noumiso_H.MinRange = 10;
         noumiso_H.MaxRange = 10;
         noumiso_H.Weight = 1;
@@ -43,7 +44,7 @@ public class PartsList : CharaBase
         medama_H.Name = "めだま";
         medama_H.EffectNum = 1;
         medama_H.Cost = 0;
-        medama_H.Timing = 0;
+        medama_H.Timing = COUNT;
         medama_H.MinRange = 10;
         medama_H.MaxRange = 10;
         medama_H.Weight = 1;
@@ -54,7 +55,7 @@ public class PartsList : CharaBase
         kobusi_A.Name = "こぶし";
         kobusi_A.EffectNum = 1;
         kobusi_A.Cost = 2;
-        kobusi_A.Timing = 1;
+        kobusi_A.Timing = ACTION;
         kobusi_A.MinRange = 0;
         kobusi_A.MaxRange = 0;
         kobusi_A.Weight = 1;
@@ -62,7 +63,7 @@ public class PartsList : CharaBase
         kata_A.Name = "かた";
         kata_A.EffectNum = 1;
         kata_A.Cost = 4;
-        kata_A.Timing = 1;
+        kata_A.Timing = ACTION;
         kata_A.MinRange = 10;
         kata_A.MaxRange = 10;
         kata_A.Weight = 1;
@@ -70,7 +71,7 @@ public class PartsList : CharaBase
         ude_A.Name = "うで";
         ude_A.EffectNum = 1;
         ude_A.Cost = 1;
-        ude_A.Timing = 3;
+        ude_A.Timing = JUDGE;
         ude_A.MinRange = 0;
         ude_A.MaxRange = 0;
         ude_A.Weight = 1;
@@ -79,8 +80,8 @@ public class PartsList : CharaBase
 
         sebone_B.Name = "せぼね";
         sebone_B.EffectNum = -1;
-        sebone_B.Cost = 2;
-        sebone_B.Timing = 1;
+        sebone_B.Cost = 1;
+        sebone_B.Timing = ACTION;
         sebone_B.MinRange = 0;
         sebone_B.MaxRange = 0;
         sebone_B.Weight = 1;
@@ -88,7 +89,7 @@ public class PartsList : CharaBase
         harawata_B.Name = "はらわた";
         harawata_B.EffectNum = 0;
         harawata_B.Cost = 0;
-        harawata_B.Timing = 0;
+        harawata_B.Timing = AUTO;
         harawata_B.MinRange = 10;
         harawata_B.MaxRange = 10;
         harawata_B.Weight = 1;
@@ -96,7 +97,7 @@ public class PartsList : CharaBase
         harawata2_B.Name = "はらわた";
         harawata2_B.EffectNum = 0;
         harawata2_B.Cost = 0;
-        harawata2_B.Timing = 0;
+        harawata2_B.Timing = AUTO;
         harawata2_B.MinRange = 10;
         harawata2_B.MaxRange = 10;
         harawata2_B.Weight = 1;
@@ -106,7 +107,7 @@ public class PartsList : CharaBase
         hone_L.Name = "ほね";
         hone_L.EffectNum = 1;
         hone_L.Cost = 3;
-        hone_L.Timing = 1;
+        hone_L.Timing = ACTION;
         hone_L.MinRange = 10;
         hone_L.MaxRange = 10;
         hone_L.Weight = 1;
@@ -114,7 +115,7 @@ public class PartsList : CharaBase
         hone2_L.Name = "ほね";
         hone2_L.EffectNum = 1;
         hone2_L.Cost = 3;
-        hone2_L.Timing = 1;
+        hone2_L.Timing = ACTION;
         hone2_L.MinRange = 10;
         hone2_L.MaxRange = 10;
         hone2_L.Weight = 1;
@@ -124,7 +125,7 @@ public class PartsList : CharaBase
         asi_L.Cost = 1;
         asi_L.MinRange = 0;
         asi_L.MaxRange = 0;
-        asi_L.Timing = 3;
+        asi_L.Timing = JUDGE;
         asi_L.Weight = 1;
 
     }
