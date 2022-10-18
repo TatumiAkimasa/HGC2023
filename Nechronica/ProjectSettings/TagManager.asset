@@ -4,8 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayableChara
   - EnemyChara
+  - rengoku
+  - hanazono
+  - rakuen
+  - jigoku
+  - naraku
+  - AllyChara
   layers:
   - Default
   - TransparentFX
