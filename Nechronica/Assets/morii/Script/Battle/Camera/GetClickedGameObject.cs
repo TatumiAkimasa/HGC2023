@@ -50,10 +50,9 @@ public class GetClickedGameObject : MonoBehaviour
                 Debug.Log(clickedGameObject.name);
             }
 
-            //クリックしたゲームオブジェクトがプレイアブルキャラなら
-            if (clickedGameObject.CompareTag("PlayableChara"))
+            //クリックしたゲームオブジェクトが味方キャラなら
+            if (clickedGameObject.CompareTag("AllyChara"))
             {
-                Debug.Log("まさかここ通ってる？");
                 CharaSelect();
                 // ここでコマンド表示
                 StartCoroutine(MoveStandby(clickedGameObject));

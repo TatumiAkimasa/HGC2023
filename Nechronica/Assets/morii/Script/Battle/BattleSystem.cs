@@ -17,6 +17,10 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private List<Doll_blu_Nor> charaObject = new List<Doll_blu_Nor>();
 
+    // キャラスポーンスクリプト参照用
+    [SerializeField]
+    private BattleSpone battleSpone;
+
     // クリックされたプレイアブルキャラを受け取るようの変数
     private GameObject clickedChara;
 
@@ -74,12 +78,13 @@ public class BattleSystem : MonoBehaviour
             charaObject.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
 
-        // デバッグ用にスタートに書く。本当はTurnStartに配置。
-        for (int i = 0; i < charaObject.Count; i++)
-        {
-            charaObject[i].IncreaseNowCount();
-            Debug.Log(charaObject[i].GetNowCount());
-        }
+        // キャラをスポーン
+        charaObject=battleSpone.CharaSpone(charaObject);
+    }
+
+    private void Start()
+    {
+        TurnStart();
     }
 
     /// <summary>
@@ -87,7 +92,25 @@ public class BattleSystem : MonoBehaviour
     /// </summary>
     public void TurnStart()
     {
+        // デバッグ用にスタートに書く。本当はTurnStartに配置。
+        for (int i = 0; i < charaObject.Count; i++)
+        {
+            charaObject[i].IncreaseNowCount();
+            Debug.Log(charaObject[i].GetNowCount());
+        }
+
+        CountStart();
+    }
+
+    /// <summary>
+    /// カウント開始時に入るメソッド
+    /// </summary>
+    public void CountStart()
+    {
+        // 現在のカウントを表示
         CountText.text = NowCount.ToString();
+
+        // 現在のカウントと同じ行動値のキャラを取得し、スクロールビューに表示
         for (int i = 0; i < charaObject.Count; i++)
         {
             if (NowCount == charaObject[i].GetNowCount())
@@ -97,34 +120,39 @@ public class BattleSystem : MonoBehaviour
                 battleExe = true;
             }
         }
-        if(battleExe)
+        if (battleExe)
         {
             BattleStart();
         }
-        
     }
 
     /// <summary>
     /// ターン終了時に入るメソッド
     /// </summary>
-    public void TurnLast()
+    public void CountLast()
     {
         NowCount--;
         if(NowCount==0)
         {
             NowCount += 20;
+            for (int i = 0; i < CloneCntPrefab.Count; i++)
+            {
+                Destroy(CloneCntPrefab[i]);
+            }
+            CloneCntPrefab.Clear();
+            TurnStart();
         }
 
         // カウント終了時に左の行動表のリストをクリア
-        if(CloneCntPrefab.Count>=0)
+        else if(CloneCntPrefab.Count>=0)
         {
             for(int i=0;i<CloneCntPrefab.Count;i++)
             {
                 Destroy(CloneCntPrefab[i]);
             }
             CloneCntPrefab.Clear();
+            CountStart();
         }
-        TurnStart();
     }
 
     /// <summary>
