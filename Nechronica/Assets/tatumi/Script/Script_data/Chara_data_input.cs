@@ -82,7 +82,8 @@ public class Chara_data_input : CharaBase
             {
                 for (int k = 0; k != 3; k++)
                 {
-                    if (WE_Maneger.Site_[SITE].Step[i].Text[k] != null)
+                    //Noneî•ñ‚ğ”²‚«‚É‚µ‚Ä®—
+                    if (WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetName()!="")
                     {
                         if (SITE == HEAD)
                         {

@@ -15,7 +15,8 @@ public class MOve_chara : MonoBehaviour
 
     private float my_y;
 
-
+    [SerializeField]
+    GameObject Menu;
 
     void Start()
     {
@@ -45,6 +46,9 @@ public class MOve_chara : MonoBehaviour
         moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
         my_y = moveDirection.y;
         controller.Move(moveDirection * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.M))
+            Menu.SetActive(true);
     }
 
   
