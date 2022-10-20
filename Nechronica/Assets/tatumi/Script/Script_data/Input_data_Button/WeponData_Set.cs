@@ -36,7 +36,7 @@ public class WeponData_Set : CharaBase
     {
         if (change_image != null)
         {
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(1)&&this.GetComponent<Toggle>().isOn==false)
             {
                     string now_name = this.gameObject.name.Substring(0, this.gameObject.name.Length - 1);
 

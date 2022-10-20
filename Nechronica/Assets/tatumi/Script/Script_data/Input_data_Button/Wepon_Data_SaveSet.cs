@@ -8,7 +8,7 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     //内部データ------------------------------------------------
     [SerializeField]
     private int EffectNum, Cost, Timing, MinRange, MaxRange, Weight, AtkType, Num_per_Action;//基礎設定値
-
+    [SerializeField]
     private string Name;//パーツ名
 
     [SerializeField]
@@ -20,10 +20,28 @@ public class Wepon_Data_SaveSet : MonoBehaviour
    
     //ゲッター,セッター
     public CharaManeuver GetParts() => Set_Parts;
-    public CharaManeuver SetParts(CharaManeuver item) => Set_Parts = item;
+    public void SetParts(CharaManeuver item)
+    {
+        Set_Parts.Cost = item.Cost;
+        Set_Parts.EffectNum = item.EffectNum;
+        Set_Parts.isDmage = item.isDmage;
+        Set_Parts.isUse = item.isUse;
+        Set_Parts.MaxRange = item.MaxRange;
+        Set_Parts.MinRange = item.MinRange;
+        Set_Parts.Name = item.Name;
+        Set_Parts.Timing = item.Timing;
+        Set_Parts.Weight = item.Weight;
+
+        Set_Parts.Atk.AtkType = item.Atk.AtkType;
+        Set_Parts.Atk.isAllAttack = item.Atk.isAllAttack;
+        Set_Parts.Atk.isCotting = item.Atk.isCotting;
+        Set_Parts.Atk.isExplosion = item.Atk.isExplosion;
+        Set_Parts.Atk.isSuccession = item.Atk.isSuccession;
+        Set_Parts.Atk.Num_per_Action = item.Atk.Num_per_Action;
+    }
     public string GetName() => Set_Parts.Name;
 
-    private void Start()
+    private void Awake()
     {
         //武器選択
         if (this.GetComponent<WeponData_Set>() != null)
