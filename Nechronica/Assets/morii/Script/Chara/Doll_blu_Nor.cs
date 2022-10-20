@@ -11,6 +11,7 @@ public class Doll_blu_Nor : PartsList
     public short[] Memory= {1,2 };                 //‹L‰¯‚Ì‚©‚¯‚ç
 
     public string GetName() => Name;
+    List<List<CharaManeuver>> charaManeuvers;
 
     
 
@@ -19,6 +20,17 @@ public class Doll_blu_Nor : PartsList
     public string MainClass="Stacy", SubClass="Stacy";     //E‹Æ(skill)
     public short Armament=0, Variant=0, Alter=0; //•‘•,•ÏˆÙ,‰ü‘¢(Skill)
     public List<CharaManeuver> Skill;              //ƒXƒLƒ‹
+
+    public List<List<CharaManeuver>> GetManeuver()
+    {
+        charaManeuvers.Add(HeadParts);
+        charaManeuvers.Add(ArmParts);
+        charaManeuvers.Add(BodyParts);
+        charaManeuvers.Add(LegParts);
+        charaManeuvers.Add(Skill);
+
+        return charaManeuvers;
+    }
 
     private void Start()
     {

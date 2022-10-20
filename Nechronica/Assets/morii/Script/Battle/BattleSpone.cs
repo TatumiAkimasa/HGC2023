@@ -25,8 +25,11 @@ public class BattleSpone : MonoBehaviour
 
     public List<Doll_blu_Nor> CharaSpone(List<Doll_blu_Nor> array)
     {
-        charaObject.Add(null);
-        array.CopyTo(charaObject.ToArray(),0);
+        // array‚Ìî•ñ‚ğcharaObject‚ÉŠi”[
+        for(int i=0;i<array.Count;i++)
+        {
+            charaObject.Add(array[i]);
+        }
 
         for (int i=0;i<charaObject.Count;i++)
         {
@@ -44,7 +47,6 @@ public class BattleSpone : MonoBehaviour
                         charaObject[i].transform.position = sponeField[RENGOKU].transform.GetChild(0).position;
                         break;
                 }
-                Debug.Log(charaObject[i].transform.position.y);
             }
         }
 
