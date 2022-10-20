@@ -25,12 +25,15 @@ public class CharaBase_SaveData
     public int GetMaxCount() => MaxCount;
     public int GetNowCount() => NowCount;
     public int GetWeight() => AllWeight;
+    public int GetALLParts()=> HeadParts.Count + ArmParts.Count + BodyParts.Count + LegParts.Count;
+    
 
     public List<CharaManeuver> GetHeadParts() => HeadParts; //頭パーツ参照
     public List<CharaManeuver> GetArmParts() => ArmParts;   //腕パーツ参照
     public List<CharaManeuver> GetBodygParts() => BodyParts;//胴体パーツ参照
     public List<CharaManeuver> GetLegParts() => LegParts;   //脚パーツ参照
     public List<CharaManeuver> GetSkillParts() => Skill;      //SKILLのパーツ
+   
 
     public List<CharaManeuver> HeadParts;      //頭のパーツ
     public List<CharaManeuver> ArmParts;       //腕のパーツ

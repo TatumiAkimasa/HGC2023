@@ -36,7 +36,7 @@ public class Chara_data_input : CharaBase
     public short[] Memory_=new short[6];                 //記憶のかけら
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //参照渡しでいったん解決（Copyがうまくいかない...）
         Doll_data.Memory = Memory_;
@@ -82,7 +82,8 @@ public class Chara_data_input : CharaBase
             {
                 for (int k = 0; k != 3; k++)
                 {
-                    if (WE_Maneger.Site_[SITE].Step[i].Text[k] != null)
+                    //None情報を抜きにして整理
+                    if (WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetName()!="")
                     {
                         if (SITE == HEAD)
                         {
@@ -106,7 +107,7 @@ public class Chara_data_input : CharaBase
             }
         }
 
-        //お宝を対応場所に付与(場所は10枠目固定)
+        //お宝を対応場所に付与(場所はラスト固定)
         switch (Treasure_num)
         {
             case HEAD:

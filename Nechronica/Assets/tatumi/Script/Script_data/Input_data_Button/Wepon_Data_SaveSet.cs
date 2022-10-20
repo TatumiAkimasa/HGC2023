@@ -21,6 +21,7 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     //ゲッター,セッター
     public CharaManeuver GetParts() => Set_Parts;
     public CharaManeuver SetParts(CharaManeuver item) => Set_Parts = item;
+    public string GetName() => Set_Parts.Name;
 
     private void Start()
     {
@@ -38,7 +39,7 @@ public class Wepon_Data_SaveSet : MonoBehaviour
 
     }
 
-    public CharaManeuver GetPrats() => Set_Parts;
+    //public CharaManeuver GetPrats() => Set_Parts;
 
     public void Reset()
     {

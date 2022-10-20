@@ -21,8 +21,7 @@ public class Talk_Chara : MonoBehaviour
     private int text_Len = 0;//必要文字数
 
     private int Max_count = 0;//最大文字切り替え数
-    private bool T_now_flag = false;//Tキー長押し判定
-
+   
 
     // Start is called before the first frame update
     void Start()
