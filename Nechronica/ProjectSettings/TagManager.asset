@@ -11,6 +11,8 @@ TagManager:
   - jigoku
   - naraku
   - AllyChara
+  - ActionCommands
+  - RapidCommands
   layers:
   - Default
   - TransparentFX

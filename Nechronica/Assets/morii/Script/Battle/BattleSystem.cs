@@ -96,7 +96,7 @@ public class BattleSystem : MonoBehaviour
         for (int i = 0; i < charaObject.Count; i++)
         {
             charaObject[i].IncreaseNowCount();
-            Debug.Log(charaObject[i].GetNowCount());
+            Debug.Log(charaObject[i].NowCount);
         }
 
         CountStart();
@@ -113,7 +113,7 @@ public class BattleSystem : MonoBehaviour
         // 現在のカウントと同じ行動値のキャラを取得し、スクロールビューに表示
         for (int i = 0; i < charaObject.Count; i++)
         {
-            if (NowCount == charaObject[i].GetNowCount())
+            if (NowCount == charaObject[i].NowCount)
             {
                 IndicateMoveChara(charaObject[i]);
                 CountMoveChara.Add(charaObject[i]);
