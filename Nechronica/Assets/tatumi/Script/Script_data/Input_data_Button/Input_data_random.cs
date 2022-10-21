@@ -10,8 +10,7 @@ public class Input_data_random : MonoBehaviour
 
     protected string[] memory_datas = new string[10];
 
-    [SerializeField]
-    Chara_data_input Chara_data_input_cs;
+    private Chara_data_input Chara_data_input_cs;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +26,7 @@ public class Input_data_random : MonoBehaviour
         memory_datas[8] = "Šó–]";
         memory_datas[9] = "K•Ÿ";
 
-      
+        Chara_data_input_cs = Maneger_Accessor.Instance.chara_Data_Input_cs;
     }
 
     // Update is called once per frame

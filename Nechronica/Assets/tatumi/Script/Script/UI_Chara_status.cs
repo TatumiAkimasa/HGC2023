@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Players_Status
 {
     [Header("名前,パーツ数,最大行動値")]
-    public Text[] text = new Text[3];
+    public Text[] text = new Text[4];
 
 }
 
@@ -26,15 +26,22 @@ public class UI_Chara_status : ClassData_
     // Start is called before the first frame update
     void Start()
     {
-        data_Scan_cs = GameObject.FindWithTag("AllyChara").GetComponent<Data_Scan>();
-        Data_Length = data_Scan_cs.my_data.Length;
-
-        for(int i=0;i!= Data_Length; i++)
+        StartCoroutine(Data_Scan.Instance.Init((End=>
         {
-            Charas[i].text[0].text = data_Scan_cs.my_data[i].Name;
-            Charas[i].text[1].text = data_Scan_cs.my_data[i].CharaBase_data.GetALLParts().ToString();
-            Charas[i].text[2].text = data_Scan_cs.my_data[i].CharaBase_data.GetMaxCount().ToString();
-        }
+            data_Scan_cs = Data_Scan.Instance;
+
+            Data_Length = Data_Scan.Instance.my_data.Length;
+
+            for (int i = 0; i != Data_Length; i++)
+            {
+                Charas[i].text[0].text = data_Scan_cs.my_data[i].Name;
+                Charas[i].text[1].text = data_Scan_cs.my_data[i].CharaBase_data.GetALLParts().ToString();
+                Charas[i].text[2].text = data_Scan_cs.my_data[i].CharaBase_data.GetMaxCount().ToString();
+                Charas[i].text[3].text = data_Scan_cs.my_data[i].CharaField_data.Event[0].str;
+            }
+        })));
+
+        
     }
 
     public void Chara_Parts_View(int SITE)

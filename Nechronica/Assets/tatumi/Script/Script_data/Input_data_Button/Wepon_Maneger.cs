@@ -47,9 +47,9 @@ public class Wepon_Maneger : ClassData_
   
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-      
+        Maneger_Accessor.Instance.weponManeger_cs = this;
     }
 
     private int Bounus_Parts(int Level,int Type)

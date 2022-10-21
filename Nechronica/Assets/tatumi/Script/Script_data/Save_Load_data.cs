@@ -7,12 +7,8 @@ using UnityEngine.UI;
 
 public class Save_Load_data : MonoBehaviour
 {
-   
-    [SerializeField]
-    public Chara_data_input Chara_data_input_cs;
-
-  
     const string filename = "Nechronica_savedata";
+    const string filename_sub = "Nechronica_savedata_sub";
 
     [SerializeField]
     public Doll_blueprint aa;
@@ -25,20 +21,22 @@ public class Save_Load_data : MonoBehaviour
         binarySaveLoad.IsSimpleEncryption = true;
         binarySaveLoad.UserEncrypt = (data) => { for (int i = 0; i < data.Length; i++) data[i] += 1; };
         binarySaveLoad.UserDecrypt = (data) => { for (int i = 0; i < data.Length; i++) data[i] -= 1; };
-
+        Data_Scan.Instance.save_Load_Data_cs = this;
     }
+
+
 
     public void ClickButtonSave()
     {
-        Doll_blueprint test = Chara_data_input_cs.Doll_data;
-        binarySaveLoad.Save(filename, test);
+        Doll_blueprint test = Maneger_Accessor.Instance.chara_Data_Input_cs.Doll_data;
+        binarySaveLoad.Save(filename_sub, test);
     }
 
     public void ClickButtonLoad()
     {
         Doll_blueprint loaddata;
 
-        binarySaveLoad.Load(filename, out loaddata);
+        binarySaveLoad.Load(filename_sub, out loaddata);
 
         // display load data
         if (loaddata == null)
@@ -50,8 +48,11 @@ public class Save_Load_data : MonoBehaviour
             Debug.Log("LOAD-OK_savedata");
         }
 
+        //aa.CharaField_data.Event[0].str = "Œ®‚ðŽè‚É“ü‚êANPC2‚É˜b‚©‚¯‚æB";
         aa=loaddata;
     }
+
+ 
 
     public void ClickButtonDelete()
     {

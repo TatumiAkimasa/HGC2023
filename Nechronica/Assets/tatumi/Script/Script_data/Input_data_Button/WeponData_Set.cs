@@ -15,7 +15,7 @@ public class WeponData_Set : CharaBase
     [SerializeField]
     private Image change_image;
 
-    public Wepon_Maneger Wepon_maneger;
+   
     public int Type, level;
 
     private int nowType = 0;
@@ -24,7 +24,7 @@ public class WeponData_Set : CharaBase
     //ÉfÅ[É^ÇÃé¿ç€Ç…
     public void Wepon_add()
     {
-        Wepon_maneger.Add_Wepon(this.GetComponent<Toggle>(), Type,level);
+        Maneger_Accessor.Instance.weponManeger_cs.Add_Wepon(this.GetComponent<Toggle>(), Type,level);
     }
 
     public string Get_Wepon_Text()

@@ -7,11 +7,12 @@ using System.Linq;
 public class PartsPoint_Add : ClassData_
 {
     ToggleGroup mToggleGroup;
-    public SkillManeger skillManeger_cs;
+    private SkillManeger skillManeger_cs;
 
     // Start is called before the first frame update
     void Start()
     {
+        skillManeger_cs = Maneger_Accessor.Instance.skillManeger_cs;
         mToggleGroup = this.GetComponent<ToggleGroup>();
         skillManeger_cs.parts[ARMAMENT + 6]++;
     }

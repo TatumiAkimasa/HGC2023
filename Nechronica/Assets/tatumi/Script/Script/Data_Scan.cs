@@ -2,25 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Data_Scan : MonoBehaviour
+public class Data_Scan
 {
-    [SerializeField]
-    public Doll_blueprint[] my_data;
+    //シングルトンパターン
+    private static Data_Scan instance = null;
 
-    [SerializeField]
-    private Save_Load_data save_Load_Data_cs;
+    public static Data_Scan Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new Data_Scan();
+            }
+            return instance;
+        }
+
+    }
+
+    public Doll_blueprint[] my_data = new Doll_blueprint [1];
+
+    public Save_Load_data save_Load_Data_cs;
 
     //将来的に全データを一旦こいつに置く。
-    void Start()
+    public IEnumerator Init(System.Action<bool> action)
     {
         save_Load_Data_cs.ClickButtonLoad();
 
-        my_data[0] = save_Load_Data_cs.aa;
+        while (save_Load_Data_cs.aa == null)
+            yield return null;
+
+        my_data[0]=save_Load_Data_cs.aa;
+
+        action(true);
+        yield return null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
