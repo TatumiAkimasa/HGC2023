@@ -7,21 +7,21 @@ using UnityEngine.UI;
 public class CharaBase : MonoBehaviour
 {
     //タイミングの定数
-    protected const int COUNT  = -1;
-    protected const int AUTO   = 0;
-    protected const int ACTION = 1;
-    protected const int RAPID  = 2;
-    protected const int JUDGE  = 3;
-    protected const int DAMAGE = 4;
+    public const int COUNT  = -1;
+    public const int AUTO   = 0;
+    public const int ACTION = 1;
+    public const int RAPID  = 2;
+    public const int JUDGE  = 3;
+    public const int DAMAGE = 4;
 
     //ゲッター
-    public int GetMaxCount() => MaxCount;
-    public int GetNowCount() => NowCount;
-    public int GetWeight() => AllWeight;
+    public int GetMaxCount() => maxCount;
+    public int GetNowCount() => nowCount;
+    public int GetWeight() => allWeight;
 
     public List<CharaManeuver> GetHeadParts() => HeadParts; //頭パーツ参照
     public List<CharaManeuver> GetArmParts() => ArmParts;   //腕パーツ参照
-    public List<CharaManeuver> GetBodygParts() => BodyParts;//胴体パーツ参照
+    public List<CharaManeuver> GetBodyParts() => BodyParts;//胴体パーツ参照
     public List<CharaManeuver> GetLegParts() => LegParts;   //脚パーツ参照
     public List<CharaManeuver> GetSkillParts()=>Skill;      //SKILLのパーツ
 
@@ -44,7 +44,7 @@ public class CharaBase : MonoBehaviour
             //最大行動値加算パーツが破損していなければ最大行動値加算
             if(!HeadParts[i].isDmage&& HeadParts[i].Timing==COUNT)
             {
-                MaxCount += HeadParts[i].EffectNum;
+                maxCount += HeadParts[i].EffectNum;
             }
         }
         for (int i = 0; i < ArmParts.Count; i++)
@@ -52,7 +52,7 @@ public class CharaBase : MonoBehaviour
             //最大行動値加算パーツが破損していなければ最大行動値加算
             if (!ArmParts[i].isDmage && ArmParts[i].Timing == COUNT)
             {
-                MaxCount += ArmParts[i].EffectNum;
+                maxCount += ArmParts[i].EffectNum;
             }
         }
         for (int i = 0; i < BodyParts.Count; i++)
@@ -60,7 +60,7 @@ public class CharaBase : MonoBehaviour
             //最大行動値加算パーツが破損していなければ最大行動値加算
             if (!BodyParts[i].isDmage && BodyParts[i].Timing == COUNT)
             {
-                MaxCount += BodyParts[i].EffectNum;
+                maxCount += BodyParts[i].EffectNum;
             }
         }
         for (int i = 0; i < LegParts.Count; i++)
@@ -68,7 +68,7 @@ public class CharaBase : MonoBehaviour
             //最大行動値加算パーツが破損していなければ最大行動値加算
             if (!LegParts[i].isDmage && LegParts[i].Timing == COUNT)
             {
-                MaxCount += LegParts[i].EffectNum;
+                maxCount += LegParts[i].EffectNum;
             }
         }
     }
@@ -78,12 +78,17 @@ public class CharaBase : MonoBehaviour
     /// </summary>
     public void IncreaseNowCount()
     {
-        NowCount += MaxCount;
+        nowCount += maxCount;
     }
 
-    protected int MaxCount = 6;                   //カウント最大値 ルール上もともと最大行動値は6あるので6で初期化
-    protected int NowCount;                       //現在のカウント
-    protected int AllWeight;                      //重さ
+    protected int maxCount = 6;                   //カウント最大値 ルール上もともと最大行動値は6あるので6で初期化
+    protected int nowCount;                       //現在のカウント
+    public int NowCount
+    {
+        get { return nowCount; }
+        set { nowCount = value; }
+    }
+    protected int allWeight;                      //重さ
 
     [SerializeField]
     protected Image CharaImg;
