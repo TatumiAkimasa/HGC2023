@@ -24,9 +24,14 @@ public class CheckUp_chara : MonoBehaviour
             {
                 talk_now = true;
 
-                StartCoroutine(Talk_cs.Talk_Set((End =>
+                StartCoroutine(Talk_cs.Talk_Set((Talk_End =>
                 {
-                    talk_now = End;
+                    talk_now = true;
+
+                    for (int i = 0; i != Talk_End.Length; i++)
+                    {
+                        Data_Scan.Instance.my_data[0].Item.Add(Talk_End[i]);
+                    }
                 })));
 
             }
@@ -52,4 +57,8 @@ public class CheckUp_chara : MonoBehaviour
             PL = null;
         }
     }
+
+    
 }
+
+
