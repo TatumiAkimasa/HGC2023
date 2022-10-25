@@ -53,12 +53,11 @@ public class GetClickedGameObject : MonoBehaviour
             //クリックしたゲームオブジェクトが味方キャラなら
             if (clickedGameObject.CompareTag("AllyChara"))
             {
+                clickedGameObject.GetComponent<BattleCommand>().SetNowSelect(true);
                 CharaSelect();
                 // ここでコマンド表示
                 StartCoroutine(MoveStandby(clickedGameObject));
             }
-
-            
         }
         else if(selectedChara)
         {
@@ -68,7 +67,7 @@ public class GetClickedGameObject : MonoBehaviour
     }
 
     /// <summary>
-    /// キャラが選択された後に近づくメソッド
+    /// キャラが選択された後、カメラが選択されたキャラに近づくメソッド
     /// </summary>
     /// <returns></returns>
     public void CharaSelect()
@@ -107,15 +106,9 @@ public class GetClickedGameObject : MonoBehaviour
             // 複製したプレハブカメラを消す。
             StartCoroutine(DstroyCamera());
         }
-        // else if(技コマンド選択で…
-        //{
-        //    DestroyCamera();
-        //    battleSystem.BattleProcess(選んだ技コマンド);
-        //    battleSystem.rayGuard.SetActive(true);
-        //    selsectedChara=false;
-        //}
-
     }
+
+
 
     // カメラが完全に離れてから消すためのコルーチン
     IEnumerator DstroyCamera()

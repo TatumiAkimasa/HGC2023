@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
+using System.IO;
 
 
 public class BattleCommand : MonoBehaviour
@@ -28,13 +30,21 @@ public class BattleCommand : MonoBehaviour
     [SerializeField]
     private Button rapidButton;                     // ラピッドのボタン
     [SerializeField]
-    private Button standbyButton;                     // ラピッドのボタン
-
-
+    private Button standbyButton;                     // 待機のボタン
+    [SerializeField]
+    private ButtonTexts prefabActButton;                    // actionコマンドのプレハブ
+    [SerializeField]
+    private ButtonTexts prefabRpdButton;                     // rapidコマンドのプレハブ
+    [SerializeField]
+    private bool nowSelect;                         // 選択中かどうか
+    public void SetNowSelect(bool select) => nowSelect = select;
 
     private void Start()
     {
-        // ボタンおを取得
+        prefabActButton = NonResources.Load<ButtonTexts>("Assets/morii/Prefab/Commands/ActionButton.prefab");
+        prefabRpdButton = NonResources.Load<ButtonTexts>("Assets/morii/Prefab/Commands/RapidButton.prefab");
+
+        // ボタンを取得
         actionButton = thisChara.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
         rapidButton = thisChara.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
         standbyButton = thisChara.transform.Find("Canvas/Act_select/Standby").gameObject.GetComponent<Button>();
@@ -47,6 +57,7 @@ public class BattleCommand : MonoBehaviour
         // コマンドを取得
         actionCommands = thisChara.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
         rapidCommand = thisChara.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+
 
         // 各部位パーツのアクション、ラピッドタイミングのパーツを取得
         for(int i=0;i<thisChara.GetHeadParts().Count;i++)
@@ -96,8 +107,12 @@ public class BattleCommand : MonoBehaviour
                 RapidManeuvers.Add(thisChara.GetLegParts()[i]);
             }
         }
-    }
 
+        for(int i=0;i<ActionManeuvers.Count;i++)
+        {
+
+        }
+    }
 
     public void OnClickStandby()
     {
