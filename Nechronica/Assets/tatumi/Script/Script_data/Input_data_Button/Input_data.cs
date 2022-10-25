@@ -9,14 +9,13 @@ public class Input_data : ClassData_
     public InputField inputField;
     public Text text,Tre_pos_text;
 
-    [SerializeField]
-    Chara_data_input Chara_data_input_cs;
+    private Chara_data_input Chara_data_input_cs;
 
     public int Treasure_pos_num=0;
    
     void Start()
     {
-      
+        Chara_data_input_cs = Maneger_Accessor.Instance.chara_Data_Input_cs;
     }
 
     public void InputText(int ID)

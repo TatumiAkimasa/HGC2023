@@ -13,9 +13,31 @@ public class Doll_blueprint
     public string MainClass, SubClass;     //職業
     public short Armament, Variant, Alter; //武装,変異,改造
     public short potition;                 //初期配置
+    public List<Item> Item;              //所持アイテム
     public CharaBase_SaveData CharaBase_data;
-   
+    public Chara_Field_SaveData CharaField_data;
+}
 
+[System.Serializable]
+public class Chara_Field_SaveData
+{
+    public string Scene_Name;
+    public float[] Pos = new float[3];
+    public EventFlag[] Event = new EventFlag[2];
+}
+
+[System.Serializable]
+public class EventFlag
+{
+    public string str;
+    public bool flag;
+}
+
+[System.Serializable]
+public class Item
+{
+    public string Tiltle;
+    public string str;
 }
 
 [System.Serializable]

@@ -18,6 +18,9 @@ public class MOve_chara : MonoBehaviour
     [SerializeField]
     GameObject Menu;
 
+    [SerializeField]
+    GameObject mission;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -48,7 +51,10 @@ public class MOve_chara : MonoBehaviour
         controller.Move(moveDirection * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.M))
+        {
             Menu.SetActive(true);
+            mission.SetActive(false);
+        }
     }
 
   

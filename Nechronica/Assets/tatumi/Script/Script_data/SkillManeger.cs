@@ -27,12 +27,14 @@ public class SkillManeger : ClassData_
 
     Button[] Parent_Skill = new Button[2];
 
-    public Wepon_Maneger wepon_Maneger;
-    public Chara_data_input Chara_intpu_cs;
+    private Wepon_Maneger wepon_Maneger;
+    private Chara_data_input Chara_intpu_cs;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        Maneger_Accessor.Instance.skillManeger_cs = this;
+
         //‰Šú‰»
         for(int i=0;i!=9;i++)
         {
@@ -48,6 +50,12 @@ public class SkillManeger : ClassData_
         }
 
         keyword = "x";
+    }
+
+    private void Start()
+    {
+        wepon_Maneger = Maneger_Accessor.Instance.weponManeger_cs;
+        Chara_intpu_cs = Maneger_Accessor.Instance.chara_Data_Input_cs;
     }
 
     // Update is called once per frame

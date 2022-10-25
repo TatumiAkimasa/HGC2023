@@ -15,8 +15,8 @@ public class Chara_data_input : CharaBase
     public string name_;                    //ドール名 
     public string death_year_;              //享年
 
-    public Wepon_Maneger WE_Maneger;
-    public SkillManeger SK_Maneger;
+    private Wepon_Maneger WE_Maneger;
+    private SkillManeger SK_Maneger;
     [SerializeField]
     private kihonnpatu ALL_Base_Parts;
 
@@ -41,6 +41,14 @@ public class Chara_data_input : CharaBase
         //参照渡しでいったん解決（Copyがうまくいかない...）
         Doll_data.Memory = Memory_;
         Treasure = ALL_Base_Parts.Treasure_parts;
+
+        Maneger_Accessor.Instance.chara_Data_Input_cs = this;
+    }
+
+    private void Start()
+    {
+        WE_Maneger = Maneger_Accessor.Instance.weponManeger_cs;
+        SK_Maneger = Maneger_Accessor.Instance.skillManeger_cs;
     }
 
     // Update is called once per frame
@@ -83,7 +91,7 @@ public class Chara_data_input : CharaBase
                 for (int k = 0; k != 3; k++)
                 {
                     //None情報を抜きにして整理
-                    if (WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetName()!="")
+                    if (WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetName()!="None")
                     {
                         if (SITE == HEAD)
                         {
@@ -144,6 +152,8 @@ public class Chara_data_input : CharaBase
 
         //positionスキルのみこちらで設定
         Doll_data.CharaBase_data.Skill.Add(Potition_Skill);
+
+        Doll_data.CharaField_data.Event[0].str = "鍵を手に入れ、NPC2に話かけよ。";
 
     }
 
