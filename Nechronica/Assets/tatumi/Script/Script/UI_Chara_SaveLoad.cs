@@ -15,6 +15,7 @@ public class UI_Chara_SaveLoad : MonoBehaviour
     private void Start()
     {
         SaveObj = GameObject.FindGameObjectWithTag("AllyChara").GetComponent<Save_Load_data>();
+        nanana();
     }
 
     public void nanana()

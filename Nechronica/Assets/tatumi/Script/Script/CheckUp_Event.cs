@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CheckUp_Event : CheckUp_chara
 {
     [SerializeField]
-    private GameObject Obj,UI;
+    private GameObject ParentObj,UI;
 
     [SerializeField,Header("必要アイテム名")]
     private string Item_Name;
@@ -30,10 +31,9 @@ public class CheckUp_Event : CheckUp_chara
 
                 if (Event != null)
                 {
-                    Data_Scan.Instance.my_data[0].CharaField_data.Event[Event_num].flag = true;
-                    Obj.SetActive(false);
+                    
                     Talk_cs.Set_Itemstr(Event_OK);
-                    UI.GetComponent<UI_Chara_status>().Eventstr_Update();
+                  
                 }
                 else
                 {
@@ -42,7 +42,15 @@ public class CheckUp_Event : CheckUp_chara
 
                 StartCoroutine(Talk_cs.Talk_Set((Talk_End =>
                 {
-                    talk_now = true;
+                    talk_now = false;
+
+                    if (Event != null)
+                    {
+                        Data_Scan.Instance.my_data[0].CharaField_data.Event[Event_num].flag = true;
+                        ParentObj.SetActive(false);
+                        
+                        UI.GetComponent<UI_Chara_status>().Eventstr_Update();
+                    }
 
                     for (int i = 0; i != Talk_End.Length; i++)
                     {

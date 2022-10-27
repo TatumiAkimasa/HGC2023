@@ -40,6 +40,12 @@ public class Talk_Chara : MonoBehaviour
     private int Max_count = 0;//Å‘å•¶ŽšØ‚è‘Ö‚¦”
 
     public string Set_Itemstr(string set) => UI_str = set;
+    public void Set_Talkstr(string[] set) 
+    {
+        Talk = new string[set.Length];
+        Max_count = set.Length;
+        set.CopyTo(Talk, 0); 
+    }
 
     // Start is called before the first frame update
     void Start()
