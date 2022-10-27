@@ -16,7 +16,7 @@ public class CheckUp_Save : CheckUp_chara
                 talk_now = true;
 
                 SaveRoad.SetActive(true);
-                SaveRoad.GetComponent<UI_Chara_SaveLoad>().nanana();
+             
             }
         }
     }

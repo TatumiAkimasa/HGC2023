@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class Action_Fleld : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+   
+    [SerializeField]
+    private GameObject[] TargetObjs;
+
+    public enum Layers
     {
-        
+        Defult = 0,
+        InHouse = 3,
+        SkeletonWall = 7
     }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField]
+    private Layers Inlay,Outlay;
+
+    private void OnTriggerEnter(Collider Item)
     {
-        
+        if (Item.tag == "Player")
+        {
+           
+            for(int i=0;i!=TargetObjs.Length;i++)
+                TargetObjs[i].layer = (int)Inlay;
+
+        }
+    }
+
+    private void OnTriggerExit(Collider Item)
+    {
+        if (Item.tag == "Player")
+        {
+            for (int i = 0; i != TargetObjs.Length; i++)
+                TargetObjs[i].layer = (int)Outlay;
+
+        }
     }
 }
