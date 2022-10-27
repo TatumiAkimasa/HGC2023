@@ -23,27 +23,35 @@ public class BattleCommand : MonoBehaviour
     private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
 
     [SerializeField]
-    private GameObject rapidCommand;                // ラピッドタイミングのコマンドオブジェクト
+    private GameObject rapidCommands;                // ラピッドタイミングのコマンドオブジェクト
 
     [SerializeField]
     private Button actionButton;                    // アクションのボタン
     [SerializeField]
     private Button rapidButton;                     // ラピッドのボタン
     [SerializeField]
-    private Button standbyButton;                     // 待機のボタン
+    private Button standbyButton;                   // 待機のボタン
+
     [SerializeField]
-    private ButtonTexts prefabActButton;                    // actionコマンドのプレハブ
+    private GameObject prefabActButton;             // actionコマンドのプレハブ
     [SerializeField]
-    private ButtonTexts prefabRpdButton;                     // rapidコマンドのプレハブ
+    private List<GameObject> parentsActObj = new List<GameObject>();                // アクションコマンドの親オブジェクトリスト
+    private List<GameObject> prefabActObjList = new List<GameObject>();
+
+    [SerializeField]
+    private GameObject prefabRpdButton;             // rapidコマンドのプレハブ
+    [SerializeField]
+    private List<GameObject> parentsRpdObj = new List<GameObject>();                // ラピッドコマンドの親オブジェクト
+    private List<GameObject> prefabRpdObjList = new List<GameObject>();
+
+    private GameObject originalParentObj;           //上記プレハブの親Objの元となるオブジェクト
+
     [SerializeField]
     private bool nowSelect;                         // 選択中かどうか
     public void SetNowSelect(bool select) => nowSelect = select;
 
     private void Start()
     {
-        prefabActButton = NonResources.Load<ButtonTexts>("Assets/morii/Prefab/Commands/ActionButton.prefab");
-        prefabRpdButton = NonResources.Load<ButtonTexts>("Assets/morii/Prefab/Commands/RapidButton.prefab");
-
         // ボタンを取得
         actionButton = thisChara.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
         rapidButton = thisChara.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
@@ -56,11 +64,28 @@ public class BattleCommand : MonoBehaviour
 
         // コマンドを取得
         actionCommands = thisChara.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
-        rapidCommand = thisChara.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+        rapidCommands = thisChara.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
 
+        // 独自のプレハブフォルダからクローンオブジェクトを取得
+        prefabActButton = NonResources.Load<GameObject>("Assets/morii/Prefab/Commands/ActionButton.prefab");
+        prefabRpdButton = NonResources.Load<GameObject>("Assets/morii/Prefab/Commands/RapidButton.prefab");
+
+        // 独自のプレハブフォルダから上記プレハブの親Objの元となるオブジェクトを取得
+        originalParentObj = NonResources.Load<GameObject>("Assets/morii/Prefab/UIparent/VerticalParent.prefab");
+
+        // 親の数
+        int countParent = 0;
+        // クローン生成用GameObject
+        GameObject Instance;
+
+        // あらかじめ1個目の親となるオブジェクトを生成
+        Instance = Instantiate(originalParentObj);
+        VerticalLayoutGroup parentClone = Instance.GetComponent<VerticalLayoutGroup>();
+        parentClone.transform.parent = actionCommands.transform;
+        parentsActObj.Add(parentClone.gameObject);
 
         // 各部位パーツのアクション、ラピッドタイミングのパーツを取得
-        for(int i=0;i<thisChara.GetHeadParts().Count;i++)
+        for (int i=0;i<thisChara.GetHeadParts().Count;i++)
         {
             if (thisChara.GetHeadParts()[i].Timing == CharaBase.ACTION)
             {
@@ -108,9 +133,40 @@ public class BattleCommand : MonoBehaviour
             }
         }
 
-        for(int i=0;i<ActionManeuvers.Count;i++)
+        for (int i = 0; i < ActionManeuvers.Count; i++)
         {
+            
 
+            Instance = Instantiate(prefabActButton);
+            ButtonTexts clone = Instance.GetComponent<ButtonTexts>();
+            clone.SetName(ActionManeuvers[i].Name);
+            clone.SetCost(ActionManeuvers[i].Cost.ToString());
+
+            // 射程が複数存在する場合と、一か所にしか存在しない場合で処理を分ける
+            if (ActionManeuvers[i].MinRange != ActionManeuvers[i].MaxRange)
+            {
+                clone.SetRange(ActionManeuvers[i].MinRange.ToString() + "～" + ActionManeuvers[i].MaxRange.ToString());
+            }
+            else
+            {
+                clone.SetRange(ActionManeuvers[i].MinRange.ToString());
+            }
+            clone.transform.SetParent(parentsActObj[countParent].transform, false);
+
+
+            // コマンド5個区切りでコマンドの親オブジェクトを複製する。
+            if ((i + 1) % 5 == 0)
+            {
+                countParent++;
+                Instance = Instantiate(originalParentObj);
+                parentClone = Instance.GetComponent<VerticalLayoutGroup>();
+                parentClone.transform.parent = actionCommands.transform;
+                parentClone.gameObject.SetActive(false);
+                parentsActObj.Add(parentClone.gameObject);
+            }
+
+            //リストに保存
+            prefabActObjList.Add(clone.gameObject);
         }
     }
 
@@ -129,6 +185,6 @@ public class BattleCommand : MonoBehaviour
     public void OnClickRapid()
     {
         // ラピッドのコマンドを表示
-        rapidCommand.SetActive(true);
+        rapidCommands.SetActive(true);
     }
 }

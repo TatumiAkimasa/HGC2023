@@ -12,7 +12,7 @@ public class ButtonTexts : MonoBehaviour
     [SerializeField]
     private Text range;
 
-    void SetName(string text) { name.text = text; }
-    void SetCost(string text) { cost.text = text; }
-    void SetRange(string text) { range.text = text; }
+    public void SetName(string text) { name.text = text; }
+    public void SetCost(string text) { cost.text = text; }
+    public void SetRange(string text) { range.text = text; }
 }
