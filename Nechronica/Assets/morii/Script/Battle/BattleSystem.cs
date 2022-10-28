@@ -24,7 +24,7 @@ public class BattleSystem : MonoBehaviour
     // クリックされたプレイアブルキャラを受け取るようの変数
     private GameObject clickedChara;
 
-    // カウント宙に動くキャラをこのリストに入れる
+    // カウント中に動くキャラをこのリストに入れる
     private List<Doll_blu_Nor> CountMoveChara = new List<Doll_blu_Nor>();
 
     // カウント処理パートに移行するかの成否
@@ -92,7 +92,7 @@ public class BattleSystem : MonoBehaviour
     /// </summary>
     public void TurnStart()
     {
-        // デバッグ用にスタートに書く。本当はTurnStartに配置。
+        // 最大行動値ぶん、行動値を回復。
         for (int i = 0; i < charaObject.Count; i++)
         {
             charaObject[i].IncreaseNowCount();
@@ -156,7 +156,7 @@ public class BattleSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// バトルが始まったときに呼び出されるメソッド（Startでいい感じしてる）
+    /// カウント中にプレイアブルキャラがいるかいないか判断し、いたら操作を受け付けるようにする。
     /// </summary>
     public void BattleStart()
     {
