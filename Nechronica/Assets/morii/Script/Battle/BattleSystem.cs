@@ -69,6 +69,7 @@ public class BattleSystem : MonoBehaviour
 
     void Awake()
     {
+        // カウントを表示
         CountText.text = NowCount.ToString();
         // Charaというタグがついたキャラをすべて取得
         charaObjectsBuffer = GameObject.FindGameObjectsWithTag("AllyChara");

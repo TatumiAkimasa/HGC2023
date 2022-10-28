@@ -20,7 +20,7 @@ public class Doll_blu_Nor : PartsList
     public short Armament=0, Variant=0, Alter=0; //•‘•,•ÏˆÙ,‰ü‘¢(Skill)
     public List<CharaManeuver> Skill;              //ƒXƒLƒ‹
 
-    private void Start()
+    private void Awake()
     {
         InitParts();
         //“ª----------------------

@@ -8,6 +8,8 @@ using System.IO;
 
 public class BattleCommand : MonoBehaviour
 {
+    const float COMMAND_SIZE = 90;
+
     [SerializeField]
     private Doll_blu_Nor thisChara;                 // 自身を参照するための変数
 
@@ -44,7 +46,8 @@ public class BattleCommand : MonoBehaviour
     private List<GameObject> parentsRpdObj = new List<GameObject>();                // ラピッドコマンドの親オブジェクト
     private List<GameObject> prefabRpdObjList = new List<GameObject>();
 
-    private GameObject originalParentObj;           //上記プレハブの親Objの元となるオブジェクト
+    private GameObject originalParentObj;           // 上記プレハブの親Objの元となるオブジェクト
+    private RectTransform backImg;                  // 上記変数の座標となるオブジェクト
 
     [SerializeField]
     private bool nowSelect;                         // 選択中かどうか
@@ -53,8 +56,8 @@ public class BattleCommand : MonoBehaviour
     private void Start()
     {
         // ボタンを取得
-        actionButton = thisChara.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
-        rapidButton = thisChara.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
+        actionButton  = thisChara.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
+        rapidButton   = thisChara.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
         standbyButton = thisChara.transform.Find("Canvas/Act_select/Standby").gameObject.GetComponent<Button>();
 
         // ボタンにメソッドを加える
@@ -64,7 +67,10 @@ public class BattleCommand : MonoBehaviour
 
         // コマンドを取得
         actionCommands = thisChara.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
-        rapidCommands = thisChara.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+        rapidCommands  = thisChara.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+
+        // バックイメージを取得
+        backImg = thisChara.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
 
         // 独自のプレハブフォルダからクローンオブジェクトを取得
         prefabActButton = NonResources.Load<GameObject>("Assets/morii/Prefab/Commands/ActionButton.prefab");
@@ -75,6 +81,15 @@ public class BattleCommand : MonoBehaviour
 
         // 親の数
         int countParent = 0;
+        // サイズ調整----ゴリ押しなの気に食わん--------------------------
+        // クローンした親オブジェクトのサイズ調整用
+        Vector2 parentSize = backImg.sizeDelta;
+        parentSize.y = parentSize.y - COMMAND_SIZE / 2;
+
+        Vector3 parentPos = backImg.position;
+        parentPos.y = parentPos.y + COMMAND_SIZE / 4;
+        // --------------------------------------------------------------
+
         // クローン生成用GameObject
         GameObject Instance;
 
@@ -82,6 +97,9 @@ public class BattleCommand : MonoBehaviour
         Instance = Instantiate(originalParentObj);
         VerticalLayoutGroup parentClone = Instance.GetComponent<VerticalLayoutGroup>();
         parentClone.transform.parent = actionCommands.transform;
+        // クローンしたオブジェクトの座標、サイズを調整する
+        parentClone.GetComponent<RectTransform>().sizeDelta = parentSize;
+        parentClone.GetComponent<RectTransform>().position = parentPos;
         parentsActObj.Add(parentClone.gameObject);
 
         // 各部位パーツのアクション、ラピッドタイミングのパーツを取得
@@ -135,15 +153,18 @@ public class BattleCommand : MonoBehaviour
 
         for (int i = 0; i < ActionManeuvers.Count; i++)
         {
-            
 
-            Instance = Instantiate(prefabActButton);
+            Instance = Instantiate(prefabActButton, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
             ButtonTexts clone = Instance.GetComponent<ButtonTexts>();
             clone.SetName(ActionManeuvers[i].Name);
             clone.SetCost(ActionManeuvers[i].Cost.ToString());
 
-            // 射程が複数存在する場合と、一か所にしか存在しない場合で処理を分ける
-            if (ActionManeuvers[i].MinRange != ActionManeuvers[i].MaxRange)
+            // 射程が複数存在する場合と、一か所にしか存在しない場合、もしくは自身に効果が及ぶ場合で処理を分ける
+            if (ActionManeuvers[i].MinRange == 10) 
+            {
+                clone.SetRange("自身");
+            }
+            else if (ActionManeuvers[i].MinRange != ActionManeuvers[i].MaxRange)
             {
                 clone.SetRange(ActionManeuvers[i].MinRange.ToString() + "～" + ActionManeuvers[i].MaxRange.ToString());
             }
@@ -158,9 +179,11 @@ public class BattleCommand : MonoBehaviour
             if ((i + 1) % 5 == 0)
             {
                 countParent++;
-                Instance = Instantiate(originalParentObj);
+                Instance = Instantiate(originalParentObj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), actionCommands.transform);
                 parentClone = Instance.GetComponent<VerticalLayoutGroup>();
-                parentClone.transform.parent = actionCommands.transform;
+                // クローンしたオブジェクトの座標、サイズを調整する
+                parentClone.GetComponent<RectTransform>().position = backImg.position;
+                parentClone.GetComponent<RectTransform>().sizeDelta = backImg.sizeDelta;
                 parentClone.gameObject.SetActive(false);
                 parentsActObj.Add(parentClone.gameObject);
             }

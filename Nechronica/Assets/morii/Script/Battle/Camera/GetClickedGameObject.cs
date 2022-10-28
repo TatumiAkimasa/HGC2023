@@ -81,8 +81,7 @@ public class GetClickedGameObject : MonoBehaviour
         clickedObjPos.x -= 2.5f;
 
         // シネマカメラのプレハブを生成しクリックしたオブジェクトを親オブジェクトにする
-        CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity);
-        CharaCamera.transform.parent = clickedGameObject.transform;
+        CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity, clickedGameObject.transform);
 
         // 生成したプレハブのバーチャルカメラがメインカメラになるようプライオリティを設定
         CharaCamera.Priority = CharaPriority;
@@ -149,7 +148,7 @@ public class GetClickedGameObject : MonoBehaviour
             else
             {
                 // 選択したキャラのコマンドのオブジェクトを取得
-                childCommand = move.transform.GetChild(ACTION);
+                childCommand = move.transform.GetChild(ACTION).transform.GetChild(ACTION);
                 //技コマンドもろもろを表示
                 childCommand.gameObject.SetActive(true);
             }
