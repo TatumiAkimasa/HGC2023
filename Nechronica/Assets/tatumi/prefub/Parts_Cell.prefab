@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 6185690867857645989}
   - component: {fileID: 5859077320103755598}
   m_Layer: 5
-  m_Name: CharaParts_View_Cell
+  m_Name: Parts_Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -122,8 +122,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Item_Cell, Assembly-CSharp
+      - m_Target: {fileID: 7316033858301134252}
+        m_TargetAssemblyTypeName: Item_CellSet, Assembly-CSharp
         m_MethodName: Item_text_click
         m_Mode: 1
         m_Arguments:

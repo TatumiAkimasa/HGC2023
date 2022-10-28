@@ -16,13 +16,13 @@ public class Players_Item
 public class Talk_Chara : MonoBehaviour
 {
     [SerializeField]
-    private GameObject ParentObj, EndProText;
+    private GameObject Parent3DObj,Parent2DObj, EndProText;
 
     [SerializeField]
     private string[] Talk;
 
-    [SerializeField]
-    private string Item_str;
+    [SerializeField, Header("UI上での表示")]
+    private string UI_str;
 
     [SerializeField]
     private TextMeshPro ProText;
@@ -39,6 +39,14 @@ public class Talk_Chara : MonoBehaviour
 
     private int Max_count = 0;//最大文字切り替え数
 
+    public string Set_Itemstr(string set) => UI_str = set;
+    public void Set_Talkstr(string[] set) 
+    {
+        Talk = new string[set.Length];
+        Max_count = set.Length;
+        set.CopyTo(Talk, 0); 
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,12 +61,27 @@ public class Talk_Chara : MonoBehaviour
 
     public IEnumerator Talk_Set(System.Action<Item[]> End)
     {
-        ParentObj.SetActive(true);
+        if(Parent2DObj==null)
+            Parent3DObj.SetActive(true);
+        else if(Parent3DObj==null)
+            Parent2DObj.SetActive(true);
+        else
+            Parent3DObj.SetActive(true);
 
         StartCoroutine(Talk_Active((action=>
         {
-            ParentObj.SetActive(false);
             EndProText.SetActive(false);
+          
+            if (Parent2DObj == null)
+                Parent3DObj.SetActive(false);
+            else if (Parent3DObj == null)
+                Parent2DObj.SetActive(false);
+            else
+            {
+                Parent2DObj.SetActive(false);
+                Parent3DObj.SetActive(false);
+            }
+                
 
             var Items = new Item[Item.Length];
 
@@ -116,13 +139,22 @@ public class Talk_Chara : MonoBehaviour
             EndProText.SetActive(false);
         }
 
+        //アイテム表示Break!!
+        if(Parent2DObj==null)
+        {
+            action_end(true);
+            yield break;
+        }
 
-        ItemGetText.text = Item_str;
+
+        ItemGetText.text = UI_str;
 
         text_Len = ItemGetText.text.Length;
         Nowvisual_Len = 0;
 
         ItemGetText.maxVisibleCharacters = 0; // 表示文字数を０に
+
+        Parent2DObj.SetActive(true);
 
         while (true)
         {

@@ -153,8 +153,8 @@ public class Chara_data_input : CharaBase
         //positionスキルのみこちらで設定
         Doll_data.CharaBase_data.Skill.Add(Potition_Skill);
 
-        Doll_data.CharaField_data.Event[0].str = "鍵を手に入れ、NPC2に話かけよ。";
-
+        Doll_data.CharaField_data.Event[0].str = "鍵を手に入れて　NPC2に話かけよ。";
+        Doll_data.CharaField_data.Event[1].str = "実験は成功だ";
     }
 
     //宝物入力関数

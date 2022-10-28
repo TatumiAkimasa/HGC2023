@@ -32,6 +32,12 @@ public class Save_Load_data : MonoBehaviour
         binarySaveLoad.Save(filename_sub, test);
     }
 
+    public void ClickButtonSave(string filename)
+    {
+        Doll_blueprint test = Data_Scan.Instance.my_data[0];
+        binarySaveLoad.Save(filename, test);
+    }
+
     public void ClickButtonLoad()
     {
         Doll_blueprint loaddata;
@@ -48,11 +54,30 @@ public class Save_Load_data : MonoBehaviour
             Debug.Log("LOAD-OK_savedata");
         }
 
-        //aa.CharaField_data.Event[0].str = "鍵を手に入れ、NPC2に話かけよ。";
+        
         aa=loaddata;
     }
 
- 
+    public void ClickButtonLoad(string filename)
+    {
+        Doll_blueprint loaddata;
+
+        binarySaveLoad.Load(filename, out loaddata);
+
+        // display load data
+        if (loaddata == null)
+        {
+            Debug.LogError("ERROR-NUll_Savedata");
+        }
+        else
+        {
+            Debug.Log("LOAD-OK_savedata");
+        }
+
+        //aa.CharaField_data.Event[0].str = "鍵を手に入れ、NPC2に話かけよ。";
+        aa = loaddata;
+    }
+
 
     public void ClickButtonDelete()
     {

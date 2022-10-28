@@ -89,4 +89,9 @@ public class UI_Chara_status : ClassData_
             cell.SetParts(data[i].Cost, data[i].Timing, data[i].Name, data[i].MaxRange, data[i].MinRange);
         }
     }
+
+    public void Eventstr_Update()
+    {
+        Charas[0].text[3].text = data_Scan_cs.my_data[0].CharaField_data.Event[1].str;
+    }
 }
