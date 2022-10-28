@@ -449,6 +449,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -1601,6 +1605,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1830,6 +1838,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -2377,6 +2389,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2569,6 +2585,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2699,6 +2719,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -3873,6 +3897,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -4606,6 +4634,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -4720,6 +4752,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (26)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -5509,6 +5545,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (24)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -5717,6 +5757,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -6283,6 +6327,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4b7d800b796e52b4783b5b34f109eb9c, type: 3}
   m_PrefabInstance: {fileID: 148878297}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &149535177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 149535178}
+  - component: {fileID: 149535179}
+  m_Layer: 3
+  m_Name: Box (12)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &149535178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149535177}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -21.02, y: 15.33, z: -19.62}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &149535179
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149535177}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.08, y: 1, z: 1.76}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &149693902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7023,6 +7111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -7469,6 +7561,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -8307,6 +8403,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: ca0f26e3217cc1540b8739bfff9c11d7, type: 3}
   m_PrefabInstance: {fileID: 320085565}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &214537651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 214537652}
+  - component: {fileID: 214537653}
+  m_Layer: 3
+  m_Name: Box (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &214537652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214537651}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.0299988, y: 17.675, z: -23.599998}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &214537653
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214537651}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.73, y: 0.71, z: 0.69}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &215168270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8317,6 +8457,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -9190,6 +9334,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -9915,6 +10063,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 8f7da3fe0c3e07a499817697103ceeaf, type: 3}
   m_PrefabInstance: {fileID: 259296579}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &245696037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 245696038}
+  - component: {fileID: 245696039}
+  m_Layer: 3
+  m_Name: Box (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &245696038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245696037}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -21.02, y: 17.76, z: -8.93}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &245696039
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245696037}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.08, y: 1.7, z: 0.73}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &247664613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10663,6 +10855,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -11973,6 +12169,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -12987,6 +13187,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -16313,6 +16517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -16925,6 +17133,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -17281,6 +17493,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
   m_PrefabInstance: {fileID: 429296027}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &429456932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 429456933}
+  m_Layer: 3
+  m_Name: Colider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &429456933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429456932}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1199402910}
+  - {fileID: 1221166100}
+  - {fileID: 1681337768}
+  - {fileID: 1584527925}
+  - {fileID: 1028201084}
+  - {fileID: 1914611101}
+  - {fileID: 1097198637}
+  - {fileID: 214537652}
+  - {fileID: 1572204560}
+  - {fileID: 245696038}
+  - {fileID: 1440310204}
+  - {fileID: 590814899}
+  - {fileID: 149535178}
+  - {fileID: 1143383133}
+  - {fileID: 491342670}
+  - {fileID: 1812074637}
+  m_Father: {fileID: 1670531540}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &430753760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
@@ -18702,6 +18960,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -19484,6 +19746,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b2199dcf82f4a3e4aa156625121b5863, type: 3}
   m_PrefabInstance: {fileID: 607654947}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &491342669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 491342670}
+  - component: {fileID: 491342671}
+  m_Layer: 3
+  m_Name: Box (14)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &491342670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491342669}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -21.02, y: 15.33, z: -29.07}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &491342671
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491342669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.08, y: 1, z: 1.76}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &493287019 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 61a63333d3e7ba34fa01aef237d3d87a, type: 3}
@@ -20281,6 +20587,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -21675,6 +21985,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -23214,6 +23528,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78b36f9936c94fa42a52b47dc600068f, type: 3}
+--- !u!1 &590814898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 590814899}
+  - component: {fileID: 590814900}
+  m_Layer: 3
+  m_Name: Box (11)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &590814899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590814898}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -21.02, y: 17.76, z: -19.39}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &590814900
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590814898}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.08, y: 1.7, z: 0.73}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &591124538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23778,6 +24136,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -24778,6 +25140,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -25838,6 +26204,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -26426,6 +26796,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -26521,7 +26895,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.001
+  near clip plane: 0.01
   far clip plane: 5000
   field of view: 40
   orthographic: 0
@@ -28529,6 +28903,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -28657,6 +29035,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -29127,6 +29509,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -29742,6 +30128,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -29943,6 +30333,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -32272,6 +32666,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -32338,6 +32736,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -32424,6 +32826,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -32934,6 +33340,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -34021,6 +34431,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -34732,6 +35146,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -35198,6 +35616,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -36652,6 +37074,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -39796,6 +40222,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
+--- !u!1 &1028201083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028201084}
+  - component: {fileID: 1028201085}
+  m_Layer: 3
+  m_Name: Box (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1028201084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028201083}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.0299988, y: 14.85, z: -23.86}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1028201085
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028201083}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.73, y: 0.71, z: 2.27}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1028684066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40259,6 +40729,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -40389,6 +40863,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -40686,6 +41164,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -42111,6 +42593,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 120b628707d512840ac2d40f8aca21ed, type: 3}
   m_PrefabInstance: {fileID: 740198643}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1097198636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1097198637}
+  - component: {fileID: 1097198638}
+  m_Layer: 3
+  m_Name: Box (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1097198637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097198636}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.925003, y: 14.709999, z: -23.864998}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1097198638
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097198636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.59, y: 0.68, z: 0.79}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1098318413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42712,6 +43238,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -43954,6 +44484,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c57a52cd057e2f648a07690cd561f5cb, type: 3}
   m_PrefabInstance: {fileID: 387836992}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1143383132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1143383133}
+  - component: {fileID: 1143383134}
+  m_Layer: 3
+  m_Name: Box (13)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1143383133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143383132}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -21.02, y: 17.76, z: -28.839996}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1143383134
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143383132}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.08, y: 1.7, z: 0.73}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1144455550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44095,6 +44669,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0ccc65feebde1d04e921f8c1bc592e5b, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_barrel_big_empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0ccc65feebde1d04e921f8c1bc592e5b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0ccc65feebde1d04e921f8c1bc592e5b, type: 3}
       propertyPath: m_RootOrder
@@ -46340,6 +46918,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
   m_PrefabInstance: {fileID: 1947220216}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1199402909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1199402910}
+  - component: {fileID: 1199402911}
+  m_Layer: 3
+  m_Name: Box
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1199402910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199402909}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.75, y: 17.76, z: 0.375}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1199402911
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199402909}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 1.95, z: 0.73}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1199737593 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
@@ -46861,6 +47483,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -47185,6 +47811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -47240,6 +47870,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
   m_PrefabInstance: {fileID: 1219510380}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1221166099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1221166100}
+  - component: {fileID: 1221166101}
+  m_Layer: 3
+  m_Name: Box (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1221166100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221166099}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.529999, y: 16.43, z: -1.0200043}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1221166101
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221166099}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.66, y: 1.5, z: 1.39}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1221267045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48811,6 +49485,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -49457,6 +50135,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -50734,6 +51416,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_barrel_small_sidex3
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0ab670983e4bfef4ebcbb68471a48d84, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0ab670983e4bfef4ebcbb68471a48d84, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -50880,6 +51566,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -51039,6 +51729,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -53162,6 +53856,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -53509,6 +54207,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -54644,6 +55346,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f575d48fa40493b4a8c8303e84ea44d2, type: 3}
+--- !u!1 &1440310203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1440310204}
+  - component: {fileID: 1440310205}
+  m_Layer: 3
+  m_Name: Box (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1440310204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440310203}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -21.02, y: 15.33, z: -9.16}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1440310205
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440310203}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.08, y: 1, z: 1.76}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1440537220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55409,6 +56155,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (27)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -56502,6 +57252,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -56654,6 +57408,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -57483,6 +58241,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -58049,6 +58811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -58494,6 +59260,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0ab670983e4bfef4ebcbb68471a48d84, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_barrel_small_sidex3 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0ab670983e4bfef4ebcbb68471a48d84, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0ab670983e4bfef4ebcbb68471a48d84, type: 3}
       propertyPath: m_RootOrder
@@ -59405,6 +60175,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c57a52cd057e2f648a07690cd561f5cb, type: 3}
+--- !u!1 &1572204559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1572204560}
+  - component: {fileID: 1572204561}
+  m_Layer: 3
+  m_Name: Box (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1572204560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572204559}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 25.23, y: 18.39, z: -23.88}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1572204561
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572204559}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.76, y: 0.72, z: 3.7}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1572743549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60160,6 +60974,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
   m_PrefabInstance: {fileID: 1965155353}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1584527924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1584527925}
+  - component: {fileID: 1584527926}
+  m_Layer: 3
+  m_Name: Box (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1584527925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584527924}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 24.83, y: 14.74, z: -23.88}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1584527926
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584527924}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.14, y: 0.72, z: 3.7}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1586176741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60654,6 +61512,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -62091,6 +62953,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -63510,6 +64376,7 @@ Transform:
   - {fileID: 1779849318}
   - {fileID: 866498503}
   - {fileID: 94862510}
+  - {fileID: 429456933}
   m_Father: {fileID: 1201118712}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63523,6 +64390,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -63941,6 +64812,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
   m_PrefabInstance: {fileID: 434130786}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1681337767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1681337768}
+  - component: {fileID: 1681337769}
+  m_Layer: 3
+  m_Name: Box (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1681337768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681337767}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 30.480003, y: 17.31, z: -0.27000427}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1681337769
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681337767}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.51, y: 1.84, z: 1.42}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1681474770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66049,6 +66964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -66257,6 +67176,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -66762,6 +67685,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -67036,6 +67963,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_barrel_small_sidex3 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0ab670983e4bfef4ebcbb68471a48d84, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0ab670983e4bfef4ebcbb68471a48d84, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -67109,6 +68040,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -68169,6 +69104,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -69590,6 +70529,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78b36f9936c94fa42a52b47dc600068f, type: 3}
+--- !u!1 &1812074636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1812074637}
+  - component: {fileID: 1812074638}
+  m_Layer: 3
+  m_Name: Box (15)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1812074637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812074636}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -22.52, y: 16.07, z: -38.04}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1812074638
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812074636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.08, y: 1.22, z: 0.73}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1815644523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
@@ -70039,9 +71022,9 @@ Transform:
   - {fileID: 1739120848}
   - {fileID: 1967995228}
   - {fileID: 1510229901}
-  - {fileID: 1861228979}
   - {fileID: 1756854664}
   - {fileID: 848727721}
+  - {fileID: 1861228979}
   - {fileID: 609234152}
   - {fileID: 1998782500}
   - {fileID: 1599436933}
@@ -70802,6 +71785,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -71390,6 +72377,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -72817,6 +73808,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e4934a98a6565342b4d756769d70c88, type: 3}
+--- !u!1 &1914611100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1914611101}
+  - component: {fileID: 1914611102}
+  m_Layer: 3
+  m_Name: Box (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1914611101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914611100}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.095001, y: 14.709999, z: -23.864998}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 429456933}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1914611102
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914611100}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.59, y: 0.68, z: 0.79}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1914632143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74647,6 +75682,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -74708,6 +75747,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -75529,6 +76572,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
@@ -77528,6 +78575,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -78221,6 +79272,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fi_vil_container_crate_big (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -78613,6 +79668,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_Name
       value: fi_vil_container_crate_big (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ada0c951f2cb46e4fa077a66d58594e9, type: 3}
       propertyPath: m_RootOrder
