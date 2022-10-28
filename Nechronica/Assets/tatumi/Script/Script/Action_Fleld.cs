@@ -24,9 +24,9 @@ public class Action_Fleld : MonoBehaviour
         {
 
             // すべての子オブジェクトを取得
-            foreach (GameObject n in TargetObjs.transform)
+            foreach (Transform n in TargetObjs.transform)
             {
-               n.layer = (int)Inlay;
+               n.gameObject.layer = (int)Inlay;
             }
 
         }
@@ -37,9 +37,9 @@ public class Action_Fleld : MonoBehaviour
         if (Item.tag == "Player")
         {
             // すべての子オブジェクトを取得
-            foreach (GameObject n in TargetObjs.transform)
+            foreach (Transform n in TargetObjs.transform)
             {
-                n.layer = (int)Outlay;
+                n.gameObject.layer = (int)Outlay;
             }
 
         }
