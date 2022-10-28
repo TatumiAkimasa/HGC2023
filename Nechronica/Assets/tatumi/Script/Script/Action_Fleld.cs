@@ -6,11 +6,11 @@ public class Action_Fleld : MonoBehaviour
 {
    
     [SerializeField]
-    private GameObject[] TargetObjs;
+    private GameObject TargetObjs;
 
     public enum Layers
     {
-        Defult = 0,
+        FX = 1,
         InHouse = 3,
         SkeletonWall = 7
     }
@@ -22,9 +22,12 @@ public class Action_Fleld : MonoBehaviour
     {
         if (Item.tag == "Player")
         {
-           
-            for(int i=0;i!=TargetObjs.Length;i++)
-                TargetObjs[i].layer = (int)Inlay;
+
+            // すべての子オブジェクトを取得
+            foreach (GameObject n in TargetObjs.transform)
+            {
+               n.layer = (int)Inlay;
+            }
 
         }
     }
@@ -33,8 +36,11 @@ public class Action_Fleld : MonoBehaviour
     {
         if (Item.tag == "Player")
         {
-            for (int i = 0; i != TargetObjs.Length; i++)
-                TargetObjs[i].layer = (int)Outlay;
+            // すべての子オブジェクトを取得
+            foreach (GameObject n in TargetObjs.transform)
+            {
+                n.layer = (int)Outlay;
+            }
 
         }
     }
