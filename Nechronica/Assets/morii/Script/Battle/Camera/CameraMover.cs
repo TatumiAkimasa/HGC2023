@@ -56,6 +56,31 @@ public class CameraMover : MonoBehaviour
         {
             ResetCameraRotation(); //回転角度のみリセット
             CameraPositionKeyControl(); //カメラのローカル移動 キー
+            CameraRotationMouseControl();  //カメラの回転 マウス
+        }
+    }
+
+    //カメラの回転 マウス
+    private void CameraRotationMouseControl()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            _startMousePos = Input.mousePosition;
+            _presentCamRotation.x = _camTransform.transform.eulerAngles.x;
+            _presentCamRotation.y = _camTransform.transform.eulerAngles.y;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            //(移動開始座標 - マウスの現在座標) / 解像度 で正規化
+            float x = (_startMousePos.x - Input.mousePosition.x) / Screen.width;
+            float y = (_startMousePos.y - Input.mousePosition.y) / Screen.height;
+
+            //回転開始角度 ＋ マウスの変化量 * マウス感度
+            float eulerX = _presentCamRotation.x + y * _mouseSensitive;
+            float eulerY = _presentCamRotation.y + x * _mouseSensitive;
+
+            _camTransform.rotation = Quaternion.Euler(eulerX, 0, 0);
         }
     }
 
@@ -89,9 +114,24 @@ public class CameraMover : MonoBehaviour
     private void CameraPositionKeyControl()
     {
         Vector3 campos = _camTransform.position;
+        //if (Input.GetKey(KeyCode.W)) { campos += _camTransform.up * Time.deltaTime * _positionStep; }
+        //if (Input.GetKey(KeyCode.S)) { campos -= _camTransform.up * Time.deltaTime * _positionStep; }
+        //if (Input.GetKey(KeyCode.A)) { campos -= _camTransform.right * Time.deltaTime * _positionStep; }
+        //if (Input.GetKey(KeyCode.D)) { campos += _camTransform.right * Time.deltaTime * _positionStep; }
 
-        if (Input.GetKey(KeyCode.D)) { campos += _camTransform.right * Time.deltaTime * _positionStep; }
-        if (Input.GetKey(KeyCode.A)) { campos -= _camTransform.right * Time.deltaTime * _positionStep; }
+        if (Input.GetKey(KeyCode.W)) { campos.y += _positionStep; }
+        if (Input.GetKey(KeyCode.S)) { campos.y -= _positionStep; }
+        if (Input.GetKey(KeyCode.A)) { campos.x -= _positionStep; }
+        if (Input.GetKey(KeyCode.D)) { campos.x += _positionStep; }
+
+        //if (Input.GetKey(KeyCode.A)) { campos.z -= _positionStep; }
+        //if (Input.GetKey(KeyCode.D)) { campos.z += _positionStep; }
+
+        // カメラが床より下にいかないようにする
+        if (campos.y<=4.3f)
+        {
+            campos.y = 4.3f;
+        }
 
         _camTransform.position = campos;
     }

@@ -13,6 +13,7 @@ TagManager:
   - AllyChara
   - ActionCommands
   - RapidCommands
+  - BattleManager
   layers:
   - Default
   - TransparentFX

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
 
-
 public class BattleCommand : MonoBehaviour
 {
     const float COMMAND_SIZE = 90;
@@ -34,6 +33,7 @@ public class BattleCommand : MonoBehaviour
     [SerializeField]
     private Button standbyButton;                   // 待機のボタン
 
+
     [SerializeField]
     private GameObject prefabActButton;             // actionコマンドのプレハブ
     [SerializeField]
@@ -46,8 +46,12 @@ public class BattleCommand : MonoBehaviour
     private List<GameObject> parentsRpdObj = new List<GameObject>();                // ラピッドコマンドの親オブジェクト
     private List<GameObject> prefabRpdObjList = new List<GameObject>();
 
+
     private GameObject originalParentObj;           // 上記プレハブの親Objの元となるオブジェクト
     private RectTransform backImg;                  // 上記変数の座標となるオブジェクト
+
+    [SerializeField]
+    private BattleSystem battleSystem;              
 
     [SerializeField]
     private bool nowSelect;                         // 選択中かどうか
@@ -55,6 +59,9 @@ public class BattleCommand : MonoBehaviour
 
     private void Start()
     {
+        // バトルシステムを取得
+        battleSystem = GameObject.FindGameObjectWithTag("BattleManager").gameObject.GetComponent<BattleSystem>();
+
         // ボタンを取得
         actionButton  = thisChara.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
         rapidButton   = thisChara.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
@@ -151,13 +158,15 @@ public class BattleCommand : MonoBehaviour
             }
         }
 
+        // コマンドを生成
         for (int i = 0; i < ActionManeuvers.Count; i++)
         {
-
             Instance = Instantiate(prefabActButton, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
             ButtonTexts clone = Instance.GetComponent<ButtonTexts>();
             clone.SetName(ActionManeuvers[i].Name);
             clone.SetCost(ActionManeuvers[i].Cost.ToString());
+
+            // ここでボタンにオンクリックを追加。内容はマニューバ発動
 
             // 射程が複数存在する場合と、一か所にしか存在しない場合、もしくは自身に効果が及ぶ場合で処理を分ける
             if (ActionManeuvers[i].MinRange == 10) 
@@ -173,8 +182,11 @@ public class BattleCommand : MonoBehaviour
                 clone.SetRange(ActionManeuvers[i].MinRange.ToString());
             }
             clone.transform.SetParent(parentsActObj[countParent].transform, false);
-
-
+            ManerverAndArea buff;
+            buff.maneuver = ActionManeuvers[i];
+            buff.area = thisChara.potition;
+            clone.GetComponent<Button>().onClick.AddListener(() => battleSystem.OnClickCommand(buff));
+            
             // コマンド5個区切りでコマンドの親オブジェクトを複製する。
             if ((i + 1) % 5 == 0)
             {
@@ -210,4 +222,10 @@ public class BattleCommand : MonoBehaviour
         // ラピッドのコマンドを表示
         rapidCommands.SetActive(true);
     }
+}
+
+public struct ManerverAndArea
+{
+    public CharaManeuver maneuver;
+    public int area;
 }

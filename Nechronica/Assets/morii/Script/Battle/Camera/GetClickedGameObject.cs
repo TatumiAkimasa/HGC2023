@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Cinemachine;
 
@@ -11,11 +10,9 @@ public class GetClickedGameObject : MonoBehaviour
     const int ACTION = 0;               // 子オブジェクト取得のための定数
     //----------------------------------------------------------
 
-    [SerializeField]
-    private GameObject clickedGameObject;           // クリックしたゲームオブジェクト
-
     private CinemachineVirtualCamera CharaCamera;   // キャラに持たせるプレハブのクローンのカメラ
 
+    private CinemachineVirtualCamera saveCharaCamera;   // Charaカメラの内容保存用変数
 
     [SerializeField]
     private new Camera camera;                      // メインカメラ
@@ -32,78 +29,109 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField]
     private Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
 
+    // ほかスクリプトからも値を変更する変数
+    private bool standbyCharaSelect = false;
+
+    public bool StandbyCharaSelect
+    {
+        get { return standbyCharaSelect; }
+        set { standbyCharaSelect = value; }
+    }
+
+    private bool standbyEnemySelect = false;
+    public bool StandbyEnemySelect
+    {
+        get { return standbyEnemySelect; }
+        set { standbyEnemySelect = value; }
+    }
+
+    private bool skillSelected = false;
+
+    public bool SkillSelected
+    {
+        get { return skillSelected; }
+        set { skillSelected = value; }
+    }
+
+    private CharaManeuver dollManeuver;         // 選択されたドールのマニューバ格納用変数
+    public void SetManeuver(CharaManeuver set) { dollManeuver = set; }
+
+    private int dollArea = 0;                   // 選択されたドールの所属エリア格納用変数
+    public void SetArea(int set) { dollArea = set; }
+
+    //------------------------------------
+
     private bool selectedChara = false;
 
     private void Update()
     {
-        //左クリックで
-        if (Input.GetMouseButtonDown(0) && CharaCamera == null && !selectedChara)
-        {
-            //Clickした箇所にレイを飛ばす。
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit = new RaycastHit();
-
-            //ヒットしたオブジェクトを取得
-            if (Physics.Raycast(ray, out hit))
-            {
-                clickedGameObject = hit.collider.gameObject;
-                Debug.Log(clickedGameObject.name);
-            }
-
-            //クリックしたゲームオブジェクトが味方キャラなら
-            if (clickedGameObject.CompareTag("AllyChara"))
-            {
-                clickedGameObject.GetComponent<BattleCommand>().SetNowSelect(true);
-                CharaSelect();
-                // ここでコマンド表示
-                StartCoroutine(MoveStandby(clickedGameObject));
-            }
-        }
-        else if(selectedChara)
+        if(selectedChara)
         {
             SkillSelectStandby();
+        }
+        else if(standbyCharaSelect)
+        {
+            CharaSelectStandby();
+        }
 
+        if(standbyEnemySelect)
+        {
+            EnemySelectStandby();
         }
     }
 
-    /// <summary>
-    /// キャラが選択された後、カメラが選択されたキャラに近づくメソッド
-    /// </summary>
-    /// <returns></returns>
-    public void CharaSelect()
+    void CharaSelectStandby()
     {
-        
-        Debug.Log("どうでしょうか");
-        // クリックしたオブジェクトの座標情報を取得
-        Vector3 clickedObjPos = clickedGameObject.transform.position;
-        // 取得した座標情報から少し離れた位置に座標を調整
-        clickedObjPos.z -= 10.0f;
-        clickedObjPos.x -= 2.5f;
+        //左クリックで
+        if (Input.GetMouseButtonDown(0) && CharaCamera == null && !selectedChara)
+        {
+            GameObject clickedObj = ShotRay();
 
-        // シネマカメラのプレハブを生成しクリックしたオブジェクトを親オブジェクトにする
-        CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity, clickedGameObject.transform);
+            //クリックしたゲームオブジェクトが味方キャラなら
+            if (clickedObj.CompareTag("AllyChara"))
+            {
+                clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
+                ZoomUpObj(clickedObj);
+                selectedChara = true;
+                // ここでコマンド表示
+                StartCoroutine(MoveStandby(clickedObj));
+            }
+        }
+    }
 
-        // 生成したプレハブのバーチャルカメラがメインカメラになるようプライオリティを設定
-        CharaCamera.Priority = CharaPriority;
+    public void EnemySelectStandby()
+    {
+        //左クリックで
+        if (Input.GetMouseButtonDown(0))
+        {
+            // プレイアブルキャラに向いていたカメラ情報を保存
+            saveCharaCamera = CharaCamera;
 
-        selectedChara = true;
-        return;
+
+            GameObject clickedObj = ShotRay();
+
+            //クリックしたゲームオブジェクトが敵キャラなら
+            if (clickedObj.CompareTag("EnemyChara"))
+            {
+                // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、
+                if (Mathf.Abs(dollArea - clickedObj.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange-dollManeuver.MinRange))
+                {
+                    ZoomUpObj(clickedObj);
+                    // ここでコマンド表示
+                    StartCoroutine(MoveStandby(clickedObj));
+                }
+            }
+        }
     }
 
     public void SkillSelectStandby()
     {
-        //技を発動した時点でこのメソッドを抜けたい感じある。
-        //選択した技コマンドを取得する必要ありか…
-
         // 右クリックで
-        if (Input.GetMouseButtonDown(1) && CharaCamera != null)
+        if ((Input.GetMouseButtonDown(1) || skillSelected) && CharaCamera != null)
         {
-            // 全体を表示させるカメラを優先にする。
-            CharaCamera.Priority = 0;
-            // コマンドを消す
-            childCommand.gameObject.SetActive(false);
-            // 複製したプレハブカメラを消す。
-            StartCoroutine(DstroyCamera());
+            ZoomOutObj();
+            // キャラ選択待機状態にする
+            selectedChara = false;
         }
     }
 
@@ -124,8 +152,6 @@ public class GetClickedGameObject : MonoBehaviour
                 //priorityを元の数値にする
                 cinemaCamera.Priority = 10;
                 selectedChara = false;
-                // 必要な情報は取得した後なので初期化しておく
-                clickedGameObject = null;
             }
         }
     }
@@ -147,11 +173,68 @@ public class GetClickedGameObject : MonoBehaviour
             }
             else
             {
-                // 選択したキャラのコマンドのオブジェクトを取得
-                childCommand = move.transform.GetChild(ACTION).transform.GetChild(ACTION);
-                //技コマンドもろもろを表示
-                childCommand.gameObject.SetActive(true);
+                if(move.CompareTag("AllyChara"))
+                {
+                    // 選択したキャラのコマンドのオブジェクトを取得
+                    childCommand = move.transform.GetChild(ACTION).transform.GetChild(ACTION);
+                    // 技コマンドもろもろを表示
+                    childCommand.gameObject.SetActive(true);
+                }
+                else if(move.CompareTag("EnemyChara"))
+                {
+                    // ここで 攻撃する～みたいなコマンドを表示
+                    // 攻撃する～を選んだら、selectedChara、standbyCharaSelectをfalseにし、ダイスロールへ
+                    // ダイスロール後、マニューバ、敵Obj(move)、ダイスの値を引数とし、ダメージタイミングへ
+                }
             }
         }
+    }
+
+    /// <summary>
+    /// クリックしたObjを取得し、返す
+    /// </summary>
+    /// <returns></returns>
+    GameObject ShotRay()
+    {
+        //Clickした箇所にレイを飛ばす。
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit = new RaycastHit();
+
+        //ヒットしたオブジェクトを取得
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.collider.gameObject;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// キャラが選択された後、カメラが選択されたキャラに近づくメソッド
+    /// </summary>
+    /// <param name="clicked"></param>
+    void ZoomUpObj(GameObject clicked)
+    {
+        // クリックしたオブジェクトの座標情報を取得
+        Vector3 clickedObjPos = clicked.transform.position;
+        // 取得した座標情報から少し離れた位置に座標を調整
+        clickedObjPos.z -= 10.0f;
+        clickedObjPos.x -= 2.5f;
+
+        // シネマカメラのプレハブを生成しクリックしたオブジェクトを親オブジェクトにする
+        CharaCamera = Instantiate(cinemaCamera, clickedObjPos, Quaternion.identity, clicked.transform);
+
+        // 生成したプレハブのバーチャルカメラがメインカメラになるようプライオリティを設定
+        CharaCamera.Priority = CharaPriority;
+    }
+
+    void ZoomOutObj()
+    {
+        // 全体を表示させるカメラを優先にする。
+        CharaCamera.Priority = 0;
+        // コマンドを消す
+        childCommand.gameObject.SetActive(false);
+        // 複製したプレハブカメラを消す。
+        StartCoroutine(DstroyCamera());
     }
 }
