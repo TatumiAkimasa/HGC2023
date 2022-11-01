@@ -63,9 +63,6 @@ public class Talk_Chara : MonoBehaviour
     {
         if (Parent2DObj == null)
             Parent3DObj.SetActive(true);
-        else if (Parent3DObj == null)
-            ;
-        //Parent2DObj.SetActive(true);
         else
             Parent3DObj.SetActive(true);
 
@@ -141,7 +138,7 @@ public class Talk_Chara : MonoBehaviour
         }
 
         //アイテム表示Break!!
-        if(Parent2DObj!=null)
+        if(Parent2DObj==null)
         {
             action_end(true);
             yield break;
