@@ -63,8 +63,8 @@ public class Talk_Chara : MonoBehaviour
     {
         if (Parent2DObj == null)
             Parent3DObj.SetActive(true);
-        else
-            Parent3DObj.SetActive(true);
+        //else
+        //    Parent3DObj.SetActive(true);
 
         StartCoroutine(Talk_Active((action=>
         {
