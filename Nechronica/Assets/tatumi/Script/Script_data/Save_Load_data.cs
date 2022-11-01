@@ -13,6 +13,9 @@ public class Save_Load_data : MonoBehaviour
     [SerializeField]
     public Doll_blueprint aa;
 
+    [SerializeField]
+    private bool DebugMode; 
+
     void Start()
     {
         //‰ŠúÝ’è
@@ -22,6 +25,7 @@ public class Save_Load_data : MonoBehaviour
         binarySaveLoad.UserDecrypt = (data) => { for (int i = 0; i < data.Length; i++) data[i] -= 1; };
         Data_Scan.Instance.save_Load_Data_cs = this;
         ClickButtonLoad();
+        if(DebugMode == false)
         SceneManager.LoadScene("Title");
         DontDestroyOnLoad(this.gameObject);
     }
