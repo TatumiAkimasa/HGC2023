@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 2812743685069378344}
   - component: {fileID: 2099117687171575263}
   m_Layer: 5
-  m_Name: Save_cell
+  m_Name: SaveData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

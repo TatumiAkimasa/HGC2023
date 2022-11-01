@@ -11,7 +11,7 @@ public class Save_Load_data : MonoBehaviour
     const string filename_sub = "Nechronica_savedata_sub";
 
     [SerializeField]
-    public Doll_blueprint aa;
+    public Doll_blueprint aa,bb;
 
     [SerializeField]
     private bool DebugMode; 

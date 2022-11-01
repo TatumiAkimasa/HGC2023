@@ -63,8 +63,10 @@ public class Talk_Chara : MonoBehaviour
     {
         if (Parent2DObj == null)
             Parent3DObj.SetActive(true);
-        //else
-        //    Parent3DObj.SetActive(true);
+        if (Parent3DObj == null)
+            Parent2DObj.SetActive(true);
+        else
+            Parent3DObj.SetActive(true);
 
         StartCoroutine(Talk_Active((action=>
         {
@@ -152,8 +154,6 @@ public class Talk_Chara : MonoBehaviour
 
         ItemGetText.maxVisibleCharacters = 0; // ï\é¶ï∂éöêîÇÇOÇ…
 
-        Parent2DObj.SetActive(true);
-
         while (true)
         {
             if (Input.GetKeyDown(KeyCode.T) && Nowvisual_Len == text_Len)
@@ -169,7 +169,6 @@ public class Talk_Chara : MonoBehaviour
             //ï∂èIóπ
             else if (Nowvisual_Len == text_Len)
             {
-                EndProText.SetActive(true);
                 yield return null;
             }
             else
