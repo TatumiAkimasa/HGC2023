@@ -67,6 +67,8 @@ public class CheckUp_Talk : CheckUp_chara
                         Data_Scan.Instance.my_data[0].Item.Add(Talk_End[i]);
                     }
 
+                    if (Change_Scene != "")
+                        Scene_change(Change_Scene);
 
                 })));
 
