@@ -14,6 +14,9 @@ public class CheckUp_Event : CheckUp_chara
     [SerializeField, Header("対応イベント番号")]
     private int Event_num;
 
+    [SerializeField, Header("イベントを進ませるか")]
+    private bool Event_Go;
+
     [SerializeField, Header("成功時の台詞")]
     private string Event_OK;
     [SerializeField, Header("失敗時の台詞")]
@@ -46,10 +49,14 @@ public class CheckUp_Event : CheckUp_chara
 
                     if (Event != null)
                     {
-                        Data_Scan.Instance.my_data[0].CharaField_data.Event[Event_num].flag = true;
+                        if(Event_Go==true)
+                        {
+                            Data_Scan.Instance.my_data[0].CharaField_data.Event[Event_num].flag = true;
+                            UI.GetComponent<UI_Chara_status>().Eventstr_Update();
+                        }
+                       
                         ParentObj.SetActive(false);
                         
-                        UI.GetComponent<UI_Chara_status>().Eventstr_Update();
                     }
 
                     for (int i = 0; i != Talk_End.Length; i++)

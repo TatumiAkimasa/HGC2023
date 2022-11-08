@@ -19,6 +19,9 @@ public class CheckUp_Talk : CheckUp_chara
     private string[] Event_OUT;
 
     [SerializeField]
+    private bool Item;
+
+    [SerializeField]
     private GameObject ParentObj, UI;
 
     void Update()
@@ -60,6 +63,11 @@ public class CheckUp_Talk : CheckUp_chara
 
                             UI.GetComponent<UI_Chara_status>().Eventstr_Update();
                         }
+                    }
+
+                    if(Item==true)
+                    {
+                        ParentObj.SetActive(false);
                     }
 
                     for (int i = 0; i != Talk_End.Length; i++)

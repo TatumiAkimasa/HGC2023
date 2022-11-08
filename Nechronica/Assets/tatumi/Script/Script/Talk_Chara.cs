@@ -28,7 +28,7 @@ public class Talk_Chara : MonoBehaviour
     private TextMeshPro ProText;
 
     [SerializeField]
-    private TextMeshProUGUI ItemGetText;
+    private TextMeshProUGUI ItemGetText,GetText;
 
     [SerializeField, Header("会話によるアイテム入手（必須ではない")]
     private Players_Item[] Item;
@@ -70,6 +70,8 @@ public class Talk_Chara : MonoBehaviour
 
         StartCoroutine(Talk_Active((action=>
         {
+            if (GetText != null)
+                GetText.gameObject.SetActive(false);
             EndProText.SetActive(false);
           
             if (Parent2DObj == null)
@@ -153,6 +155,9 @@ public class Talk_Chara : MonoBehaviour
         Nowvisual_Len = 0;
 
         ItemGetText.maxVisibleCharacters = 0; // 表示文字数を０に
+
+        if (GetText != null)
+            GetText.gameObject.SetActive(true);
 
         while (true)
         {
