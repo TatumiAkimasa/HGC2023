@@ -69,6 +69,8 @@ public class BattleSystem : MonoBehaviour
 
     void Awake()
     {
+        ManagerAccessor.Instance.battleSystem = this;
+
         // カウントを表示
         CountText.text = NowCount.ToString();
         // AllyCharaというタグがついたキャラをすべて取得
@@ -229,7 +231,7 @@ public class BattleSystem : MonoBehaviour
 
         // 実際にダメージを入れる
         int diceRoll = 10;
-        int cont = 0;
+        int count = 0;
         if(diceRoll==10)
         {
             for(int i=0;i<eff.EffectNum;i++)
