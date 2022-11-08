@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UI_Chara_Item : MonoBehaviour
 {
+    //
     [SerializeField]
     private GameObject ItemData_Prefub_obj;
     [SerializeField]
