@@ -2973,10 +2973,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ede7bc87ed29f43b8aada3a2336ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeadParts: []
-  ArmParts: []
-  BodyParts: []
-  LegParts: []
   CharaImg: {fileID: 0}
   CharaName: {fileID: 0}
 --- !u!114 &741667022
@@ -2991,10 +2987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df026921c8baa4c4d99cfde00ffe72f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeadParts: []
-  ArmParts: []
-  BodyParts: []
-  LegParts: []
   CharaImg: {fileID: 0}
   CharaName: {fileID: 0}
   noumiso_H:
@@ -3224,7 +3216,6 @@ MonoBehaviour:
   Armament: 0
   Variant: 0
   Alter: 0
-  Skill: []
 --- !u!114 &741667023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6347,7 +6338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1228964199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6360,10 +6351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df026921c8baa4c4d99cfde00ffe72f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeadParts: []
-  ArmParts: []
-  BodyParts: []
-  LegParts: []
   CharaImg: {fileID: 0}
   CharaName: {fileID: 0}
   noumiso_H:
@@ -6593,7 +6580,6 @@ MonoBehaviour:
   Armament: 0
   Variant: 0
   Alter: 0
-  Skill: []
 --- !u!114 &1228964200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6606,10 +6592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ede7bc87ed29f43b8aada3a2336ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeadParts: []
-  ArmParts: []
-  BodyParts: []
-  LegParts: []
   CharaImg: {fileID: 0}
   CharaName: {fileID: 0}
 --- !u!114 &1228964201

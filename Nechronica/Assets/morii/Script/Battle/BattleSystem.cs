@@ -242,6 +242,34 @@ public class BattleSystem : MonoBehaviour
                 }
             }
         }
+        else if (diceRoll == 9)
+        {
+
+        }
+        else if (diceRoll == 8)
+        {
+
+        }
+        else if (diceRoll == 7)
+        {
+
+        }
+        else if (diceRoll == 6)
+        {
+
+        }
+        else if (diceRoll <= 5)
+        {
+
+        }
+        else if (diceRoll > 10)
+        {
+
+        }
+        else if (diceRoll == 1)
+        {
+
+        }
     }
 
 

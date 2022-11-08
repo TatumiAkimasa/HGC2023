@@ -33,6 +33,8 @@ public class PartsList : CharaBase
         ago_H.MaxRange = 0;
         ago_H.Weight = 1;
 
+        Debug.Log(ago_H.Name);
+
         noumiso_H.Name = "‚Ì‚¤‚Ý‚»";
         noumiso_H.EffectNum = 2;
         noumiso_H.Cost = 0;
