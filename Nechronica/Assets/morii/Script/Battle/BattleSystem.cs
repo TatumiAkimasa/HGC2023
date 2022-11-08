@@ -24,7 +24,7 @@ public class BattleSystem : MonoBehaviour
     // クリックされたプレイアブルキャラを受け取るようの変数
     private GameObject clickedChara;
 
-    // カウント宙に動くキャラをこのリストに入れる
+    // カウント中に動くキャラをこのリストに入れる
     private List<Doll_blu_Nor> CountMoveChara = new List<Doll_blu_Nor>();
 
     // カウント処理パートに移行するかの成否
@@ -69,17 +69,23 @@ public class BattleSystem : MonoBehaviour
 
     void Awake()
     {
+        // カウントを表示
         CountText.text = NowCount.ToString();
-        // Charaというタグがついたキャラをすべて取得
+        // AllyCharaというタグがついたキャラをすべて取得
         charaObjectsBuffer = GameObject.FindGameObjectsWithTag("AllyChara");
         for (int i = 0; i < charaObjectsBuffer.Length; i++)
         {
-            // キャラ
+            charaObject.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+        }
+        // EnemyCharaというタグがついたキャラをすべて取得
+        charaObjectsBuffer = GameObject.FindGameObjectsWithTag("EnemyChara");
+        for (int i = 0; i < charaObjectsBuffer.Length; i++)
+        {
             charaObject.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
 
         // キャラをスポーン
-        charaObject=battleSpone.CharaSpone(charaObject);
+        charaObject =battleSpone.CharaSpone(charaObject);
     }
 
     private void Start()
@@ -92,7 +98,7 @@ public class BattleSystem : MonoBehaviour
     /// </summary>
     public void TurnStart()
     {
-        // デバッグ用にスタートに書く。本当はTurnStartに配置。
+        // 最大行動値ぶん、行動値を回復。
         for (int i = 0; i < charaObject.Count; i++)
         {
             charaObject[i].IncreaseNowCount();
@@ -123,6 +129,10 @@ public class BattleSystem : MonoBehaviour
         if (battleExe)
         {
             BattleStart();
+        }
+        else
+        {
+            CountLast();
         }
     }
 
@@ -156,7 +166,7 @@ public class BattleSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// バトルが始まったときに呼び出されるメソッド（Startでいい感じしてる）
+    /// カウント中にプレイアブルキャラがいるかいないか判断し、いたら操作を受け付けるようにする。
     /// </summary>
     public void BattleStart()
     {
@@ -166,7 +176,7 @@ public class BattleSystem : MonoBehaviour
         {
             if (CountMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
-                rayGuard.SetActive(false);
+                controllManager.StandbyCharaSelect = true;
             }
             // else if(敵キャラなら…)
             // else(味方NPCなら…)
@@ -195,6 +205,59 @@ public class BattleSystem : MonoBehaviour
         //リストに保存
         CloneCntPrefab.Add(Instance);
     }
+
+
+    /// <summary>
+    /// 選択されたコマンドを発動させるための準備段階に移行させる関数
+    /// </summary>
+    /// <param name="eff">発動するマニューバの内容</param>
+    public void OnClickCommand(ManerverAndArea eff)
+    {
+        // 必要な情報を送信
+        controllManager.SkillSelected = true;
+        controllManager.SetManeuver(eff.maneuver);
+        controllManager.SetArea(eff.area);
+        controllManager.StandbyEnemySelect = true;
+    }
+
+    public void DamageTiming(CharaManeuver eff, Doll_blu_Nor enemy/*, int diceRoll*/)
+    {
+        // controllManager.SkillSelected=false;
+        // controllManager.
+
+        // ---うんぬんかんぬんの処理終わり-----
+
+        // 実際にダメージを入れる
+        int diceRoll = 10;
+        int cont = 0;
+        if(diceRoll==10)
+        {
+            for(int i=0;i<eff.EffectNum;i++)
+            {
+                if(!enemy.GetHeadParts()[i].isDmage)
+                {
+                    enemy.GetHeadParts()[i].isDmage = true;
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ClickedGameObject
+
 
 }
 

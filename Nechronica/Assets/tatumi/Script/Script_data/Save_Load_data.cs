@@ -4,24 +4,30 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class Save_Load_data : MonoBehaviour
 {
     const string filename = "Nechronica_savedata";
     const string filename_sub = "Nechronica_savedata_sub";
 
     [SerializeField]
-    public Doll_blueprint aa;
+    public Doll_blueprint aa,bb;
 
-    void Awake()
+    [SerializeField]
+    private bool DebugMode; 
+
+    void Start()
     {
-       
         //‰ŠúÝ’è
         binarySaveLoad.IsZipArchive = true;
         binarySaveLoad.IsSimpleEncryption = true;
         binarySaveLoad.UserEncrypt = (data) => { for (int i = 0; i < data.Length; i++) data[i] += 1; };
         binarySaveLoad.UserDecrypt = (data) => { for (int i = 0; i < data.Length; i++) data[i] -= 1; };
         Data_Scan.Instance.save_Load_Data_cs = this;
+        ClickButtonLoad();
+        if(DebugMode == false)
+        SceneManager.LoadScene("Title");
+        DontDestroyOnLoad(this.gameObject);
     }
 
 

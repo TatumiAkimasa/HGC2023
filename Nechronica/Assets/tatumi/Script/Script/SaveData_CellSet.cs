@@ -28,7 +28,7 @@ public class SaveData_CellSet : MonoBehaviour
     {
         Data_Scan.Instance.my_data[0].CharaField_data.Time[0] = "00:00:12";
         Data_Scan.Instance.my_data[0].CharaField_data.Time[1] = DateTime.Now.ToString();
-        SaveObj.ClickButtonSave(this.gameObject.name);
+        SaveObj.ClickButtonSave(this.gameObject.name+myint.ToString());
 
         Set_cell("00:00:12", DateTime.Now.ToString(), Name.text, myint);
     }

@@ -16,7 +16,10 @@ public class CheckUp_Save : CheckUp_chara
                 talk_now = true;
 
                 SaveRoad.SetActive(true);
-             
+
+                if (Change_Scene != "")
+                    Scene_change(Change_Scene);
+
             }
         }
     }

@@ -17,7 +17,7 @@ public class Fade_FIeld : MonoBehaviour
     {
         if (Item.tag == "Player")
         {
-            MainCamera_obj.SetActive(false);
+            //MainCamera_obj.SetActive(false);
             RawCamera_obj.SetActive(true);
 
             RawImage_anim.SetTrigger("FadeOn");
@@ -28,7 +28,7 @@ public class Fade_FIeld : MonoBehaviour
     {
         if (Item.tag == "Player")
         {
-            MainCamera_obj.SetActive(true);
+            //MainCamera_obj.SetActive(true);
             RawCamera_obj.SetActive(false);
 
             RawImage_anim.SetTrigger("FadeOff");
