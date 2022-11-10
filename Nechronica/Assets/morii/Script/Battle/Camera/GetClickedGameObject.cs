@@ -200,10 +200,10 @@ public class GetClickedGameObject : MonoBehaviour
                     childCommand.gameObject.SetActive(true);
 
                     // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
-                    // 左辺…攻撃対象のエリアと攻撃するキャラの攻撃射程を比べる…
-                    // 右辺…攻撃するキャラの射程を計算、届く最大の射程から最小の射程を計算し、絶対値を出す。
-                    // 左辺の結果が右辺の結果以下ならコマンドを表示
-                    if (Mathf.Abs(dollArea - move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange - dollManeuver.MinRange))
+                    // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
+                    // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
+                    if (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + dollArea) &&
+                        Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + dollArea))
                     {
                         move.transform.GetChild(CANVAS).gameObject.SetActive(true);
 

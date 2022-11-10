@@ -57,11 +57,13 @@ public class BattleCommand : MonoBehaviour
     private bool nowSelect;                         // 選択中かどうか
     public void SetNowSelect(bool select) => nowSelect = select;
 
+    public GetClickedGameObject getClicked;
+
     private void Start()
     {
         // バトルシステムを取得
-        battleSystem = GameObject.FindGameObjectWithTag("BattleManager").gameObject.GetComponent<BattleSystem>();
-        //battleSystem = ManagerAccessor.Instance.battleSystem;
+        //battleSystem = GameObject.FindGameObjectWithTag("BattleManager").gameObject.GetComponent<BattleSystem>();
+        battleSystem = ManagerAccessor.Instance.battleSystem;
 
         // ボタンを取得
         actionButton  = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
