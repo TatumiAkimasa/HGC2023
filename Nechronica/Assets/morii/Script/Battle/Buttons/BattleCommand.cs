@@ -112,54 +112,10 @@ public class BattleCommand : MonoBehaviour
         parentClone.GetComponent<RectTransform>().position = parentPos;
         parentsActObj.Add(parentClone.gameObject);
 
-        // 各部位パーツのアクション、ラピッドタイミングのパーツを取得
-        for (int i=0;i<thisChara.GetHeadParts().Count;i++)
-        {
-            if (thisChara.GetHeadParts()[i].Timing == CharaBase.ACTION)
-            {
-                ActionManeuvers.Add(thisChara.GetHeadParts()[i]);
-            }
-            else if (thisChara.GetHeadParts()[i].Timing == CharaBase.RAPID) 
-            {
-                RapidManeuvers.Add(thisChara.GetHeadParts()[i]);
-            }
-        }
-
-        for (int i = 0; i < thisChara.GetArmParts().Count; i++)
-        {
-            if (thisChara.GetArmParts()[i].Timing == CharaBase.ACTION)
-            {
-                ActionManeuvers.Add(thisChara.GetArmParts()[i]);
-            }
-            else if (thisChara.GetHeadParts()[i].Timing == CharaBase.RAPID)
-            {
-                RapidManeuvers.Add(thisChara.GetArmParts()[i]);
-            }
-        }
-
-        for (int i = 0; i < thisChara.GetBodyParts().Count; i++)
-        {
-            if (thisChara.GetBodyParts()[i].Timing == CharaBase.ACTION)
-            {
-                ActionManeuvers.Add(thisChara.GetBodyParts()[i]);
-            }
-            else if (thisChara.GetBodyParts()[i].Timing == CharaBase.RAPID)
-            {
-                RapidManeuvers.Add(thisChara.GetBodyParts()[i]);
-            }
-        }
-
-        for (int i = 0; i < thisChara.GetLegParts().Count; i++)
-        {
-            if (thisChara.GetLegParts()[i].Timing == CharaBase.ACTION)
-            {
-                ActionManeuvers.Add(thisChara.GetLegParts()[i]);
-            }
-            else if (thisChara.GetLegParts()[i].Timing == CharaBase.RAPID)
-            {
-                RapidManeuvers.Add(thisChara.GetLegParts()[i]);
-            }
-        }
+        AddManeuver(thisChara.GetHeadParts());
+        AddManeuver(thisChara.GetArmParts());
+        AddManeuver(thisChara.GetBodyParts());
+        AddManeuver(thisChara.GetLegParts());
 
         // コマンドを生成
         for (int i = 0; i < ActionManeuvers.Count; i++)
@@ -227,6 +183,25 @@ public class BattleCommand : MonoBehaviour
     {
         // ラピッドのコマンドを表示
         rapidCommands.SetActive(true);
+    }
+
+    /// <summary>
+    /// キャラクターのアクション、ラピッドマニューバを取得
+    /// </summary>
+    /// <param name="maneuvers"></param>
+    public void AddManeuver(List<CharaManeuver> maneuvers)
+    {
+        for (int i = 0; i < thisChara.GetLegParts().Count; i++)
+        {
+            if (maneuvers[i].Timing == CharaBase.ACTION)
+            {
+                ActionManeuvers.Add(thisChara.GetLegParts()[i]);
+            }
+            else if (maneuvers[i].Timing == CharaBase.RAPID)
+            {
+                RapidManeuvers.Add(thisChara.GetLegParts()[i]);
+            }
+        }
     }
 }
 
