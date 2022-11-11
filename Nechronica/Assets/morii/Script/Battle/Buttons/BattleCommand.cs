@@ -38,13 +38,13 @@ public class BattleCommand : MonoBehaviour
     private GameObject prefabActButton;             // actionコマンドのプレハブ
     [SerializeField]
     private List<GameObject> parentsActObj = new List<GameObject>();                // アクションコマンドの親オブジェクトリスト
-    private List<GameObject> prefabActObjList = new List<GameObject>();
+    private List<GameObject> prefabActObjList = new List<GameObject>();             // クローンしたプレハブの保存先
 
     [SerializeField]
     private GameObject prefabRpdButton;             // rapidコマンドのプレハブ
     [SerializeField]
     private List<GameObject> parentsRpdObj = new List<GameObject>();                // ラピッドコマンドの親オブジェクト
-    private List<GameObject> prefabRpdObjList = new List<GameObject>();
+    private List<GameObject> prefabRpdObjList = new List<GameObject>();             // クローンしたプレハブの保存先
 
 
     private GameObject originalParentObj;           // 上記プレハブの親Objの元となるオブジェクト
@@ -61,11 +61,12 @@ public class BattleCommand : MonoBehaviour
     {
         // バトルシステムを取得
         battleSystem = GameObject.FindGameObjectWithTag("BattleManager").gameObject.GetComponent<BattleSystem>();
+        //battleSystem = ManagerAccessor.Instance.battleSystem;
 
         // ボタンを取得
-        actionButton  = thisChara.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
-        rapidButton   = thisChara.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
-        standbyButton = thisChara.transform.Find("Canvas/Act_select/Standby").gameObject.GetComponent<Button>();
+        actionButton  = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
+        rapidButton   = this.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
+        standbyButton = this.transform.Find("Canvas/Act_select/Standby").gameObject.GetComponent<Button>();
 
         // ボタンにメソッドを加える
         actionButton.onClick.AddListener(OnClickAction);
@@ -73,11 +74,11 @@ public class BattleCommand : MonoBehaviour
         standbyButton.onClick.AddListener(OnClickStandby);
 
         // コマンドを取得
-        actionCommands = thisChara.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
-        rapidCommands  = thisChara.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+        actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
+        rapidCommands  = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
 
         // バックイメージを取得
-        backImg = thisChara.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
+        backImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
 
         // 独自のプレハブフォルダからクローンオブジェクトを取得
         prefabActButton = NonResources.Load<GameObject>("Assets/morii/Prefab/Commands/ActionButton.prefab");
@@ -181,10 +182,13 @@ public class BattleCommand : MonoBehaviour
             {
                 clone.SetRange(ActionManeuvers[i].MinRange.ToString());
             }
+            // 親を設定
             clone.transform.SetParent(parentsActObj[countParent].transform, false);
             ManerverAndArea buff;
+            // バッファーに必要な情報を格納
             buff.maneuver = ActionManeuvers[i];
             buff.area = thisChara.potition;
+            // コマンドを使えるようにする
             clone.GetComponent<Button>().onClick.AddListener(() => battleSystem.OnClickCommand(buff));
             
             // コマンド5個区切りでコマンドの親オブジェクトを複製する。

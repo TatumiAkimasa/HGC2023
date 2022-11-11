@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class GetClickedGameObject : MonoBehaviour
 {
     // 定数-----------------------------------------------------
+    const int CANVAS = 0;
+    
     const int CharaPriority = 20;       // シネマカメラの優先度用定数。キャラをズームする用のカメラの優先度を最優先にする
     const int ACTION = 0;               // 子オブジェクト取得のための定数
+
+    const int STATUS = 0;               // 敵のステータスを取得するための定数
+    const int BUTTONS = 1;              // 敵のボタンを取得するための定数
     //----------------------------------------------------------
 
     private CinemachineVirtualCamera CharaCamera;   // キャラに持たせるプレハブのクローンのカメラ
@@ -28,6 +34,12 @@ public class GetClickedGameObject : MonoBehaviour
 
     [SerializeField]
     private Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
+
+
+    [SerializeField]
+    private Button atkButton;
+    [SerializeField]
+    private Button backButton;
 
     // ほかスクリプトからも値を変更する変数
     private bool standbyCharaSelect = false;
@@ -62,6 +74,12 @@ public class GetClickedGameObject : MonoBehaviour
     //------------------------------------
 
     private bool selectedChara = false;
+
+    private void Awake()
+    {
+        ManagerAccessor.Instance.getClickedObj = this;
+        backButton.onClick.AddListener(OnClickBack);
+    }
 
     private void Update()
     {
@@ -107,19 +125,14 @@ public class GetClickedGameObject : MonoBehaviour
             // プレイアブルキャラに向いていたカメラ情報を保存
             saveCharaCamera = CharaCamera;
 
-
             GameObject clickedObj = ShotRay();
 
             //クリックしたゲームオブジェクトが敵キャラなら
             if (clickedObj.CompareTag("EnemyChara"))
             {
-                // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、
-                if (Mathf.Abs(dollArea - clickedObj.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange-dollManeuver.MinRange))
-                {
-                    ZoomUpObj(clickedObj);
-                    // ここでコマンド表示
-                    StartCoroutine(MoveStandby(clickedObj));
-                }
+                ZoomUpObj(clickedObj);
+                // ここでコマンド表示
+                StartCoroutine(MoveStandby(clickedObj));
             }
         }
     }
@@ -176,13 +189,29 @@ public class GetClickedGameObject : MonoBehaviour
                 if(move.CompareTag("AllyChara"))
                 {
                     // 選択したキャラのコマンドのオブジェクトを取得
-                    childCommand = move.transform.GetChild(ACTION).transform.GetChild(ACTION);
+                    childCommand = move.transform.GetChild(CANVAS).transform.GetChild(ACTION);
                     // 技コマンドもろもろを表示
                     childCommand.gameObject.SetActive(true);
                 }
                 else if(move.CompareTag("EnemyChara"))
                 {
-                    // ここで 攻撃する～みたいなコマンドを表示
+                    // ステータスを取得し、表示。後にZoomOutObjで使うのでメンバ変数に格納
+                    childCommand = move.transform.GetChild(CANVAS);
+                    childCommand.gameObject.SetActive(true);
+
+                    // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
+                    // 左辺…攻撃対象のエリアと攻撃するキャラの攻撃射程を比べる…
+                    // 右辺…攻撃するキャラの射程を計算、届く最大の射程から最小の射程を計算し、絶対値を出す。
+                    // 左辺の結果が右辺の結果以下ならコマンドを表示
+                    if (Mathf.Abs(dollArea - move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange - dollManeuver.MinRange))
+                    {
+                        move.transform.GetChild(CANVAS).gameObject.SetActive(true);
+
+                        atkButton.onClick.AddListener(() => OnClickAtk(move.GetComponent<Doll_blu_Nor>()));
+
+                        this.transform.GetChild(CANVAS).gameObject.SetActive(true);
+                    }
+                    
                     // 攻撃する～を選んだら、selectedChara、standbyCharaSelectをfalseにし、ダイスロールへ
                     // ダイスロール後、マニューバ、敵Obj(move)、ダイスの値を引数とし、ダメージタイミングへ
                 }
@@ -236,5 +265,22 @@ public class GetClickedGameObject : MonoBehaviour
         childCommand.gameObject.SetActive(false);
         // 複製したプレハブカメラを消す。
         StartCoroutine(DstroyCamera());
+    }
+
+    void OnClickBack()
+    {
+        // カメラを元の位置に戻し、UIを消す
+        ZoomOutObj();
+        this.transform.GetChild(CANVAS).gameObject.SetActive(false);
+    }
+
+    void OnClickAtk(Doll_blu_Nor enemy)
+    {
+        // ここジャッジから入る
+        battleSystem.DamageTiming(dollManeuver, enemy);
+        // カメラを元の位置に戻し、UIを消す
+        ZoomOutObj();
+        enemy.transform.GetChild(CANVAS).gameObject.SetActive(false);
+        this.transform.GetChild(CANVAS).gameObject.SetActive(false);
     }
 }

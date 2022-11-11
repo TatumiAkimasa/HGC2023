@@ -8,7 +8,7 @@ public class Doll_blu_Nor : PartsList
     public string hide_hint="test";              //暗示
     public string Death_year="10";              //享年
     public string temper="アリス";                  //ポジション
-    public short[] Memory= {1,2 };                 //記憶のかけら
+    public short[] Memory= {1,2 };                  //記憶のかけら
 
     public string GetName() => Name;
 
@@ -18,7 +18,7 @@ public class Doll_blu_Nor : PartsList
     public short potition=3;                 //初期配置(煉獄)
     public string MainClass="Stacy", SubClass="Stacy";     //職業(skill)
     public short Armament=0, Variant=0, Alter=0; //武装,変異,改造(Skill)
-    
+    public List<CharaManeuver> Skill;              //スキル
 
     private void Awake()
     {

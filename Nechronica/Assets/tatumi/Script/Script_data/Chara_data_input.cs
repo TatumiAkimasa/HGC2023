@@ -153,7 +153,7 @@ public class Chara_data_input : CharaBase
         //positionスキルのみこちらで設定
         Doll_data.CharaBase_data.Skill.Add(Potition_Skill);
 
-        Doll_data.CharaField_data.Event[0].str = "店の倉庫のカギを使い大倉庫へ迎え";
+        Doll_data.CharaField_data.Event[0].str = "店の倉庫のカギを使い大倉庫へ向え";
         Doll_data.CharaField_data.Event[1].str = "記憶を孤高のドールへ渡せ";
     }
 
