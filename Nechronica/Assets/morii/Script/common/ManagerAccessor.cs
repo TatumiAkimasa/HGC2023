@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 各マネージャークラスへのアクセスを簡易化する
+/// システム根幹スクリプトへのアクセスを簡易化する
 /// </summary>
-public class ManagerAccessor : MonoBehaviour
+public class ManagerAccessor
 {
     private static ManagerAccessor instance = null;
 
-
-    // マネージャの参照
-    public BattleSystem battleSystem;
-    public GetClickedGameObject getClickedObj;
 
     public static ManagerAccessor Instance
     {
@@ -25,5 +21,10 @@ public class ManagerAccessor : MonoBehaviour
             return instance;
         }
     }
+
+
+    // システム根幹スクリプト参照
+    public BattleSystem battleSystem;
+    public GetClickedGameObject getClickedObj;
 
 }

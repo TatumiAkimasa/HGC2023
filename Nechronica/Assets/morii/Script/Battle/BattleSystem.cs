@@ -17,6 +17,11 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private List<Doll_blu_Nor> charaObject = new List<Doll_blu_Nor>();
 
+    public List<Doll_blu_Nor> GetCharaObj()
+    {
+        return charaObject;
+    }
+
     // キャラスポーンスクリプト参照用
     [SerializeField]
     private BattleSpone battleSpone;
@@ -70,6 +75,7 @@ public class BattleSystem : MonoBehaviour
     void Awake()
     {
         ManagerAccessor.Instance.battleSystem = this;
+        Debug.Log(ManagerAccessor.Instance.battleSystem);
 
         // カウントを表示
         CountText.text = NowCount.ToString();
