@@ -1,11 +1,21 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEditor;
+
+public class Example : MonoBehaviour
+{
+    [SerializeField]
+    private string[] talk;
+
+}
 
 [CustomEditor(typeof(MoveEvent_Player))]
 //参考 https://kan-kikuchi.hatenablog.com/entry/InspectorEx , https://qiita.com/PETITDIGI/items/a40a7477579f14a5a8e6
 public class MoveEvent_Editor : Editor
 {
+   
+
     private MoveEvent_Player target_;
 
     private void Awake()
@@ -21,17 +31,44 @@ public class MoveEvent_Editor : Editor
         for (int i = 0; i != target_.EventType.Count; i++)
         {
             //各タイプ毎表示
-            if (target_.EventType. == SetMonsterStatus.MonsterType.Warrior)
+            if (target_.EventType[i].eventType == EventType.event_Type.Nomove)
             {
-                EditorGUILayout.HelpBox("Warriorは魔法が使えないのマジックポイントは設定できません", MessageType.Info, true);
+                EditorGUILayout.LabelField("待機の設定");
+                target_.EventType[i].ordes.WaitTime = EditorGUILayout.FloatField("待機時間", target_.EventType[i].ordes.WaitTime);
             }
-            else if (monster.Type == SetMonsterStatus.MonsterType.Witch)
+            else if (target_.EventType[i].eventType == EventType.event_Type.HorizonMove)
             {
-                EditorGUILayout.HelpBox("Witchはマジックポイントを0にできません。\nまた、体力より低いマジックポイントも設定できません。", MessageType.Info, true);
+                EditorGUILayout.LabelField("左右の設定");
+                target_.EventType[i].ordes.Horizon = EditorGUILayout.IntField("左:1～-右:-1", target_.EventType[i].ordes.Horizon);
+                target_.EventType[i].ordes.Move_Time = EditorGUILayout.IntField("移動時間", target_.EventType[i].ordes.Move_Time);
             }
-            else if (monster.Type == SetMonsterStatus.MonsterType.Dragon)
+            else if (target_.EventType[i].eventType == EventType.event_Type.VerticalMove)
             {
-                EditorGUILayout.HelpBox("Dragonのパワーは固定なので設定できません", MessageType.Info, true);
+                EditorGUILayout.LabelField("上下の設定");
+                target_.EventType[i].ordes.Vertical = EditorGUILayout.IntField("上:1～-下:-1", target_.EventType[i].ordes.Vertical);
+                target_.EventType[i].ordes.Move_Time = EditorGUILayout.IntField("移動時間", target_.EventType[i].ordes.Move_Time);
+            }
+            else if (target_.EventType[i].eventType == EventType.event_Type.JumpMove)
+            {
+                EditorGUILayout.LabelField("ジャンプの設定");
+                target_.EventType[i].ordes.Jump_count = EditorGUILayout.IntField("ジャンプ回数", target_.EventType[i].ordes.Jump_count);
+                target_.EventType[i].ordes.WaitTime = EditorGUILayout.FloatField("ジャンプ間隔", target_.EventType[i].ordes.WaitTime);
+            }
+            else if (target_.EventType[i].eventType == EventType.event_Type.TalkStart)
+            {
+                EditorGUILayout.LabelField("会話の設定");
+                var str = serializedObject.FindProperty("talk");
+                target_.EventType[i].ordes.Talk = new ExampleCustomList(listProp);
+
+                target_.EventType[i].ordes.WaitTime = EditorGUILayout.FloatField("ジャンプ間隔", target_.EventType[i].ordes.WaitTime);
+            }
+            else if (target_.EventType[i].eventType == EventType.event_Type.TalkEnd)
+            {
+
+            }
+            else
+            {
+                Debug.LogError("登録されてないイベントType");
             }
         }
 

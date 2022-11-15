@@ -57,7 +57,7 @@ public class MOve_chara : MonoBehaviour
         }
     }
 
-    public IEnumerator Event_Hmove(int Horizontaltime,int RightorLeft)
+    public IEnumerator Event_Horimove(int Horizontaltime,int RightorLeft)
     {
         //移動秒数分動く
         for(int i=0;i!= Horizontaltime;i++)
@@ -72,7 +72,7 @@ public class MOve_chara : MonoBehaviour
         yield return null;//1フレーム待機
     }
 
-    public IEnumerator Event_Vmove(int Vertical, int UporDown)
+    public IEnumerator Event_Vertimove(int Vertical, int UporDown)
     {
         //移動秒数分動く
         for (int i = 0; i != Vertical; i++)
@@ -87,13 +87,13 @@ public class MOve_chara : MonoBehaviour
         yield return null;//1フレーム待機
     }
 
-    public IEnumerator Event_jump(int count)
+    public IEnumerator Event_jump(int count,float time)
     {
         //移動秒数分動く
         for (int i = 0; i != count; i++)
         {
             moveDirection.y = jumpSpeed;
-            yield return new WaitForSeconds(0.5f);//0.5秒待機
+            yield return new WaitForSeconds(time);//0.5秒待機
         }
 
         yield return null;//1フレーム待機

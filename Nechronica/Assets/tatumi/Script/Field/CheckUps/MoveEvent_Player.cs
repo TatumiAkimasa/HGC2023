@@ -7,8 +7,9 @@ public class MoveEvent_Player : MonoBehaviour
     [System.Serializable]
     public class EventOrders
     {
-        public int RightorLeft,UporDown,Jump_count,Move_Time;
+        public int Horizon,Vertical,Jump_count,Move_Time;
         public string[] Talk;
+        public float WaitTime;
     }
 
     public struct Events

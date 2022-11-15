@@ -8,10 +8,8 @@ public class EventType
     public enum event_Type
     {
         Nomove = 0,
-        RightMove,
-        LeftMove,
-        UpMove,
-        DownMove,
+        HorizonMove,
+        VerticalMove,
         JumpMove,
         TalkStart,
         TalkEnd,
