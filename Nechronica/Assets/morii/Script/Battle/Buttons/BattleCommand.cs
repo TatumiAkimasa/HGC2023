@@ -28,7 +28,13 @@ public class BattleCommand : MonoBehaviour
     private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
 
     [SerializeField]
-    private GameObject rapidCommands;                // ラピッドタイミングのコマンドオブジェクト
+    private GameObject rapidCommands;               // ラピッドタイミングのコマンドオブジェクト
+
+    [SerializeField]
+    private GameObject judgeCommands;               // ジャッジタイミングのコマンドオブジェクト
+
+    [SerializeField]
+    private GameObject damageCommands;              // ダメージタイミングのコマンドオブジェクト
 
     [SerializeField]
     private Button actionButton;                    // アクションのボタン
@@ -42,7 +48,7 @@ public class BattleCommand : MonoBehaviour
     private GameObject prefabActButton;             // actionコマンドのプレハブ
     [SerializeField]
     private List<GameObject> parentsActObj = new List<GameObject>();                // アクションコマンドの親オブジェクトリスト
-    private List<GameObject> prefabActObjList = new List<GameObject>();             // クローンしたプレハブの保存先
+    [SerializeField] private List<GameObject> prefabActObjList = new List<GameObject>();             // クローンしたプレハブの保存先
 
     [SerializeField]
     private GameObject prefabRpdButton;             // rapidコマンドのプレハブ
@@ -82,8 +88,8 @@ public class BattleCommand : MonoBehaviour
         battleSystem = ManagerAccessor.Instance.battleSystem;
 
         // ボタンを取得
-        actionButton  = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
-        rapidButton   = this.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
+        actionButton = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
+        rapidButton = this.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
         standbyButton = this.transform.Find("Canvas/Act_select/Standby").gameObject.GetComponent<Button>();
 
         // ボタンにメソッドを加える
@@ -94,6 +100,8 @@ public class BattleCommand : MonoBehaviour
         // コマンドを取得
         actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
         rapidCommands  = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+        judgeCommands  = this.transform.Find("Canvas/Act_select/Judge/JudgeCommands").gameObject;
+        damageCommands = this.transform.Find("Canvas/Act_select/Damage/DamageCommands").gameObject;
 
         // バックイメージを取得
         backImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
@@ -124,61 +132,24 @@ public class BattleCommand : MonoBehaviour
         // クローンしたオブジェクトの座標、サイズを調整する
         parentClone.GetComponent<RectTransform>().sizeDelta = parentSize;
         parentClone.GetComponent<RectTransform>().position = parentPos;
-        parentsActObj.Add(parentClone.gameObject);
 
+        // 各親オブジェクトを1つずつあらかじめ作る
+        parentsActObj.Add(BuildingParent(true));
+        parentsRpdObj.Add(BuildingParent(true));
+        parentsJdgObj.Add(BuildingParent(true));
+        parentsDmgObj.Add(BuildingParent(true));
+
+        // パーツのマニューバとしての割り当てられているタイミングで分ける
         AddManeuver(thisChara.GetHeadParts());
         AddManeuver(thisChara.GetArmParts());
         AddManeuver(thisChara.GetBodyParts());
         AddManeuver(thisChara.GetLegParts());
 
-        // コマンドを生成
-        for (int i = 0; i < ActionManeuvers.Count; i++)
-        {
-            Instance = Instantiate(prefabActButton, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
-            ButtonTexts clone = Instance.GetComponent<ButtonTexts>();
-            clone.SetName(ActionManeuvers[i].Name);
-            clone.SetCost(ActionManeuvers[i].Cost.ToString());
-
-            // ここでボタンにオンクリックを追加。内容はマニューバ発動
-
-            // 射程が複数存在する場合と、一か所にしか存在しない場合、もしくは自身に効果が及ぶ場合で処理を分ける
-            if (ActionManeuvers[i].MinRange == 10) 
-            {
-                clone.SetRange("自身");
-            }
-            else if (ActionManeuvers[i].MinRange != ActionManeuvers[i].MaxRange)
-            {
-                clone.SetRange(ActionManeuvers[i].MinRange.ToString() + "～" + ActionManeuvers[i].MaxRange.ToString());
-            }
-            else
-            {
-                clone.SetRange(ActionManeuvers[i].MinRange.ToString());
-            }
-            // 親を設定
-            clone.transform.SetParent(parentsActObj[countParent].transform, false);
-            ManerverAndArea buff;
-            // バッファーに必要な情報を格納
-            buff.maneuver = ActionManeuvers[i];
-            buff.area = thisChara.potition;
-            // コマンドを使えるようにする
-            clone.GetComponent<Button>().onClick.AddListener(() => battleSystem.OnClickCommand(buff));
-            
-            // コマンド5個区切りでコマンドの親オブジェクトを複製する。
-            if ((i + 1) % 5 == 0)
-            {
-                countParent++;
-                Instance = Instantiate(originalParentObj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), actionCommands.transform);
-                parentClone = Instance.GetComponent<VerticalLayoutGroup>();
-                // クローンしたオブジェクトの座標、サイズを調整する
-                parentClone.GetComponent<RectTransform>().position = backImg.position;
-                parentClone.GetComponent<RectTransform>().sizeDelta = backImg.sizeDelta;
-                parentClone.gameObject.SetActive(false);
-                parentsActObj.Add(parentClone.gameObject);
-            }
-
-            //リストに保存
-            prefabActObjList.Add(clone.gameObject);
-        }
+        // タイミングで分けられたマニューバ
+        prefabActObjList = BuildCommands(ActionManeuvers, ref parentsActObj, prefabActObjList);
+        prefabRpdObjList = BuildCommands(RapidManeuvers , ref parentsRpdObj, prefabRpdObjList);
+        prefabJdgObjList = BuildCommands(JudgeManeuvers , ref parentsJdgObj, prefabJdgObjList);
+        prefabDmgObjList = BuildCommands(DamageManeuvers, ref parentsDmgObj, prefabDmgObjList);
     }
 
     public void OnClickStandby()
@@ -228,12 +199,13 @@ public class BattleCommand : MonoBehaviour
     }
 
     /// <summary>
-    /// コマンド生成メソッド
+    /// コマンドを生成するメソッド
     /// </summary>
-    /// <param name="maneuvers">オブジェクトリストに格納するマニューバ</param>
-    /// <param name="prefabList">マニューバボタンを格納したいオブジェクトリスト。戻り値になる</param>
-    /// <returns>prefabList</returns>
-    public List<GameObject> BuildCommands(List<CharaManeuver> maneuvers, List<GameObject> prefabList)
+    /// <param name="maneuvers">マニューバの内容をクローンオブジェクトにする</param>
+    /// <param name="prefabList">上記オブジェクトを格納し、管理するリスト</param>
+    /// <param name="parentObj">上記オブジェクトリストを格納し、コマンド選択のページとしての扱いをする。</param>
+    /// <returns><param name="prefabList"></returns>
+    public List<GameObject> BuildCommands(List<CharaManeuver> maneuvers, ref List<GameObject> parentObj, List<GameObject> prefabList)
     {
         GameObject Instance;
         // 親の数
@@ -261,7 +233,7 @@ public class BattleCommand : MonoBehaviour
                 clone.SetRange(maneuvers[i].MinRange.ToString());
             }
             // 親を設定
-            clone.transform.SetParent(parentsActObj[countParent].transform, false);
+            clone.transform.SetParent(parentObj[countParent].transform, false);
             ManerverAndArea buff;
             // バッファーに必要な情報を格納
             buff.maneuver = maneuvers[i];
@@ -273,13 +245,7 @@ public class BattleCommand : MonoBehaviour
             if ((i + 1) % 5 == 0)
             {
                 countParent++;
-                Instance = Instantiate(originalParentObj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), actionCommands.transform);
-                VerticalLayoutGroup parentClone = Instance.GetComponent<VerticalLayoutGroup>();
-                // クローンしたオブジェクトの座標、サイズを調整する
-                parentClone.GetComponent<RectTransform>().position = backImg.position;
-                parentClone.GetComponent<RectTransform>().sizeDelta = backImg.sizeDelta;
-                parentClone.gameObject.SetActive(false);
-                parentsActObj.Add(parentClone.gameObject);
+                parentObj.Add(BuildingParent(false));
             }
 
             //リストに保存
@@ -289,7 +255,23 @@ public class BattleCommand : MonoBehaviour
         return prefabList;
     }
 
-    // varticalParentオブジェクトを複製するメソッドを作る
+    /// <summary>
+    /// コマンドボタンを格納したオブジェクトリスト。
+    /// </summary>
+    /// <param name="isActive">アクティブ状態でクローンするかどうか</param>
+    /// <returns></returns>
+    GameObject BuildingParent(bool isActive)
+    {
+        GameObject Instance;
+        Instance = Instantiate(originalParentObj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), actionCommands.transform);
+        VerticalLayoutGroup parentClone = Instance.GetComponent<VerticalLayoutGroup>();
+        // クローンしたオブジェクトの座標、サイズを調整する
+        parentClone.GetComponent<RectTransform>().position = backImg.position;
+        parentClone.GetComponent<RectTransform>().sizeDelta = backImg.sizeDelta;
+        parentClone.gameObject.SetActive(isActive);
+        return parentClone.gameObject;
+    }
+
 }
 
 public struct ManerverAndArea

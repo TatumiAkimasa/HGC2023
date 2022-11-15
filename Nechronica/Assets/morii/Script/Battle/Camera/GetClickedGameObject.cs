@@ -8,12 +8,17 @@ public class GetClickedGameObject : MonoBehaviour
 {
     // 定数-----------------------------------------------------
     const int CANVAS = 0;
-    
+
     const int CharaPriority = 20;       // シネマカメラの優先度用定数。キャラをズームする用のカメラの優先度を最優先にする
     const int ACTION = 0;               // 子オブジェクト取得のための定数
+    const int JUDGE  = 1;               // 子オブジェクト取得のための定数
+    const int DAMAGE = 2;               // 子オブジェクト取得のための定数
 
     const int STATUS = 0;               // 敵のステータスを取得するための定数
     const int BUTTONS = 1;              // 敵のボタンを取得するための定数
+
+    const int ATKBUTTONS = 0;           // アタックボタンとかの子オブジェクトを取得するための定数
+    const int DICEROLL = 1;             // ダイスロールボタンを取得するための定数
     //----------------------------------------------------------
 
     private CinemachineVirtualCamera CharaCamera;   // キャラに持たせるプレハブのクローンのカメラ
@@ -35,6 +40,11 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField]
     private Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
 
+    private GameObject atkTargetEnemy;              // 攻撃する敵オブジェクトを格納場所
+
+    private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
+
+    private int rollResult = 0;                     // ダイスロールの結果を格納する変数
 
     [SerializeField]
     private Button atkButton;
@@ -65,11 +75,17 @@ public class GetClickedGameObject : MonoBehaviour
         set { skillSelected = value; }
     }
 
+    private bool isDiceRoll;
+    private bool isStandbyDiceRoll;
+    private bool isJudgeTiming=false;
+
+
     private CharaManeuver dollManeuver;         // 選択されたドールのマニューバ格納用変数
     public void SetManeuver(CharaManeuver set) { dollManeuver = set; }
 
     private int dollArea = 0;                   // 選択されたドールの所属エリア格納用変数
     public void SetArea(int set) { dollArea = set; }
+    public int GetArea() => dollArea;
 
     //------------------------------------
 
@@ -87,14 +103,25 @@ public class GetClickedGameObject : MonoBehaviour
         {
             SkillSelectStandby();
         }
+        else if (standbyEnemySelect)
+        {
+            EnemySelectStandby();
+        }
         else if(standbyCharaSelect)
         {
             CharaSelectStandby();
         }
-
-        if(standbyEnemySelect)
+        else if(isStandbyDiceRoll)
         {
-            EnemySelectStandby();
+            if(isDiceRoll)
+            {
+                isStandbyDiceRoll = false;
+                isDiceRoll = false;
+
+                // ここからジャッジタイミング
+                standbyCharaSelect = true;
+                isJudgeTiming = true;
+            }
         }
     }
 
@@ -142,6 +169,8 @@ public class GetClickedGameObject : MonoBehaviour
         // 右クリックで
         if ((Input.GetMouseButtonDown(1) || skillSelected) && CharaCamera != null)
         {
+            // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
+
             ZoomOutObj();
             // キャラ選択待機状態にする
             selectedChara = false;
@@ -188,10 +217,20 @@ public class GetClickedGameObject : MonoBehaviour
             {
                 if(move.CompareTag("AllyChara"))
                 {
-                    // 選択したキャラのコマンドのオブジェクトを取得
-                    childCommand = move.transform.GetChild(CANVAS).transform.GetChild(ACTION);
-                    // 技コマンドもろもろを表示
-                    childCommand.gameObject.SetActive(true);
+                    if(isJudgeTiming)
+                    {
+                        // 選択したキャラのコマンドのオブジェクトを取得
+                        childCommand = move.transform.GetChild(CANVAS).transform.GetChild(JUDGE);
+                        // 技コマンドもろもろを表示
+                        childCommand.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        // 選択したキャラのコマンドのオブジェクトを取得
+                        childCommand = move.transform.GetChild(CANVAS).transform.GetChild(ACTION);
+                        // 技コマンドもろもろを表示
+                        childCommand.gameObject.SetActive(true);
+                    }
                 }
                 else if(move.CompareTag("EnemyChara"))
                 {
@@ -205,11 +244,12 @@ public class GetClickedGameObject : MonoBehaviour
                     if (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + dollArea) &&
                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + dollArea))
                     {
-                        move.transform.GetChild(CANVAS).gameObject.SetActive(true);
+                        atkTargetEnemy = move;
+                        atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
 
                         atkButton.onClick.AddListener(() => OnClickAtk(move.GetComponent<Doll_blu_Nor>()));
 
-                        this.transform.GetChild(CANVAS).gameObject.SetActive(true);
+                        this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(true);
                     }
                     
                     // 攻撃する～を選んだら、selectedChara、standbyCharaSelectをfalseにし、ダイスロールへ
@@ -269,18 +309,64 @@ public class GetClickedGameObject : MonoBehaviour
 
     void OnClickBack()
     {
-        // カメラを元の位置に戻し、UIを消す
-        ZoomOutObj();
-        this.transform.GetChild(CANVAS).gameObject.SetActive(false);
+        // childCommandの中身があるということはコマンドが表示されている状態なので、それを非表示にし、childCommandの中身をなくす
+        if (childCommand != null)
+        {
+            childCommand.gameObject.SetActive(false);
+            childCommand = null;
+        }
+        else
+        {
+            // カメラを元の位置に戻し、UIを消す
+            ZoomOutObj();
+            this.transform.GetChild(CANVAS).gameObject.SetActive(false);
+        }
+       
     }
 
     void OnClickAtk(Doll_blu_Nor enemy)
     {
-        // ここジャッジから入る
-        battleSystem.DamageTiming(dollManeuver, enemy);
         // カメラを元の位置に戻し、UIを消す
         ZoomOutObj();
         enemy.transform.GetChild(CANVAS).gameObject.SetActive(false);
-        this.transform.GetChild(CANVAS).gameObject.SetActive(false);
+        this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(false);
+        this.transform.GetChild(CANVAS).transform.GetChild(DICEROLL).gameObject.SetActive(true);
+
+        selectedChara = false;
+        standbyEnemySelect = false;
+        standbyCharaSelect = false;
+
+        // ここジャッジから入る
+        isStandbyDiceRoll = true;
+
+        battleSystem.DamageTiming(dollManeuver, enemy);
+    }
+
+    private Text text;
+
+    public void OnClickDiceRoll()
+    {
+        randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
+        rollResult = randoms.NextInt(1, 10);
+        text.text = rollResult.ToString();
+        isDiceRoll = true;
+    }
+
+    public int JudgeTiming()
+    {
+        // 敵の介入（？）
+
+        // 味方選択
+
+        // 味方のジャッジ発動
+
+        // ダイス結果に値を加算
+
+        // もう一度同じ処理へ
+
+        // passを押したら終了
+
+
+        return 0;
     }
 }

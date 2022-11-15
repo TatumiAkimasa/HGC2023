@@ -228,6 +228,11 @@ public class BattleSystem : MonoBehaviour
         controllManager.StandbyEnemySelect = true;
     }
 
+    public void JudgeTiming(int rollResult)
+    {
+        controllManager.GetArea();
+    }
+
     public void DamageTiming(CharaManeuver eff, Doll_blu_Nor enemy/*, int diceRoll*/)
     {
         // controllManager.SkillSelected=false;

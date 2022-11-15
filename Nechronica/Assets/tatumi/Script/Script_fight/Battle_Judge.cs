@@ -38,7 +38,7 @@
 //        for (int Charanum = 0; Charanum != battleSystem.GetCharaObj().Count; Charanum++)
 //        {
 //            // 各部位パーツのアクション、ラピッドタイミングのパーツを取得
-//            for (int i = 0; i < battleSystem.GetCharaObj().GetHeadParts.Count; i++)
+//            for (int i = 0; i < battleSystem.GetCharaObj().GetHeadParts().Count; i++)
 //            {
 //                //ジャッジかつ、使えるとき
 //                if (battleSystem.charaObject[Charanum].GetHeadParts()[i].Timing == CharaBase.JUDGE && !battleSystem.charaObject[Charanum].GetHeadParts()[i].isDmage)
