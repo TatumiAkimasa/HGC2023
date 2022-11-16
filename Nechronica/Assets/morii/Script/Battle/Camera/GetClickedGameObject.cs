@@ -87,6 +87,9 @@ public class GetClickedGameObject : MonoBehaviour
     public void SetArea(int set) { dollArea = set; }
     public int GetArea() => dollArea;
 
+    [SerializeField]
+    private Text text;
+
     //------------------------------------
 
     private bool selectedChara = false;
@@ -135,6 +138,7 @@ public class GetClickedGameObject : MonoBehaviour
             //クリックしたゲームオブジェクトが味方キャラなら
             if (clickedObj.CompareTag("AllyChara"))
             {
+
                 clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
                 ZoomUpObj(clickedObj);
                 selectedChara = true;
@@ -341,8 +345,6 @@ public class GetClickedGameObject : MonoBehaviour
 
         battleSystem.DamageTiming(dollManeuver, enemy);
     }
-
-    private Text text;
 
     public void OnClickDiceRoll()
     {

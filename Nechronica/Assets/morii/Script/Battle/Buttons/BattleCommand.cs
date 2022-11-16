@@ -43,34 +43,27 @@ public class BattleCommand : MonoBehaviour
     [SerializeField]
     private Button standbyButton;                   // 待機のボタン
 
+    [SerializeField] private GameObject prefabActButton;                               // actionコマンドのプレハブ
+    [SerializeField] private GameObject prefabRpdButton;                               // rapidコマンドのプレハブ
+    [SerializeField] private GameObject prefabJdgButton;                               // judgeコマンドのプレハブ
+    [SerializeField] private GameObject prefabDmgButton;                               // Damageコマンドのプレハブ
 
-    [SerializeField]
-    private GameObject prefabActButton;             // actionコマンドのプレハブ
-    [SerializeField]
-    private List<GameObject> parentsActObj = new List<GameObject>();                // アクションコマンドの親オブジェクトリスト
-    [SerializeField] private List<GameObject> prefabActObjList = new List<GameObject>();             // クローンしたプレハブの保存先
-
-    [SerializeField]
-    private GameObject prefabRpdButton;             // rapidコマンドのプレハブ
-    [SerializeField]
-    private List<GameObject> parentsRpdObj = new List<GameObject>();                // ラピッドコマンドの親オブジェクト
-    private List<GameObject> prefabRpdObjList = new List<GameObject>();             // クローンしたプレハブの保存先
-
-    [SerializeField]
-    private GameObject prefabJdgButton;             // judgeコマンドのプレハブ
-    [SerializeField]
-    private List<GameObject> parentsJdgObj = new List<GameObject>();                // ラピッドコマンドの親オブジェクト
-    private List<GameObject> prefabJdgObjList = new List<GameObject>();             // クローンしたプレハブの保存先
-
-    [SerializeField]
-    private GameObject prefabDmgButton;             // Damageコマンドのプレハブ
-    [SerializeField]
-    private List<GameObject> parentsDmgObj = new List<GameObject>();                // ラピッドコマンドの親オブジェクト
-    private List<GameObject> prefabDmgObjList = new List<GameObject>();             // クローンしたプレハブの保存先
+    [SerializeField] private List<GameObject> parentsActObj = new List<GameObject>();  // アクションコマンドの親オブジェクトリスト
+    [SerializeField] private List<GameObject> parentsRpdObj = new List<GameObject>();  // ラピッドコマンドの親オブジェクト
+    [SerializeField] private List<GameObject> parentsJdgObj = new List<GameObject>();  // ジャッジコマンドの親オブジェクト
+    [SerializeField] private List<GameObject> parentsDmgObj = new List<GameObject>();  // ダメージコマンドの親オブジェクト
+    
+    private List<GameObject> prefabActObjList = new List<GameObject>();                // クローンしたアクションコマンドプレハブの保存先
+    private List<GameObject> prefabRpdObjList = new List<GameObject>();                // クローンしたラピッドコマンドプレハブの保存先
+    private List<GameObject> prefabJdgObjList = new List<GameObject>();                // クローンしたジャッジコマンドプレハブの保存先
+    private List<GameObject> prefabDmgObjList = new List<GameObject>();                // クローンしたダメージコマンドプレハブの保存先
 
 
-    private GameObject originalParentObj;           // 上記プレハブの親Objの元となるオブジェクト
-    private RectTransform backImg;                  // 上記変数の座標となるオブジェクト
+    private GameObject originalParentObj;              // 上記プレハブの親Objの元となるオブジェクト
+    private RectTransform backActImg;                  // 上記変数の座標となるオブジェクト
+    private RectTransform backRpdImg;                  // 上記変数の座標となるオブジェクト
+    private RectTransform backJdgImg;                  // 上記変数の座標となるオブジェクト
+    private RectTransform backDmgImg;                  // 上記変数の座標となるオブジェクト
 
     [SerializeField]
     private BattleSystem battleSystem;              
@@ -100,11 +93,14 @@ public class BattleCommand : MonoBehaviour
         // コマンドを取得
         actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
         rapidCommands  = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
-        judgeCommands  = this.transform.Find("Canvas/Act_select/Judge/JudgeCommands").gameObject;
-        damageCommands = this.transform.Find("Canvas/Act_select/Damage/DamageCommands").gameObject;
+        judgeCommands  = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
+        damageCommands = this.transform.Find("Canvas/Damage/DamageCommands").gameObject;
 
         // バックイメージを取得
-        backImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
+        backActImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
+        backRpdImg = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands/BackImg").GetComponent<RectTransform>();
+        backJdgImg = this.transform.Find("Canvas/Judge/JudgeCommands/BackImg").GetComponent<RectTransform>();
+        backDmgImg = this.transform.Find("Canvas/Damage/DamageCommands/BackImg").GetComponent<RectTransform>();
 
         // 独自のプレハブフォルダからクローンオブジェクトを取得
         prefabActButton = NonResources.Load<GameObject>("Assets/morii/Prefab/Commands/ActionButton.prefab");
@@ -113,31 +109,12 @@ public class BattleCommand : MonoBehaviour
         // 独自のプレハブフォルダから上記プレハブの親Objの元となるオブジェクトを取得
         originalParentObj = NonResources.Load<GameObject>("Assets/morii/Prefab/UIparent/VerticalParent.prefab");
 
-        // サイズ調整----ゴリ押しなの気に食わん--------------------------
-        // クローンした親オブジェクトのサイズ調整用
-        Vector2 parentSize = backImg.sizeDelta;
-        parentSize.y = parentSize.y - COMMAND_SIZE / 2;
-
-        Vector3 parentPos = backImg.position;
-        parentPos.y = parentPos.y + COMMAND_SIZE / 4;
-        // --------------------------------------------------------------
-
-        // クローン生成用GameObject
-        GameObject Instance;
-
-        // あらかじめ1個目の親となるオブジェクトを生成
-        Instance = Instantiate(originalParentObj);
-        VerticalLayoutGroup parentClone = Instance.GetComponent<VerticalLayoutGroup>();
-        parentClone.transform.parent = actionCommands.transform;
-        // クローンしたオブジェクトの座標、サイズを調整する
-        parentClone.GetComponent<RectTransform>().sizeDelta = parentSize;
-        parentClone.GetComponent<RectTransform>().position = parentPos;
-
+        
         // 各親オブジェクトを1つずつあらかじめ作る
-        parentsActObj.Add(BuildingParent(true));
-        parentsRpdObj.Add(BuildingParent(true));
-        parentsJdgObj.Add(BuildingParent(true));
-        parentsDmgObj.Add(BuildingParent(true));
+        parentsActObj.Add(BuildingParent(true, backActImg));
+        parentsRpdObj.Add(BuildingParent(true, backRpdImg));
+        parentsJdgObj.Add(BuildingParent(true, backJdgImg));
+        parentsDmgObj.Add(BuildingParent(true, backDmgImg));
 
         // パーツのマニューバとしての割り当てられているタイミングで分ける
         AddManeuver(thisChara.GetHeadParts());
@@ -146,10 +123,10 @@ public class BattleCommand : MonoBehaviour
         AddManeuver(thisChara.GetLegParts());
 
         // タイミングで分けられたマニューバ
-        prefabActObjList = BuildCommands(ActionManeuvers, ref parentsActObj, prefabActObjList);
-        prefabRpdObjList = BuildCommands(RapidManeuvers , ref parentsRpdObj, prefabRpdObjList);
-        prefabJdgObjList = BuildCommands(JudgeManeuvers , ref parentsJdgObj, prefabJdgObjList);
-        prefabDmgObjList = BuildCommands(DamageManeuvers, ref parentsDmgObj, prefabDmgObjList);
+        prefabActObjList = BuildCommands(ActionManeuvers, ref parentsActObj, prefabActObjList, backActImg);
+        prefabRpdObjList = BuildCommands(RapidManeuvers , ref parentsRpdObj, prefabRpdObjList, backRpdImg);
+        prefabJdgObjList = BuildCommands(JudgeManeuvers , ref parentsJdgObj, prefabJdgObjList, backJdgImg);
+        prefabDmgObjList = BuildCommands(DamageManeuvers, ref parentsDmgObj, prefabDmgObjList, backDmgImg);
     }
 
     public void OnClickStandby()
@@ -205,7 +182,7 @@ public class BattleCommand : MonoBehaviour
     /// <param name="prefabList">上記オブジェクトを格納し、管理するリスト</param>
     /// <param name="parentObj">上記オブジェクトリストを格納し、コマンド選択のページとしての扱いをする。</param>
     /// <returns><param name="prefabList"></returns>
-    public List<GameObject> BuildCommands(List<CharaManeuver> maneuvers, ref List<GameObject> parentObj, List<GameObject> prefabList)
+    public List<GameObject> BuildCommands(List<CharaManeuver> maneuvers, ref List<GameObject> parentObj, List<GameObject> prefabList, RectTransform backImg)
     {
         GameObject Instance;
         // 親の数
@@ -245,7 +222,7 @@ public class BattleCommand : MonoBehaviour
             if ((i + 1) % 5 == 0)
             {
                 countParent++;
-                parentObj.Add(BuildingParent(false));
+                parentObj.Add(BuildingParent(false, backImg));
             }
 
             //リストに保存
@@ -260,8 +237,17 @@ public class BattleCommand : MonoBehaviour
     /// </summary>
     /// <param name="isActive">アクティブ状態でクローンするかどうか</param>
     /// <returns></returns>
-    GameObject BuildingParent(bool isActive)
+    GameObject BuildingParent(bool isActive, RectTransform backImg)
     {
+        // サイズ調整----ゴリ押しなの気に食わん--------------------------
+        // クローンした親オブジェクトのサイズ調整用
+        Vector2 parentSize = backImg.sizeDelta;
+        parentSize.y = parentSize.y - COMMAND_SIZE / 2;
+
+        Vector3 parentPos = backImg.position;
+        parentPos.y = parentPos.y + COMMAND_SIZE / 4;
+        // --------------------------------------------------------------
+
         GameObject Instance;
         Instance = Instantiate(originalParentObj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), actionCommands.transform);
         VerticalLayoutGroup parentClone = Instance.GetComponent<VerticalLayoutGroup>();
@@ -269,6 +255,7 @@ public class BattleCommand : MonoBehaviour
         parentClone.GetComponent<RectTransform>().position = backImg.position;
         parentClone.GetComponent<RectTransform>().sizeDelta = backImg.sizeDelta;
         parentClone.gameObject.SetActive(isActive);
+        parentClone.transform.SetParent(backImg.parent);
         return parentClone.gameObject;
     }
 
