@@ -184,7 +184,7 @@ public class BattleSystem : MonoBehaviour
         {
             if (CountMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
-                controllManager.StandbyCharaSelect = true;
+                ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
             }
             // else if(“GƒLƒƒƒ‰‚È‚çc)
             // else(–¡•ûNPC‚È‚çc)

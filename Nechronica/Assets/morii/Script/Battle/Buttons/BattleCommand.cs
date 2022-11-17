@@ -15,33 +15,19 @@ public class BattleCommand : MonoBehaviour
     [SerializeField]
     private BattleCommand thisCharaCommand;         // 自己参照
 
-    [SerializeField]
-    private List<CharaManeuver> ActionManeuvers;    // 自身が持っているアクションマニューバを保存 
-    [SerializeField]
-    private List<CharaManeuver> RapidManeuvers;     // 自身が持っているラピッドマニューバを保存
-    [SerializeField]
-    private List<CharaManeuver> JudgeManeuvers;     // 自身が持っているジャッジマニューバを保存
-    [SerializeField]
-    private List<CharaManeuver> DamageManeuvers;    // 自身が持っているダメージマニューバを保存
+    [SerializeField] private List<CharaManeuver> ActionManeuvers;    // 自身が持っているアクションマニューバを保存 
+    [SerializeField] private List<CharaManeuver> RapidManeuvers;     // 自身が持っているラピッドマニューバを保存
+    [SerializeField] private List<CharaManeuver> JudgeManeuvers;     // 自身が持っているジャッジマニューバを保存
+    [SerializeField] private List<CharaManeuver> DamageManeuvers;    // 自身が持っているダメージマニューバを保存
                                       
-    [SerializeField]
-    private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject rapidCommands;               // ラピッドタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject judgeCommands;               // ジャッジタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject damageCommands;              // ダメージタイミングのコマンドオブジェクト
 
-    [SerializeField]
-    private GameObject rapidCommands;               // ラピッドタイミングのコマンドオブジェクト
-
-    [SerializeField]
-    private GameObject judgeCommands;               // ジャッジタイミングのコマンドオブジェクト
-
-    [SerializeField]
-    private GameObject damageCommands;              // ダメージタイミングのコマンドオブジェクト
-
-    [SerializeField]
-    private Button actionButton;                    // アクションのボタン
-    [SerializeField]
-    private Button rapidButton;                     // ラピッドのボタン
-    [SerializeField]
-    private Button standbyButton;                   // 待機のボタン
+    [SerializeField] private Button actionButton;                    // アクションのボタン
+    [SerializeField] private Button rapidButton;                     // ラピッドのボタン
+    [SerializeField] private Button standbyButton;                   // 待機のボタン
 
     [SerializeField] private GameObject prefabActButton;                               // actionコマンドのプレハブ
     [SerializeField] private GameObject prefabRpdButton;                               // rapidコマンドのプレハブ
@@ -148,14 +134,14 @@ public class BattleCommand : MonoBehaviour
     }
 
     /// <summary>
-    /// キャラクターの各マニューバを取得
+    /// キャラクターの各マニューバをそれぞれ分類わけする
     /// </summary>
     /// <param name="maneuvers"></param>
     public void AddManeuver(List<CharaManeuver> maneuvers)
     {
         for (int i = 0; i < thisChara.GetLegParts().Count; i++)
         {
-            if (maneuvers[i].Timing == CharaBase.ACTION)
+            if (maneuvers[i].Timing == CharaBase.ACTION || maneuvers[i].Timing == CharaBase.MOVE)
             {
                 ActionManeuvers.Add(maneuvers[i]);
             }
@@ -211,6 +197,7 @@ public class BattleCommand : MonoBehaviour
             }
             // 親を設定
             clone.transform.SetParent(parentObj[countParent].transform, false);
+            AddFuncToButton(ref clone, maneuvers[i]);
             ManerverAndArea buff;
             // バッファーに必要な情報を格納
             buff.maneuver = maneuvers[i];
@@ -257,6 +244,48 @@ public class BattleCommand : MonoBehaviour
         parentClone.gameObject.SetActive(isActive);
         parentClone.transform.SetParent(backImg.parent);
         return parentClone.gameObject;
+    }
+
+    void AddFuncToButton(ref ButtonTexts command, CharaManeuver maneuver)
+    {
+        if (maneuver.Timing == CharaBase.ACTION)
+        {
+            ManerverAndArea buff;
+            // バッファーに必要な情報を格納
+            buff.maneuver = maneuver;
+            buff.area = thisChara.potition;
+            command.GetComponent<Button>().onClick.AddListener(()=>OnClickActCommand(buff));
+        }
+        if (maneuver.Timing == CharaBase.MOVE)
+        {
+
+        }
+        if (maneuver.Timing == CharaBase.RAPID)
+        {
+
+        }
+        if (maneuver.Timing == CharaBase.JUDGE)
+        {
+
+        }
+        if (maneuver.Timing == CharaBase.DAMAGE)
+        {
+
+        }
+    }
+
+    void OnClickActCommand(ManerverAndArea eff)
+    {
+        // 必要な情報を送信
+        ProcessAccessor.Instance.actTiming.SkillSelected = true;
+        ProcessAccessor.Instance.actTiming.SetManeuver(eff.maneuver);
+        ProcessAccessor.Instance.actTiming.SetArea(eff.area);
+        ProcessAccessor.Instance.actTiming.StandbyEnemySelect = true;
+    }
+
+    void OnClickJdgCommand(ManerverAndArea eff)
+    {
+
     }
 
 }

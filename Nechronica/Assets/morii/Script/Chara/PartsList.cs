@@ -63,7 +63,7 @@ public class PartsList : CharaBase
         kata_A.Name = "‚©‚½";
         kata_A.EffectNum = 1;
         kata_A.Cost = 4;
-        kata_A.Timing = ACTION;
+        kata_A.Timing = MOVE;
         kata_A.MinRange = 10;
         kata_A.MaxRange = 10;
         kata_A.Weight = 1;
@@ -107,7 +107,7 @@ public class PartsList : CharaBase
         hone_L.Name = "‚Ù‚Ë";
         hone_L.EffectNum = 1;
         hone_L.Cost = 3;
-        hone_L.Timing = ACTION;
+        hone_L.Timing = MOVE;
         hone_L.MinRange = 10;
         hone_L.MaxRange = 10;
         hone_L.Weight = 1;
@@ -115,7 +115,7 @@ public class PartsList : CharaBase
         hone2_L.Name = "‚Ù‚Ë";
         hone2_L.EffectNum = 1;
         hone2_L.Cost = 3;
-        hone2_L.Timing = ACTION;
+        hone2_L.Timing = MOVE;
         hone2_L.MinRange = 10;
         hone2_L.MaxRange = 10;
         hone2_L.Weight = 1;

@@ -5740,6 +5740,7 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194231}
   - component: {fileID: 963194232}
+  - component: {fileID: 963194233}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5896,7 +5897,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1920b14f1290b7547b5781b4adeac8ac, type: 3}
   m_Name: 
@@ -5961,6 +5962,26 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &963194233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d20325b445837f4cbf2da8a51b6aad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 963194227}
+  cinemaCamera: {fileID: 2148217719629374532, guid: e74198fc8df556b47ae0292d5f6119df, type: 3}
+  MainCamera: {fileID: 241137337}
+  battleSystem: {fileID: 766473211}
+  childCommand: {fileID: 0}
+  atkButton: {fileID: 1969368518}
+  backButton: {fileID: 209081684}
+  text: {fileID: 712961769}
 --- !u!1 &969815547
 GameObject:
   m_ObjectHideFlags: 0
