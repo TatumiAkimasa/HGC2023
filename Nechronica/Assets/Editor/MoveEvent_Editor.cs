@@ -14,19 +14,32 @@ public class Example : MonoBehaviour
 //参考 https://kan-kikuchi.hatenablog.com/entry/InspectorEx , https://qiita.com/PETITDIGI/items/a40a7477579f14a5a8e6
 public class MoveEvent_Editor : Editor
 {
-   
-
     private MoveEvent_Player target_;
+    public string[] AThings;
 
     private void Awake()
     {
         target_ = target as MoveEvent_Player;
+        
     }
 
     public override void OnInspectorGUI()
     {
+
+        //入力されたモンスターの種類を設定
+       
+        SerializedObject so = new SerializedObject(target_);
+
+        SerializedProperty stringsProperty = so.FindProperty("EventType");
+
+        EditorGUILayout.PropertyField(stringsProperty, true);
+
+        so.ApplyModifiedProperties();
+
+
         //更新されたら発動！
-        EditorGUI.BeginChangeCheck();
+        //EditorGUI.BeginChangeCheck();
+        EditorGUILayout.LabelField("1番目の設定---------------------------");
 
         for (int i = 0; i != target_.EventType.Count; i++)
         {
@@ -56,11 +69,9 @@ public class MoveEvent_Editor : Editor
             }
             else if (target_.EventType[i].eventType == EventType.event_Type.TalkStart)
             {
-                EditorGUILayout.LabelField("会話の設定");
-                var str = serializedObject.FindProperty("talk");
-                target_.EventType[i].ordes.Talk = new ExampleCustomList(listProp);
+                for(int k=0;k!= target_.EventType[i].ordes.Talk.Length;k++)
+                    target_.EventType[i].ordes.Talk[k] = EditorGUILayout.TextField(k.ToString()+"番目のセリフ", target_.EventType[i].ordes.Talk[k]);
 
-                target_.EventType[i].ordes.WaitTime = EditorGUILayout.FloatField("ジャンプ間隔", target_.EventType[i].ordes.WaitTime);
             }
             else if (target_.EventType[i].eventType == EventType.event_Type.TalkEnd)
             {
@@ -70,31 +81,15 @@ public class MoveEvent_Editor : Editor
             {
                 Debug.LogError("登録されてないイベントType");
             }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField((i+2).ToString()+"番目の設定---------------------------");
         }
 
 
-        //HPはどのタイプでも設定
-        monster.HP = Mathf.Max(1, EditorGUILayout.FloatField("体力", monster.HP));
-
-        //戦士はMPが0なので設定しない
-        if (monster.Type != SetMonsterStatus.MonsterType.Warrior)
-        {
-            monster.MP = Mathf.Max(0, EditorGUILayout.FloatField("マジックポイント", monster.MP));
-        }
-
-        //ドラゴンのパワーは固定なので設定しない
-        if (monster.Type != SetMonsterStatus.MonsterType.Dragon)
-        {
-            monster.Power = Mathf.Max(1, EditorGUILayout.FloatField("パワー！", monster.Power));
-        }
-
-        //魔法使いはMP >= HP
-        if (monster.Type == SetMonsterStatus.MonsterType.Witch)
-        {
-            monster.MP = Mathf.Max(monster.MP, monster.HP);
-        }
 
         EditorUtility.SetDirty(target);
+        Debug.Log("動いた");
     }
 
 }
