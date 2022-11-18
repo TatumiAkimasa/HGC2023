@@ -248,12 +248,12 @@ public class BattleCommand : MonoBehaviour
 
     void AddFuncToButton(ref ButtonTexts command, CharaManeuver maneuver)
     {
+        ManerverAndArea buff;
+        // バッファーに必要な情報を格納
+        buff.maneuver = maneuver;
+        buff.area = thisChara.potition;
         if (maneuver.Timing == CharaBase.ACTION)
         {
-            ManerverAndArea buff;
-            // バッファーに必要な情報を格納
-            buff.maneuver = maneuver;
-            buff.area = thisChara.potition;
             command.GetComponent<Button>().onClick.AddListener(()=>OnClickActCommand(buff));
         }
         if (maneuver.Timing == CharaBase.MOVE)
@@ -266,7 +266,7 @@ public class BattleCommand : MonoBehaviour
         }
         if (maneuver.Timing == CharaBase.JUDGE)
         {
-
+            command.GetComponent<Button>().onClick.AddListener(() => OnClickJdgCommand(buff));
         }
         if (maneuver.Timing == CharaBase.DAMAGE)
         {
@@ -285,6 +285,10 @@ public class BattleCommand : MonoBehaviour
 
     void OnClickJdgCommand(ManerverAndArea eff)
     {
+        ProcessAccessor.Instance.jdgTiming.SkillSelected = true;
+        ProcessAccessor.Instance.jdgTiming.SetManeuver(eff.maneuver);
+        ProcessAccessor.Instance.jdgTiming.SetArea(eff.area);
+        ProcessAccessor.Instance.jdgTiming.JudgeButtons.SetActive(true);
 
     }
 

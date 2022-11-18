@@ -121,7 +121,7 @@ public class PartsList : CharaBase
         hone2_L.Weight = 1;
 
         asi_L.Name = "‚ ‚µ";
-        asi_L.EffectNum = 1;
+        asi_L.EffectNum = -1;
         asi_L.Cost = 1;
         asi_L.MinRange = 0;
         asi_L.MaxRange = 0;

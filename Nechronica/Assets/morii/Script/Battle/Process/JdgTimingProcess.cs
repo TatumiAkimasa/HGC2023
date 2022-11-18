@@ -14,16 +14,32 @@ public class JdgTimingProcess : GetClickedGameObject
         set { isStandbyDiceRoll = value; }
     }
 
-    private bool isJudgeTiming = false;
+    [SerializeField] private Text rollResultText;
 
+    [SerializeField] private Button passButton;     // ジャッジタイミングを終わらせるボタン
+    [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
 
-    [SerializeField]
-    protected Text text;
+    [SerializeField] private GameObject buttons;    // 最後に発動するかどうかのボタン
+    public GameObject JudgeButtons
+    {
+        get { return buttons; }
+    }
 
-    protected Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
+    public Button DiceRollButton
+    {
+        get { return diceRollButton; }
+    }
 
-    protected int rollResult = 0;                     // ダイスロールの結果を格納する変数
+    private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
 
+    private int rollResult = 0;                     // ダイスロールの結果を格納する変数
+
+    private int movingCharaArea;                    // 攻撃途中の敵、味方オブジェクトのエリア
+    public int MovingCharaArea
+    {
+        get { return movingCharaArea; }
+        set { movingCharaArea = value; }
+    }
 
     void Awake()
     {
@@ -42,10 +58,33 @@ public class JdgTimingProcess : GetClickedGameObject
 
                 // ここからジャッジタイミング
                 standbyCharaSelect = true;
-                isJudgeTiming = true;
+                //passButton.gameObject.SetActive(true);
             }
         }
+        else if(standbyCharaSelect)
+        {
+            CharaSelectStandby();
+        }
     }
+
+    //override protected void CharaSelectStandby()
+    //{
+    //    //左クリックで
+    //    if (Input.GetMouseButtonDown(0) && CharaCamera == null && !selectedChara)
+    //    {
+    //        GameObject clickedObj = ShotRay();
+
+    //        //クリックしたゲームオブジェクトが味方キャラなら
+    //        if (clickedObj.CompareTag("AllyChara"))
+    //        {
+    //            clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
+    //            ZoomUpObj(clickedObj);
+    //            selectedChara = true;
+    //            // ここでコマンド表示
+    //            StartCoroutine(MoveStandby(clickedObj));
+    //        }
+    //    }
+    //}
 
 
     /// <summary>
@@ -66,42 +105,50 @@ public class JdgTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
-                    if (isJudgeTiming)
-                    {
-                        // 選択したキャラのコマンドのオブジェクトを取得
-                        childCommand = move.transform.GetChild(CANVAS).transform.GetChild(JUDGE);
-                        // 技コマンドもろもろを表示
-                        childCommand.gameObject.SetActive(true);
-                    }
-                }
-                else if (move.CompareTag("EnemyChara"))
-                {
-                    // ステータスを取得し、表示。後にZoomOutObjで使うのでメンバ変数に格納
-                    childCommand = move.transform.GetChild(CANVAS);
+                    // 選択したキャラのコマンドのオブジェクトを取得
+                    childCommand = move.transform.GetChild(CANVAS).transform.GetChild(JUDGE);
+                    // 技コマンドもろもろを表示
                     childCommand.gameObject.SetActive(true);
-
-                    // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
-                    // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
-                    // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
-                    if (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + dollArea) &&
-                        Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + dollArea))
-                    {
-
-                    }
-
-                    // 攻撃する～を選んだら、selectedChara、standbyCharaSelectをfalseにし、ダイスロールへ
-                    // ダイスロール後、マニューバ、敵Obj(move)、ダイスの値を引数とし、ダメージタイミングへ
                 }
             }
         }
     }
 
+    /// <summary>
+    /// ジャッジタイミングを終わらせる処理
+    /// </summary>
+    public void OnClickPass()
+    {
+        // ダメージタイミングに移行
+    }
+
+    /// <summary>
+    /// ダイスロールするボタン
+    /// </summary>
     public void OnClickDiceRoll()
     {
         randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
-        rollResult = randoms.NextInt(1, 10);
-        text.text = rollResult.ToString();
+        rollResult = randoms.NextInt(1, 11);
+        rollResultText.text = rollResult.ToString();
         isDiceRoll = true;
+    }
+
+    public void OnClickExeManeuver()
+    {
+        // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
+        // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
+        // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
+        if (dollManeuver.MinRange != 10 &&
+            (Mathf.Abs(movingCharaArea) <= Mathf.Abs(dollManeuver.MaxRange + targetArea) &&
+             Mathf.Abs(movingCharaArea) >= Mathf.Abs(dollManeuver.MinRange + targetArea)))
+        {
+            rollResult += dollManeuver.EffectNum;
+            rollResultText.text = rollResult.ToString();
+        }
+        else
+        {
+            // 射程が足りませんみたいな表記をする
+        }
     }
 
 }

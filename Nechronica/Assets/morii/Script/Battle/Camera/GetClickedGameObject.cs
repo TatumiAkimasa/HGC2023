@@ -7,18 +7,15 @@ using Cinemachine;
 public class GetClickedGameObject : MonoBehaviour
 {
     // 定数-----------------------------------------------------
-    protected const int CANVAS = 0;
-
-    protected const int CharaPriority = 20;       // シネマカメラの優先度用定数。キャラをズームする用のカメラの優先度を最優先にする
-    protected const int ACTION = 0;               // 子オブジェクト取得のための定数
-    protected const int JUDGE  = 1;               // 子オブジェクト取得のための定数
-    protected const int DAMAGE = 2;               // 子オブジェクト取得のための定数
-
-    protected const int STATUS = 0;               // 敵のステータスを取得するための定数
-    protected const int BUTTONS = 1;              // 敵のボタンを取得するための定数
- 
-    protected const int ATKBUTTONS = 0;           // アタックボタンとかの子オブジェクトを取得するための定数
-    protected const int DICEROLL = 1;             // ダイスロールボタンを取得するための定数
+    public const int CANVAS = 0;
+    public const int CharaPriority = 20;       // シネマカメラの優先度用定数。キャラをズームする用のカメラの優先度を最優先にする
+    public const int ACTION = 0;               // 子オブジェクト取得のための定数
+    public const int JUDGE  = 1;               // 子オブジェクト取得のための定数
+    public const int DAMAGE = 2;               // 子オブジェクト取得のための定数
+    public const int STATUS = 0;               // 敵のステータスを取得するための定数
+    public const int BUTTONS = 1;              // 敵のボタンを取得するための定数
+    public const int ATKBUTTONS = 0;           // アタックボタンとかの子オブジェクトを取得するための定数
+    public const int DICEROLL = 1;             // ダイスロールボタンを取得するための定数
     //----------------------------------------------------------
 
     protected CinemachineVirtualCamera CharaCamera;   // キャラに持たせるプレハブのクローンのカメラ
@@ -40,10 +37,11 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField]
     protected Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
 
-    [SerializeField]
-    protected Button atkButton;
-    [SerializeField]
-    protected Button backButton;
+    [SerializeField] protected Button exeButton;
+    public Button ExeButton
+    {
+        get { return exeButton; }
+    }
 
     // ほかスクリプトからも値を変更する変数
     protected bool standbyCharaSelect = false;
@@ -74,9 +72,9 @@ public class GetClickedGameObject : MonoBehaviour
     protected CharaManeuver dollManeuver;         // 選択されたドールのマニューバ格納用変数
     public void SetManeuver(CharaManeuver set) { dollManeuver = set; }
 
-    protected int dollArea = 0;                   // 選択されたドールの所属エリア格納用変数
-    public void SetArea(int set) { dollArea = set; }
-    public int GetArea() => dollArea;
+    protected int targetArea = 0;                   // 選択されたドールの所属エリア格納用変数
+    public void SetArea(int set) { targetArea = set; }
+    public int GetArea() => targetArea;
 
     protected bool selectedChara = false;
 
@@ -86,7 +84,6 @@ public class GetClickedGameObject : MonoBehaviour
     private void Awake()
     {
         ManagerAccessor.Instance.getClickedObj = this;
-        backButton.onClick.AddListener(OnClickBack);
     }
 
     private void Update()
@@ -108,21 +105,22 @@ public class GetClickedGameObject : MonoBehaviour
 
     protected virtual void CharaSelectStandby()
     {
-        ////左クリックで
-        //if (Input.GetMouseButtonDown(0) && CharaCamera == null && !selectedChara)
-        //{
-        //    GameObject clickedObj = ShotRay();
+        //左クリックで
+        if (Input.GetMouseButtonDown(0) && CharaCamera == null && !selectedChara)
+        {
+            GameObject clickedObj = ShotRay();
 
-        //    //クリックしたゲームオブジェクトが味方キャラなら
-        //    if (clickedObj.CompareTag("AllyChara"))
-        //    {
-        //        clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
-        //        ZoomUpObj(clickedObj);
-        //        selectedChara = true;
-        //        // ここでコマンド表示
-        //        StartCoroutine(MoveStandby(clickedObj));
-        //    }
-        //}
+            //クリックしたゲームオブジェクトが味方キャラなら
+            if (clickedObj.CompareTag("AllyChara"))
+            {
+                clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
+                ZoomUpObj(clickedObj);
+                selectedChara = true;
+                standbyCharaSelect = false;
+                // ここでコマンド表示
+                StartCoroutine(MoveStandby(clickedObj));
+            }
+        }
     }
 
     protected virtual void EnemySelectStandby()
@@ -151,10 +149,10 @@ public class GetClickedGameObject : MonoBehaviour
         if ((Input.GetMouseButtonDown(1) || skillSelected) && CharaCamera != null)
         {
             // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
-
             ZoomOutObj();
             // キャラ選択待機状態にする
             selectedChara = false;
+            standbyCharaSelect = true;
         }
     }
 
