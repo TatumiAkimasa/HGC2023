@@ -12,6 +12,6 @@ public class EventType
         VerticalMove,
         JumpMove,
         TalkStart,
-        TalkEnd,
+        CameraMove,
     }
 }

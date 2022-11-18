@@ -24,6 +24,8 @@ public class Data_Scan
 
     public Save_Load_data save_Load_Data_cs;
 
+    public MOve_chara Player_controller;
+
     //将来的に全データを一旦こいつに置く。
     public IEnumerator Init(System.Action<bool> action)
     {
