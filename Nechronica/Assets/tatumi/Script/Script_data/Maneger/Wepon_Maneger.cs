@@ -36,6 +36,9 @@ public class Wepon_Maneger : ClassData_
     //武器種類/レベル/持てる限度個数
     Toggle[,,] Wepon = new Toggle[3,3,3];
 
+    [Header("不足パーツ種類Text")]
+    public Text[] ErrorText;
+
     public int[] Wepon_limit = new int[3];
 
     private int Reset_num = 0;
@@ -62,10 +65,13 @@ public class Wepon_Maneger : ClassData_
 
     public void Add_Wepon(Toggle add,int Type,int Level)
     {
+        //それぞれ選べないものを選択下ときに何もしないようにする計算用変数
         int Max_Wepon_num = (Wepon_limit[Type] - 1) / 3;
         int parts_num_add = (Wepon_limit[Type] - 1) % 3;
+        //その分野・レベルで選べれる数保存用変数
         int Serect_parts = 1;
 
+        //そもそも値が0なら何もしない
         if (Wepon_limit[Type] == 0)
         {
             add.isOn = false;
@@ -83,7 +89,7 @@ public class Wepon_Maneger : ClassData_
             Serect_parts += Max_Wepon_num;
         }
             
-
+        //                  　選べる数    + Skillによる増加数
         for (int i = 0; i != Serect_parts + Bonus_Parts_int[Bounus_Parts(Level,Type)]; i++)
         {
             //データなしの場合
@@ -91,7 +97,8 @@ public class Wepon_Maneger : ClassData_
             {
                 NameChange(add, true);
                 Wepon[Type, Level, i] = add;
-               
+
+                WeponLimit_TextChange();
                 return;
             }
             //2回目の時情報を抜く
@@ -100,7 +107,8 @@ public class Wepon_Maneger : ClassData_
                 NameChange(add, false);
                 Wepon[Type, Level, i].isOn = false;
                 Wepon[Type, Level, i] = null;
-               
+
+                WeponLimit_TextChange();
                 return;
             }
            
@@ -122,7 +130,7 @@ public class Wepon_Maneger : ClassData_
         NameChange(Wepon[Type, Level, Reset_num], true);
 
         Reset_num++;
-
+        WeponLimit_TextChange();
     }
 
     public void Reset_wepon(int Type)
@@ -205,6 +213,46 @@ public class Wepon_Maneger : ClassData_
                     }
                     //なければするー。
                 }
+            }
+        }
+    }
+
+    private void WeponLimit_TextChange()
+    {
+        for(int Type = 0; Type!=3;Type++)
+        {
+            for(int Level=0;Level!=3;Level++)
+            {
+                //それぞれ選べないものを選択下ときに何もしないようにする計算用変数
+                int Max_Wepon_num = (Wepon_limit[Type] - 1) / 3;
+                int parts_num_add = (Wepon_limit[Type] - 1) % 3;
+                //その分野・レベルで選べれる数保存用変数
+                int Serect_parts = 1;
+
+                //そもそも値が0なら何もしない
+                if (Wepon_limit[Type] == 0)
+                {
+                    Serect_parts = 0;
+                }
+                //値1の時2,3選んだら排除
+                else if (Wepon_limit[Type] < Level + Max_Wepon_num + 1)
+                {
+                    Serect_parts = 0;
+                }
+
+                if (parts_num_add >= Level)
+                {
+                    Serect_parts += Max_Wepon_num + Bounus_Parts(Level,Type);
+                }
+
+                for(int i=0;i!=3;i++)
+                {
+                    if (Wepon[Type, Level, i] != null)
+                        Serect_parts--;
+                }
+                
+                ErrorText[Type + Level].text = "LEVEL" + Level.ToString() + ":"+Serect_parts.ToString();
+                
             }
         }
     }

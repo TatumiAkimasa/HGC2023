@@ -38077,7 +38077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &781994543
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -101301,26 +101301,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 1832166784}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d678f9c93a661a640962798757d07568, type: 3}
+  m_Script: {fileID: 11500000, guid: fc81ca1fb6478134ea3cf80616bf22f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Talk_cs: {fileID: 0}
-  PL: {fileID: 0}
-  talk_now: 0
-  Change_Scene: 
-  Item_Name: "\u304F\u3059\u3093\u3060\u304B\u304E"
-  EventStart: 0
-  Event_num: 0
-  Event_OK:
-  - "\u30B9\u30EB\u30FC\u306F\u3084\u3060\uFF01"
-  Event_OUT: []
-  OverStrObj: 0
-  ParentObj: {fileID: 0}
-  UI: {fileID: 0}
-  item_data:
-    Tiltle: 
-    str: 
-  ignoreflag: 0
+  EventType:
+  - eventType: 2
+    ordes:
+      Horizon: 0
+      Vertical: 0
+      Jump_count: 0
+      Move_Time: 0
+      Talk:
+      - gadad
+      - 
+      - 
+      - 
+      - 
+      WaitTime: 0
+  - eventType: 1
+    ordes:
+      Horizon: 0
+      Vertical: 0
+      Jump_count: 0
+      Move_Time: 0
+      Talk: []
+      WaitTime: 0
+  - eventType: 0
+    ordes:
+      Horizon: 0
+      Vertical: 0
+      Jump_count: 0
+      Move_Time: 0
+      Talk: []
+      WaitTime: 0
 --- !u!65 &1832166786
 BoxCollider:
   m_ObjectHideFlags: 0
