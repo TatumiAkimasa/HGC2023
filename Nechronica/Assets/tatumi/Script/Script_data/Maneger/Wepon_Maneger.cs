@@ -27,6 +27,7 @@ public class MultiSite2
     }
 }
 
+//SKILLによる＋パーツ未対応
 public class Wepon_Maneger : ClassData_
 {
     [SerializeField, Header("多次元配列-部位")]
@@ -153,6 +154,7 @@ public class Wepon_Maneger : ClassData_
         }
 
         Reset_num = 0;
+        WeponLimit_TextChange();
     }
 
     private void NameChange(Toggle wepon,bool mode)
@@ -219,6 +221,7 @@ public class Wepon_Maneger : ClassData_
 
     private void WeponLimit_TextChange()
     {
+        Maneger_Accessor.Instance.chara_Data_Input_cs.SetErrorData(PARTS, false);
         for(int Type = 0; Type!=3;Type++)
         {
             for(int Level=0;Level!=3;Level++)
@@ -242,7 +245,7 @@ public class Wepon_Maneger : ClassData_
 
                 if (parts_num_add >= Level)
                 {
-                    Serect_parts += Max_Wepon_num + Bounus_Parts(Level,Type);
+                    Serect_parts += Max_Wepon_num + Bonus_Parts_int[Bounus_Parts(Level, Type)];
                 }
 
                 for(int i=0;i!=3;i++)
@@ -251,8 +254,11 @@ public class Wepon_Maneger : ClassData_
                         Serect_parts--;
                 }
                 
-                ErrorText[Type + Level].text = "LEVEL" + Level.ToString() + ":"+Serect_parts.ToString();
-                
+                ErrorText[(3*Type) + Level].text = "LEVEL" + (Level+1).ToString() + ":"+Serect_parts.ToString();
+
+                if(Serect_parts!=0)
+                    Maneger_Accessor.Instance.chara_Data_Input_cs.SetErrorData(PARTS, true);
+
             }
         }
     }

@@ -11,7 +11,10 @@ public class SkillManeger : ClassData_
     private GameObject[] ChildObject;
 
     [SerializeField]
-    private Text wepon_text, bio_text,mac_text,Output_text2,Output_text3,Output_text;
+    private Text wepon_text, bio_text,mac_text;
+
+    [SerializeField]
+    private Text[] Output_text;
 
     public int[] parts=new int[9];
 
@@ -47,6 +50,8 @@ public class SkillManeger : ClassData_
 
             if(i!=2)
                 Parent_Skill[i] = this.gameObject.GetComponent<Button>();
+
+            Output_text[i].text = "None";
         }
 
         keyword = "x";
@@ -131,15 +136,9 @@ public class SkillManeger : ClassData_
                     buttons[Button_num] = a;
 
                     //出力
-                    if (Button_num == 0)
-                        Output_text.text = a.GetComponentInChildren<Text>().text;
-                    else if (Button_num == 1)
-                        Output_text2.text = a.GetComponentInChildren<Text>().text;
-                    else
-                        Output_text3.text = a.GetComponentInChildren<Text>().text;
-
+                    Output_text[Button_num].text = a.GetComponentInChildren<Text>().text;
+                    
                     Button_num++;
-
 
                     if (Button_num == 3)
                         Button_num = 0;
@@ -168,12 +167,8 @@ public class SkillManeger : ClassData_
                     buttons[item] = this.gameObject.GetComponent<Button>();
 
                     //出力
-                    if (Button_num == 0)
-                        Output_text.text = "None";
-                    else if (Button_num == 1)
-                        Output_text2.text = "None";
-                    else
-                        Output_text3.text = "None";
+                    Output_text[Button_num].text = "None";
+                  
 
 
                 }
@@ -201,11 +196,8 @@ public class SkillManeger : ClassData_
                     buttons[Button_num] = a;
 
                     //出力
-                    if (Button_num == 0)
-                        Output_text.text = a.GetComponentInChildren<Text>().text;
-                    else
-                        Output_text2.text = a.GetComponentInChildren<Text>().text;
-
+                    Output_text[Button_num].text = a.GetComponentInChildren<Text>().text;
+                   
                     Button_num++;
 
                     if (Button_num >= 2)
@@ -236,10 +228,8 @@ public class SkillManeger : ClassData_
                     buttons[item] = this.gameObject.GetComponent<Button>();
 
                     //出力
-                    if (Button_num == 0)
-                        Output_text.text = "None";
-                    else
-                        Output_text2.text = "None";
+                    Output_text[Button_num].text = "None";
+                    
 
 
                 }
@@ -270,7 +260,7 @@ public class SkillManeger : ClassData_
                         buttons[2] = a;
 
                         //出力
-                        Output_text3.text = a.GetComponentInChildren<Text>().text;
+                        Output_text[Output_text.Length-1].text = a.GetComponentInChildren<Text>().text;
 
                         Chara_intpu_cs.Doll_data.CharaBase_data.Skill.Add(a.GetComponent<Wepon_Data_SaveSet>().GetParts());
 
@@ -295,13 +285,14 @@ public class SkillManeger : ClassData_
                         buttons[2] = this.gameObject.GetComponent<Button>();
 
                         //出力
-                        Output_text3.text = "None";
+                        Output_text[Output_text.Length - 1].text = "None";
 
                     }
                 }
             }
 
         }
+        
     }
 
     public void Setparts(ClassData a,bool MorS)
@@ -360,20 +351,8 @@ public class SkillManeger : ClassData_
                             cb.selectedColor = Color.white;
                             buttons[k].colors = cb;
 
-                            if (k == 0)
-                            {
-                                Output_text.text = "None";
+                            Output_text[k].text = "None";
 
-                            }
-                            else if (k == 1)
-                            {
-                                Output_text2.text = "None";
-                            }
-                            else
-                            {
-
-                                Output_text3.text = "None";
-                            }
                         }
                     }
                 }
@@ -392,26 +371,13 @@ public class SkillManeger : ClassData_
                         cb.highlightedColor = Color.white;
                         cb.selectedColor = Color.white;
                         buttons[k].colors = cb;
-
-                        if (k == 0)
-                        {
-                            Output_text.text = "None";
-                            
-                        }
-                        else if (k == 1)
-                        {
-                            Output_text2.text = "None";
-                        }
-                        else
-                        {
-                            
-                            Output_text3.text = "None";
-                        }
+                        Output_text[k].text = "None";
                     }
                 }
             }
 
         }
+       
     }
 
     public string GetKeyWord_main()
@@ -453,5 +419,28 @@ public class SkillManeger : ClassData_
         mac_text.text = (parts[2] + parts[5] + parts[8]).ToString();
         wepon_Maneger.Wepon_limit[2] = parts[2] + parts[5] + parts[8];
         wepon_Maneger.Reset_wepon(ALTER);
+    }
+
+    public void ErrorCheck_Skill()
+    {
+        for (int i = 0; i != Output_text.Length; i++)
+            if (Output_text[i].text == "None")
+            {
+                Maneger_Accessor.Instance.chara_Data_Input_cs.SetErrorData(SKILL, true);
+                return;
+            }
+
+        Maneger_Accessor.Instance.chara_Data_Input_cs.SetErrorData(SKILL, false);
+    }
+
+    public void ErrorCheck_CLASS()
+    {
+        if (keyword == "x" && keyword2 == "X")
+        {
+            Maneger_Accessor.Instance.chara_Data_Input_cs.SetErrorData(CLASS, true);
+            return;
+        }
+
+        Maneger_Accessor.Instance.chara_Data_Input_cs.SetErrorData(CLASS, false);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EventType
 {
+    //‚±‚Á‚¿‚à‚¢‚é‚æI
     [System.Serializable]
     public enum event_Type
     {
