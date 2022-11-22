@@ -17,6 +17,11 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private List<Doll_blu_Nor> charaObject = new List<Doll_blu_Nor>();
 
+    public List<Doll_blu_Nor> GetCharaObj()
+    {
+        return charaObject;
+    }
+
     // キャラスポーンスクリプト参照用
     [SerializeField]
     private BattleSpone battleSpone;
@@ -70,6 +75,7 @@ public class BattleSystem : MonoBehaviour
     void Awake()
     {
         ManagerAccessor.Instance.battleSystem = this;
+        Debug.Log(ManagerAccessor.Instance.battleSystem);
 
         // カウントを表示
         CountText.text = NowCount.ToString();
@@ -178,7 +184,7 @@ public class BattleSystem : MonoBehaviour
         {
             if (CountMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
-                controllManager.StandbyCharaSelect = true;
+                ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
             }
             // else if(敵キャラなら…)
             // else(味方NPCなら…)
@@ -220,6 +226,11 @@ public class BattleSystem : MonoBehaviour
         controllManager.SetManeuver(eff.maneuver);
         controllManager.SetArea(eff.area);
         controllManager.StandbyEnemySelect = true;
+    }
+
+    public void JudgeTiming(int rollResult)
+    {
+        controllManager.GetArea();
     }
 
     public void DamageTiming(CharaManeuver eff, Doll_blu_Nor enemy/*, int diceRoll*/)

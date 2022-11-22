@@ -10,9 +10,10 @@ public class CharaBase : MonoBehaviour
     public const int COUNT  = -1;
     public const int AUTO   = 0;
     public const int ACTION = 1;
-    public const int RAPID  = 2;
-    public const int JUDGE  = 3;
-    public const int DAMAGE = 4;
+    public const int MOVE   = 2;
+    public const int RAPID  = 3;
+    public const int JUDGE  = 4;
+    public const int DAMAGE = 5;
 
     //ƒQƒbƒ^[
     public int GetMaxCount() => maxCount;

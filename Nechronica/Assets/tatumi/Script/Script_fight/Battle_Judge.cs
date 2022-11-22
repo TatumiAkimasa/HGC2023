@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class Battle_Judge : MonoBehaviour
-{
+//public class Battle_Judge : MonoBehaviour
+//{
 //    //現在の操作可能プレイ人数
 //    const int MAXCHARA = 1;
 
@@ -26,22 +26,22 @@ public class Battle_Judge : MonoBehaviour
 //    // Update is called once per frame
 //    void Update()
 //    {
-        
+
 //    }
 
 //    public void JudgeTiming(Doll_blu_Nor TargetChara)
 //    {
 //        //選択可能枠を再設定
-//        JudgeOK_Chara = new bool[battleSystem.charaObject.Count()];
+//        JudgeOK_Chara = new bool[battleSystem.GetCharaObj().Count];
 
 //        //全キャラの中からジャッジパーツが打てる奴らを判別
-//        for (int Charanum = 0; Charanum != battleSystem.charaObject.Count(); Charanum++)
+//        for (int Charanum = 0; Charanum != battleSystem.GetCharaObj().Count; Charanum++)
 //        {
 //            // 各部位パーツのアクション、ラピッドタイミングのパーツを取得
-//            for (int i = 0; i < battleSystem.charaObject[Charanum].GetHeadParts().Count; i++)
+//            for (int i = 0; i < battleSystem.GetCharaObj().GetHeadParts().Count; i++)
 //            {
 //                //ジャッジかつ、使えるとき
-//                if (battleSystem.charaObject[Charanum].GetHeadParts()[i].Timing == CharaBase.JUDGE&&!battleSystem.charaObject[Charanum].GetHeadParts()[i].isDmage)
+//                if (battleSystem.charaObject[Charanum].GetHeadParts()[i].Timing == CharaBase.JUDGE && !battleSystem.charaObject[Charanum].GetHeadParts()[i].isDmage)
 //                {
 //                    //射程内の物を判別
 //                    if (Mathf.Abs(battleSystem.charaObject[Charanum].potition - TargetChara.potition) > battleSystem.charaObject[Charanum].GetHeadParts()[i].MaxRange)
@@ -52,7 +52,7 @@ public class Battle_Judge : MonoBehaviour
 //                    else
 //                        JudgeOK_Chara[Charanum] = true;
 //                }
-                
+
 //            }
 
 //            for (int i = 0; i < battleSystem.charaObject[Charanum].GetArmParts().Count; i++)
@@ -108,7 +108,7 @@ public class Battle_Judge : MonoBehaviour
 //        }
 
 //        //プレイやーが操作できる子たち
-//        for(int i=0;i!=MAXCHARA;i++)
+//        for (int i = 0; i != MAXCHARA; i++)
 //        {
 //            battleSystem.charaObject[Charanum].gameObject.GetComponent<BattleCommand>().ジャッジクリック許可的な物＋押せるよアピール;
 //        }
@@ -119,4 +119,4 @@ public class Battle_Judge : MonoBehaviour
 //            battleSystem.charaObject[Charanum].gameObject.GetComponent<BattleCommand>().敵ジャッジ許可;
 //        }
 //    }
-}
+//}
