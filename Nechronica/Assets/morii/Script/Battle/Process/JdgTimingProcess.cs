@@ -149,7 +149,7 @@ public class JdgTimingProcess : GetClickedGameObject
              Mathf.Abs(movingCharaArea) >= Mathf.Abs(dollManeuver.MinRange + targetArea))&&
              (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
-            rollResult += dollManeuver.EffectNum;
+            rollResult += dollManeuver.EffectNum[EffNum.Judge];
             rollResultText.text = rollResult.ToString();
             dollManeuver.isUse = true; 
             // スキルを発動したらコマンドボタンを非表示にすし、キャラ選択待機状態にもどす
