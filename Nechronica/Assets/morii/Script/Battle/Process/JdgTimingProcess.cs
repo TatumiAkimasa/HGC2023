@@ -30,6 +30,11 @@ public class JdgTimingProcess : GetClickedGameObject
         get { return diceRollButton; }
     }
 
+    public Text RollResultText
+    {
+        get { return rollResultText; }
+    }
+
     private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
 
     private int rollResult = 0;                     // ダイスロールの結果を格納する変数
@@ -105,6 +110,7 @@ public class JdgTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
+                    standbyCharaSelect = false;
                     // 選択したキャラのコマンドのオブジェクトを取得
                     childCommand = move.transform.GetChild(CANVAS).transform.GetChild(JUDGE);
                     // 技コマンドもろもろを表示
@@ -140,10 +146,17 @@ public class JdgTimingProcess : GetClickedGameObject
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
         if (dollManeuver.MinRange != 10 &&
             (Mathf.Abs(movingCharaArea) <= Mathf.Abs(dollManeuver.MaxRange + targetArea) &&
-             Mathf.Abs(movingCharaArea) >= Mathf.Abs(dollManeuver.MinRange + targetArea)))
+             Mathf.Abs(movingCharaArea) >= Mathf.Abs(dollManeuver.MinRange + targetArea))&&
+             (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
             rollResult += dollManeuver.EffectNum;
             rollResultText.text = rollResult.ToString();
+            dollManeuver.isUse = true; 
+            // スキルを発動したらコマンドボタンを非表示にすし、キャラ選択待機状態にもどす
+            JudgeButtons.SetActive(false);
+            skillSelected = false;
+            ZoomOutObj();
+            standbyCharaSelect = true;
         }
         else
         {

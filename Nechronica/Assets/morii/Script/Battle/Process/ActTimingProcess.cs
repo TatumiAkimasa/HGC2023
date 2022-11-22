@@ -139,7 +139,7 @@ public class ActTimingProcess : GetClickedGameObject
 
         // ‚±‚±ƒWƒƒƒbƒW‚©‚ç“ü‚é
         ProcessAccessor.Instance.jdgTiming.enabled = true;
-        ProcessAccessor.Instance.jdgTiming.DiceRollButton.gameObject.SetActive(true);
+        ProcessAccessor.Instance.jdgTiming.RollResultText.gameObject.SetActive(true);
         ProcessAccessor.Instance.jdgTiming.MovingCharaArea = targetArea;
         ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
 
