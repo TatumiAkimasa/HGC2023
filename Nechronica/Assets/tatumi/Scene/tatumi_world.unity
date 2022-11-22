@@ -9223,6 +9223,7 @@ MonoBehaviour:
   - {fileID: 279697544206416782, guid: 991a27e5af0a9df45abccbeac8bbd415, type: 3}
   - {fileID: 2672788955400588135, guid: 991a27e5af0a9df45abccbeac8bbd415, type: 3}
   - {fileID: -640421774372922184, guid: 991a27e5af0a9df45abccbeac8bbd415, type: 3}
+  SetEvent: 0
 --- !u!114 &148843235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61229,7 +61230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034699461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 12.33, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1832166787}
@@ -61246,7 +61247,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.52, y: 4.18, z: -29.06}
+  m_Size: {x: 33.74, y: 4.18, z: -29.06}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1034699464
 MonoBehaviour:
@@ -63657,7 +63658,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116901657}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a63c6d03b2e20a3479ffda476944dd72, type: 3}
   m_Name: 
@@ -63797,11 +63798,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpSpeed: 5
-  gravity: 20
-  MovePlayer: 0
+  jumpSpeed: 10
+  gravity: 45
+  MovePlayer: 1
   Menu: {fileID: 0}
   mission: {fileID: 0}
+  myanim: {fileID: 1831628342}
 --- !u!4 &1121826007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2846079529154260068, guid: e78f0fd06deaaad42a48c3f24f2a4729, type: 3}
@@ -94024,6 +94026,7 @@ MonoBehaviour:
   - {fileID: 7028152879937265673, guid: 4fc629cc5ce855647939d74c2747140a, type: 3}
   - {fileID: -7318769559446223348, guid: 4fc629cc5ce855647939d74c2747140a, type: 3}
   - {fileID: -4647296028034865385, guid: 4fc629cc5ce855647939d74c2747140a, type: 3}
+  SetEvent: 0
 --- !u!114 &1581279369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94357,6 +94360,7 @@ MonoBehaviour:
   - {fileID: -4046594194804870563, guid: 6d61fa21101c40749b712af29853bf46, type: 3}
   - {fileID: 9207482730706735542, guid: 6d61fa21101c40749b712af29853bf46, type: 3}
   - {fileID: 7823716663786147348, guid: 6d61fa21101c40749b712af29853bf46, type: 3}
+  SetEvent: 0
 --- !u!114 &1583208864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101357,6 +101361,7 @@ MonoBehaviour:
   - {fileID: -4046594194804870563, guid: 6d61fa21101c40749b712af29853bf46, type: 3}
   - {fileID: 9207482730706735542, guid: 6d61fa21101c40749b712af29853bf46, type: 3}
   - {fileID: 7823716663786147348, guid: 6d61fa21101c40749b712af29853bf46, type: 3}
+  SetEvent: 0
 --- !u!1 &1832166784
 GameObject:
   m_ObjectHideFlags: 0
@@ -101389,7 +101394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Charas:
-  - {fileID: 0}
+  - {fileID: 1116901665}
   ChinemaCameras: []
 --- !u!65 &1832166786
 BoxCollider:
@@ -101412,7 +101417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832166784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.69, y: 0.79, z: -12.638084}
+  m_LocalPosition: {x: 8.25, y: 0.79, z: -12.638084}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1034699462}
@@ -101436,22 +101441,61 @@ MonoBehaviour:
   EventTypes:
   - eventType: 1
     ordes:
-      Horizon: 0
+      Horizon: 1
       Vertical: 0
       Jump_count: 0
-      Move_Time: 0
+      Move_Time: 45
       ObjChara_Num: 0
       Talk: []
       WaitTime: 0
-  - eventType: 4
+  - eventType: 0
     ordes:
-      Horizon: 0
+      Horizon: 1
       Vertical: 0
       Jump_count: 0
-      Move_Time: 0
+      Move_Time: 5
+      ObjChara_Num: 0
+      Talk: []
+      WaitTime: 3
+  - eventType: 2
+    ordes:
+      Horizon: 1
+      Vertical: 1
+      Jump_count: 0
+      Move_Time: 45
+      ObjChara_Num: 0
+      Talk: []
+      WaitTime: 3
+  - eventType: 1
+    ordes:
+      Horizon: -1
+      Vertical: 0
+      Jump_count: 0
+      Move_Time: 45
+      ObjChara_Num: 0
+      Talk: []
+      WaitTime: 3
+  - eventType: 4
+    ordes:
+      Horizon: -1
+      Vertical: 0
+      Jump_count: 0
+      Move_Time: 45
       ObjChara_Num: 0
       Talk:
-      - oihoihoihlhpo
+      - hi
+      - ENd
+      WaitTime: 3
+  - eventType: 3
+    ordes:
+      Horizon: -1
+      Vertical: 0
+      Jump_count: 2
+      Move_Time: 45
+      ObjChara_Num: 0
+      Talk:
+      - hi
+      - ENd
       WaitTime: 0
 --- !u!4 &1832460785 stripped
 Transform:
@@ -108449,6 +108493,7 @@ MonoBehaviour:
   - {fileID: -4374544182496454598, guid: e72d09df48bbe9d4d9910dea94a291bd, type: 3}
   - {fileID: 6940381374064218336, guid: e72d09df48bbe9d4d9910dea94a291bd, type: 3}
   - {fileID: 6403557332089573380, guid: e72d09df48bbe9d4d9910dea94a291bd, type: 3}
+  SetEvent: 0
 --- !u!114 &2033283335
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -35,7 +35,13 @@ public class MOve_chara : MonoBehaviour
     void Update()
     {
         if (MovePlayer == false)
+        {
+            moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
+            my_y = moveDirection.y;
+            controller.Move(new Vector3(0.0f, moveDirection.y,0.0f) * Time.deltaTime);
             return;
+        }
+           
 
         if (controller.isGrounded)
         {

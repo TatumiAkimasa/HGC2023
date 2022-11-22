@@ -39,7 +39,7 @@ public class MoveEvent_Editor : Editor
         //EditorGUI.BeginChangeCheck();
 
         //‹óŠÔ‚É•¶š•\¦
-        EditorGUILayout.LabelField("1”Ô–Ú‚Ìİ’è---------------------------");
+        EditorGUILayout.LabelField("0”Ô–Ú‚Ìİ’è---------------------------");
 
         //List‚È‚Ì‚Å—v‘f”•ª€–Ú‚ª‘‚¦‚é
         for (int i = 0; i != target_.EventTypes.Count; i++)
@@ -97,7 +97,7 @@ public class MoveEvent_Editor : Editor
             }
 
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField(i.ToString()+"”Ô–Ú‚Ìİ’è---------------------------");
+            EditorGUILayout.LabelField((i+1).ToString()+"”Ô–Ú‚Ìİ’è---------------------------");
         }
 
 

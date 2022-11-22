@@ -10,9 +10,14 @@ public class EventStart : CheckUp_Base
 
     void Update()
     {
-        if (PL != null)
+        if (PL != null && !talk_now)
         {
-            StartCoroutine(test.Event());
+            talk_now = true;
+            StartCoroutine(test.Event((EndTiming =>
+            {
+                Destroy(this.gameObject);
+                //‰½‚©‚µ‚á‚×‚è‚¨‚í‚Á‚½Žž‚É‚µ‚½‚¢‚±‚Æ‚ ‚ê‚Î¡‚Í–³‚µ(‘½•ªPL‚Ì‘€ìŽó•t‹‘”Û‰ðœˆ—‚Æ‚©“ü‚é)
+            })));
         }
     }
 }

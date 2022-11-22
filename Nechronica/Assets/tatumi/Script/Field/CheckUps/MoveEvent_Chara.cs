@@ -39,10 +39,13 @@ public class MoveEvent_Chara : MonoBehaviour
     }
 
     //é¿ç€ÇÃèàóù(Editorä÷åWÇ»Çµ)
-    public IEnumerator Event()
+    public IEnumerator Event(System.Action<bool> action_end)
     {
         for(int i=0;i!=EventTypes.Count;i++)
         {
+            Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].MovePlayer = false;
+            Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].myanim.SetEvent = true;
+
             switch (EventTypes[i].eventType)
             {
                 case EventType.event_Type.Nomove:
@@ -76,6 +79,7 @@ public class MoveEvent_Chara : MonoBehaviour
             }
 
         }
+        action_end(true);
     }
-
+    
 }
