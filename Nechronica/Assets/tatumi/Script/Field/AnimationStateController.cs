@@ -14,6 +14,8 @@ public class AnimationStateController : MonoBehaviour
 
     public Sprite[] sprites;
 
+    public bool SetEvent;
+
     void Start()
     {
         // èâä˙âª
@@ -25,6 +27,10 @@ public class AnimationStateController : MonoBehaviour
 
     void Update()
     {
+        if (SetEvent)
+        {
+            setStateToAnimator(null);
+        }
 
         if (Input.anyKeyDown)
         {
@@ -73,6 +79,13 @@ public class AnimationStateController : MonoBehaviour
         this.animator.SetFloat("X", vector.Value.x);
         this.animator.SetFloat("Y", vector.Value.y);
 
+    }
+
+    public void setStateEventToAnimator(Vector2? vector)
+    {
+        this.animator.speed = 1.0f;
+        this.animator.SetFloat("X", vector.Value.x);
+        this.animator.SetFloat("Y", vector.Value.y);
     }
 
     /**
