@@ -15,40 +15,41 @@ public class BattleCommand : MonoBehaviour
     [SerializeField]
     private BattleCommand thisCharaCommand;         // 自己参照
 
-    [SerializeField]
-    private List<CharaManeuver> ActionManeuvers;    // 自身が持っているアクションマニューバを保存 
-    [SerializeField]
-    private List<CharaManeuver> RapidManeuvers;     // 自身が持っているラピッドマニューバを保存
+    [SerializeField] private List<CharaManeuver> ActionManeuvers;    // 自身が持っているアクションマニューバを保存 
+    [SerializeField] private List<CharaManeuver> RapidManeuvers;     // 自身が持っているラピッドマニューバを保存
+    [SerializeField] private List<CharaManeuver> JudgeManeuvers;     // 自身が持っているジャッジマニューバを保存
+    [SerializeField] private List<CharaManeuver> DamageManeuvers;    // 自身が持っているダメージマニューバを保存
                                       
-    [SerializeField]
-    private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject rapidCommands;               // ラピッドタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject judgeCommands;               // ジャッジタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject damageCommands;              // ダメージタイミングのコマンドオブジェクト
 
-    [SerializeField]
-    private GameObject rapidCommands;                // ラピッドタイミングのコマンドオブジェクト
+    [SerializeField] private Button actionButton;                    // アクションのボタン
+    [SerializeField] private Button rapidButton;                     // ラピッドのボタン
+    [SerializeField] private Button standbyButton;                   // 待機のボタン
 
-    [SerializeField]
-    private Button actionButton;                    // アクションのボタン
-    [SerializeField]
-    private Button rapidButton;                     // ラピッドのボタン
-    [SerializeField]
-    private Button standbyButton;                   // 待機のボタン
+    [SerializeField] private GameObject prefabActButton;                               // actionコマンドのプレハブ
+    [SerializeField] private GameObject prefabRpdButton;                               // rapidコマンドのプレハブ
+    [SerializeField] private GameObject prefabJdgButton;                               // judgeコマンドのプレハブ
+    [SerializeField] private GameObject prefabDmgButton;                               // Damageコマンドのプレハブ
 
-
-    [SerializeField]
-    private GameObject prefabActButton;             // actionコマンドのプレハブ
-    [SerializeField]
-    private List<GameObject> parentsActObj = new List<GameObject>();                // アクションコマンドの親オブジェクトリスト
-    private List<GameObject> prefabActObjList = new List<GameObject>();             // クローンしたプレハブの保存先
-
-    [SerializeField]
-    private GameObject prefabRpdButton;             // rapidコマンドのプレハブ
-    [SerializeField]
-    private List<GameObject> parentsRpdObj = new List<GameObject>();                // ラピッドコマンドの親オブジェクト
-    private List<GameObject> prefabRpdObjList = new List<GameObject>();             // クローンしたプレハブの保存先
+    [SerializeField] private List<GameObject> parentsActObj = new List<GameObject>();  // アクションコマンドの親オブジェクトリスト
+    [SerializeField] private List<GameObject> parentsRpdObj = new List<GameObject>();  // ラピッドコマンドの親オブジェクト
+    [SerializeField] private List<GameObject> parentsJdgObj = new List<GameObject>();  // ジャッジコマンドの親オブジェクト
+    [SerializeField] private List<GameObject> parentsDmgObj = new List<GameObject>();  // ダメージコマンドの親オブジェクト
+    
+    private List<GameObject> prefabActObjList = new List<GameObject>();                // クローンしたアクションコマンドプレハブの保存先
+    private List<GameObject> prefabRpdObjList = new List<GameObject>();                // クローンしたラピッドコマンドプレハブの保存先
+    private List<GameObject> prefabJdgObjList = new List<GameObject>();                // クローンしたジャッジコマンドプレハブの保存先
+    private List<GameObject> prefabDmgObjList = new List<GameObject>();                // クローンしたダメージコマンドプレハブの保存先
 
 
-    private GameObject originalParentObj;           // 上記プレハブの親Objの元となるオブジェクト
-    private RectTransform backImg;                  // 上記変数の座標となるオブジェクト
+    private GameObject originalParentObj;              // 上記プレハブの親Objの元となるオブジェクト
+    private RectTransform backActImg;                  // 上記変数の座標となるオブジェクト
+    private RectTransform backRpdImg;                  // 上記変数の座標となるオブジェクト
+    private RectTransform backJdgImg;                  // 上記変数の座標となるオブジェクト
+    private RectTransform backDmgImg;                  // 上記変数の座標となるオブジェクト
 
     [SerializeField]
     private BattleSystem battleSystem;              
@@ -66,8 +67,8 @@ public class BattleCommand : MonoBehaviour
         battleSystem = ManagerAccessor.Instance.battleSystem;
 
         // ボタンを取得
-        actionButton  = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
-        rapidButton   = this.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
+        actionButton = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
+        rapidButton = this.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
         standbyButton = this.transform.Find("Canvas/Act_select/Standby").gameObject.GetComponent<Button>();
 
         // ボタンにメソッドを加える
@@ -78,9 +79,14 @@ public class BattleCommand : MonoBehaviour
         // コマンドを取得
         actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
         rapidCommands  = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+        judgeCommands  = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
+        damageCommands = this.transform.Find("Canvas/Damage/DamageCommands").gameObject;
 
         // バックイメージを取得
-        backImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
+        backActImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
+        backRpdImg = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands/BackImg").GetComponent<RectTransform>();
+        backJdgImg = this.transform.Find("Canvas/Judge/JudgeCommands/BackImg").GetComponent<RectTransform>();
+        backDmgImg = this.transform.Find("Canvas/Damage/DamageCommands/BackImg").GetComponent<RectTransform>();
 
         // 独自のプレハブフォルダからクローンオブジェクトを取得
         prefabActButton = NonResources.Load<GameObject>("Assets/morii/Prefab/Commands/ActionButton.prefab");
@@ -89,82 +95,24 @@ public class BattleCommand : MonoBehaviour
         // 独自のプレハブフォルダから上記プレハブの親Objの元となるオブジェクトを取得
         originalParentObj = NonResources.Load<GameObject>("Assets/morii/Prefab/UIparent/VerticalParent.prefab");
 
-        // 親の数
-        int countParent = 0;
-        // サイズ調整----ゴリ押しなの気に食わん--------------------------
-        // クローンした親オブジェクトのサイズ調整用
-        Vector2 parentSize = backImg.sizeDelta;
-        parentSize.y = parentSize.y - COMMAND_SIZE / 2;
+        
+        // 各親オブジェクトを1つずつあらかじめ作る
+        parentsActObj.Add(BuildingParent(true, backActImg));
+        parentsRpdObj.Add(BuildingParent(true, backRpdImg));
+        parentsJdgObj.Add(BuildingParent(true, backJdgImg));
+        parentsDmgObj.Add(BuildingParent(true, backDmgImg));
 
-        Vector3 parentPos = backImg.position;
-        parentPos.y = parentPos.y + COMMAND_SIZE / 4;
-        // --------------------------------------------------------------
-
-        // クローン生成用GameObject
-        GameObject Instance;
-
-        // あらかじめ1個目の親となるオブジェクトを生成
-        Instance = Instantiate(originalParentObj);
-        VerticalLayoutGroup parentClone = Instance.GetComponent<VerticalLayoutGroup>();
-        parentClone.transform.parent = actionCommands.transform;
-        // クローンしたオブジェクトの座標、サイズを調整する
-        parentClone.GetComponent<RectTransform>().sizeDelta = parentSize;
-        parentClone.GetComponent<RectTransform>().position = parentPos;
-        parentsActObj.Add(parentClone.gameObject);
-
+        // パーツのマニューバとしての割り当てられているタイミングで分ける
         AddManeuver(thisChara.GetHeadParts());
         AddManeuver(thisChara.GetArmParts());
         AddManeuver(thisChara.GetBodyParts());
         AddManeuver(thisChara.GetLegParts());
 
-        // コマンドを生成
-        for (int i = 0; i < ActionManeuvers.Count; i++)
-        {
-            Instance = Instantiate(prefabActButton, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
-            ButtonTexts clone = Instance.GetComponent<ButtonTexts>();
-            clone.SetName(ActionManeuvers[i].Name);
-            clone.SetCost(ActionManeuvers[i].Cost.ToString());
-
-            // ここでボタンにオンクリックを追加。内容はマニューバ発動
-
-            // 射程が複数存在する場合と、一か所にしか存在しない場合、もしくは自身に効果が及ぶ場合で処理を分ける
-            if (ActionManeuvers[i].MinRange == 10) 
-            {
-                clone.SetRange("自身");
-            }
-            else if (ActionManeuvers[i].MinRange != ActionManeuvers[i].MaxRange)
-            {
-                clone.SetRange(ActionManeuvers[i].MinRange.ToString() + "～" + ActionManeuvers[i].MaxRange.ToString());
-            }
-            else
-            {
-                clone.SetRange(ActionManeuvers[i].MinRange.ToString());
-            }
-            // 親を設定
-            clone.transform.SetParent(parentsActObj[countParent].transform, false);
-            ManerverAndArea buff;
-            // バッファーに必要な情報を格納
-            buff.maneuver = ActionManeuvers[i];
-            buff.area = thisChara.potition;
-            // コマンドを使えるようにする
-            clone.GetComponent<Button>().onClick.AddListener(() => battleSystem.OnClickCommand(buff));
-            
-            // コマンド5個区切りでコマンドの親オブジェクトを複製する。
-            if ((i + 1) % 5 == 0)
-            {
-                countParent++;
-                Instance = Instantiate(originalParentObj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), actionCommands.transform);
-                parentClone = Instance.GetComponent<VerticalLayoutGroup>();
-                // クローンしたオブジェクトの座標、サイズを調整する
-                parentClone.GetComponent<RectTransform>().position = backImg.position;
-                parentClone.GetComponent<RectTransform>().sizeDelta = backImg.sizeDelta;
-                parentClone.gameObject.SetActive(false);
-                parentsActObj.Add(parentClone.gameObject);
-            }
-
-            //リストに保存
-            prefabActObjList.Add(clone.gameObject);
-        }
+        // タイミングで分けられたマニューバ
+        prefabActObjList = BuildCommands(ActionManeuvers, ref parentsActObj, prefabActObjList, backActImg);
+        prefabRpdObjList = BuildCommands(RapidManeuvers , ref parentsRpdObj, prefabRpdObjList, backRpdImg);
+        prefabJdgObjList = BuildCommands(JudgeManeuvers , ref parentsJdgObj, prefabJdgObjList, backJdgImg);
+        prefabDmgObjList = BuildCommands(DamageManeuvers, ref parentsDmgObj, prefabDmgObjList, backDmgImg);
     }
 
     public void OnClickStandby()
@@ -186,23 +134,164 @@ public class BattleCommand : MonoBehaviour
     }
 
     /// <summary>
-    /// キャラクターのアクション、ラピッドマニューバを取得
+    /// キャラクターの各マニューバをそれぞれ分類わけする
     /// </summary>
     /// <param name="maneuvers"></param>
     public void AddManeuver(List<CharaManeuver> maneuvers)
     {
         for (int i = 0; i < thisChara.GetLegParts().Count; i++)
         {
-            if (maneuvers[i].Timing == CharaBase.ACTION)
+            if (maneuvers[i].Timing == CharaBase.ACTION || maneuvers[i].Timing == CharaBase.MOVE)
             {
-                ActionManeuvers.Add(thisChara.GetLegParts()[i]);
+                ActionManeuvers.Add(maneuvers[i]);
             }
             else if (maneuvers[i].Timing == CharaBase.RAPID)
             {
-                RapidManeuvers.Add(thisChara.GetLegParts()[i]);
+                RapidManeuvers.Add(maneuvers[i]);
             }
+            else if (maneuvers[i].Timing == CharaBase.JUDGE)
+            {
+                JudgeManeuvers.Add(maneuvers[i]);
+            }
+            else if (maneuvers[i].Timing == CharaBase.DAMAGE)
+            {
+                DamageManeuvers.Add(maneuvers[i]);
+            }
+
         }
     }
+
+    /// <summary>
+    /// コマンドを生成するメソッド
+    /// </summary>
+    /// <param name="maneuvers">マニューバの内容をクローンオブジェクトにする</param>
+    /// <param name="prefabList">上記オブジェクトを格納し、管理するリスト</param>
+    /// <param name="parentObj">上記オブジェクトリストを格納し、コマンド選択のページとしての扱いをする。</param>
+    /// <returns><param name="prefabList"></returns>
+    public List<GameObject> BuildCommands(List<CharaManeuver> maneuvers, ref List<GameObject> parentObj, List<GameObject> prefabList, RectTransform backImg)
+    {
+        GameObject Instance;
+        // 親の数
+        int countParent = 0;
+        for (int i = 0; i < maneuvers.Count; i++)
+        {
+            Instance = Instantiate(prefabActButton, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
+            ButtonTexts clone = Instance.GetComponent<ButtonTexts>();
+            clone.SetName(maneuvers[i].Name);
+            clone.SetCost(maneuvers[i].Cost.ToString());
+
+            // ここでボタンにオンクリックを追加。内容はマニューバ発動
+
+            // 射程が複数存在する場合と、一か所にしか存在しない場合、もしくは自身に効果が及ぶ場合で処理を分ける
+            if (maneuvers[i].MinRange == 10)
+            {
+                clone.SetRange("自身");
+            }
+            else if (maneuvers[i].MinRange != maneuvers[i].MaxRange)
+            {
+                clone.SetRange(maneuvers[i].MinRange.ToString() + "～" + maneuvers[i].MaxRange.ToString());
+            }
+            else
+            {
+                clone.SetRange(maneuvers[i].MinRange.ToString());
+            }
+            // 親を設定
+            clone.transform.SetParent(parentObj[countParent].transform, false);
+            AddFuncToButton(ref clone, maneuvers[i]);
+            ManerverAndArea buff;
+            // バッファーに必要な情報を格納
+            buff.maneuver = maneuvers[i];
+            buff.area = thisChara.potition;
+            // コマンドを使えるようにする
+            clone.GetComponent<Button>().onClick.AddListener(() => ManagerAccessor.Instance.battleSystem.OnClickCommand(buff));
+
+            // コマンド5個区切りでコマンドの親オブジェクトを複製する。
+            if ((i + 1) % 5 == 0)
+            {
+                countParent++;
+                parentObj.Add(BuildingParent(false, backImg));
+            }
+
+            //リストに保存
+            prefabList.Add(clone.gameObject);
+        }
+
+        return prefabList;
+    }
+
+    /// <summary>
+    /// コマンドボタンを格納したオブジェクトリスト。
+    /// </summary>
+    /// <param name="isActive">アクティブ状態でクローンするかどうか</param>
+    /// <returns></returns>
+    GameObject BuildingParent(bool isActive, RectTransform backImg)
+    {
+        // サイズ調整----ゴリ押しなの気に食わん--------------------------
+        // クローンした親オブジェクトのサイズ調整用
+        Vector2 parentSize = backImg.sizeDelta;
+        parentSize.y = parentSize.y - COMMAND_SIZE / 2;
+
+        Vector3 parentPos = backImg.position;
+        parentPos.y = parentPos.y + COMMAND_SIZE / 4;
+        // --------------------------------------------------------------
+
+        GameObject Instance;
+        Instance = Instantiate(originalParentObj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), actionCommands.transform);
+        VerticalLayoutGroup parentClone = Instance.GetComponent<VerticalLayoutGroup>();
+        // クローンしたオブジェクトの座標、サイズを調整する
+        parentClone.GetComponent<RectTransform>().position = backImg.position;
+        parentClone.GetComponent<RectTransform>().sizeDelta = backImg.sizeDelta;
+        parentClone.gameObject.SetActive(isActive);
+        parentClone.transform.SetParent(backImg.parent);
+        return parentClone.gameObject;
+    }
+
+    void AddFuncToButton(ref ButtonTexts command, CharaManeuver maneuver)
+    {
+        ManerverAndArea buff;
+        // バッファーに必要な情報を格納
+        buff.maneuver = maneuver;
+        buff.area = thisChara.potition;
+        if (maneuver.Timing == CharaBase.ACTION)
+        {
+            command.GetComponent<Button>().onClick.AddListener(()=>OnClickActCommand(buff));
+        }
+        if (maneuver.Timing == CharaBase.MOVE)
+        {
+
+        }
+        if (maneuver.Timing == CharaBase.RAPID)
+        {
+
+        }
+        if (maneuver.Timing == CharaBase.JUDGE)
+        {
+            command.GetComponent<Button>().onClick.AddListener(() => OnClickJdgCommand(buff));
+        }
+        if (maneuver.Timing == CharaBase.DAMAGE)
+        {
+
+        }
+    }
+
+    void OnClickActCommand(ManerverAndArea eff)
+    {
+        // 必要な情報を送信
+        ProcessAccessor.Instance.actTiming.SkillSelected = true;
+        ProcessAccessor.Instance.actTiming.SetManeuver(eff.maneuver);
+        ProcessAccessor.Instance.actTiming.SetArea(eff.area);
+        ProcessAccessor.Instance.actTiming.StandbyEnemySelect = true;
+    }
+
+    void OnClickJdgCommand(ManerverAndArea eff)
+    {
+        ProcessAccessor.Instance.jdgTiming.SkillSelected = true;
+        ProcessAccessor.Instance.jdgTiming.SetManeuver(eff.maneuver);
+        ProcessAccessor.Instance.jdgTiming.SetArea(eff.area);
+        ProcessAccessor.Instance.jdgTiming.JudgeButtons.SetActive(true);
+
+    }
+
 }
 
 public struct ManerverAndArea

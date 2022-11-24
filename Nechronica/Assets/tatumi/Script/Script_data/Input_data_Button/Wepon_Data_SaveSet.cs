@@ -32,9 +32,9 @@ public class Wepon_Data_SaveSet : MonoBehaviour
         Set_Parts.Timing = item.Timing;
         Set_Parts.Weight = item.Weight;
 
-        Set_Parts.Atk.AtkType = item.Atk.AtkType;
+        Set_Parts.Atk.atkType = item.Atk.atkType;
         Set_Parts.Atk.isAllAttack = item.Atk.isAllAttack;
-        Set_Parts.Atk.isCotting = item.Atk.isCotting;
+        Set_Parts.Atk.isCutting = item.Atk.isCutting;
         Set_Parts.Atk.isExplosion = item.Atk.isExplosion;
         Set_Parts.Atk.isSuccession = item.Atk.isSuccession;
         Set_Parts.Atk.Num_per_Action = item.Atk.Num_per_Action;
@@ -71,9 +71,9 @@ public class Wepon_Data_SaveSet : MonoBehaviour
         Set_Parts.Timing = Timing;
         Set_Parts.Weight = Weight;
 
-        Set_Parts.Atk.AtkType = AtkType;
+        Set_Parts.Atk.atkType = AtkType;
         Set_Parts.Atk.isAllAttack = isAllAttack;
-        Set_Parts.Atk.isCotting = isCotting;
+        Set_Parts.Atk.isCutting = isCotting;
         Set_Parts.Atk.isExplosion = isExplosion;
         Set_Parts.Atk.isSuccession = isSuccession;
         Set_Parts.Atk.Num_per_Action = Num_per_Action;

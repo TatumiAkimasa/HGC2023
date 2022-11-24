@@ -10,9 +10,10 @@ public class CharaBase : MonoBehaviour
     public const int COUNT  = -1;
     public const int AUTO   = 0;
     public const int ACTION = 1;
-    public const int RAPID  = 2;
-    public const int JUDGE  = 3;
-    public const int DAMAGE = 4;
+    public const int MOVE   = 2;
+    public const int RAPID  = 3;
+    public const int JUDGE  = 4;
+    public const int DAMAGE = 5;
 
     //ゲッター
     public int GetMaxCount() => maxCount;
@@ -37,7 +38,7 @@ public class CharaBase : MonoBehaviour
             //最大行動値加算パーツが破損していなければ最大行動値加算
             if(!HeadParts[i].isDmage&& HeadParts[i].Timing==COUNT)
             {
-                maxCount += HeadParts[i].EffectNum;
+                maxCount += HeadParts[i].EffectNum[EffNum.Count];
             }
         }
         for (int i = 0; i < ArmParts.Count; i++)
@@ -45,7 +46,7 @@ public class CharaBase : MonoBehaviour
             //最大行動値加算パーツが破損していなければ最大行動値加算
             if (!ArmParts[i].isDmage && ArmParts[i].Timing == COUNT)
             {
-                maxCount += ArmParts[i].EffectNum;
+                maxCount += ArmParts[i].EffectNum[EffNum.Count];
             }
         }
         for (int i = 0; i < BodyParts.Count; i++)
@@ -53,7 +54,7 @@ public class CharaBase : MonoBehaviour
             //最大行動値加算パーツが破損していなければ最大行動値加算
             if (!BodyParts[i].isDmage && BodyParts[i].Timing == COUNT)
             {
-                maxCount += BodyParts[i].EffectNum;
+                maxCount += BodyParts[i].EffectNum[EffNum.Count];
             }
         }
         for (int i = 0; i < LegParts.Count; i++)
@@ -61,7 +62,7 @@ public class CharaBase : MonoBehaviour
             //最大行動値加算パーツが破損していなければ最大行動値加算
             if (!LegParts[i].isDmage && LegParts[i].Timing == COUNT)
             {
-                maxCount += LegParts[i].EffectNum;
+                maxCount += LegParts[i].EffectNum[EffNum.Count];
             }
         }
     }
@@ -93,7 +94,8 @@ public class CharaBase : MonoBehaviour
 public class CharaManeuver
 {
     public string Name;            //パーツ名
-    public int EffectNum;          //効果値
+    //public int EffectNum;          //効果値
+    public Dictionary<string,int> EffectNum;          //効果値
     public int Cost;               //コスト
     public int Timing;             //発動タイミング
     public int MinRange;           //射程の最小値
@@ -108,12 +110,21 @@ public class CharaManeuver
 [System.Serializable]
 public class ManeuverEffectsAtk
 {
-    public int AtkType;       //攻撃属性
-    public  bool isExplosion;   //爆発攻撃かどうか
-    public bool isCotting;     //切断攻撃かどうか
+    public int atkType;        //攻撃属性
+    public  bool isExplosion;  //爆発攻撃かどうか
+    public bool isCutting;     //切断攻撃かどうか
     public bool isAllAttack;   //全体攻撃かどうか
     public bool isSuccession;  //連撃かどうか
-    public int Num_per_Action;//連撃回数
+    public int Num_per_Action; //連撃回数
+}
+
+class EffNum
+{
+    public const string Damage   = "Damage";
+    public const string Support  = "Support";
+    public const string Sabotage = "Sabotage";
+    public const string Move     = "Move";
+    public const string Count    = "Count";
 }
 
 
