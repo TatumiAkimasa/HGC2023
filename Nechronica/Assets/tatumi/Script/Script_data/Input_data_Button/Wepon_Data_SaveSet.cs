@@ -17,6 +17,9 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     //データセット（シリアライズ抜くと機能せず）
     [SerializeField]
     private CharaManeuver Set_Parts;
+
+    [SerializeField]
+    private Text text;
    
     //ゲッター,セッター
     public CharaManeuver GetParts() => Set_Parts;
@@ -62,7 +65,7 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     public void Reset()
     {
         Set_Parts.Cost = Cost;
-        Set_Parts.EffectNum = EffectNum;
+        Set_Parts.EffectNum.Add(text.text,EffectNum);
         Set_Parts.isDmage = false;
         Set_Parts.isUse = false;
         Set_Parts.MaxRange = MaxRange;

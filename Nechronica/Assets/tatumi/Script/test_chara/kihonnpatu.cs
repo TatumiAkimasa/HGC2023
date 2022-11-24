@@ -43,19 +43,19 @@ public class kihonnpatu : CharaBase
         Treasure_parts.Name = "";
 
         //ƒ_ƒ[ƒW’l----------------------
-        Base_Head_parts[0].EffectNum = 1;
-        Base_Head_parts[1].EffectNum = 2;
-        Base_Head_parts[2].EffectNum = 1;
-        Base_Arm_parts[0].EffectNum = 1;
-        Base_Arm_parts[1].EffectNum = 1;
-        Base_Arm_parts[2].EffectNum = 1;
-        Base_Body_parts[0].EffectNum = -1;
-        Base_Body_parts[1].EffectNum = 0;
-        Base_Body_parts[2].EffectNum = 0;
-        Base_Leg_parts[0].EffectNum = 1;
-        Base_Leg_parts[1].EffectNum = 1;
-        Base_Leg_parts[2].EffectNum = 1;
-        Treasure_parts.EffectNum = 0;
+        Base_Head_parts[0].EffectNum.Add("“÷’eUŒ‚1",1);
+        Base_Head_parts[1].EffectNum.Add("Å‘ås“®’l1", 2);
+        Base_Head_parts[2].EffectNum.Add("Å‘ås“®’l1", 1);
+        Base_Arm_parts[0].EffectNum.Add("“÷’eUŒ‚1", 1);
+        Base_Arm_parts[1].EffectNum.Add("ˆÚ“®1", 1);
+        Base_Arm_parts[2].EffectNum.Add("x‰‡1", 1);
+        Base_Body_parts[0].EffectNum.Add("Cost-1", -1);
+        Base_Body_parts[1].EffectNum.Add("", 0);
+        Base_Body_parts[2].EffectNum.Add("", 0);
+        Base_Leg_parts[0].EffectNum.Add("ˆÚ“®1", 1);
+        Base_Leg_parts[1].EffectNum.Add("ˆÚ“®1", 1);
+        Base_Leg_parts[2].EffectNum.Add("–WŠQ1", 1);
+        Treasure_parts.EffectNum.Add("•ó", 0);
 
         //COST-------------
         Base_Head_parts[0].Cost = 2;
