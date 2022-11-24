@@ -22,5 +22,6 @@ public class ProcessAccessor
     // システム根幹スクリプト参照
     public ActTimingProcess actTiming;
     public JdgTimingProcess jdgTiming;
+    public DmgTimingProcess dmgTiming;
 
 }

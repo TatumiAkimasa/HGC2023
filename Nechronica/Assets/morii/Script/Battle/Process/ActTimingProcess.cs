@@ -142,6 +142,10 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.jdgTiming.RollResultText.gameObject.SetActive(true);
         ProcessAccessor.Instance.jdgTiming.MovingCharaArea = targetArea;
         ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
+        if(dollManeuver.EffectNum.ContainsKey(EffNum.Damage))
+        {
+            ProcessAccessor.Instance.jdgTiming.GiveDamage = dollManeuver.EffectNum[EffNum.Damage];
+        }
 
         // ジャッジに入ってからバトルプロセスが動かないように非アクティブにする
         this.enabled = false;

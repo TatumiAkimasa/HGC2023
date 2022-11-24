@@ -8,6 +8,14 @@ public class JdgTimingProcess : GetClickedGameObject
 {
     private bool isDiceRoll;
     private bool isStandbyDiceRoll;
+
+    private int  giveDamage;
+    public int GiveDamage
+    {
+        get { return giveDamage; }
+        set { giveDamage = value; }
+    }
+
     public bool IsStandbyDiceRoll
     {
         get { return isStandbyDiceRoll; }
@@ -16,7 +24,7 @@ public class JdgTimingProcess : GetClickedGameObject
 
     [SerializeField] private Text rollResultText;
 
-    [SerializeField] private Button passButton;     // ジャッジタイミングを終わらせるボタン
+    [SerializeField] private Button nextButton;     // ジャッジタイミングを終わらせるボタン
     [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
 
     [SerializeField] private GameObject buttons;    // 最後に発動するかどうかのボタン
@@ -36,9 +44,7 @@ public class JdgTimingProcess : GetClickedGameObject
     }
 
     private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
-
     private int rollResult = 0;                     // ダイスロールの結果を格納する変数
-
     private int movingCharaArea;                    // 攻撃途中の敵、味方オブジェクトのエリア
     public int MovingCharaArea
     {
@@ -164,7 +170,32 @@ public class JdgTimingProcess : GetClickedGameObject
         }
     }
 
+    /// <summary>
+    /// このメソッドが動いたらダメージタイミングに移行する
+    /// </summary>
+    public void OnClickNext()
+    {
+        if(rollResult>=6)
+        {
+            int addDmg = 0;
 
+            if (rollResult > 10)
+            {
+                addDmg = rollResult - 10;
+            }
+
+            ProcessAccessor.Instance.dmgTiming.GiveDamage = giveDamage + addDmg;
+        }
+        else if(rollResult==1)
+        {
+            // 大失敗の処理
+        }
+        else
+        {
+            // 次のカウントに行く処理
+        }
+
+    }
 
 }
 
