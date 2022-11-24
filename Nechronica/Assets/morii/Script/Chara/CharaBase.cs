@@ -95,7 +95,7 @@ public class CharaManeuver
 {
     public string Name;            //パーツ名
     //public int EffectNum;          //効果値
-    public Dictionary<string,int> EffectNum;          //効果値
+    public Dictionary<string,int> EffectNum = new Dictionary<string, int>();          //効果値
     public int Cost;               //コスト
     public int Timing;             //発動タイミング
     public int MinRange;           //射程の最小値
@@ -118,13 +118,14 @@ public class ManeuverEffectsAtk
     public int Num_per_Action; //連撃回数
 }
 
-class EffNum
+[System.Serializable]
+public class EffNum
 {
     public const string Damage   = "Damage";
-    public const string Support  = "Support";
-    public const string Sabotage = "Sabotage";
+    public const string Judge    = "Judge";
     public const string Move     = "Move";
     public const string Count    = "Count";
+    public const string Extra    = "Extra";
 }
 
 

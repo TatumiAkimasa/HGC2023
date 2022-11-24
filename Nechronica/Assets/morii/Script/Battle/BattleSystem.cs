@@ -245,7 +245,7 @@ public class BattleSystem : MonoBehaviour
         int count = 0;
         if(diceRoll==10)
         {
-            for(int i=0;i<eff.EffectNum;i++)
+            for(int i=0;i<eff.EffectNum[EffNum.Damage];i++)
             {
                 if(!enemy.GetHeadParts()[i].isDmage)
                 {
