@@ -15,8 +15,12 @@ public class EventStart : CheckUp_Base
             talk_now = true;
             StartCoroutine(test.Event((EndTiming =>
             {
+                //Event領域削除
                 Destroy(this.gameObject);
-                //何かしゃべりおわった時にしたいことあれば今は無し(多分PLの操作受付拒否解除処理とか入る)
+                //主人公行動可能処理
+                test.gameObject.GetComponent<Assist_MoveEvent>().Charas[0].MovePlayer = true;
+                test.gameObject.GetComponent<Assist_MoveEvent>().Charas[0].myanim.SetEvent = false;
+                
             })));
         }
     }

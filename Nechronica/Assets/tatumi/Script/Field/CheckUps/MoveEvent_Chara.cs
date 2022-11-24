@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MoveEvent_Chara : MonoBehaviour
 {
-    //pub‚¶‚á‚Ë‚¥‚ÆEditor”½‰‚¹‚¸(Šg’£‚ª‚Å‚«‚È‚¢)
-    public int InCamera=0, OutCamera=1;
+    //“ü‚ê‘Ö‚¦‘ÎÛŒ³Camera
+    private int InCamera = 0;
 
     //Class‚Å‚Ü‚Æ‚ß‚Ä‚é‚È‚ç‚¢‚é
     [System.Serializable]
@@ -16,6 +16,8 @@ public class MoveEvent_Chara : MonoBehaviour
         //‚à‚¿‚ë‚ñ’†g‚àpublic‚Å
         public string[] Talk;
         public float WaitTime;
+        //pub‚¶‚á‚Ë‚¥‚ÆEditor”½‰‚¹‚¸(Šg’£‚ª‚Å‚«‚È‚¢)
+        public int OutCamera;
     }
 
     [System.Serializable]
@@ -64,17 +66,24 @@ public class MoveEvent_Chara : MonoBehaviour
                     yield return null;
                     break;
                 case EventType.event_Type.TalkStart:
+                    bool TalkEnd = false;
                     Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject.GetComponent<Talk_Chara>().Set_Talkstr(EventTypes[i].ordes.Talk);
-                    StartCoroutine(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject.GetComponent<Talk_Chara>().Talk_Set((EndTiming=>
+                    yield return StartCoroutine(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject.GetComponent<Talk_Chara>().Talk_Set((EndTiming=>
                     {
                         //‰½‚©‚µ‚á‚×‚è‚¨‚í‚Á‚½‚É‚µ‚½‚¢‚±‚Æ‚ ‚ê‚Î¡‚Í–³‚µ(‘½•ªPL‚Ì‘€ìó•t‹‘”Û‰ğœˆ—‚Æ‚©“ü‚é)
+                        TalkEnd = true;
                     })));
+                    while(!TalkEnd)
                     yield return null;
                     break;
                 case EventType.event_Type.CameraMove:
                     Assistcs.ChinemaCameras[InCamera].SetActive(false);
-                    Assistcs.ChinemaCameras[OutCamera].SetActive(true);
-                    InCamera = OutCamera;
+                    Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
+                    InCamera = EventTypes[i].ordes.OutCamera;
+                    yield return new WaitForSeconds(3.0f);
+                    break;
+                case EventType.event_Type.DeleteChara:
+                    Destroy(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject);
                     break;
             }
 

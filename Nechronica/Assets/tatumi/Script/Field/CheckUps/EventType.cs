@@ -14,5 +14,6 @@ public class EventType
         JumpMove,
         TalkStart,
         CameraMove,
+        DeleteChara,
     }
 }

@@ -89,7 +89,11 @@ public class MoveEvent_Editor : Editor
             }
             else if (target_.EventTypes[i].eventType == EventType.event_Type.CameraMove)
             {
-                target_.OutCamera = EditorGUILayout.IntField("ˆÚ‚è•Ï‚í‚èæƒJƒƒ‰”Ô†", target_.OutCamera);
+                target_.EventTypes[i].ordes.OutCamera = EditorGUILayout.IntField("ˆÚ‚è•Ï‚í‚èæƒJƒƒ‰”Ô†", target_.EventTypes[i].ordes.OutCamera);
+            }
+            else if (target_.EventTypes[i].eventType == EventType.event_Type.DeleteChara)
+            {
+                target_.EventTypes[i].ordes.ObjChara_Num = EditorGUILayout.IntField("‘ÎÛƒLƒƒƒ‰”Ô†", target_.EventTypes[i].ordes.ObjChara_Num);
             }
             else
             {
