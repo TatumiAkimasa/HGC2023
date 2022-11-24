@@ -64244,8 +64244,8 @@ MonoBehaviour:
   jumpSpeed: 10
   gravity: 45
   MovePlayer: 1
-  Menu: {fileID: 0}
-  mission: {fileID: 0}
+  Menu: {fileID: 1368259865}
+  mission: {fileID: 1098323924}
   myanim: {fileID: 1831628342}
 --- !u!4 &1121826007 stripped
 Transform:
@@ -112729,6 +112729,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4830327269393164904, guid: be3683cba63b03a44b5d3116464cdfec, type: 3}
+      propertyPath: UI
+      value: 
+      objectReference: {fileID: 1607269473}
     - target: {fileID: 4830327269393164904, guid: be3683cba63b03a44b5d3116464cdfec, type: 3}
       propertyPath: SaveRoad
       value: 

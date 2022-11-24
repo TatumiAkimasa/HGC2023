@@ -18,7 +18,7 @@ public class UI_Chara_SaveLoad : MonoBehaviour
     private void Start()
     {
         SaveObj = GameObject.FindGameObjectWithTag("AllyChara").GetComponent<Save_Load_data>();
-        Set_SaveCell();
+        //Set_SaveCell();
     }
 
     public void Set_SaveCell()
@@ -56,9 +56,8 @@ public class UI_Chara_SaveLoad : MonoBehaviour
         {
             SaveData_CellSet cell = Instantiate(SaveData_Prefub_obj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), LoadData_ParentView_obj.transform).GetComponent<SaveData_CellSet>();
 
-            SaveObj.ClickButtonLoad("SaveData(Clone)" + i.ToString());
+            SaveObj.ClickButtonLoad("SaveData(Clone)"+i.ToString());
 
-           
             cell.Set_cell(SaveObj.bb.CharaField_data.Time[0], SaveObj.bb.CharaField_data.Time[1], SaveObj.bb.Name, i);
          
             cell.Set_SaveObj(SaveObj);

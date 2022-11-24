@@ -81,7 +81,7 @@ public class Save_Load_data : MonoBehaviour
         }
 
         //aa.CharaField_data.Event[0].str = "Œ®‚ğè‚É“ü‚êANPC2‚É˜b‚©‚¯‚æB";
-        aa = loaddata;
+        bb = loaddata;
     }
 
 

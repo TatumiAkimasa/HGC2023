@@ -30,7 +30,7 @@ public class SaveData_CellSet : MonoBehaviour
         Data_Scan.Instance.my_data[0].CharaField_data.Time[1] = DateTime.Now.ToString();
         SaveObj.ClickButtonSave(this.gameObject.name+myint.ToString());
 
-        Set_cell("00:00:12", DateTime.Now.ToString(), Name.text, myint);
+        Set_cell("00:00:12", DateTime.Now.ToString(), Data_Scan.Instance.my_data[0].Name, myint);
     }
 
     public void Click_Load()
