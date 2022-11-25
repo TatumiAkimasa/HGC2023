@@ -1,53 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//エディター設定
 using UnityEditor;
 
-public class Example : MonoBehaviour
-{
-    [SerializeField]
-    private string[] talk;
-
-}
-
-[CustomEditor(typeof(MoveEvent_Player))]
+//対象クラス名(Script)
+[CustomEditor(typeof(MoveEvent_Chara))]
 //参考 https://kan-kikuchi.hatenablog.com/entry/InspectorEx , https://qiita.com/PETITDIGI/items/a40a7477579f14a5a8e6
+
+//※Unity上もしくは、実際のフォルダ操作でAseetsの中にEditorフォルダを新規作成しそのなかにこのEditorScriptを入れる事
+
+//継承先はEditor
 public class MoveEvent_Editor : Editor
 {
-    private MoveEvent_Player target_;
-    public string[] AThings;
-
+    //対象クラス名(Script)宣言(長くなるから)
+    private MoveEvent_Chara target_;
+  
+    //代入
     private void Awake()
     {
-        target_ = target as MoveEvent_Player;
-        
+        //代入の仕方ちょい特殊(GameObject型に変換)
+        target_ = target as MoveEvent_Chara;
     }
 
     public override void OnInspectorGUI()
     {
-
-        //入力されたモンスターの種類を設定
-       
+        //入力されたList表示
+        //インスペクターを弄るためのObj型（？）
         SerializedObject so = new SerializedObject(target_);
-
-        SerializedProperty stringsProperty = so.FindProperty("EventType");
-
+        //Listや配列はこのように変数名から検索
+        SerializedProperty stringsProperty = so.FindProperty("EventTypes");
+        //表示するためのもの
         EditorGUILayout.PropertyField(stringsProperty, true);
-
         so.ApplyModifiedProperties();
 
 
-        //更新されたら発動！
+        //更新されたら発動！(いらん)
         //EditorGUI.BeginChangeCheck();
-        EditorGUILayout.LabelField("1番目の設定---------------------------");
 
+        //空間に文字表示
+        EditorGUILayout.LabelField("0番目の設定---------------------------");
+
+        //Listなので要素数分項目が増える
         for (int i = 0; i != target_.EventTypes.Count; i++)
         {
             //各タイプ毎表示
             if (target_.EventTypes[i].eventType == EventType.event_Type.Nomove)
             {
                 EditorGUILayout.LabelField("待機の設定");
+
+                //変える変数の対象先　　　　　　　　　                 Float型の変更で名前、  変える変数の対象先　
                 target_.EventTypes[i].ordes.WaitTime = EditorGUILayout.FloatField("待機時間", target_.EventTypes[i].ordes.WaitTime);
+                //変える変数の対象先　　　　　　　　　                     Int型の変更で名前、        変える変数の対象先　
                 target_.EventTypes[i].ordes.ObjChara_Num = EditorGUILayout.IntField("対象キャラ番号", target_.EventTypes[i].ordes.ObjChara_Num);
             }
             else if (target_.EventTypes[i].eventType == EventType.event_Type.HorizonMove)
@@ -73,14 +77,23 @@ public class MoveEvent_Editor : Editor
             }
             else if (target_.EventTypes[i].eventType == EventType.event_Type.TalkStart)
             {
-                for(int k=0;k!= target_.EventTypes[i].ordes.Talk.Length;k++)
+                //string(配列)の場合（疑似的）※上の(25行目)Listのやり方のやつはClassなりなんなりの中に入ってるやつはできない
+                EditorGUILayout.LabelField("トークの設定");
+
+                //要素数分回す
+                for (int k=0;k!= target_.EventTypes[i].ordes.Talk.Length;k++)
+                    //要素数分Text枠を増やす
                     target_.EventTypes[i].ordes.Talk[k] = EditorGUILayout.TextField(k.ToString()+"番目のセリフ", target_.EventTypes[i].ordes.Talk[k]);
                 target_.EventTypes[i].ordes.ObjChara_Num = EditorGUILayout.IntField("対象キャラ番号", target_.EventTypes[i].ordes.ObjChara_Num);
 
             }
             else if (target_.EventTypes[i].eventType == EventType.event_Type.CameraMove)
             {
-                target_.OutCamera = EditorGUILayout.IntField("移り変わり先カメラ番号", target_.OutCamera);
+                target_.EventTypes[i].ordes.OutCamera = EditorGUILayout.IntField("移り変わり先カメラ番号", target_.EventTypes[i].ordes.OutCamera);
+            }
+            else if (target_.EventTypes[i].eventType == EventType.event_Type.DeleteChara)
+            {
+                target_.EventTypes[i].ordes.ObjChara_Num = EditorGUILayout.IntField("対象キャラ番号", target_.EventTypes[i].ordes.ObjChara_Num);
             }
             else
             {
@@ -88,7 +101,7 @@ public class MoveEvent_Editor : Editor
             }
 
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField((i+2).ToString()+"番目の設定---------------------------");
+            EditorGUILayout.LabelField((i+1).ToString()+"番目の設定---------------------------");
         }
 
 

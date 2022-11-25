@@ -26,10 +26,10 @@ public class Input_data : ClassData_
         switch (ID)
         {
             case 1:
-                Chara_data_input_cs.name_ = inputField.text;
+                Chara_data_input_cs.SetName_(inputField.text);
                 break;
             case 2:
-                Chara_data_input_cs.death_year_ = inputField.text;
+                Chara_data_input_cs.SetDeath_year_(inputField.text);
                 break;
             case 3:
                 //入力手段用意（対応パーツ選択）

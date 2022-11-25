@@ -41,7 +41,7 @@ public class Input_data_random : MonoBehaviour
         short M1, M2;
 
         anothertext.text = memory_datas[value];
-        Chara_data_input_cs.hide_hint_ = memory_datas[value];
+        Chara_data_input_cs.SetHide_hint_(memory_datas[value]);
 
         M1 = (short)UnityEngine.Random.Range(0, 100);
         M2 = (short)UnityEngine.Random.Range(0, 100);

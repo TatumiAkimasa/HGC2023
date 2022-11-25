@@ -13,12 +13,19 @@ public class UI_Chara_SaveLoad : MonoBehaviour
     public GameObject LoadData_ParentView_obj;
 
     [SerializeField]
+    private GameObject LoadData_Prefub_obj;
+
+    [SerializeField]
     private Save_Load_data SaveObj;
+
+    private Vector3 SavePos;
+
+    public Vector3 SetSavePos(Vector3 value) =>  SavePos = value; 
 
     private void Start()
     {
         SaveObj = GameObject.FindGameObjectWithTag("AllyChara").GetComponent<Save_Load_data>();
-        Set_SaveCell();
+        //Set_SaveCell();
     }
 
     public void Set_SaveCell()
@@ -34,7 +41,9 @@ public class UI_Chara_SaveLoad : MonoBehaviour
         {
             SaveData_CellSet cell = Instantiate(SaveData_Prefub_obj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), SaveData_ParentView_obj.transform).GetComponent<SaveData_CellSet>();
 
-            if(i==0)
+            cell.SetSaveCellPos(SavePos);
+
+            if (i==0)
             cell.Set_cell(Data_Scan.Instance.my_data[i].CharaField_data.Time[0], Data_Scan.Instance.my_data[i].CharaField_data.Time[1], Data_Scan.Instance.my_data[i].Name,i);
             else
                 cell.Set_cell("NULL", "NULL", "Noname", i);
@@ -54,11 +63,12 @@ public class UI_Chara_SaveLoad : MonoBehaviour
 
         for (int i = 0; i != 15; i++)
         {
-            SaveData_CellSet cell = Instantiate(SaveData_Prefub_obj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), LoadData_ParentView_obj.transform).GetComponent<SaveData_CellSet>();
+            SaveData_CellSet cell = Instantiate(LoadData_Prefub_obj, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), LoadData_ParentView_obj.transform).GetComponent<SaveData_CellSet>();
 
-            SaveObj.ClickButtonLoad("SaveData(Clone)" + i.ToString());
+            //trueÇ»ÇÁÉfÅ[É^Ç»Çµ
+            if (SaveObj.ClickButtonLoad("SaveData(Clone)" + i.ToString(),false))
+                break;
 
-           
             cell.Set_cell(SaveObj.bb.CharaField_data.Time[0], SaveObj.bb.CharaField_data.Time[1], SaveObj.bb.Name, i);
          
             cell.Set_SaveObj(SaveObj);

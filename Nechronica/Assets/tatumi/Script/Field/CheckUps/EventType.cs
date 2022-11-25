@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EventType
 {
+    //Ç±Ç¡ÇøÇ‡Ç¢ÇÈÇÊÅI
     [System.Serializable]
     public enum event_Type
     {
@@ -13,5 +14,6 @@ public class EventType
         JumpMove,
         TalkStart,
         CameraMove,
+        DeleteChara,
     }
 }

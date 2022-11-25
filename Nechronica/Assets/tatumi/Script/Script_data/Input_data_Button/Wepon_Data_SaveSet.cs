@@ -17,6 +17,9 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     //データセット（シリアライズ抜くと機能せず）
     [SerializeField]
     private CharaManeuver Set_Parts;
+
+    [SerializeField]
+    private Text text;
    
     //ゲッター,セッター
     public CharaManeuver GetParts() => Set_Parts;
@@ -32,9 +35,9 @@ public class Wepon_Data_SaveSet : MonoBehaviour
         Set_Parts.Timing = item.Timing;
         Set_Parts.Weight = item.Weight;
 
-        Set_Parts.Atk.AtkType = item.Atk.AtkType;
+        Set_Parts.Atk.atkType = item.Atk.atkType;
         Set_Parts.Atk.isAllAttack = item.Atk.isAllAttack;
-        Set_Parts.Atk.isCotting = item.Atk.isCotting;
+        Set_Parts.Atk.isCutting = item.Atk.isCutting;
         Set_Parts.Atk.isExplosion = item.Atk.isExplosion;
         Set_Parts.Atk.isSuccession = item.Atk.isSuccession;
         Set_Parts.Atk.Num_per_Action = item.Atk.Num_per_Action;
@@ -62,7 +65,7 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     public void Reset()
     {
         Set_Parts.Cost = Cost;
-        Set_Parts.EffectNum = EffectNum;
+        Set_Parts.EffectNum.Add(text.text,EffectNum);
         Set_Parts.isDmage = false;
         Set_Parts.isUse = false;
         Set_Parts.MaxRange = MaxRange;
@@ -71,9 +74,9 @@ public class Wepon_Data_SaveSet : MonoBehaviour
         Set_Parts.Timing = Timing;
         Set_Parts.Weight = Weight;
 
-        Set_Parts.Atk.AtkType = AtkType;
+        Set_Parts.Atk.atkType = AtkType;
         Set_Parts.Atk.isAllAttack = isAllAttack;
-        Set_Parts.Atk.isCotting = isCotting;
+        Set_Parts.Atk.isCutting = isCotting;
         Set_Parts.Atk.isExplosion = isExplosion;
         Set_Parts.Atk.isSuccession = isSuccession;
         Set_Parts.Atk.Num_per_Action = Num_per_Action;

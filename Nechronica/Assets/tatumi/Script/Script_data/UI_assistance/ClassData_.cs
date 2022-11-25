@@ -22,6 +22,14 @@ public class ClassData_ : MonoBehaviour
     protected const int BODY = 2;
     protected const int LEG = 3;
 
+    //エラー
+    protected const int NAME = 0;     
+    protected const int CLASS = 1;      
+    protected const int PARTS = 2;        
+    protected const int SKILL = 3;        
+    protected const int POTITIONSKILL = 4;
+    protected const int POTITION = 5;
+
     public string Classname_JtoE(string a)
     {
         if (a == "ステーシー")

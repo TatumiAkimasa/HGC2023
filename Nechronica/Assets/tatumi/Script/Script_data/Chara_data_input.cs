@@ -4,36 +4,67 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class Chara_data_input : CharaBase 
+public class Chara_data_input : CharaBase
 {
+    //固定化
     const int HEAD = 0;
     const int ARM = 1;
     const int BODY = 2;
     const int LEG = 3;
 
-    private int Treasure_num;
-    public string name_;                    //ドール名 
-    public string death_year_;              //享年
+    private enum ErrorStr
+    {
+        NameError = 0,
+        ClassError,
+        PartsError,
+        SkillError,
+        Potition_SkillError,
+        PotitionError,
+        MAX,
+    }
 
-    private Wepon_Maneger WE_Maneger;
-    private SkillManeger SK_Maneger;
+
+    //基礎データ受け取り口
     [SerializeField]
     private kihonnpatu ALL_Base_Parts;
 
-    public Doll_blueprint Doll_data;
-
-    public CharaManeuver Potition_Skill;
+    //宝管理用変数
+    private int Treasure_num;
     [SerializeField]
     private CharaManeuver backTreasure, Treasure;
 
-    [System.NonSerialized]
-    public string temper_name;
-    [System.NonSerialized]
-    public short position_;
-    [System.NonSerialized]
-    public string hide_hint_;              //暗示
+    //キャラデータ
+    private string temper_name;            //名前
+    private short position_;               //初期位置
+    private string hide_hint_;             //暗示
+    private string name_;                  //ドール名 
+    private string death_year_;            //享年
+    private CharaManeuver Potition_Skill;  //ポジスキル
+    //ゲッターのみ使用
+    public string SetTemper_name(string value) => temper_name = value;
+    public short SetPosition_(short value) => position_ = value;
+    public string SetHide_hint_(string value) => hide_hint_ = value;
+    public string SetName_(string value) => name_ = value;
+    public string SetDeath_year_(string value) => death_year_ = value;
+    public CharaManeuver SetPotionSkill_(CharaManeuver value) => Potition_Skill = value;
+    //↑それぞれのSCから直接もらう
+    //↓この子のみこっち側で情報受け取り
+    public short[] Memory_ = new short[6];   //記憶のかけら
 
-    public short[] Memory_=new short[6];                 //記憶のかけら
+
+    //Charaデータまとめ先
+    public Doll_blueprint Doll_data;
+
+    //データエラー
+    [SerializeField]
+    private Text[] ErrorText;
+    public void ResetErrorText()
+    {
+        for (int i = 0; i != ErrorText.Length; i++)
+            ErrorText[i].text = "";
+    }
+    private bool[] ErrorData;
+    public void SetErrorData(int Errornumber,bool value) { ErrorData[Errornumber] = value; }
 
     // Start is called before the first frame update
     void Awake()
@@ -43,12 +74,16 @@ public class Chara_data_input : CharaBase
         Treasure = ALL_Base_Parts.Treasure_parts;
 
         Maneger_Accessor.Instance.chara_Data_Input_cs = this;
+        ErrorData = new bool[(int)ErrorStr.MAX];
+        for (int i = 0; i != ErrorData.Length; i++)
+        {
+            ErrorData[i] = true;
+        }
     }
 
     private void Start()
     {
-        WE_Maneger = Maneger_Accessor.Instance.weponManeger_cs;
-        SK_Maneger = Maneger_Accessor.Instance.skillManeger_cs;
+       
     }
 
     // Update is called once per frame
@@ -63,8 +98,66 @@ public class Chara_data_input : CharaBase
         Potition_Skill = null;
     }
 
-    public void input()
+    public bool input()
     {
+        //マネージャーSet
+        SkillManeger SK_Maneger = Maneger_Accessor.Instance.skillManeger_cs;
+
+        SK_Maneger.ErrorCheck_CLASS();
+        SK_Maneger.ErrorCheck_Skill();
+        //エラー認識処理------------------------------------------------------------------------
+        int Textnum = 0;
+
+        for(int i=0;i!= ErrorData.Length; i++)
+        {
+            if (Textnum == ErrorText.Length - 1)
+            {
+                ErrorText[Textnum].text = "...etc";
+                break;
+            }
+            else if (ErrorData[i])
+            {
+                switch (i)
+                {
+                    case (int)ErrorStr.NameError:
+                        ErrorText[Textnum].text = "名前が設定されていません";
+                        Textnum++;
+                        break;
+                    case (int)ErrorStr.ClassError:
+                        ErrorText[Textnum].text = "職業が設定されていません";
+                        Textnum++;
+                        break;
+                    case (int)ErrorStr.SkillError:
+                        ErrorText[Textnum].text = "職業スキルが設定されていません";
+                        Textnum++;
+                        break;
+                    case (int)ErrorStr.PartsError:
+                        ErrorText[Textnum].text = "パーツが足りていません";
+                        Textnum++;
+                        break;
+                    case (int)ErrorStr.Potition_SkillError:
+                        ErrorText[Textnum].text = "ポジションスキルが設定されていません";
+                        Textnum++;
+                        break;
+                    case (int)ErrorStr.PotitionError:
+                        ErrorText[Textnum].text = "初期位置が設定されていません";
+                        Textnum++;
+                        break;
+                }
+            }
+        }
+
+        if (Textnum != 0)
+            //return false;
+            ;
+        else
+            ResetErrorText();
+         //----------------------------------------------------------------------------------------
+
+         //マネージャーSet
+         Wepon_Maneger WE_Maneger = Maneger_Accessor.Instance.weponManeger_cs;
+
+        //データセット
         //初期化
         Doll_data.CharaBase_data.HeadParts.Clear();
         Doll_data.CharaBase_data.ArmParts.Clear();
@@ -155,6 +248,8 @@ public class Chara_data_input : CharaBase
 
         Doll_data.CharaField_data.Event[0].str = "店の倉庫のカギを使い大倉庫へ向え";
         Doll_data.CharaField_data.Event[1].str = "記憶を孤高のドールへ渡せ";
+
+        return true;
     }
 
     //宝物入力関数

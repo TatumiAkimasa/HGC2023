@@ -28,7 +28,13 @@ public class Input_data_Potion : Input_data_Button
     {
         keyword=Push_button_pos();
 
-        Maneger_Accessor.Instance.chara_Data_Input_cs.temper_name = keyword;
+        if (keyword == "")
+            Maneger_Accessor.Instance.chara_Data_Input_cs.SetErrorData(NAME, true);
+        else
+        {
+            Maneger_Accessor.Instance.chara_Data_Input_cs.SetTemper_name(keyword);
+            Maneger_Accessor.Instance.chara_Data_Input_cs.SetErrorData(NAME, false);
+        }
 
         ChildObject = new GameObject[Pskils.transform.childCount];
 
