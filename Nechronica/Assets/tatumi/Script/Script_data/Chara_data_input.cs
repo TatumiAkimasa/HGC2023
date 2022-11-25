@@ -148,7 +148,8 @@ public class Chara_data_input : CharaBase
         }
 
         if (Textnum != 0)
-            return false;
+            //return false;
+            ;
         else
             ResetErrorText();
          //----------------------------------------------------------------------------------------

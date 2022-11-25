@@ -23,6 +23,7 @@ public class Chara_Field_SaveData
 {
     public string Scene_Name;
     public float[] Pos = new float[3];
+    public string PosStr;
     public EventFlag[] Event = new EventFlag[2];
     public string[] Time = new string[2];
 }

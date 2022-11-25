@@ -16,7 +16,9 @@ public class CheckUp_Save : CheckUp_Base
                 talk_now = true;
 
                 SaveRoad.SetActive(true);
+                UI.GetComponent<UI_Chara_SaveLoad>().SetSavePos(this.transform.position);
                 UI.GetComponent<UI_Chara_SaveLoad>().Set_SaveCell();
+               
 
                 if (Change_Scene != "")
                     Scene_change(Change_Scene);

@@ -28,7 +28,11 @@ public class MOve_chara : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         if (this.gameObject.tag.Contains("Player"))
+        {
             Data_Scan.Instance.Player_controller = this;
+            if(Data_Scan.Instance.save_Load_Data_cs.GetFirstPos.x!=0.0f&& Data_Scan.Instance.save_Load_Data_cs.GetFirstPos.z!=0.0f)
+            this.transform.position = Data_Scan.Instance.save_Load_Data_cs.GetFirstPos;
+        }
 
     }
 
