@@ -1,11 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DmgTimingProcess : GetClickedGameObject
 {
 
     private int giveDamage;
+
+    [SerializeField] private Button nextButton;
+
+    private int rollResult;             // ダイスロールの結果の値
+
+    private Doll_blu_Nor damagedChara;  // ダメージを受ける予定のキャラ
+    public Doll_blu_Nor DamagedChara
+    {
+        set { damagedChara = value; }
+    }
+    
+
     public int GiveDamage
     {
         get { return giveDamage; }
@@ -46,6 +59,38 @@ public class DmgTimingProcess : GetClickedGameObject
                     childCommand.gameObject.SetActive(true);
                 }
             }
+        }
+    }
+
+    public void OnClickNextButton()
+    {
+        // 最終的なダメージの結果をだし、攻撃されたキャラクターがダメージを受ける処理にしたい
+
+        if (rollResult >= 10)
+        {
+            for (int i = 0; i < giveDamage; i++)
+            {
+                if (!damagedChara.GetHeadParts()[i].isDmage)
+                {
+                    damagedChara.GetHeadParts()[i].isDmage = true;
+                }
+            }
+        }
+        else if (rollResult == 9)
+        {
+
+        }
+        else if (rollResult == 8)
+        {
+
+        }
+        else if (rollResult == 7)
+        {
+
+        }
+        else if (rollResult == 6)
+        {
+
         }
     }
 }
