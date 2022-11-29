@@ -65,7 +65,11 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     public void Reset()
     {
         Set_Parts.Cost = Cost;
-        Set_Parts.EffectNum.Add(text.text,EffectNum);
+        //Text管理だけスルー
+        if (this.GetComponent<Text>() != null)
+            Set_Parts.EffectNum.Add("",EffectNum);
+        else
+            Set_Parts.EffectNum.Add(text.text, EffectNum);
         Set_Parts.isDmage = false;
         Set_Parts.isUse = false;
         Set_Parts.MaxRange = MaxRange;

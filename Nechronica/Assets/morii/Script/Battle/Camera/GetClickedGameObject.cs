@@ -22,22 +22,14 @@ public class GetClickedGameObject : MonoBehaviour
 
     protected CinemachineVirtualCamera saveCharaCamera;   // Charaカメラの内容保存用変数
 
-    [SerializeField]
-    protected new Camera camera;                      // メインカメラ
-
-    [SerializeField]
-    protected CinemachineVirtualCamera cinemaCamera;  // クローン生成元のシネマカメラ
-
-    [SerializeField]
-    private CinemachineVirtualCamera MainCamera;    // 全体を映すシネマカメラ
-
-    [SerializeField]
-    protected BattleSystem battleSystem;              // バトルシステムとの変数受け渡し用
-
-    [SerializeField]
-    protected Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
-
+    [SerializeField] protected new Camera camera;                      // メインカメラ
+    [SerializeField] protected CinemachineVirtualCamera cinemaCamera;  // クローン生成元のシネマカメラ
+    [SerializeField] private CinemachineVirtualCamera MainCamera;    // 全体を映すシネマカメラ
+    [SerializeField] protected BattleSystem battleSystem;              // バトルシステムとの変数受け渡し用
+    [SerializeField] protected Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
     [SerializeField] protected Button exeButton;
+
+
     public Button ExeButton
     {
         get { return exeButton; }
@@ -72,9 +64,9 @@ public class GetClickedGameObject : MonoBehaviour
     protected CharaManeuver dollManeuver;         // 選択されたドールのマニューバ格納用変数
     public void SetManeuver(CharaManeuver set) { dollManeuver = set; }
 
-    protected int targetArea = 0;                   // 選択されたドールの所属エリア格納用変数
-    public void SetArea(int set) { targetArea = set; }
-    public int GetArea() => targetArea;
+    protected int movingArea = 0;                   // 選択されたドールの所属エリア格納用変数
+    public void SetArea(int set) { movingArea = set; }
+    public int GetArea() => movingArea;
 
     protected bool selectedChara = false;
 
@@ -262,23 +254,5 @@ public class GetClickedGameObject : MonoBehaviour
             this.transform.GetChild(CANVAS).gameObject.SetActive(false);
         }
        
-    }
-
-    public int JudgeTiming()
-    {
-        // 敵の介入（？）
-
-        // 味方選択
-
-        // 味方のジャッジ発動
-
-        // ダイス結果に値を加算
-
-        // もう一度同じ処理へ
-
-        // passを押したら終了
-
-
-        return 0;
     }
 }

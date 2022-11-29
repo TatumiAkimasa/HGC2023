@@ -60,6 +60,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private GameObject OriginCntPrefab;    //生成の元となるプレハブ
 
+    // 生成したクローンプレハブのリスト
     private List<GameObject> CloneCntPrefab = new List<GameObject>();  
 
     //クローンしたカウント表示のプレハブの親となる存在
@@ -136,6 +137,7 @@ public class BattleSystem : MonoBehaviour
         }
         if (battleExe)
         {
+            
             BattleStart();
         }
         else
@@ -228,64 +230,21 @@ public class BattleSystem : MonoBehaviour
         controllManager.StandbyEnemySelect = true;
     }
 
-    public void JudgeTiming(int rollResult)
+    void CharaCountSort()
     {
-        controllManager.GetArea();
-    }
-
-    public void DamageTiming(CharaManeuver eff, Doll_blu_Nor enemy/*, int diceRoll*/)
-    {
-        // controllManager.SkillSelected=false;
-        // controllManager.
-
-        // ---うんぬんかんぬんの処理終わり-----
-
-        // 実際にダメージを入れる
-        int diceRoll = 10;
-        int count = 0;
-        if(diceRoll==10)
+        for (int i = 0; i < CountMoveChara.Count; i++) 
         {
-            for(int i=0;i<eff.EffectNum[EffNum.Damage];i++)
+            for (int j = i + 1; j < CountMoveChara.Count; j++) 
             {
-                if(!enemy.GetHeadParts()[i].isDmage)
+                if(CountMoveChara[i].GetWeight()>CountMoveChara[j].GetWeight())
                 {
-                    enemy.GetHeadParts()[i].isDmage = true;
+                    Doll_blu_Nor buff = CountMoveChara[i];
+                    CountMoveChara[i] = CountMoveChara[j];
+                    CountMoveChara[j] = buff;
                 }
             }
         }
-        else if (diceRoll == 9)
-        {
-
-        }
-        else if (diceRoll == 8)
-        {
-
-        }
-        else if (diceRoll == 7)
-        {
-
-        }
-        else if (diceRoll == 6)
-        {
-
-        }
-        else if (diceRoll <= 5)
-        {
-
-        }
-        else if (diceRoll > 10)
-        {
-
-        }
-        else if (diceRoll == 1)
-        {
-
-        }
     }
-
-
-
-
 
 
 

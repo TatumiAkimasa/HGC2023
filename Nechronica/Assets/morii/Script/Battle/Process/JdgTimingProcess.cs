@@ -9,6 +9,14 @@ public class JdgTimingProcess : GetClickedGameObject
     private bool isDiceRoll;
     private bool isStandbyDiceRoll;
 
+    private GameObject atkTargetEnemy;                                // 攻撃する敵オブジェクトを格納場所
+
+    public GameObject AtkTargetEnemy
+    {
+        set { atkTargetEnemy = value; }
+        get { return atkTargetEnemy; }
+    }
+
     private int  giveDamage;
     public int GiveDamage
     {
@@ -151,8 +159,8 @@ public class JdgTimingProcess : GetClickedGameObject
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
         if (dollManeuver.MinRange != 10 &&
-            (Mathf.Abs(movingCharaArea) <= Mathf.Abs(dollManeuver.MaxRange + targetArea) &&
-             Mathf.Abs(movingCharaArea) >= Mathf.Abs(dollManeuver.MinRange + targetArea))&&
+            (Mathf.Abs(movingCharaArea) <= Mathf.Abs(dollManeuver.MaxRange + movingArea) &&
+             Mathf.Abs(movingCharaArea) >= Mathf.Abs(dollManeuver.MinRange + movingArea))&&
              (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
             rollResult += dollManeuver.EffectNum[EffNum.Judge];
@@ -185,6 +193,7 @@ public class JdgTimingProcess : GetClickedGameObject
             }
 
             ProcessAccessor.Instance.dmgTiming.GiveDamage = giveDamage + addDmg;
+            ProcessAccessor.Instance.dmgTiming.DamagedChara = atkTargetEnemy.GetComponent<Doll_blu_Nor>();
         }
         else if(rollResult==1)
         {

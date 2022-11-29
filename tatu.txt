@@ -4,7 +4,7 @@ MINIMAP→LINER移植で〇
 パーツ数不足物表示→〇
 不足データ構築設定時、LOAD不可→〇
 会話時、PL動き×→〇
-FADE演出→
+FADE演出→Animのみ〇SC管理は多分パッとできる
 敵のAI
 
 複雑EVENT機能↓
