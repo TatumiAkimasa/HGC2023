@@ -4247,7 +4247,6 @@ MonoBehaviour:
   CharaName: {fileID: 0}
   noumiso_H:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4257,15 +4256,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   medama_H:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4275,15 +4273,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   ago_H:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4293,15 +4290,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   kobusi_A:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4311,15 +4307,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   ude_A:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4329,15 +4324,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   kata_A:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4347,15 +4341,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   sebone_B:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4365,15 +4358,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   harawata_B:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4383,15 +4375,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   harawata2_B:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4401,15 +4392,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   hone_L:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4419,15 +4409,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   hone2_L:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4437,15 +4426,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   asi_L:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4455,9 +4443,9 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
@@ -6193,6 +6181,7 @@ GameObject:
   - component: {fileID: 963194232}
   - component: {fileID: 963194233}
   - component: {fileID: 963194234}
+  - component: {fileID: 963194235}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6449,9 +6438,28 @@ MonoBehaviour:
   childCommand: {fileID: 0}
   exeButton: {fileID: 0}
   rollResultText: {fileID: 712961769}
-  passButton: {fileID: 0}
+  nextButton: {fileID: 0}
   diceRollButton: {fileID: 1399939938}
   buttons: {fileID: 751194950}
+--- !u!114 &963194235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c1d95b047683a4390ad197635fd80a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 963194227}
+  cinemaCamera: {fileID: 2148217719629374532, guid: e74198fc8df556b47ae0292d5f6119df, type: 3}
+  MainCamera: {fileID: 241137337}
+  battleSystem: {fileID: 766473211}
+  childCommand: {fileID: 0}
+  exeButton: {fileID: 0}
+  nextButton: {fileID: 0}
 --- !u!1 &969815547
 GameObject:
   m_ObjectHideFlags: 0
@@ -8065,7 +8073,6 @@ MonoBehaviour:
   CharaName: {fileID: 0}
   noumiso_H:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8075,15 +8082,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   medama_H:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8093,15 +8099,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   ago_H:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8111,15 +8116,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   kobusi_A:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8129,15 +8133,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   ude_A:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8147,15 +8150,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   kata_A:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8165,15 +8167,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   sebone_B:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8183,15 +8184,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   harawata_B:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8201,15 +8201,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   harawata2_B:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8219,15 +8218,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   hone_L:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8237,15 +8235,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   hone2_L:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8255,15 +8252,14 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
   asi_L:
     Name: 
-    EffectNum: 0
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -8273,9 +8269,9 @@ MonoBehaviour:
     isUse: 0
     isDmage: 0
     Atk:
-      AtkType: 0
+      atkType: 0
       isExplosion: 0
-      isCotting: 0
+      isCutting: 0
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0

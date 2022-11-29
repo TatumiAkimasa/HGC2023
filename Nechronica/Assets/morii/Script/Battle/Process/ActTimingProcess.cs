@@ -6,7 +6,13 @@ using Cinemachine;
 
 public class ActTimingProcess : GetClickedGameObject
 {
-    private GameObject atkTargetEnemy;              // 攻撃する敵オブジェクトを格納場所
+    private GameObject atkTargetEnemy;                                // 攻撃する敵オブジェクトを格納場所
+
+    public GameObject AtkTargetEnemy
+    {
+        set { atkTargetEnemy = value; }
+        get { return atkTargetEnemy; }
+    }
 
     // Start is called before the first frame update
     void Awake()
@@ -32,6 +38,11 @@ public class ActTimingProcess : GetClickedGameObject
         
     }
 
+    /// <summary>
+    /// キャラ選択待機状態時に動く関数
+    /// クリックするまで特に何も処理を行わない
+    /// クリックしたらその場所にレイを飛ばし、オブジェクトを取得
+    /// </summary>
     protected override void CharaSelectStandby()
     {
         //左クリックで
@@ -42,8 +53,10 @@ public class ActTimingProcess : GetClickedGameObject
             //クリックしたゲームオブジェクトが味方キャラなら
             if (clickedObj.CompareTag("AllyChara"))
             {
+                // コマンドを表示し、選んだキャラに近づく
                 clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
                 ZoomUpObj(clickedObj);
+                // 下記変数をtrueにし、スキル選択待機状態へ移行
                 selectedChara = true;
                 // ここでコマンド表示
                 StartCoroutine(MoveStandby(clickedObj));
@@ -51,6 +64,11 @@ public class ActTimingProcess : GetClickedGameObject
         }
     }
 
+    /// <summary>
+    /// 敵選択待機状態時に動く関数
+    /// クリックするまで特に何も処理を行わない
+    /// クリックしたらその場所にレイを飛ばし、オブジェクトを取得
+    /// </summary>
     protected override void EnemySelectStandby()
     {
         //左クリックで
@@ -71,6 +89,11 @@ public class ActTimingProcess : GetClickedGameObject
         }
     }
 
+    /// <summary>
+    /// スキル選択待機状態
+    /// ここではカメラが元に戻る処理だけ行う
+    /// 元に戻るタイミングはスキルが選択されたタイミング、戻るボタンが押されたタイミング
+    /// </summary>
     protected override void SkillSelectStandby()
     {
         // 右クリックで
@@ -83,6 +106,16 @@ public class ActTimingProcess : GetClickedGameObject
         }
     }
 
+    /// <summary>
+    /// カメラが近づいた後の処理。敵と味方で処理が異なる
+    /// 味方-------------------
+    /// コマンドを表示するだけ
+    /// 敵---------------------
+    /// 敵オブジェクトを取得し、ステータスを表示
+    /// その後、攻撃ボタンを表示する
+    /// </summary>
+    /// <param name="move"></param>
+    /// <returns></returns>
     protected override IEnumerator MoveStandby(GameObject move)
     {
         for (int i = 0; i < 2; i++)
@@ -103,7 +136,7 @@ public class ActTimingProcess : GetClickedGameObject
                 }
                 else if (move.CompareTag("EnemyChara"))
                 {
-                    // ステータスを取得し、表示。後にZoomOutObjで使うのでメンバ変数に格納
+                    // ステータスを取得し、表示。後にOnClickAtkで使うのでメンバ変数に格納
                     childCommand = move.transform.GetChild(CANVAS);
                     childCommand.gameObject.SetActive(true);
 
@@ -111,8 +144,8 @@ public class ActTimingProcess : GetClickedGameObject
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
                     if (dollManeuver.MinRange != 10 &&
-                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + targetArea) &&
-                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + targetArea)))
+                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + movingArea) &&
+                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + movingArea)))
                     {
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
@@ -137,18 +170,19 @@ public class ActTimingProcess : GetClickedGameObject
         standbyEnemySelect = false;
         standbyCharaSelect = false;
 
-        // ここジャッジから入る
+        // ここからジャッジに入る
         ProcessAccessor.Instance.jdgTiming.enabled = true;
         ProcessAccessor.Instance.jdgTiming.RollResultText.gameObject.SetActive(true);
-        ProcessAccessor.Instance.jdgTiming.MovingCharaArea = targetArea;
+        ProcessAccessor.Instance.jdgTiming.MovingCharaArea = movingArea;
         ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
+        ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy;
         if(dollManeuver.EffectNum.ContainsKey(EffNum.Damage))
         {
             ProcessAccessor.Instance.jdgTiming.GiveDamage = dollManeuver.EffectNum[EffNum.Damage];
         }
 
         // ジャッジに入ってからバトルプロセスが動かないように非アクティブにする
-        this.enabled = false;
+        // this.enabled = false;
 
         // Debug用
         //battleSystem.DamageTiming(dollManeuver, enemy);
