@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/tatumi/Scene/tatumi_world.unity
     guid: e399367e1db9ac14ca33f3927da3bdfd
+  - enabled: 1
+    path: Assets/yaotani/forest.unity
+    guid: 7c9050b3fdb032a4cb3e9a55e4a29726
   m_configObjects: {}
