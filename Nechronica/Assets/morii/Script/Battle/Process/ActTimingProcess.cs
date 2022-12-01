@@ -7,7 +7,6 @@ using Cinemachine;
 public class ActTimingProcess : GetClickedGameObject
 {
     private GameObject atkTargetEnemy;                                // 攻撃する敵オブジェクトを格納場所
-
     public GameObject AtkTargetEnemy
     {
         set { atkTargetEnemy = value; }
@@ -144,8 +143,8 @@ public class ActTimingProcess : GetClickedGameObject
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
                     if (dollManeuver.MinRange != 10 &&
-                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + movingArea) &&
-                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + movingArea)))
+                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.potition) &&
+                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + actingChara.potition)))
                     {
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
@@ -172,13 +171,14 @@ public class ActTimingProcess : GetClickedGameObject
 
         // ここからジャッジに入る
         ProcessAccessor.Instance.jdgTiming.enabled = true;
-        ProcessAccessor.Instance.jdgTiming.RollResultText.gameObject.SetActive(true);
-        ProcessAccessor.Instance.jdgTiming.MovingCharaArea = movingArea;
+        ProcessAccessor.Instance.jdgTiming.DiceRollButton.gameObject.SetActive(true);
+        ProcessAccessor.Instance.jdgTiming.ActingChara = actingChara;
         ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
         ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy;
+
         if(dollManeuver.EffectNum.ContainsKey(EffNum.Damage))
         {
-            ProcessAccessor.Instance.jdgTiming.GiveDamage = dollManeuver.EffectNum[EffNum.Damage];
+            ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
         }
 
         // ジャッジに入ってからバトルプロセスが動かないように非アクティブにする

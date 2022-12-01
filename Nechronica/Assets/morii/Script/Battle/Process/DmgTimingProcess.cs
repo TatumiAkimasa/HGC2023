@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DmgTimingProcess : GetClickedGameObject
 {
-
+    private int addDamage;
     private int giveDamage;
 
     [SerializeField] private Button nextButton;
@@ -17,7 +17,15 @@ public class DmgTimingProcess : GetClickedGameObject
     {
         set { damagedChara = value; }
     }
-    
+
+
+    private CharaManeuver actManeuver;     // アクションタイミングで発動されたコマンドの格納場所
+
+    public CharaManeuver ActMneuver
+    {
+        get { return actManeuver; }
+        set { actManeuver = value; }
+    }
 
     public int GiveDamage
     {
@@ -62,9 +70,42 @@ public class DmgTimingProcess : GetClickedGameObject
         }
     }
 
+    private void ExeManeuver()
+    {
+        if(dollManeuver.EffectNum.ContainsKey(EffNum.Damage))
+        {
+
+        }
+        else if(dollManeuver.EffectNum.ContainsKey(EffNum.Guard))   
+        {
+
+        }
+        else if(dollManeuver.EffectNum.ContainsKey(EffNum.Extra))   // 固有の効果マジでどうしよう
+        {
+
+        }
+    }
+
+    private void DamageUPProcess()
+    {
+        // 与えるダメージが上がる系の処理
+    }
+
+    private void GuardProcess()
+    {
+        // 防御とかの処理
+    }
+
+    private void EXProcess()
+    {
+        // 背徳の悦びとか
+    }
+
     public void OnClickNextButton()
     {
         // 最終的なダメージの結果をだし、攻撃されたキャラクターがダメージを受ける処理にしたい
+
+
 
         if (rollResult >= 10)
         {

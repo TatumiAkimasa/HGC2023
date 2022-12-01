@@ -122,6 +122,7 @@ public class ManeuverEffectsAtk
 public class EffNum
 {
     public const string Damage   = "Damage";
+    public const string Guard    = "Guard";
     public const string Judge    = "Judge";
     public const string Move     = "Move";
     public const string Count    = "Count";

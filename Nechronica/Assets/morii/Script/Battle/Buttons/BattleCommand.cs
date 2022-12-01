@@ -63,8 +63,7 @@ public class BattleCommand : MonoBehaviour
     private void Start()
     {
         // バトルシステムを取得
-        //battleSystem = GameObject.FindGameObjectWithTag("BattleManager").gameObject.GetComponent<BattleSystem>();
-        battleSystem = ManagerAccessor.Instance.battleSystem;
+        thisChara = this.GetComponent<Doll_blu_Nor>();
 
         // ボタンを取得
         actionButton = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
@@ -198,12 +197,6 @@ public class BattleCommand : MonoBehaviour
             // 親を設定
             clone.transform.SetParent(parentObj[countParent].transform, false);
             AddFuncToButton(ref clone, maneuvers[i]);
-            ManerverAndArea buff;
-            // バッファーに必要な情報を格納
-            buff.maneuver = maneuvers[i];
-            buff.area = thisChara.potition;
-            // コマンドを使えるようにする
-            clone.GetComponent<Button>().onClick.AddListener(() => ManagerAccessor.Instance.battleSystem.OnClickCommand(buff));
 
             // コマンド5個区切りでコマンドの親オブジェクトを複製する。
             if ((i + 1) % 5 == 0)
@@ -248,13 +241,9 @@ public class BattleCommand : MonoBehaviour
 
     void AddFuncToButton(ref ButtonTexts command, CharaManeuver maneuver)
     {
-        ManerverAndArea buff;
-        // バッファーに必要な情報を格納
-        buff.maneuver = maneuver;
-        buff.area = thisChara.potition;
         if (maneuver.Timing == CharaBase.ACTION)
         {
-            command.GetComponent<Button>().onClick.AddListener(()=>OnClickActCommand(buff));
+            command.GetComponent<Button>().onClick.AddListener(()=>OnClickActCommand(maneuver));
         }
         if (maneuver.Timing == CharaBase.MOVE)
         {
@@ -266,31 +255,41 @@ public class BattleCommand : MonoBehaviour
         }
         if (maneuver.Timing == CharaBase.JUDGE)
         {
-            command.GetComponent<Button>().onClick.AddListener(() => OnClickJdgCommand(buff));
+            command.GetComponent<Button>().onClick.AddListener(() => OnClickJdgCommand(maneuver));
         }
         if (maneuver.Timing == CharaBase.DAMAGE)
         {
-
+            command.GetComponent<Button>().onClick.AddListener(() => OnClickDmgCommand(maneuver));
         }
     }
 
-    void OnClickActCommand(ManerverAndArea eff)
+    void OnClickActCommand(CharaManeuver maneuver)
     {
         // 必要な情報を送信
         ProcessAccessor.Instance.actTiming.SkillSelected = true;
-        ProcessAccessor.Instance.actTiming.SetManeuver(eff.maneuver);
-        ProcessAccessor.Instance.actTiming.SetArea(eff.area);
+        ProcessAccessor.Instance.actTiming.SetManeuver(maneuver);
+        // 後のジャッジ、ダメージタイミングで攻撃を行うキャラが必要になるのでこの時点で行動するキャラを格納しておく
+        ProcessAccessor.Instance.actTiming.ActingChara = thisChara;
         ProcessAccessor.Instance.actTiming.StandbyEnemySelect = true;
+        // アルゴリズムメモ：攻撃しないアクションタイミングの為if文分けする
     }
 
-    void OnClickJdgCommand(ManerverAndArea eff)
+    void OnClickJdgCommand(CharaManeuver maneuver)
     {
         ProcessAccessor.Instance.jdgTiming.SkillSelected = true;
-        ProcessAccessor.Instance.jdgTiming.SetManeuver(eff.maneuver);
-        ProcessAccessor.Instance.jdgTiming.SetArea(eff.area);
+        ProcessAccessor.Instance.jdgTiming.SetManeuver(maneuver);
+        ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.potition);
         ProcessAccessor.Instance.jdgTiming.JudgeButtons.SetActive(true);
 
     }
+
+    void OnClickDmgCommand(CharaManeuver maneuver)
+    {
+        ProcessAccessor.Instance.jdgTiming.SkillSelected = true;
+        ProcessAccessor.Instance.jdgTiming.SetManeuver(maneuver);
+        ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.potition);
+    }
+
 
 }
 

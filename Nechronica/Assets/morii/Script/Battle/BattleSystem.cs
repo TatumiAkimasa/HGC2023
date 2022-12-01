@@ -217,19 +217,6 @@ public class BattleSystem : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// 選択されたコマンドを発動させるための準備段階に移行させる関数
-    /// </summary>
-    /// <param name="eff">発動するマニューバの内容</param>
-    public void OnClickCommand(ManerverAndArea eff)
-    {
-        // 必要な情報を送信
-        controllManager.SkillSelected = true;
-        controllManager.SetManeuver(eff.maneuver);
-        controllManager.SetArea(eff.area);
-        controllManager.StandbyEnemySelect = true;
-    }
-
     void CharaCountSort()
     {
         for (int i = 0; i < CountMoveChara.Count; i++) 

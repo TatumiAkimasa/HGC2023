@@ -9,7 +9,7 @@ public class JdgTimingProcess : GetClickedGameObject
     private bool isDiceRoll;
     private bool isStandbyDiceRoll;
 
-    private GameObject atkTargetEnemy;                                // 攻撃する敵オブジェクトを格納場所
+    private GameObject atkTargetEnemy;      // 攻撃する敵オブジェクトを格納場所
 
     public GameObject AtkTargetEnemy
     {
@@ -17,11 +17,12 @@ public class JdgTimingProcess : GetClickedGameObject
         get { return atkTargetEnemy; }
     }
 
-    private int  giveDamage;
-    public int GiveDamage
+    private CharaManeuver actManeuver;     // アクションタイミングで発動されたコマンドの格納場所
+
+    public CharaManeuver ActMneuver
     {
-        get { return giveDamage; }
-        set { giveDamage = value; }
+        get { return actManeuver; }
+        set { actManeuver = value; }
     }
 
     public bool IsStandbyDiceRoll
@@ -34,6 +35,7 @@ public class JdgTimingProcess : GetClickedGameObject
 
     [SerializeField] private Button nextButton;     // ジャッジタイミングを終わらせるボタン
     [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
+    [SerializeField] private Image buttonImg;       // ボタンの画像
 
     [SerializeField] private GameObject buttons;    // 最後に発動するかどうかのボタン
     public GameObject JudgeButtons
@@ -53,12 +55,7 @@ public class JdgTimingProcess : GetClickedGameObject
 
     private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
     private int rollResult = 0;                     // ダイスロールの結果を格納する変数
-    private int movingCharaArea;                    // 攻撃途中の敵、味方オブジェクトのエリア
-    public int MovingCharaArea
-    {
-        get { return movingCharaArea; }
-        set { movingCharaArea = value; }
-    }
+
 
     void Awake()
     {
@@ -105,7 +102,6 @@ public class JdgTimingProcess : GetClickedGameObject
     //    }
     //}
 
-
     /// <summary>
     /// カメラが近づいてからコマンドを表示するメソッド
     /// </summary>
@@ -134,12 +130,10 @@ public class JdgTimingProcess : GetClickedGameObject
         }
     }
 
-    /// <summary>
-    /// ジャッジタイミングを終わらせる処理
-    /// </summary>
-    public void OnClickPass()
+    public void OnClickBack()
     {
-        // ダメージタイミングに移行
+        ZoomOutObj();
+        JudgeButtons.SetActive(false);
     }
 
     /// <summary>
@@ -150,6 +144,8 @@ public class JdgTimingProcess : GetClickedGameObject
         randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
         rollResult = randoms.NextInt(1, 11);
         rollResultText.text = rollResult.ToString();
+        buttonImg.raycastTarget = false;
+        diceRollButton.enabled = false;
         isDiceRoll = true;
     }
 
@@ -159,8 +155,8 @@ public class JdgTimingProcess : GetClickedGameObject
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
         if (dollManeuver.MinRange != 10 &&
-            (Mathf.Abs(movingCharaArea) <= Mathf.Abs(dollManeuver.MaxRange + movingArea) &&
-             Mathf.Abs(movingCharaArea) >= Mathf.Abs(dollManeuver.MinRange + movingArea))&&
+            (Mathf.Abs(actingChara.potition) <= Mathf.Abs(dollManeuver.MaxRange + movingArea) &&
+             Mathf.Abs(actingChara.potition) >= Mathf.Abs(dollManeuver.MinRange + movingArea))&&
              (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
             rollResult += dollManeuver.EffectNum[EffNum.Judge];
@@ -192,8 +188,12 @@ public class JdgTimingProcess : GetClickedGameObject
                 addDmg = rollResult - 10;
             }
 
-            ProcessAccessor.Instance.dmgTiming.GiveDamage = giveDamage + addDmg;
+            ProcessAccessor.Instance.dmgTiming.GiveDamage = actManeuver.EffectNum[EffNum.Damage] + addDmg;
             ProcessAccessor.Instance.dmgTiming.DamagedChara = atkTargetEnemy.GetComponent<Doll_blu_Nor>();
+            ProcessAccessor.Instance.dmgTiming.ActingChara = actingChara;
+            ProcessAccessor.Instance.dmgTiming.ActMneuver = actManeuver;
+
+            
         }
         else if(rollResult==1)
         {
@@ -204,6 +204,9 @@ public class JdgTimingProcess : GetClickedGameObject
             // 次のカウントに行く処理
         }
 
+        // 次のジャッジタイミングで使えるようにtrueにする
+        buttonImg.raycastTarget = true;
+        diceRollButton.enabled = true;
     }
 
 }

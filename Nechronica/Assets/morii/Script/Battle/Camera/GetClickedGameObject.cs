@@ -59,6 +59,12 @@ public class GetClickedGameObject : MonoBehaviour
         set { skillSelected = value; }
     }
 
+    protected Doll_blu_Nor actingChara;                                   // 攻撃などの行動をしようとしているキャラ
+    public Doll_blu_Nor ActingChara
+    {
+        set { actingChara = value; }
+        get { return actingChara; }
+    }
 
 
     protected CharaManeuver dollManeuver;         // 選択されたドールのマニューバ格納用変数
