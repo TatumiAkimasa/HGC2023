@@ -105,6 +105,8 @@ public class CharaManeuver
     public bool isUse;             //g—p‚µ‚½‚©‚Ç‚¤‚©
     public bool isDmage;           //”j‘¹‚µ‚½‚©‚Ç‚¤‚©
     public ManeuverEffectsAtk Atk; //UŒ‚Œn
+    [NamedArrayAttribute(new string[] { "UŒ‚", "–hŒä", "x‰‡E‰ñ•œ", "–WŠQ" ,"BOSS"})]
+    public List<short> EnemyAI; //“Gs“®—Dæ‡ˆÊ
 }
 
 [System.Serializable]

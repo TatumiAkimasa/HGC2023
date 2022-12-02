@@ -134,6 +134,61 @@ public class kihonnpatu : CharaBase
         Base_Leg_parts[1].Weight = 1;
         Base_Leg_parts[2].Weight = 1;
         Treasure_parts.Weight = 1;
+
+        Base_Head_parts[0].EnemyAI.Add(5);
+        Base_Head_parts[0].EnemyAI.Add(1);
+        Base_Head_parts[0].EnemyAI.Add(1);
+        Base_Head_parts[0].EnemyAI.Add(3);
+
+        Base_Arm_parts[0].EnemyAI.Add(5);
+        Base_Arm_parts[0].EnemyAI.Add(1);
+        Base_Arm_parts[0].EnemyAI.Add(1);
+        Base_Arm_parts[0].EnemyAI.Add(3);
+
+        Base_Arm_parts[1].EnemyAI.Add(3);
+        Base_Arm_parts[1].EnemyAI.Add(1);
+        Base_Arm_parts[1].EnemyAI.Add(1);
+        Base_Arm_parts[1].EnemyAI.Add(3);
+
+        Base_Arm_parts[2].EnemyAI.Add(2);
+        Base_Arm_parts[2].EnemyAI.Add(3);
+        Base_Arm_parts[2].EnemyAI.Add(5);
+        Base_Arm_parts[2].EnemyAI.Add(1);
+
+        Base_Body_parts[0].EnemyAI.Add(2);
+        Base_Body_parts[0].EnemyAI.Add(2);
+        Base_Body_parts[0].EnemyAI.Add(2);
+        Base_Body_parts[0].EnemyAI.Add(2);
+       
+        Base_Leg_parts[0].EnemyAI.Add(2);
+        Base_Leg_parts[0].EnemyAI.Add(1);
+        Base_Leg_parts[0].EnemyAI.Add(1);
+        Base_Leg_parts[0].EnemyAI.Add(2);
+
+        Base_Leg_parts[0].EnemyAI.Add(2);
+        Base_Leg_parts[0].EnemyAI.Add(1);
+        Base_Leg_parts[0].EnemyAI.Add(1);
+        Base_Leg_parts[0].EnemyAI.Add(2);
+
+        Base_Leg_parts[0].EnemyAI.Add(3);
+        Base_Leg_parts[0].EnemyAI.Add(1);
+        Base_Leg_parts[0].EnemyAI.Add(2);
+        Base_Leg_parts[0].EnemyAI.Add(5);
+
+        //NAME-------------------
+        Base_Head_parts[0].Name = "‚ ‚²";
+        Base_Head_parts[1].Name = "‚Ì‚¤‚Ý‚»";
+        Base_Head_parts[2].Name = "‚ß‚¾‚Ü";
+        Base_Arm_parts[0].Name = "‚±‚Ô‚µ";
+        Base_Arm_parts[1].Name = "‚©‚½";
+        Base_Arm_parts[2].Name = "‚¤‚Å";
+        Base_Body_parts[0].Name = "‚¹‚Ú‚Ë";
+        Base_Body_parts[1].Name = "‚Í‚ç‚í‚½";
+        Base_Body_parts[2].Name = "‚Í‚ç‚í‚½";
+        Base_Leg_parts[0].Name = "‚Ù‚Ë";
+        Base_Leg_parts[1].Name = "‚Ù‚Ë";
+        Base_Leg_parts[2].Name = "‚ ‚µ";
+        Treasure_parts.Name = "";
     }
 
 
