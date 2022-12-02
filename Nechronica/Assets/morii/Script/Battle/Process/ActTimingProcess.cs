@@ -13,6 +13,13 @@ public class ActTimingProcess : GetClickedGameObject
         get { return atkTargetEnemy; }
     }
 
+    [SerializeField] protected Button exeButton;
+    public Button ExeButton
+    {
+        get { return exeButton; }
+    }
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -143,8 +150,8 @@ public class ActTimingProcess : GetClickedGameObject
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
                     if (dollManeuver.MinRange != 10 &&
-                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.potition) &&
-                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + actingChara.potition)))
+                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().position) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.position) &&
+                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().position) >= Mathf.Abs(dollManeuver.MinRange + actingChara.position)))
                     {
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
@@ -171,10 +178,12 @@ public class ActTimingProcess : GetClickedGameObject
 
         // ここからジャッジに入る
         ProcessAccessor.Instance.jdgTiming.enabled = true;
-        ProcessAccessor.Instance.jdgTiming.DiceRollButton.gameObject.SetActive(true);
-        ProcessAccessor.Instance.jdgTiming.ActingChara = actingChara;
+        ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
+        ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
         ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
         ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy;
+        ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
+        ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
 
         if(dollManeuver.EffectNum.ContainsKey(EffNum.Damage))
         {

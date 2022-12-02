@@ -44,7 +44,7 @@ public class BattleSpone : MonoBehaviour
             // “GƒLƒƒƒ‰‚©–¡•ûƒLƒƒƒ‰‚©”»’f
             if(charaObject[i].gameObject.CompareTag("AllyChara"))
             {
-                switch(charaObject[i].potition)
+                switch(charaObject[i].position)
                 {
                     case RAKUEN:
                         charaObject[i].transform.position = allySponeField[RAKUEN].transform.GetChild(charaCount).position;
@@ -62,7 +62,7 @@ public class BattleSpone : MonoBehaviour
             }
             if(charaObject[i].gameObject.CompareTag("EnemyChara"))
             {
-                switch (charaObject[i].potition)
+                switch (charaObject[i].position)
                 {
                     case RAKUEN:
                         charaObject[i].transform.position = enemySponeField[RAKUEN].transform.GetChild(enemyCount).position;

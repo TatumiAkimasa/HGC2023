@@ -15,7 +15,7 @@ public class Doll_blu_Nor : PartsList
     
 
                                            //---------------------------------------------------↑完了↓未完
-    public short potition=3;                 //初期配置(煉獄)
+    public short position=3;                 //初期配置(煉獄)
     public string MainClass="Stacy", SubClass="Stacy";     //職業(skill)
     public short Armament=0, Variant=0, Alter=0; //武装,変異,改造(Skill)
     public List<CharaManeuver> Skill;              //スキル

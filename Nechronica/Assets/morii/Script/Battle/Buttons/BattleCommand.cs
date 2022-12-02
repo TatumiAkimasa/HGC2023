@@ -278,16 +278,17 @@ public class BattleCommand : MonoBehaviour
     {
         ProcessAccessor.Instance.jdgTiming.SkillSelected = true;
         ProcessAccessor.Instance.jdgTiming.SetManeuver(maneuver);
-        ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.potition);
-        ProcessAccessor.Instance.jdgTiming.JudgeButtons.SetActive(true);
+        ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.position);
+        ProcessAccessor.Instance.jdgTiming.GetConfirmatButton().SetActive(true);
 
     }
 
     void OnClickDmgCommand(CharaManeuver maneuver)
     {
-        ProcessAccessor.Instance.jdgTiming.SkillSelected = true;
-        ProcessAccessor.Instance.jdgTiming.SetManeuver(maneuver);
-        ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.potition);
+        ProcessAccessor.Instance.dmgTiming.SkillSelected = true;
+        ProcessAccessor.Instance.dmgTiming.SetManeuver(maneuver);
+        ProcessAccessor.Instance.dmgTiming.SetArea(thisChara.position);
+        ProcessAccessor.Instance.dmgTiming.GetConfirmatButton().SetActive(true);
     }
 
 
