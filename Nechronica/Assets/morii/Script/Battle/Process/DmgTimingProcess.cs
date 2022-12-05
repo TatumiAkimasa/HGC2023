@@ -169,7 +169,7 @@ public class DmgTimingProcess : GetClickedGameObject
 
         
 
-        giveDamage = giveDamage + addDamage - dmgGuard;
+        giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
         // rollResult‚ª10‚æ‚è‘½‚¢ê‡‚ÍUŒ‚‚·‚éƒLƒƒƒ‰‚ª‚Ç‚±‚Ì•”ˆÊ‚É“–‚Ä‚é‚©Œˆ‚ß‚ç‚ê‚é‚ª¡‚Í‰¼‚É“ª‚Æ‚·‚é
         if (rollResult > 10)

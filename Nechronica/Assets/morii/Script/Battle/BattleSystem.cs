@@ -131,13 +131,13 @@ public class BattleSystem : MonoBehaviour
             if (NowCount == charaObject[i].NowCount)
             {
                 IndicateMoveChara(charaObject[i]);
+                // 表示カウントで行動できるキャラをこのリストに格納
                 CountMoveChara.Add(charaObject[i]);
                 battleExe = true;
             }
         }
         if (battleExe)
         {
-            
             BattleStart();
         }
         else
@@ -191,12 +191,6 @@ public class BattleSystem : MonoBehaviour
             // else if(敵キャラなら…)
             // else(味方NPCなら…)
         }
-    }
-
-    // コマンド選択された時の処理
-    public void BattleProcess(CharaManeuver maneuver)
-    {
-        //技の処理的な
     }
 
     /// <summary>

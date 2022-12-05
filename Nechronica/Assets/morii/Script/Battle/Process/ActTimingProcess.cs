@@ -190,10 +190,6 @@ public class ActTimingProcess : GetClickedGameObject
             ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
         }
 
-        // ジャッジに入ってからバトルプロセスが動かないように非アクティブにする
-        // this.enabled = false;
-
-        // Debug用
-        //battleSystem.DamageTiming(dollManeuver, enemy);
+        // メモ：ここで行動値を減少させる
     }
 }
