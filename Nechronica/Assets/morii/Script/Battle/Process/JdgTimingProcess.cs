@@ -160,6 +160,13 @@ public class JdgTimingProcess : GetClickedGameObject
             skillSelected = false;
             ZoomOutObj();
             standbyCharaSelect = true;
+
+            // 行動値をコスト分減少させる
+            selectedAllyChara.NowCount -= dollManeuver.Cost;
+            if (selectedAllyChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount)
+            {
+                ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
+            }
         }
         else
         {

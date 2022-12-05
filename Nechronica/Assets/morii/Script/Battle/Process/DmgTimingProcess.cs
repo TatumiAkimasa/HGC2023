@@ -105,6 +105,11 @@ public class DmgTimingProcess : GetClickedGameObject
         {
 
         }
+
+        if(selectedAllyChara.NowCount==ManagerAccessor.Instance.battleSystem.NowCount)
+        {
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
+        }
     }
 
     private void DamageUPProcess()
@@ -116,6 +121,8 @@ public class DmgTimingProcess : GetClickedGameObject
             if(actingChara==selectedChara)
             {
                 addDamage += dollManeuver.EffectNum[EffNum.Damage];
+                // 要if文分け。特殊なコストどうか判断する
+                selectedAllyChara.NowCount -= dollManeuver.Cost;
             }
         }
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
@@ -126,6 +133,12 @@ public class DmgTimingProcess : GetClickedGameObject
                 (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
             addDamage += dollManeuver.EffectNum[EffNum.Damage];
+            // 要if文分け。特殊なコストどうか判断する
+            selectedAllyChara.NowCount -= dollManeuver.Cost;
+        }
+        else
+        {
+            // 射程が足りません見たいな表記する
         }
     }
 
@@ -138,6 +151,8 @@ public class DmgTimingProcess : GetClickedGameObject
             if (damageChara == selectedChara)
             {
                 dmgGuard += dollManeuver.EffectNum[EffNum.Guard];
+                // 要if文分け。特殊なコストどうか判断する
+                selectedAllyChara.NowCount -= dollManeuver.Cost;
             }
         }
         else if ((Mathf.Abs(damageChara.position) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.position) &&
@@ -148,7 +163,12 @@ public class DmgTimingProcess : GetClickedGameObject
             {
                 dmgGuard += dollManeuver.EffectNum[EffNum.Guard];
             }
-            
+            // 要if文分け。特殊なコストどうか判断する
+            selectedAllyChara.NowCount -= dollManeuver.Cost;
+        }
+        else
+        {
+            // 射程が足りません見たいな表記する
         }
     }
 
@@ -158,6 +178,8 @@ public class DmgTimingProcess : GetClickedGameObject
         if (dollManeuver.EffectNum.ContainsKey(EffNum.Protect))
         {
             // ここかばうの処理入るかも
+            // 要if文分け。特殊なコストどうか判断する
+            selectedAllyChara.NowCount -= dollManeuver.Cost;
         }
         
     }
@@ -237,5 +259,8 @@ public class DmgTimingProcess : GetClickedGameObject
                 }
             }
         }
+
+        // 行動したキャラを表示から消す
+        ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
     }
 }

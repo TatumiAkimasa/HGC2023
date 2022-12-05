@@ -51,7 +51,13 @@ public class BattleSystem : MonoBehaviour
     // -----------------------------------------------------------------
     // カウント関連-----------------------------------------------------
 
-    private int NowCount = 20;
+    private int nowCount = 20;
+
+    public int NowCount
+    {
+        get { return nowCount; }
+        set { nowCount = value; }
+    }
 
     [SerializeField]
     private Text CountText;
@@ -61,11 +67,13 @@ public class BattleSystem : MonoBehaviour
     private GameObject OriginCntPrefab;    //生成の元となるプレハブ
 
     // 生成したクローンプレハブのリスト
-    private List<GameObject> CloneCntPrefab = new List<GameObject>();  
+    private List<GameObject> CloneCntPrefab = new List<GameObject>();
 
     //クローンしたカウント表示のプレハブの親となる存在
     [SerializeField]
     private GameObject parent;
+
+
 
     //-----------------------------------------------------------------
 
@@ -79,7 +87,7 @@ public class BattleSystem : MonoBehaviour
         Debug.Log(ManagerAccessor.Instance.battleSystem);
 
         // カウントを表示
-        CountText.text = NowCount.ToString();
+        CountText.text = nowCount.ToString();
         // AllyCharaというタグがついたキャラをすべて取得
         charaObjectsBuffer = GameObject.FindGameObjectsWithTag("AllyChara");
         for (int i = 0; i < charaObjectsBuffer.Length; i++)
@@ -107,7 +115,7 @@ public class BattleSystem : MonoBehaviour
     /// </summary>
     public void TurnStart()
     {
-        // 最大行動値ぶん、行動値を回復。
+        // 最大行動値分、行動値を回復。
         for (int i = 0; i < charaObject.Count; i++)
         {
             charaObject[i].IncreaseNowCount();
@@ -123,12 +131,12 @@ public class BattleSystem : MonoBehaviour
     public void CountStart()
     {
         // 現在のカウントを表示
-        CountText.text = NowCount.ToString();
+        CountText.text = nowCount.ToString();
 
         // 現在のカウントと同じ行動値のキャラを取得し、スクロールビューに表示
         for (int i = 0; i < charaObject.Count; i++)
         {
-            if (NowCount == charaObject[i].NowCount)
+            if (nowCount == charaObject[i].NowCount)
             {
                 IndicateMoveChara(charaObject[i]);
                 // 表示カウントで行動できるキャラをこのリストに格納
@@ -151,10 +159,10 @@ public class BattleSystem : MonoBehaviour
     /// </summary>
     public void CountLast()
     {
-        NowCount--;
-        if(NowCount==0)
+        nowCount--;
+        if(nowCount==0)
         {
-            NowCount += 20;
+            nowCount += 20;
             for (int i = 0; i < CloneCntPrefab.Count; i++)
             {
                 Destroy(CloneCntPrefab[i]);
@@ -203,7 +211,7 @@ public class BattleSystem : MonoBehaviour
 
         Instance = Instantiate(OriginCntPrefab);
         IndiCountChara clone = Instance.GetComponent<IndiCountChara>();
-        clone.SetName(indichara.GetName());
+        clone.SetName(indichara.Name);
         clone.transform.parent = parent.transform;
 
         //リストに保存
@@ -223,6 +231,24 @@ public class BattleSystem : MonoBehaviour
                     CountMoveChara[i] = CountMoveChara[j];
                     CountMoveChara[j] = buff;
                 }
+            }
+        }
+    }
+
+    // 表示されている一番上のキャラを削除
+    public void DeleteMoveChara()
+    {
+        Destroy(CloneCntPrefab[0]);
+    }
+
+    // 表示されている一番上のキャラを削除
+    public void DeleteMoveChara(string name)
+    {
+        for (int i=0;i<CloneCntPrefab.Count;i++)
+        {
+            if(name==CloneCntPrefab[i].GetComponent<IndiCountChara>().GetName())
+            {
+                Destroy(CloneCntPrefab[i]);
             }
         }
     }
