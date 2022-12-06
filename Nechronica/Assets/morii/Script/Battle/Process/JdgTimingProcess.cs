@@ -6,6 +6,13 @@ using Cinemachine;
 
 public class JdgTimingProcess : GetClickedGameObject
 {
+    //-------------------------------
+    // ほしい情報メモ
+    // 攻撃するenemy
+    // ターゲットになってる味方キャラ
+    // ダイスロールの値
+    //-------------------------------
+
     private bool isDiceRoll;
     private bool isStandbyDiceRoll;
 
@@ -128,6 +135,7 @@ public class JdgTimingProcess : GetClickedGameObject
     {
         ZoomOutObj();
         confirmatButton.SetActive(false);
+        standbyCharaSelect = true;
     }
 
     /// <summary>
@@ -222,6 +230,8 @@ public class JdgTimingProcess : GetClickedGameObject
             ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
             ManagerAccessor.Instance.battleSystem.BattleExe = true;
             nextButton.gameObject.SetActive(false);
+            diceRollButton.gameObject.SetActive(false);
+            judgeButtons.SetActive(false);
         }
 
         // 次のジャッジタイミングで使えるようにtrueにする

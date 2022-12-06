@@ -237,7 +237,7 @@ public class GetClickedGameObject : MonoBehaviour
         // 全体を表示させるカメラを優先にする。
         CharaCamera.Priority = 0;
         // コマンドを消す
-        childCommand.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        //childCommand.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         childCommand.gameObject.SetActive(false);
         // 複製したプレハブカメラを消す。
         StartCoroutine(DstroyCamera());

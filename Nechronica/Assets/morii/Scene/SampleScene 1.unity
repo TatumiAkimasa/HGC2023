@@ -5142,6 +5142,23 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+  hunnu_H:
+    Name: 
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
   kobusi_A:
     Name: 
     Cost: 0
@@ -5327,7 +5344,7 @@ MonoBehaviour:
   DamageManeuvers: []
   actionCommands: {fileID: 0}
   rapidCommands: {fileID: 0}
-  judgeCommands: {fileID: 0}
+  judgCommands: {fileID: 0}
   damageCommands: {fileID: 0}
   actionButton: {fileID: 0}
   rapidButton: {fileID: 0}
@@ -9744,6 +9761,23 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+  hunnu_H:
+    Name: 
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
   kobusi_A:
     Name: 
     Cost: 0
@@ -11559,7 +11593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1399939937
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13361,7 +13395,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 766473210}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -13372,7 +13406,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &1635227933
 MonoBehaviour:
   m_ObjectHideFlags: 0

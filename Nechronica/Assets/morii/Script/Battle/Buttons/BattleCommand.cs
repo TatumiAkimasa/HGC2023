@@ -22,8 +22,13 @@ public class BattleCommand : MonoBehaviour
 
     [SerializeField] private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
     [SerializeField] private GameObject rapidCommands;               // ラピッドタイミングのコマンドオブジェクト
-    [SerializeField] private GameObject judgeCommands;               // ジャッジタイミングのコマンドオブジェクト
+    [SerializeField] private GameObject judgCommands;               // ジャッジタイミングのコマンドオブジェクト
     [SerializeField] private GameObject damageCommands;              // ダメージタイミングのコマンドオブジェクト
+
+    public GameObject GetActCommands() => actionCommands;
+    public GameObject GetRpdCommands() => rapidCommands;
+    public GameObject GetJdgCommands() => judgCommands;
+    public GameObject GetDmgCommands() => damageCommands;
 
     [SerializeField] private Button actionButton;                    // アクションのボタン
     [SerializeField] private Button rapidButton;                     // ラピッドのボタン
@@ -58,8 +63,6 @@ public class BattleCommand : MonoBehaviour
     private bool nowSelect;                         // 選択中かどうか
     public void SetNowSelect(bool select) => nowSelect = select;
 
-    public GetClickedGameObject getClicked;
-
     private void Start()
     {
         // バトルシステムを取得
@@ -78,7 +81,7 @@ public class BattleCommand : MonoBehaviour
         // コマンドを取得
         actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
         rapidCommands = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
-        judgeCommands = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
+        judgCommands = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
         damageCommands = this.transform.Find("Canvas/Damage/DamageCommands").gameObject;
 
         // バックイメージを取得

@@ -6,6 +6,8 @@ using Cinemachine;
 
 public class ActTimingProcess : GetClickedGameObject
 {
+    // メモ：どないかこないかしてBattleCommandを参照したいなぁ
+
     private GameObject atkTargetEnemy;                                // 攻撃する敵オブジェクトを格納場所
     public GameObject AtkTargetEnemy
     {
@@ -106,6 +108,7 @@ public class ActTimingProcess : GetClickedGameObject
         if ((Input.GetMouseButtonDown(1) || skillSelected) && CharaCamera != null)
         {
             // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
+            if()
             ZoomOutObj();
             // キャラ選択待機状態にする
             selectedChara = false;

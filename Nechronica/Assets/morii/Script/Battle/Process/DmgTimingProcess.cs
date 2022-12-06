@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class DmgTimingProcess : GetClickedGameObject
 {
+    //-------------------------------
+    // ほしい情報メモ
+    // 攻撃するenemy
+    // ターゲットになってる味方キャラ
+    //-------------------------------
+
     private int addDamage = 0;          // ダメージタイミングのマニューバ二位夜追加ダメージ
     private int giveDamage = 0;         // 与えるダメージ
     private int dmgGuard = 0;           // 与えるダメージをこの変数の値分減らす
@@ -201,6 +207,12 @@ public class DmgTimingProcess : GetClickedGameObject
             int addDmg = rollResult - 10;
             giveDamage = giveDamage + addDmg;
 
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetHeadParts().Count)
+            {
+                giveDamage = damageChara.GetHeadParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetHeadParts()[i].isDmage)
@@ -211,6 +223,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 10)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage>damageChara.GetHeadParts().Count)
+            {
+                giveDamage = damageChara.GetHeadParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetHeadParts()[i].isDmage)
@@ -221,6 +239,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 9)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetArmParts().Count)
+            {                               
+                giveDamage = damageChara.GetArmParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetArmParts()[i].isDmage)
@@ -231,6 +255,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 8)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetBodyParts().Count)
+            {                               
+                giveDamage = damageChara.GetBodyParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetBodyParts()[i].isDmage)
@@ -241,6 +271,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 7)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetLegParts().Count)
+            {                               
+                giveDamage = damageChara.GetLegParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetLegParts()[i].isDmage)
@@ -251,6 +287,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 6)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetHeadParts().Count)
+            {
+                giveDamage = damageChara.GetHeadParts().Count;
+            }
+
             // 相手が選ぶ。今は仮に頭にダメージが入るようにする
             for (int i = 0; i < giveDamage; i++)
             {
