@@ -105,53 +105,53 @@ public class Chara_data_input : CharaBase
 
         SK_Maneger.ErrorCheck_CLASS();
         SK_Maneger.ErrorCheck_Skill();
-        //エラー認識処理------------------------------------------------------------------------
-        int Textnum = 0;
+        ////エラー認識処理------------------------------------------------------------------------
+        //int Textnum = 0;
 
-        for(int i=0;i!= ErrorData.Length; i++)
-        {
-            if (Textnum == ErrorText.Length - 1)
-            {
-                ErrorText[Textnum].text = "...etc";
-                break;
-            }
-            else if (ErrorData[i])
-            {
-                switch (i)
-                {
-                    case (int)ErrorStr.NameError:
-                        ErrorText[Textnum].text = "名前が設定されていません";
-                        Textnum++;
-                        break;
-                    case (int)ErrorStr.ClassError:
-                        ErrorText[Textnum].text = "職業が設定されていません";
-                        Textnum++;
-                        break;
-                    case (int)ErrorStr.SkillError:
-                        ErrorText[Textnum].text = "職業スキルが設定されていません";
-                        Textnum++;
-                        break;
-                    case (int)ErrorStr.PartsError:
-                        ErrorText[Textnum].text = "パーツが足りていません";
-                        Textnum++;
-                        break;
-                    case (int)ErrorStr.Potition_SkillError:
-                        ErrorText[Textnum].text = "ポジションスキルが設定されていません";
-                        Textnum++;
-                        break;
-                    case (int)ErrorStr.PotitionError:
-                        ErrorText[Textnum].text = "初期位置が設定されていません";
-                        Textnum++;
-                        break;
-                }
-            }
-        }
+        //for(int i=0;i!= ErrorData.Length; i++)
+        //{
+        //    if (Textnum == ErrorText.Length - 1)
+        //    {
+        //        ErrorText[Textnum].text = "...etc";
+        //        break;
+        //    }
+        //    else if (ErrorData[i])
+        //    {
+        //        switch (i)
+        //        {
+        //            case (int)ErrorStr.NameError:
+        //                ErrorText[Textnum].text = "名前が設定されていません";
+        //                Textnum++;
+        //                break;
+        //            case (int)ErrorStr.ClassError:
+        //                ErrorText[Textnum].text = "職業が設定されていません";
+        //                Textnum++;
+        //                break;
+        //            case (int)ErrorStr.SkillError:
+        //                ErrorText[Textnum].text = "職業スキルが設定されていません";
+        //                Textnum++;
+        //                break;
+        //            case (int)ErrorStr.PartsError:
+        //                ErrorText[Textnum].text = "パーツが足りていません";
+        //                Textnum++;
+        //                break;
+        //            case (int)ErrorStr.Potition_SkillError:
+        //                ErrorText[Textnum].text = "ポジションスキルが設定されていません";
+        //                Textnum++;
+        //                break;
+        //            case (int)ErrorStr.PotitionError:
+        //                ErrorText[Textnum].text = "初期位置が設定されていません";
+        //                Textnum++;
+        //                break;
+        //        }
+        //    }
+        //}
 
-        if (Textnum != 0)
-            return false;
-        else
-            ResetErrorText();
-         //----------------------------------------------------------------------------------------
+        //if (Textnum != 0)
+        //    return false;
+        //else
+        //    ResetErrorText();
+        // //----------------------------------------------------------------------------------------
 
          //マネージャーSet
          Wepon_Maneger WE_Maneger = Maneger_Accessor.Instance.weponManeger_cs;
@@ -245,7 +245,7 @@ public class Chara_data_input : CharaBase
         //positionスキルのみこちらで設定
         Doll_data.CharaBase_data.Skill.Add(Potition_Skill);
 
-        Doll_data.CharaField_data.Event[0].str = "店の倉庫のカギを使い大倉庫へ向え";
+        Doll_data.CharaField_data.Event[0].str = "森の中にある斧を見つけ木を切れ";
         Doll_data.CharaField_data.Event[1].str = "記憶を孤高のドールへ渡せ";
 
         return true;

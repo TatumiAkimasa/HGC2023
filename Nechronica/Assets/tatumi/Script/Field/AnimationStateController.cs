@@ -29,7 +29,7 @@ public class AnimationStateController : MonoBehaviour
     {
         if (SetEvent)
         {
-            setStateToAnimator(null);
+            this.animator.speed = 0.0f;
         }
 
         if (Input.anyKeyDown)

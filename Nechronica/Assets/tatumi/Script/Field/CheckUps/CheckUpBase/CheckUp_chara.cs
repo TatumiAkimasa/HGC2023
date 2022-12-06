@@ -18,7 +18,7 @@ public class CheckUp_chara : CheckUp_Base
     [SerializeField, Header("¸”s‚Ì‘äŒ")]
     protected string[] Event_OUT;
 
-    [SerializeField, Header("‰æ–Êã‚ÌUI‚ğg‚¤‚©")]
+    [SerializeField, Header("ˆê“x˜b‚µ‚©‚¯‚é‚ÆParentObj‚ğÁ‚·")]
     protected bool OverStrObj;
 
     [SerializeField, Header("EventŠ®—¹Œãíœ")]
