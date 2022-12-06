@@ -27,14 +27,7 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera MainCamera;    // 全体を映すシネマカメラ
     [SerializeField] protected BattleSystem battleSystem;              // バトルシステムとの変数受け渡し用
     [SerializeField] protected Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
-    [SerializeField] protected Button exeButton;
-
-
-    public Button ExeButton
-    {
-        get { return exeButton; }
-    }
-
+    
     // ほかスクリプトからも値を変更する変数
     protected bool standbyCharaSelect = false;
 
@@ -58,7 +51,14 @@ public class GetClickedGameObject : MonoBehaviour
         get { return skillSelected; }
         set { skillSelected = value; }
     }
-
+    [SerializeField]
+    protected Doll_blu_Nor actingChara;                                   // 攻撃などの行動をしようとしているキャラ
+    public void SetActChara(Doll_blu_Nor doll) => actingChara = doll;
+    public Doll_blu_Nor ActingChara
+    {
+        set { actingChara = value; }
+        get { return actingChara; }
+    }
 
 
     protected CharaManeuver dollManeuver;         // 選択されたドールのマニューバ格納用変数
@@ -214,7 +214,7 @@ public class GetClickedGameObject : MonoBehaviour
     /// キャラが選択された後、カメラが選択されたキャラに近づくメソッド
     /// </summary>
     /// <param name="clicked"></param>
-    protected void ZoomUpObj(GameObject clicked)
+    protected virtual void ZoomUpObj(GameObject clicked)
     {
         // クリックしたオブジェクトの座標情報を取得
         Vector3 clickedObjPos = clicked.transform.position;
@@ -229,7 +229,10 @@ public class GetClickedGameObject : MonoBehaviour
         CharaCamera.Priority = CharaPriority;
     }
 
-    protected void ZoomOutObj()
+    /// <summary>
+    /// 戻るを押したらカメラが離れていく処理
+    /// </summary>
+    protected virtual void ZoomOutObj()
     {
         // 全体を表示させるカメラを優先にする。
         CharaCamera.Priority = 0;
