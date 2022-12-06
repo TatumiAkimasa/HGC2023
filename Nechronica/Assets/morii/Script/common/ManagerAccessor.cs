@@ -26,5 +26,5 @@ public class ManagerAccessor
     // システム根幹スクリプト参照
     public BattleSystem battleSystem;
     public GetClickedGameObject getClickedObj;
-
+    public BattleSpone battleSpone;
 }

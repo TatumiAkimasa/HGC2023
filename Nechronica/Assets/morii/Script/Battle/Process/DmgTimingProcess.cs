@@ -88,7 +88,7 @@ public class DmgTimingProcess : GetClickedGameObject
     protected override void ZoomUpObj(GameObject clicked)
     {
         base.ZoomUpObj(clicked);
-        nextButton.gameObject.SetActive(true);
+        nextButton.gameObject.SetActive(false);
     }
 
     private void ExeManeuver()
@@ -128,8 +128,8 @@ public class DmgTimingProcess : GetClickedGameObject
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
-        else if ((Mathf.Abs(actingChara.position) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.position)  &&
-                  Mathf.Abs(actingChara.position) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.position)) &&
+        else if ((Mathf.Abs(actingChara.area) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.area)  &&
+                  Mathf.Abs(actingChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area)) &&
                 (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
             addDamage += dollManeuver.EffectNum[EffNum.Damage];
@@ -155,8 +155,8 @@ public class DmgTimingProcess : GetClickedGameObject
                 selectedAllyChara.NowCount -= dollManeuver.Cost;
             }
         }
-        else if ((Mathf.Abs(damageChara.position) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.position) &&
-                  Mathf.Abs(damageChara.position) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.position)) &&
+        else if ((Mathf.Abs(damageChara.area) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.area) &&
+                  Mathf.Abs(damageChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area)) &&
                 (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
             if(dollManeuver.EffectNum.ContainsKey(EffNum.Guard))
@@ -260,7 +260,11 @@ public class DmgTimingProcess : GetClickedGameObject
             }
         }
 
+        // ここ、アニメーション終わってからの処理にしたいなぁ
         // 行動したキャラを表示から消す
         ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+        ManagerAccessor.Instance.battleSystem.BattleExe = true;
+        nextButton.gameObject.SetActive(false);
+
     }
 }

@@ -35,6 +35,13 @@ public class BattleSystem : MonoBehaviour
     // カウント処理パートに移行するかの成否
     private bool battleExe = false;
 
+    public bool BattleExe
+    {
+        get { return battleExe; }
+        set { battleExe = value; }
+    }
+
+
     // キャラ変数のやり取りのマネージャー
     [SerializeField]
     private GetClickedGameObject controllManager;
@@ -110,6 +117,18 @@ public class BattleSystem : MonoBehaviour
         TurnStart();
     }
 
+    private void FixedUpdate()
+    {
+        if(battleExe)
+        {
+            BattleStart();
+        }
+        else if (CloneCntPrefab.Count <= 0)
+        {
+            CountLast();
+        }
+    }
+
     /// <summary>
     /// ターン開始時に入るメソッド
     /// </summary>
@@ -144,14 +163,7 @@ public class BattleSystem : MonoBehaviour
                 battleExe = true;
             }
         }
-        if (battleExe)
-        {
-            BattleStart();
-        }
-        else
-        {
-            CountLast();
-        }
+        
     }
 
     /// <summary>
@@ -160,27 +172,14 @@ public class BattleSystem : MonoBehaviour
     public void CountLast()
     {
         nowCount--;
-        if(nowCount==0)
+        CountMoveChara.Clear();
+        if (nowCount<=0)
         {
             nowCount += 20;
-            for (int i = 0; i < CloneCntPrefab.Count; i++)
-            {
-                Destroy(CloneCntPrefab[i]);
-            }
-            CloneCntPrefab.Clear();
             TurnStart();
         }
 
-        // カウント終了時に左の行動表のリストをクリア
-        else if(CloneCntPrefab.Count>=0)
-        {
-            for(int i=0;i<CloneCntPrefab.Count;i++)
-            {
-                Destroy(CloneCntPrefab[i]);
-            }
-            CloneCntPrefab.Clear();
-            CountStart();
-        }
+        CountStart();
     }
 
     /// <summary>
@@ -190,11 +189,12 @@ public class BattleSystem : MonoBehaviour
     {
         //for文でweightが小さい順に処理していく
         //プレイアブルキャラになったらクリックガードを外す
-        for(int i=0;i<CountMoveChara.Count;i++)
+        for (int i = 0; i < CountMoveChara.Count; i++)
         {
             if (CountMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
                 ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
+                battleExe = false;
             }
             // else if(敵キャラなら…)
             // else(味方NPCなら…)
@@ -239,9 +239,11 @@ public class BattleSystem : MonoBehaviour
     public void DeleteMoveChara()
     {
         Destroy(CloneCntPrefab[0]);
+        CloneCntPrefab.RemoveAt(0);
     }
 
     // 表示されている一番上のキャラを削除
+    // 今のカウントで動くキャラがジャッジ、ダメージタイミングのキャラがコストを支払った時用
     public void DeleteMoveChara(string name)
     {
         for (int i=0;i<CloneCntPrefab.Count;i++)

@@ -23,5 +23,5 @@ public class ProcessAccessor
     public ActTimingProcess actTiming;
     public JdgTimingProcess jdgTiming;
     public DmgTimingProcess dmgTiming;
-
+    public MoveActProcess actTimingMove;
 }
