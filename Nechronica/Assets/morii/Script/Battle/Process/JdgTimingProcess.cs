@@ -33,6 +33,7 @@ public class JdgTimingProcess : GetClickedGameObject
     }
 
     [SerializeField] private Text rollResultText;
+    [SerializeField] private Text plusNumText;      // パッシブなどによるダイスロールに行われる加算
     [SerializeField] private Button nextButton;     // ジャッジタイミングを終わらせるボタン
     [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
     [SerializeField] private Image buttonImg;       // ボタンの画像
@@ -42,6 +43,7 @@ public class JdgTimingProcess : GetClickedGameObject
     public Button GetDiceRollButton() => diceRollButton;
     public GameObject GetConfirmatButton() => confirmatButton;
     public GameObject GetJudgeButton() => judgeButtons;
+    public GameObject GetPlusNum() => plusNumText.gameObject;
 
 
     private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
@@ -152,6 +154,7 @@ public class JdgTimingProcess : GetClickedGameObject
              Mathf.Abs(actingChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area))&&
              (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
+            // ダイスロールの結果に支援、妨害の値を反映
             rollResult += dollManeuver.EffectNum[EffNum.Judge];
             rollResultText.text = rollResult.ToString();
             dollManeuver.isUse = true; 
@@ -163,7 +166,7 @@ public class JdgTimingProcess : GetClickedGameObject
 
             // 行動値をコスト分減少させる
             selectedAllyChara.NowCount -= dollManeuver.Cost;
-            if (selectedAllyChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount)
+            if (selectedAllyChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount && selectedChara != actingChara)
             {
                 ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
             }
@@ -215,12 +218,15 @@ public class JdgTimingProcess : GetClickedGameObject
         }
         else
         {
-            // 次のカウントに行く処理
+            // アクションタイミングで行動したキャラを表示から消す
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+            ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            nextButton.gameObject.SetActive(false);
         }
 
         // 次のジャッジタイミングで使えるようにtrueにする
         buttonImg.raycastTarget = true;
-        diceRollButton.enabled = true;
+        diceRollButton.enabled  = true;
     }
 
 }

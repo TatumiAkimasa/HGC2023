@@ -194,6 +194,7 @@ public class DmgTimingProcess : GetClickedGameObject
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
         // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められるが今は仮に頭とする
+        // 要if文分け。サヴァントかホラーかレギオンか
         if (rollResult > 10)
         {
             // ダイスロールの結果が10より上の場合の追加ダメージ処理

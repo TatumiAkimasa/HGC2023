@@ -181,24 +181,15 @@ public class ActTimingProcess : GetClickedGameObject
         standbyEnemySelect = false;
         standbyCharaSelect = false;
 
-        // ダメージを与える系のアクションマニューバーかどうか判断する
-        if(dollManeuver.EffectNum.ContainsKey(EffNum.Damage))
-        {
-            // ここからジャッジに入る
-            ProcessAccessor.Instance.jdgTiming.enabled = true;
-            ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
-            ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
-            ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
-            ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy;
-            ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
-            ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
-            ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
-        }
-        else
-        {
-            // なんかもろもろの処理が終わったことをバトルシステムに送信する
-            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
-        }
+        // ここからジャッジに入る
+        ProcessAccessor.Instance.jdgTiming.enabled = true;
+        ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
+        ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
+        ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
+        ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy;
+        ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
+        ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
+        ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
 
 
         // 要if分分け。特殊なコストでなければコストを減少させる
