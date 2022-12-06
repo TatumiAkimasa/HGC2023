@@ -150,8 +150,8 @@ public class ActTimingProcess : GetClickedGameObject
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
                     if (dollManeuver.MinRange != 10 &&
-                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().position) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.position) &&
-                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().position) >= Mathf.Abs(dollManeuver.MinRange + actingChara.position)))
+                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.area) &&
+                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) >= Mathf.Abs(dollManeuver.MinRange + actingChara.area)))
                     {
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
@@ -163,6 +163,11 @@ public class ActTimingProcess : GetClickedGameObject
                 }
             }
         }
+    }
+
+    public void ZoomOutRequest()
+    {
+        ZoomOutObj();
     }
 
     public void OnClickAtk(Doll_blu_Nor enemy)

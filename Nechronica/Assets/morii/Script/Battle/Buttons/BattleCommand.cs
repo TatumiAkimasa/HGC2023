@@ -19,7 +19,7 @@ public class BattleCommand : MonoBehaviour
     [SerializeField] private List<CharaManeuver> RapidManeuvers;     // 自身が持っているラピッドマニューバを保存
     [SerializeField] private List<CharaManeuver> JudgeManeuvers;     // 自身が持っているジャッジマニューバを保存
     [SerializeField] private List<CharaManeuver> DamageManeuvers;    // 自身が持っているダメージマニューバを保存
-                                      
+
     [SerializeField] private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
     [SerializeField] private GameObject rapidCommands;               // ラピッドタイミングのコマンドオブジェクト
     [SerializeField] private GameObject judgeCommands;               // ジャッジタイミングのコマンドオブジェクト
@@ -38,7 +38,7 @@ public class BattleCommand : MonoBehaviour
     [SerializeField] private List<GameObject> parentsRpdObj = new List<GameObject>();  // ラピッドコマンドの親オブジェクト
     [SerializeField] private List<GameObject> parentsJdgObj = new List<GameObject>();  // ジャッジコマンドの親オブジェクト
     [SerializeField] private List<GameObject> parentsDmgObj = new List<GameObject>();  // ダメージコマンドの親オブジェクト
-    
+
     private List<GameObject> prefabActObjList = new List<GameObject>();                // クローンしたアクションコマンドプレハブの保存先
     private List<GameObject> prefabRpdObjList = new List<GameObject>();                // クローンしたラピッドコマンドプレハブの保存先
     private List<GameObject> prefabJdgObjList = new List<GameObject>();                // クローンしたジャッジコマンドプレハブの保存先
@@ -52,7 +52,7 @@ public class BattleCommand : MonoBehaviour
     private RectTransform backDmgImg;                  // 上記変数の座標となるオブジェクト
 
     [SerializeField]
-    private BattleSystem battleSystem;              
+    private BattleSystem battleSystem;
 
     [SerializeField]
     private bool nowSelect;                         // 選択中かどうか
@@ -77,8 +77,8 @@ public class BattleCommand : MonoBehaviour
 
         // コマンドを取得
         actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
-        rapidCommands  = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
-        judgeCommands  = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
+        rapidCommands = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+        judgeCommands = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
         damageCommands = this.transform.Find("Canvas/Damage/DamageCommands").gameObject;
 
         // バックイメージを取得
@@ -94,7 +94,7 @@ public class BattleCommand : MonoBehaviour
         // 独自のプレハブフォルダから上記プレハブの親Objの元となるオブジェクトを取得
         originalParentObj = NonResources.Load<GameObject>("Assets/morii/Prefab/UIparent/VerticalParent.prefab");
 
-        
+
         // 各親オブジェクトを1つずつあらかじめ作る
         parentsActObj.Add(BuildingParent(true, backActImg));
         parentsRpdObj.Add(BuildingParent(true, backRpdImg));
@@ -109,8 +109,8 @@ public class BattleCommand : MonoBehaviour
 
         // タイミングで分けられたマニューバ
         prefabActObjList = BuildCommands(ActionManeuvers, ref parentsActObj, prefabActObjList, backActImg);
-        prefabRpdObjList = BuildCommands(RapidManeuvers , ref parentsRpdObj, prefabRpdObjList, backRpdImg);
-        prefabJdgObjList = BuildCommands(JudgeManeuvers , ref parentsJdgObj, prefabJdgObjList, backJdgImg);
+        prefabRpdObjList = BuildCommands(RapidManeuvers, ref parentsRpdObj, prefabRpdObjList, backRpdImg);
+        prefabJdgObjList = BuildCommands(JudgeManeuvers, ref parentsJdgObj, prefabJdgObjList, backJdgImg);
         prefabDmgObjList = BuildCommands(DamageManeuvers, ref parentsDmgObj, prefabDmgObjList, backDmgImg);
     }
 
@@ -243,11 +243,11 @@ public class BattleCommand : MonoBehaviour
     {
         if (maneuver.Timing == CharaBase.ACTION)
         {
-            command.GetComponent<Button>().onClick.AddListener(()=>OnClickActCommand(maneuver));
+            command.GetComponent<Button>().onClick.AddListener(() => OnClickActCommand(maneuver));
         }
         if (maneuver.Timing == CharaBase.MOVE)
         {
-
+            command.GetComponent<Button>().onClick.AddListener(() => OnClickMoveCommand(maneuver));
         }
         if (maneuver.Timing == CharaBase.RAPID)
         {
@@ -278,7 +278,7 @@ public class BattleCommand : MonoBehaviour
     {
         ProcessAccessor.Instance.jdgTiming.SkillSelected = true;
         ProcessAccessor.Instance.jdgTiming.SetManeuver(maneuver);
-        ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.position);
+        ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.area);
         ProcessAccessor.Instance.jdgTiming.GetConfirmatButton().SetActive(true);
 
     }
@@ -287,11 +287,16 @@ public class BattleCommand : MonoBehaviour
     {
         ProcessAccessor.Instance.dmgTiming.SkillSelected = true;
         ProcessAccessor.Instance.dmgTiming.SetManeuver(maneuver);
-        ProcessAccessor.Instance.dmgTiming.SetArea(thisChara.position);
+        ProcessAccessor.Instance.dmgTiming.SetArea(thisChara.area);
         ProcessAccessor.Instance.dmgTiming.GetConfirmatButton().SetActive(true);
     }
 
-
+    void OnClickMoveCommand(CharaManeuver maneuver)
+    {
+        ProcessAccessor.Instance.actTimingMove.SkillSelected = true;
+        ProcessAccessor.Instance.actTimingMove.ActingChara = thisChara;
+        ProcessAccessor.Instance.actTimingMove.SetManeuver(maneuver);
+    }
 }
 
 public struct ManerverAndArea
