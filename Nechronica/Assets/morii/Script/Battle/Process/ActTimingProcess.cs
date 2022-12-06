@@ -7,12 +7,18 @@ using Cinemachine;
 public class ActTimingProcess : GetClickedGameObject
 {
     private GameObject atkTargetEnemy;                                // 攻撃する敵オブジェクトを格納場所
-
     public GameObject AtkTargetEnemy
     {
         set { atkTargetEnemy = value; }
         get { return atkTargetEnemy; }
     }
+
+    [SerializeField] protected Button exeButton;
+    public Button ExeButton
+    {
+        get { return exeButton; }
+    }
+
 
     // Start is called before the first frame update
     void Awake()
@@ -144,8 +150,8 @@ public class ActTimingProcess : GetClickedGameObject
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
                     if (dollManeuver.MinRange != 10 &&
-                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) <= Mathf.Abs(dollManeuver.MaxRange + movingArea) &&
-                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().potition) >= Mathf.Abs(dollManeuver.MinRange + movingArea)))
+                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().position) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.position) &&
+                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().position) >= Mathf.Abs(dollManeuver.MinRange + actingChara.position)))
                     {
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
@@ -170,21 +176,28 @@ public class ActTimingProcess : GetClickedGameObject
         standbyEnemySelect = false;
         standbyCharaSelect = false;
 
-        // ここからジャッジに入る
-        ProcessAccessor.Instance.jdgTiming.enabled = true;
-        ProcessAccessor.Instance.jdgTiming.RollResultText.gameObject.SetActive(true);
-        ProcessAccessor.Instance.jdgTiming.MovingCharaArea = movingArea;
-        ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
-        ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy;
+        // ダメージを与える系のアクションマニューバーかどうか判断する
         if(dollManeuver.EffectNum.ContainsKey(EffNum.Damage))
         {
-            ProcessAccessor.Instance.jdgTiming.GiveDamage = dollManeuver.EffectNum[EffNum.Damage];
+            // ここからジャッジに入る
+            ProcessAccessor.Instance.jdgTiming.enabled = true;
+            ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
+            ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
+            ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
+            ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy;
+            ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
+            ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
+            ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
+        }
+        else
+        {
+            // なんかもろもろの処理が終わったことをバトルシステムに送信する
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
         }
 
-        // ジャッジに入ってからバトルプロセスが動かないように非アクティブにする
-        // this.enabled = false;
 
-        // Debug用
-        //battleSystem.DamageTiming(dollManeuver, enemy);
+        // 要if分分け。特殊なコストでなければコストを減少させる
+        // 行動値を減少させる
+        actingChara.NowCount -= dollManeuver.Cost;
     }
 }

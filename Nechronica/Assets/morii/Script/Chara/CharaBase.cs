@@ -20,16 +20,16 @@ public class CharaBase : MonoBehaviour
     public int GetNowCount() => nowCount;
     public int GetWeight() => allWeight;
 
-    public List<CharaManeuver> GetHeadParts() => HeadParts; //頭パーツ参照
-    public List<CharaManeuver> GetArmParts() => ArmParts;   //腕パーツ参照
-    public List<CharaManeuver> GetBodyParts() => BodyParts;//胴体パーツ参照
-    public List<CharaManeuver> GetLegParts() => LegParts;   //脚パーツ参照
+    public List<CharaManeuver> GetHeadParts() => HeadParts; // 頭パーツ参照
+    public List<CharaManeuver> GetArmParts() => ArmParts;   // 腕パーツ参照
+    public List<CharaManeuver> GetBodyParts() => BodyParts; // 胴体パーツ参照
+    public List<CharaManeuver> GetLegParts() => LegParts;   // 脚パーツ参照
 
-    public List<CharaManeuver> HeadParts;      //頭のパーツ
-    public List<CharaManeuver> ArmParts;       //腕のパーツ
-    public List<CharaManeuver> BodyParts;      //胴のパーツ
-    public List<CharaManeuver> LegParts;       //脚のパーツ
-
+    public List<CharaManeuver> HeadParts;      // 頭のパーツ
+    public List<CharaManeuver> ArmParts;       // 腕のパーツ
+    public List<CharaManeuver> BodyParts;      // 胴のパーツ
+    public List<CharaManeuver> LegParts;       // 脚のパーツ
+                                                  
     //最大行動値計算
     public void MaxCountCal()
     {
@@ -75,14 +75,14 @@ public class CharaBase : MonoBehaviour
         nowCount += maxCount;
     }
 
-    protected int maxCount = 6;                   //カウント最大値 ルール上もともと最大行動値は6あるので6で初期化
-    protected int nowCount;                       //現在のカウント
+    protected int maxCount = 6;                   // カウント最大値 ルール上もともと最大行動値は6あるので6で初期化
+    protected int nowCount;                       // 現在のカウント
     public int NowCount
     {
         get { return nowCount; }
         set { nowCount = value; }
     }
-    protected int allWeight;                      //重さ
+    protected int allWeight;                      // 重さ
 
     [SerializeField]
     protected Image CharaImg;
@@ -93,39 +93,48 @@ public class CharaBase : MonoBehaviour
 [System.Serializable]
 public class CharaManeuver
 {
-    public string Name;            //パーツ名
-    //public int EffectNum;          //効果値
-    public Dictionary<string,int> EffectNum = new Dictionary<string, int>();          //効果値
-    public int Cost;               //コスト
-    public int Timing;             //発動タイミング
-    public int MinRange;           //射程の最小値
-    public int MaxRange;           //射程の最大値
-    public int Weight;             //重さ
-    public int Moving;             //移動量(0で移動しない)
-    public bool isUse;             //使用したかどうか
-    public bool isDmage;           //破損したかどうか
-    public ManeuverEffectsAtk Atk; //攻撃系
+
+    public string Name;            // パーツ名
+    //public int EffectNum;        // 効果値
+    public Dictionary<string, int> EffectNum = new Dictionary<string, int>();          // 効果値
+    public int Cost;               // コスト
+    public int Timing;             // 発動タイミング
+    public int MinRange;           // 射程の最小値
+    public int MaxRange;           // 射程の最大値
+    public int Weight;             // 重さ
+    public int Moving;             // 移動量(0で移動しない)
+    public bool isUse;             // 使用したかどうか
+    public bool isDmage;           // 破損したかどうか
+    public ManeuverEffectsAtk Atk; // 攻撃系
+    [NamedArrayAttribute(new string[] { "攻撃", "防御", "支援・回復", "妨害" ,"BOSS"})]
+    public List<short> EnemyAI; //敵行動優先順位
 }
 
 [System.Serializable]
 public class ManeuverEffectsAtk
 {
-    public int atkType;        //攻撃属性
-    public  bool isExplosion;  //爆発攻撃かどうか
-    public bool isCutting;     //切断攻撃かどうか
-    public bool isAllAttack;   //全体攻撃かどうか
-    public bool isSuccession;  //連撃かどうか
-    public int Num_per_Action; //連撃回数
+    public int atkType;        // 攻撃属性
+    public bool isExplosion;   // 爆発攻撃かどうか
+    public bool isCutting;     // 切断攻撃かどうか
+    public bool isAllAttack;   // 全体攻撃かどうか
+    public bool isSuccession;  // 連撃かどうか
+    public int Num_per_Action; // 連撃回数
 }
 
 [System.Serializable]
 public class EffNum
 {
     public const string Damage   = "Damage";
+    public const string Guard    = "Guard";
     public const string Judge    = "Judge";
     public const string Move     = "Move";
     public const string Count    = "Count";
+    public const string Insanity = "Insanity";      // 狂気点が関与するものはこれを入れる
     public const string Extra    = "Extra";
+    
+    
+    // オンリーワンの効果
+    public const string Protect  = "Protect";       // かばうの効果はこれで認識
 }
 
 

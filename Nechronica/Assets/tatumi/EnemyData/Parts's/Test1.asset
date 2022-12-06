@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090cf4860d422d34093f820d7003e1b0, type: 3}
+  m_Name: Test1
+  m_EditorClassIdentifier: 
+  Eff_String: 0
+  Eff_int: 3
+  Maneuver:
+    Name: "\u304B\u307F\u3064\u304D"
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: 0
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+    EnemyAI: 0500010001000300

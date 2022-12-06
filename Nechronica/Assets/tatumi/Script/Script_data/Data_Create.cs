@@ -16,6 +16,6 @@ public class Data_Create : Scene_Change
         SaveData.ClickButtonSave();
         SaveData.ClickButtonLoad();
 
-        Scene_change("tatumi_world");
+        Scene_change("forest");
    }
 }

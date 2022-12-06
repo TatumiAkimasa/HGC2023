@@ -30,6 +30,8 @@ public class ClassData_ : MonoBehaviour
     protected const int POTITIONSKILL = 4;
     protected const int POTITION = 5;
 
+    protected const int MAXPARTS = 15;
+
     public string Classname_JtoE(string a)
     {
         if (a == "ステーシー")
