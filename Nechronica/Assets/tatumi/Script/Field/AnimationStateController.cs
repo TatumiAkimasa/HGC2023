@@ -30,6 +30,7 @@ public class AnimationStateController : MonoBehaviour
         if (SetEvent)
         {
             this.animator.speed = 0.0f;
+            return;
         }
 
         if (Input.anyKeyDown)
