@@ -12,8 +12,6 @@ public class Doll_blu_Nor : PartsList
 
     public string GetName() => Name;
 
-    
-
                                            //---------------------------------------------------ªŠ®—¹«–¢Š®
     public int area=2;                 //‰Šú”z’u(—ù–)
     public string MainClass="Stacy", SubClass="Stacy";     //E‹Æ(skill)
