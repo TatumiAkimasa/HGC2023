@@ -246,7 +246,7 @@ public class Chara_data_input : CharaBase
         Doll_data.CharaBase_data.Skill.Add(Potition_Skill);
 
         Doll_data.CharaField_data.Event[0].str = "森の中にある斧を見つけ木を切れ";
-        Doll_data.CharaField_data.Event[1].str = "記憶を孤高のドールへ渡せ";
+        Doll_data.CharaField_data.Event[1].str = "なぞの人物にあおう";
 
         return true;
     }
