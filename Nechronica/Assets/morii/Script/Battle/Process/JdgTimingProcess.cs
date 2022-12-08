@@ -43,7 +43,7 @@ public class JdgTimingProcess : GetClickedGameObject
     [SerializeField] private Text plusNumText;      // パッシブなどによるダイスロールに行われる加算
     [SerializeField] private Button nextButton;     // ジャッジタイミングを終わらせるボタン
     [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
-    [SerializeField] private Image buttonImg;       // ボタンの画像
+    [SerializeField] private Image diceRollButtonImg;       // ダイス演出などに使うボタンの画像
     [SerializeField] private GameObject confirmatButton;    // 最後に発動するか確認するボタン
     [SerializeField] private GameObject judgeButtons;       // ジャッジタイミングで扱うボタンの親オブジェクト
 
@@ -73,11 +73,11 @@ public class JdgTimingProcess : GetClickedGameObject
                 isDiceRoll = false;
 
                 // ここからジャッジタイミング
-                standbyCharaSelect = true;
+                isStandbyCharaSelect = true;
                 nextButton.gameObject.SetActive(true);
             }
         }
-        else if(standbyCharaSelect)
+        else if(isStandbyCharaSelect)
         {
             CharaSelectStandby();
         }
@@ -120,7 +120,7 @@ public class JdgTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
-                    standbyCharaSelect = false;
+                    isStandbyCharaSelect = false;
                     selectedAllyChara = move.GetComponent<Doll_blu_Nor>();
                     // 選択したキャラのコマンドのオブジェクトを取得
                     childCommand = move.transform.GetChild(CANVAS).transform.GetChild(JUDGE);
@@ -135,7 +135,7 @@ public class JdgTimingProcess : GetClickedGameObject
     {
         ZoomOutObj();
         confirmatButton.SetActive(false);
-        standbyCharaSelect = true;
+        isStandbyCharaSelect = true;
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class JdgTimingProcess : GetClickedGameObject
         rollResult = randoms.NextInt(1, 11);
         rollResultText.text = rollResult.ToString();
         // その後の操作を邪魔しないようにfalseにしておく
-        buttonImg.raycastTarget = false;
+        diceRollButtonImg.raycastTarget = false;
         diceRollButton.enabled = false;
         isDiceRoll = true;
     }
@@ -170,11 +170,11 @@ public class JdgTimingProcess : GetClickedGameObject
             confirmatButton.SetActive(false);
             skillSelected = false;
             ZoomOutObj();
-            standbyCharaSelect = true;
+            isStandbyCharaSelect = true;
 
             // 行動値をコスト分減少させる
             selectedAllyChara.NowCount -= dollManeuver.Cost;
-            if (selectedAllyChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount && selectedChara != actingChara)
+            if (selectedAllyChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount && isSelectedChara != actingChara)
             {
                 ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
             }
@@ -213,6 +213,7 @@ public class JdgTimingProcess : GetClickedGameObject
 
             ProcessAccessor.Instance.dmgTiming.SetActChara(actingChara);
             ProcessAccessor.Instance.dmgTiming.ActMneuver = actManeuver;
+            ProcessAccessor.Instance.dmgTiming.StandbyCharaSelect = true;
             ProcessAccessor.Instance.dmgTiming.SetDamageChara(atkTargetEnemy.GetComponent<Doll_blu_Nor>());
             ProcessAccessor.Instance.dmgTiming.SetRollResult(rollResult);
             ProcessAccessor.Instance.dmgTiming.GetDamageButtons().SetActive(true);
@@ -235,8 +236,9 @@ public class JdgTimingProcess : GetClickedGameObject
         }
 
         // 次のジャッジタイミングで使えるようにtrueにする
-        buttonImg.raycastTarget = true;
+        diceRollButtonImg.raycastTarget = true;
         diceRollButton.enabled  = true;
+        isStandbyCharaSelect = false;
     }
 
 }

@@ -6,9 +6,18 @@ using Cinemachine;
 
 public class ActTimingProcess : GetClickedGameObject
 {
-    // メモ：どないかこないかしてBattleCommandを参照したいなぁ
+    // 定数--------------------------
 
-    private GameObject atkTargetEnemy;                                // 攻撃する敵オブジェクトを格納場所
+    private const bool ALLY  = true;
+    private const bool ENEMY = false;
+
+    //-------------------------------
+
+    // キャラクターのアクションコマンドを取得
+    private BattleCommand actCharaCommand;
+    private bool isAllyOrEnemy;                       // 選んだキャラが敵か味方かの判断
+
+    private GameObject atkTargetEnemy;                // 攻撃する敵オブジェクトを格納場所
     public GameObject AtkTargetEnemy
     {
         set { atkTargetEnemy = value; }
@@ -31,20 +40,22 @@ public class ActTimingProcess : GetClickedGameObject
     // Update is called once per frame
     void Update()
     {
-        if (selectedChara)
+        if (isSelectedChara)
         {
             SkillSelectStandby();
         }
-        else if (standbyEnemySelect)
+        else if (isStandbyEnemySelect)
         {
             EnemySelectStandby();
         }
-        else if (standbyCharaSelect)
+        else if (isStandbyCharaSelect)
         {
             CharaSelectStandby();
         }
         
     }
+
+    // カメラの動き、キャラ選択関連のメソッド--------------------------------------------------
 
     /// <summary>
     /// キャラ選択待機状態時に動く関数
@@ -54,18 +65,16 @@ public class ActTimingProcess : GetClickedGameObject
     protected override void CharaSelectStandby()
     {
         //左クリックで
-        if (Input.GetMouseButtonDown(0) && CharaCamera == null && !selectedChara)
+        if (Input.GetMouseButtonDown(0) && CharaCamera == null && !isSelectedChara)
         {
             GameObject clickedObj = ShotRay();
 
             //クリックしたゲームオブジェクトが味方キャラなら
-            if (clickedObj.CompareTag("AllyChara"))
+            if (clickedObj.CompareTag("AllyChara")　|| clickedObj.CompareTag("EnemyChara"))
             {
                 // コマンドを表示し、選んだキャラに近づく
-                clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
+                actCharaCommand = clickedObj.GetComponent<BattleCommand>();
                 ZoomUpObj(clickedObj);
-                // 下記変数をtrueにし、スキル選択待機状態へ移行
-                selectedChara = true;
                 // ここでコマンド表示
                 StartCoroutine(MoveStandby(clickedObj));
             }
@@ -107,13 +116,62 @@ public class ActTimingProcess : GetClickedGameObject
         // 右クリックで
         if ((Input.GetMouseButtonDown(1) || skillSelected) && CharaCamera != null)
         {
-            // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
-            if()
-            ZoomOutObj();
-            // キャラ選択待機状態にする
-            selectedChara = false;
+            if(isAllyOrEnemy==ALLY)
+            {
+                // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
+                if (actCharaCommand.GetActCommands().activeSelf)
+                {
+                    actCharaCommand.GetActCommands().SetActive(false);
+                }
+                else
+                {
+                    MyZoomOutObj(actCharaCommand.GetActSelect());
+                    // キャラ選択待機状態にする
+                    isSelectedChara = false;
+                    if(skillSelected)
+                    {
+                        skillSelected = false;
+                    }
+                }
+            }
+            else
+            {
+                ZoomOutObj();
+            }
         }
     }
+
+    public void ZoomOutRequest()
+    {
+        ZoomOutObj();
+    }
+
+    private void MyZoomOutObj(GameObject hideCommand)
+    {
+        // 全体を表示させるカメラを優先にする。
+        CharaCamera.Priority = 0;
+        // コマンドを消す
+        hideCommand.SetActive(false);
+        // 複製したプレハブカメラを消す。
+        StartCoroutine(DstroyCamera());
+    }
+
+    /// <summary>
+    /// 敵選択の時に戻るを押したら実行されるメソッド
+    /// </summary>
+    protected void OnClickBack()
+    {
+        // カメラを元の位置に戻し、UIを消す
+        ZoomOutObj();
+        this.transform.GetChild(CANVAS).gameObject.SetActive(false);
+        // childCommandの中身をなくす
+        if (childCommand != null)
+        {
+            childCommand = null;
+        }
+    }
+
+    //-----------------------------------------------------------------------------------------
 
     /// <summary>
     /// カメラが近づいた後の処理。敵と味方で処理が異なる
@@ -127,6 +185,7 @@ public class ActTimingProcess : GetClickedGameObject
     /// <returns></returns>
     protected override IEnumerator MoveStandby(GameObject move)
     {
+
         for (int i = 0; i < 2; i++)
         {
             //カメラがクリックしたキャラに近づくまで待つ
@@ -138,21 +197,21 @@ public class ActTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
-                    // 選択したキャラのコマンドのオブジェクトを取得
-                    childCommand = move.transform.GetChild(CANVAS).transform.GetChild(ACTION);
                     // 技コマンドもろもろを表示
-                    childCommand.gameObject.SetActive(true);
+                    actCharaCommand.GetActSelect().SetActive(true);
+                    isAllyOrEnemy = ALLY;
                 }
                 else if (move.CompareTag("EnemyChara"))
                 {
                     // ステータスを取得し、表示。後にOnClickAtkで使うのでメンバ変数に格納
                     childCommand = move.transform.GetChild(CANVAS);
                     childCommand.gameObject.SetActive(true);
+                    isAllyOrEnemy = ENEMY;
 
                     // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
-                    if (dollManeuver.MinRange != 10 &&
+                    if (isStandbyEnemySelect && dollManeuver.MinRange != 10 && 
                         (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.area) &&
                          Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) >= Mathf.Abs(dollManeuver.MinRange + actingChara.area)))
                     {
@@ -164,25 +223,26 @@ public class ActTimingProcess : GetClickedGameObject
                         this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(true);
                     }
                 }
+                isSelectedChara = true;
             }
         }
     }
 
-    public void ZoomOutRequest()
-    {
-        ZoomOutObj();
-    }
-
+    
+    /// <summary>
+    /// ジャッジタイミングへ移行するボタン。
+    /// </summary>
+    /// <param name="enemy">これ多分消す</param>
     public void OnClickAtk(Doll_blu_Nor enemy)
     {
         // カメラを元の位置に戻し、UIを消す
         ZoomOutObj();
-        enemy.transform.GetChild(CANVAS).gameObject.SetActive(false);
+        //enemy.transform.GetChild(CANVAS).gameObject.SetActive(false);
         this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(false);
 
-        selectedChara = false;
-        standbyEnemySelect = false;
-        standbyCharaSelect = false;
+        isSelectedChara = false;
+        isStandbyEnemySelect = false;
+        isStandbyCharaSelect = false;
 
         // ここからジャッジに入る
         ProcessAccessor.Instance.jdgTiming.enabled = true;

@@ -29,19 +29,19 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField] protected Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
     
     // ほかスクリプトからも値を変更する変数
-    protected bool standbyCharaSelect = false;
+    protected bool isStandbyCharaSelect = false;
 
     public bool StandbyCharaSelect
     {
-        get { return standbyCharaSelect; }
-        set { standbyCharaSelect = value; }
+        get { return isStandbyCharaSelect; }
+        set { isStandbyCharaSelect = value; }
     }
 
-    protected bool standbyEnemySelect = false;
+    protected bool isStandbyEnemySelect = false;
     public bool StandbyEnemySelect
     {
-        get { return standbyEnemySelect; }
-        set { standbyEnemySelect = value; }
+        get { return isStandbyEnemySelect; }
+        set { isStandbyEnemySelect = value; }
     }
 
     protected bool skillSelected = false;
@@ -68,7 +68,7 @@ public class GetClickedGameObject : MonoBehaviour
     public void SetArea(int set) { movingArea = set; }
     public int GetArea() => movingArea;
 
-    protected bool selectedChara = false;
+    protected bool isSelectedChara = false;
 
     //------------------------------------
 
@@ -81,15 +81,15 @@ public class GetClickedGameObject : MonoBehaviour
     private void Update()
     {
         // バトル処理ステップ
-        if(selectedChara)
+        if(isSelectedChara)
         {
             SkillSelectStandby();
         }
-        else if (standbyEnemySelect)
+        else if (isStandbyEnemySelect)
         {
             EnemySelectStandby();
         }
-        else if(standbyCharaSelect)
+        else if(isStandbyCharaSelect)
         {
             CharaSelectStandby();
         }
@@ -98,7 +98,7 @@ public class GetClickedGameObject : MonoBehaviour
     protected virtual void CharaSelectStandby()
     {
         //左クリックで
-        if (Input.GetMouseButtonDown(0) && CharaCamera == null && !selectedChara)
+        if (Input.GetMouseButtonDown(0) && CharaCamera == null && !isSelectedChara)
         {
             GameObject clickedObj = ShotRay();
 
@@ -107,8 +107,8 @@ public class GetClickedGameObject : MonoBehaviour
             {
                 clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
                 ZoomUpObj(clickedObj);
-                selectedChara = true;
-                standbyCharaSelect = false;
+                isSelectedChara = true;
+                isStandbyCharaSelect = false;
                 // ここでコマンド表示
                 StartCoroutine(MoveStandby(clickedObj));
             }
@@ -143,8 +143,8 @@ public class GetClickedGameObject : MonoBehaviour
             // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
             ZoomOutObj();
             // キャラ選択待機状態にする
-            selectedChara = false;
-            standbyCharaSelect = true;
+            isSelectedChara = false;
+            isStandbyCharaSelect = true;
         }
     }
 
@@ -164,7 +164,7 @@ public class GetClickedGameObject : MonoBehaviour
                 Destroy(CharaCamera.gameObject);
                 //priorityを元の数値にする
                 cinemaCamera.Priority = 10;
-                selectedChara = false;
+                isSelectedChara = false;
             }
         }
     }
@@ -241,22 +241,5 @@ public class GetClickedGameObject : MonoBehaviour
         childCommand.gameObject.SetActive(false);
         // 複製したプレハブカメラを消す。
         StartCoroutine(DstroyCamera());
-    }
-
-    protected void OnClickBack()
-    {
-        // childCommandの中身があるということはコマンドが表示されている状態なので、それを非表示にし、childCommandの中身をなくす
-        if (childCommand != null)
-        {
-            childCommand.gameObject.SetActive(false);
-            childCommand = null;
-        }
-        else
-        {
-            // カメラを元の位置に戻し、UIを消す
-            ZoomOutObj();
-            this.transform.GetChild(CANVAS).gameObject.SetActive(false);
-        }
-       
     }
 }

@@ -49,7 +49,7 @@ public class DmgTimingProcess : GetClickedGameObject
     // Update is called once per frame
     void Update()
     {
-        if(standbyCharaSelect)
+        if(isStandbyCharaSelect)
         {
             CharaSelectStandby();
         }
@@ -73,8 +73,8 @@ public class DmgTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
+                    isStandbyCharaSelect = false;
                     selectedAllyChara = move.GetComponent<Doll_blu_Nor>();
-                    standbyCharaSelect = false;
                     // 選択したキャラのコマンドのオブジェクトを取得
                     childCommand = move.transform.GetChild(CANVAS).transform.GetChild(DAMAGE);
                     // 技コマンドもろもろを表示
@@ -124,7 +124,7 @@ public class DmgTimingProcess : GetClickedGameObject
         // 射程が自身のみの場合、ダメージを与えるキャラとダメージタイミングで動くキャラが同じかどうか調べる
         if (dollManeuver.MinRange == 10)
         {
-            if(actingChara==selectedChara)
+            if(actingChara==isSelectedChara)
             {
                 addDamage += dollManeuver.EffectNum[EffNum.Damage];
                 // 要if文分け。特殊なコストどうか判断する
@@ -154,7 +154,7 @@ public class DmgTimingProcess : GetClickedGameObject
         // 射程が自身のみの場合、ダメージを受けるキャラとダメージタイミングで動くキャラが同じかどうか調べる
         if (dollManeuver.MinRange == 10)
         {
-            if (damageChara == selectedChara)
+            if (damageChara == isSelectedChara)
             {
                 dmgGuard += dollManeuver.EffectNum[EffNum.Guard];
                 // 要if文分け。特殊なコストどうか判断する

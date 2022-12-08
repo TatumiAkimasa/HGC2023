@@ -47,13 +47,13 @@ public class PartsList : CharaBase
         medama_H.MaxRange = 10;
         medama_H.Weight = 1;
 
-        medama_H.Name = "•®“{";
-        medama_H.EffectNum.Add(EffNum.Damage, 5);
-        medama_H.Cost = 0;
-        medama_H.Timing = DAMAGE;
-        medama_H.MinRange = 10;
-        medama_H.MaxRange = 10;
-        medama_H.Weight = 0;
+        hunnu_H.Name = "•®“{";
+        hunnu_H.EffectNum.Add(EffNum.Damage, 5);
+        hunnu_H.Cost = 0;
+        hunnu_H.Timing = DAMAGE;
+        hunnu_H.MinRange = 10;
+        hunnu_H.MaxRange = 10;
+        hunnu_H.Weight = 0;
 
 
 
