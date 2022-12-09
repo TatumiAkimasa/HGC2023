@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class Doll_blu_Nor : PartsList
 {
+    //げったー
+    public string GetName() => Name;
+
     public string Name="test";                    //ドール名 
     public string hide_hint="test";              //暗示
     public string Death_year="10";              //享年
     public string temper="アリス";                  //ポジション
     public short[] Memory= {1,2 };                  //記憶のかけら
-
-    public string GetName() => Name;
-
-                                           //---------------------------------------------------↑完了↓未完
-    public int area=2;                 //初期配置(煉獄)
-    public string MainClass="Stacy", SubClass="Stacy";     //職業(skill)
-    public short Armament=0, Variant=0, Alter=0; //武装,変異,改造(Skill)
+    public int area;                 //現在位置
+    public int initArea = 2;                 //初期配置(煉獄)
+    public string MainClass = "Stacy", SubClass = "Stacy";     //職業(skill)
+    public short Armament = 0, Variant = 0, Alter = 0; //武装,変異,改造(Skill)
     public List<CharaManeuver> Skill;              //スキル
 
+    
     private void Awake()
     {
         InitParts();
+
+        //初期位置を現在位置に代入
+        area = initArea;
+
         //頭----------------------
         HeadParts.Add(noumiso_H);
         HeadParts.Add(medama_H);
