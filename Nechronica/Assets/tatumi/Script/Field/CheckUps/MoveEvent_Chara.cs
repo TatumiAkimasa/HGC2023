@@ -43,11 +43,15 @@ public class MoveEvent_Chara : MonoBehaviour
     //é¿ç€ÇÃèàóù(Editorä÷åWÇ»Çµ)
     public IEnumerator Event(System.Action<bool> action_end)
     {
-        for (int i = 0; i != Assistcs.Charas.Length; i++)
+        Debug.Log("?");
+
+        for (int j = 0; j != Assistcs.Charas.Length; j++)
         {
-            Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].MovePlayer = false;
-            Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].myanim.SetEvent = true;
+            Assistcs.Charas[j].MovePlayer = false;
+            Assistcs.Charas[j].myanim.SetEvent = true;
         }
+
+        Debug.Log("!");
 
         for (int i=0;i!=EventTypes.Count;i++)
         {
@@ -89,7 +93,6 @@ public class MoveEvent_Chara : MonoBehaviour
                     Destroy(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject);
                     break;
             }
-
         }
         action_end(true);
     }
