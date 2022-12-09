@@ -238,7 +238,7 @@ public class Chara_data_input : CharaBase
         Doll_data.temper = temper_name;
         Doll_data.Death_year = death_year_;
         Doll_data.Name = name_;
-        Doll_data.potition = position_;
+        Doll_data.InitArea = position_;
         Doll_data.hide_hint = hide_hint_;
         
 
