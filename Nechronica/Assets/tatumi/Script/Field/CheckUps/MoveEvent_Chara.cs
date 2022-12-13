@@ -84,8 +84,10 @@ public class MoveEvent_Chara : MonoBehaviour
                     yield return null;
                     break;
                 case EventType.event_Type.CameraMove:
-                    Assistcs.ChinemaCameras[InCamera].SetActive(false);
                     Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
+                    yield return new WaitForSeconds(0.01f); ;
+                    Assistcs.ChinemaCameras[InCamera].SetActive(false);
+                    
                     InCamera = EventTypes[i].ordes.OutCamera;
                     yield return new WaitForSeconds(3.0f);
                     break;
