@@ -5104,6 +5104,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   medama_H:
     Name: 
     Cost: 0
@@ -5121,6 +5122,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   ago_H:
     Name: 
     Cost: 0
@@ -5138,6 +5140,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   kobusi_A:
     Name: 
     Cost: 0
@@ -5155,6 +5158,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   ude_A:
     Name: 
     Cost: 0
@@ -5172,6 +5176,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   kata_A:
     Name: 
     Cost: 0
@@ -5189,6 +5194,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   sebone_B:
     Name: 
     Cost: 0
@@ -5206,6 +5212,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   harawata_B:
     Name: 
     Cost: 0
@@ -5223,6 +5230,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   harawata2_B:
     Name: 
     Cost: 0
@@ -5240,6 +5248,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hone_L:
     Name: 
     Cost: 0
@@ -5257,6 +5266,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hone2_L:
     Name: 
     Cost: 0
@@ -5274,6 +5284,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   asi_L:
     Name: 
     Cost: 0
@@ -5291,12 +5302,14 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   Name: test
   hide_hint: test
   Death_year: 10
   temper: "\u30A2\u30EA\u30B9"
   Memory: 01000200
   area: 2
+  initArea: 2
   MainClass: Stacy
   SubClass: Stacy
   Armament: 0
@@ -9660,7 +9673,7 @@ GameObject:
   - component: {fileID: 1228964201}
   - component: {fileID: 1228964200}
   - component: {fileID: 1228964199}
-  - component: {fileID: 1228964207}
+  - component: {fileID: 1228964208}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: EnemyChara
@@ -9703,6 +9716,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   medama_H:
     Name: 
     Cost: 0
@@ -9720,6 +9734,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   ago_H:
     Name: 
     Cost: 0
@@ -9737,6 +9752,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   kobusi_A:
     Name: 
     Cost: 0
@@ -9754,6 +9770,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   ude_A:
     Name: 
     Cost: 0
@@ -9771,6 +9788,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   kata_A:
     Name: 
     Cost: 0
@@ -9788,6 +9806,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   sebone_B:
     Name: 
     Cost: 0
@@ -9805,6 +9824,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   harawata_B:
     Name: 
     Cost: 0
@@ -9822,6 +9842,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   harawata2_B:
     Name: 
     Cost: 0
@@ -9839,6 +9860,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hone_L:
     Name: 
     Cost: 0
@@ -9856,6 +9878,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hone2_L:
     Name: 
     Cost: 0
@@ -9873,6 +9896,7 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   asi_L:
     Name: 
     Cost: 0
@@ -9890,12 +9914,14 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   Name: test
   hide_hint: test
   Death_year: 10
   temper: "\u30A2\u30EA\u30B9"
   Memory: 01000200
   area: 2
+  initArea: 2
   MainClass: Stacy
   SubClass: Stacy
   Armament: 0
@@ -10023,7 +10049,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1228964207
+--- !u!114 &1228964208
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10032,11 +10058,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1228964198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e1587392e8894c49951f3891adb22c8, type: 3}
+  m_Script: {fileID: 11500000, guid: ee1e1707894182d4b820c100e5b6c5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleSystem: {fileID: 766473211}
-  getClickedObj: {fileID: 963194231}
+  Enemy: {fileID: 11400000, guid: 09df2fa75f689d742b1d30b2ce50dcdf, type: 2}
+  kihon: {fileID: 0}
+  EnemyAI: 0
+  me: {fileID: 1228964199}
+  opponentManeuver:
+    Name: "\u76F8\u624B\u306E\u653B\u6483"
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 1
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: 0
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+    EnemyAI: 
+  opponent: {fileID: 741667022}
 --- !u!1 &1236681391
 GameObject:
   m_ObjectHideFlags: 0

@@ -65,10 +65,10 @@ MonoBehaviour:
     value: 8.95
   aperture:
     overrideState: 1
-    value: 7.6
+    value: 19.6
   focalLength:
     overrideState: 1
-    value: 90
+    value: 194
   kernelSize:
     overrideState: 0
     value: 1
@@ -124,7 +124,7 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 1, g: 0.2696729, b: 0, a: 1}
+    value: {r: 1, g: 0.27058825, b: 0, a: 1}
   fastMode:
     overrideState: 1
     value: 0
