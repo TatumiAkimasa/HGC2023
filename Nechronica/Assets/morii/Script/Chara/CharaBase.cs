@@ -31,12 +31,16 @@ public class CharaBase : MonoBehaviour
     public List<CharaManeuver> GetArmParts() => ArmParts;   // 腕パーツ参照
     public List<CharaManeuver> GetBodyParts() => BodyParts; // 胴体パーツ参照
     public List<CharaManeuver> GetLegParts() => LegParts;   // 脚パーツ参照
+    public List<CharaManeuver> GetPotisionSkill() => positionSkill; // ポジションスキル参照
+    public List<CharaManeuver> GetClassSkill() => classSkill;   // クラススキル
 
     public List<CharaManeuver> HeadParts;       // 頭のパーツ
     public List<CharaManeuver> ArmParts;        // 腕のパーツ
     public List<CharaManeuver> BodyParts;       // 胴のパーツ
     public List<CharaManeuver> LegParts;        // 脚のパーツ
+
     public List<CharaManeuver> positionSkill;   // ポジションスキル
+
     public List<CharaManeuver> classSkill;      // クラススキル
                                                   
     //最大行動値計算
@@ -93,7 +97,7 @@ public class CharaBase : MonoBehaviour
     }
 
     protected int maxCount = 6;                   // カウント最大値 ルール上もともと最大行動値は6あるので6で初期化
-    protected int nowCount;                       // 現在のカウント
+    [SerializeField]protected int nowCount;                       // 現在のカウント
     public int NowCount
     {
         get { return nowCount; }
@@ -149,6 +153,9 @@ public class EffNum
     
     // オンリーワンの効果
     public const string Protect  = "Protect";       // かばうの効果はこれで認識
+    public const string YobunnnaUde = "YobunnnaUde";   // 余分な腕、死の手はこれで認識
+
+
 }
 
 

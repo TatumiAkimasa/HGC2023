@@ -22,7 +22,7 @@ public class BattleCommand : MonoBehaviour
     public GameObject GetActSelect() => actSelect;
 
     private GameObject actionCommands;             // アクションタイミングのコマンドオブジェクト
-    private GameObject rapidCommands;              // ラピッドタイミングのコマンドオブジェクト
+    public GameObject rapidCommands;              // ラピッドタイミングのコマンドオブジェクト
     private GameObject judgCommands;               // ジャッジタイミングのコマンドオブジェクト
     private GameObject damageCommands;             // ダメージタイミングのコマンドオブジェクト
 
@@ -84,13 +84,13 @@ public class BattleCommand : MonoBehaviour
 
         // コマンドを取得
         actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
-        rapidCommands = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
+        rapidCommands = this.transform.Find("Canvas/Rapid/RapidCommands").gameObject;
         judgCommands = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
         damageCommands = this.transform.Find("Canvas/Damage/DamageCommands").gameObject;
 
         // バックイメージを取得
         backActImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
-        backRpdImg = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands/BackImg").GetComponent<RectTransform>();
+        backRpdImg = this.transform.Find("Canvas/Rapid/RapidCommands/BackImg").GetComponent<RectTransform>();
         backJdgImg = this.transform.Find("Canvas/Judge/JudgeCommands/BackImg").GetComponent<RectTransform>();
         backDmgImg = this.transform.Find("Canvas/Damage/DamageCommands/BackImg").GetComponent<RectTransform>();
 
@@ -258,7 +258,7 @@ public class BattleCommand : MonoBehaviour
         }
         if (maneuver.Timing == CharaBase.RAPID)
         {
-
+            command.GetComponent<Button>().onClick.AddListener(() => OnClickRpdCommand(maneuver));
         }
         if (maneuver.Timing == CharaBase.JUDGE)
         {
@@ -287,7 +287,17 @@ public class BattleCommand : MonoBehaviour
         ProcessAccessor.Instance.jdgTiming.SetManeuver(maneuver);
         ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.area);
         ProcessAccessor.Instance.jdgTiming.GetConfirmatButton().SetActive(true);
+    }
 
+    void OnClickRpdCommand(CharaManeuver maneuver)
+    {
+        ProcessAccessor.Instance.rpdTiming.SkillSelected = true;
+        ProcessAccessor.Instance.rpdTiming.SetManeuver(maneuver);
+        ProcessAccessor.Instance.rpdTiming.SetArea(thisChara.area);
+        if(maneuver.MinRange==10)
+        {
+            ProcessAccessor.Instance.dmgTiming.GetConfirmatButton().SetActive(true);
+        }
     }
 
     void OnClickDmgCommand(CharaManeuver maneuver)

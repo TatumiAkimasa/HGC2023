@@ -12,6 +12,7 @@ public class GetClickedGameObject : MonoBehaviour
     public const int ACTION = 0;               // 子オブジェクト取得のための定数
     public const int JUDGE  = 1;               // 子オブジェクト取得のための定数
     public const int DAMAGE = 2;               // 子オブジェクト取得のための定数
+    public const int RAPID  = 3;
     public const int STATUS = 0;               // 敵のステータスを取得するための定数
     public const int BUTTONS = 1;              // 敵のボタンを取得するための定数
     public const int ATKBUTTONS = 0;           // アタックボタンとかの子オブジェクトを取得するための定数
@@ -238,7 +239,10 @@ public class GetClickedGameObject : MonoBehaviour
         CharaCamera.Priority = 0;
         // コマンドを消す
         //childCommand.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        childCommand.gameObject.SetActive(false);
+        if(childCommand!=null)
+        {
+            childCommand.gameObject.SetActive(false);
+        }
         // 複製したプレハブカメラを消す。
         StartCoroutine(DstroyCamera());
     }

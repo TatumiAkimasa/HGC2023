@@ -152,7 +152,7 @@ public class JdgTimingProcess : GetClickedGameObject
         isDiceRoll = true;
     }
 
-    public void OnClickExeManeuver()
+    public void OnClickManeuver()
     {
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
@@ -162,28 +162,42 @@ public class JdgTimingProcess : GetClickedGameObject
              Mathf.Abs(actingChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area))&&
              (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
-            // ダイスロールの結果に支援、妨害の値を反映
-            rollResult += dollManeuver.EffectNum[EffNum.Judge];
-            rollResultText.text = rollResult.ToString();
-            dollManeuver.isUse = true; 
-            // スキルを発動したらコマンドボタンを非表示にし、キャラ選択待機状態にもどす
-            confirmatButton.SetActive(false);
-            skillSelected = false;
-            ZoomOutObj();
-            isStandbyCharaSelect = true;
-
-            // 行動値をコスト分減少させる
-            selectedAllyChara.NowCount -= dollManeuver.Cost;
-            if (selectedAllyChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount && isSelectedChara != actingChara)
-            {
-                ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
-            }
+            ExeJudgManeuver(dollManeuver, selectedAllyChara);
         }
         else
         {
             // 射程が足りませんみたいな表記をする
         }
     }
+
+    /// <summary>
+    /// 実際にジャッジタイミングの効果を発動する処理
+    /// </summary>
+    /// <param name="maneuver"></param>
+    /// <param name="judgExeChara"></param>
+    public void ExeJudgManeuver(CharaManeuver maneuver, Doll_blu_Nor judgExeChara)
+    {
+        // ダイスロールの結果に支援、妨害の値を反映
+        rollResult += dollManeuver.EffectNum[EffNum.Judge];
+        rollResultText.text = rollResult.ToString();
+        maneuver.isUse = true;
+        // スキルを発動したらコマンドボタンを非表示にし、キャラ選択待機状態にもどす
+        confirmatButton.SetActive(false);
+        skillSelected = false;
+        if(judgExeChara.gameObject.CompareTag("AllyChara"))
+        {
+            ZoomOutObj();
+        }
+        isStandbyCharaSelect = true;
+
+        // 行動値をコスト分減少させる
+        judgExeChara.NowCount -= dollManeuver.Cost;
+        if (judgExeChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount && judgExeChara != actingChara)
+        {
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara(judgExeChara.Name);
+        }
+    }
+
 
     protected override void ZoomOutObj()
     {

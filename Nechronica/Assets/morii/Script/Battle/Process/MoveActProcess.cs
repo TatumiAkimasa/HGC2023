@@ -110,29 +110,29 @@ public class MoveActProcess : GetClickedGameObject
     // 楽園方向に移動するボタン用のメソッド
     public void OnClickParadiseMove()
     {
-        if(moveChara.area==BattleSpone.RAKUEN)
-        {
-            // これ以上移動できませんみたいな表記する
-        }
-        else
-        {
-            // このクラスに入る前にActTimingProcessクラスでカメラの処理をしているのでActTimingProcessクラスでズームアウトの処理を行う
-            ProcessAccessor.Instance.actTiming.ZoomOutRequest();
-            // 実際にキャラを動かす
-            ManagerAccessor.Instance.battleSpone.CharaMove(moveChara, 1);
-            moveButtons.SetActive(false);
-            actingChara.NowCount -= dollManeuver.Cost;
-            // ここ、アニメーション終わってからの処理にしたいなぁ
-            // 行動したキャラを表示から消す
-            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
-            ManagerAccessor.Instance.battleSystem.BattleExe = true;
-        }
+        MoveChara(true,moveChara,false);
+        ProcessAccessor.Instance.actTiming.SkillSelected = true;
     }
 
     // 奈落方向に移動するボタン用のメソッド
     public void OnClickAbyssMove()
     {
-        if (moveChara.area == BattleSpone.NARAKU)
+        MoveChara(false,moveChara,false);
+        ProcessAccessor.Instance.actTiming.SkillSelected = true;
+    }
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="direction">trueで楽園方向に移動、falseで奈落方向に移動</param>
+    /// <param name="beMovedChara">移動させられるキャラ</param>
+    /// <param name="isRapid">ラピッドタイミングかどうか判断</param>
+    public void MoveChara(bool direction, Doll_blu_Nor beMovedChara, bool isRapid)
+    {
+        if ((beMovedChara.area == BattleSpone.NARAKU && !direction)||
+             beMovedChara.area == BattleSpone.RAKUEN &&  direction)
         {
             // これ以上移動できませんみたいな表記する
         }
@@ -141,13 +141,29 @@ public class MoveActProcess : GetClickedGameObject
             // このクラスに入る前にActTimingProcessクラスでカメラの処理をしているのでActTimingProcessクラスでズームアウトの処理を行う
             ProcessAccessor.Instance.actTiming.ZoomOutRequest();
             // 実際にキャラを動かす
-            ManagerAccessor.Instance.battleSpone.CharaMove(moveChara, -1);
+            if(direction)
+            {
+                ManagerAccessor.Instance.battleSpone.CharaMove(moveChara, 1);
+            }
+            else
+            {
+                ManagerAccessor.Instance.battleSpone.CharaMove(moveChara, -1);
+            }
+            
             moveButtons.SetActive(false);
             actingChara.NowCount -= dollManeuver.Cost;
             // ここ、アニメーション終わってからの処理にしたいなぁ
             // 行動したキャラを表示から消す
-            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
-            ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            if(isRapid)
+            {
+                ProcessAccessor.Instance.rpdTiming.ExemaneuverProcess = true;
+            }
+            else
+            {
+
+                ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+                ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            }
         }
     }
 }

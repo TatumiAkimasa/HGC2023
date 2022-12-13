@@ -7,10 +7,8 @@ using Cinemachine;
 public class ActTimingProcess : GetClickedGameObject
 {
     // 定数--------------------------
-
     private const bool ALLY  = true;
     private const bool ENEMY = false;
-
     //-------------------------------
 
     // キャラクターのアクションコマンドを取得
@@ -163,7 +161,7 @@ public class ActTimingProcess : GetClickedGameObject
     {
         // カメラを元の位置に戻し、UIを消す
         ZoomOutObj();
-        this.transform.GetChild(CANVAS).gameObject.SetActive(false);
+        this.transform.GetChild(CANVAS).transform.GetChild(0).gameObject.SetActive(false);
         // childCommandの中身をなくす
         if (childCommand != null)
         {
@@ -218,7 +216,7 @@ public class ActTimingProcess : GetClickedGameObject
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
 
-                        exeButton.onClick.AddListener(() => OnClickAtk(move.GetComponent<Doll_blu_Nor>()));
+                        exeButton.onClick.AddListener(() => OnClickAtkRequest());
 
                         this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(true);
                     }
@@ -228,35 +226,44 @@ public class ActTimingProcess : GetClickedGameObject
         }
     }
 
-    
     /// <summary>
-    /// ジャッジタイミングへ移行するボタン。
+    /// 次のジャッジタイミングに移行をリクエストするボタン
     /// </summary>
-    /// <param name="enemy">これ多分消す</param>
-    public void OnClickAtk(Doll_blu_Nor enemy)
+    private void OnClickAtkRequest()
     {
-        // カメラを元の位置に戻し、UIを消す
-        ZoomOutObj();
-        //enemy.transform.GetChild(CANVAS).gameObject.SetActive(false);
-        this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(false);
+        ExeAtkManeuver(atkTargetEnemy.GetComponent<Doll_blu_Nor>(), dollManeuver, actingChara);
+    }
+
+
+
+    /// <summary>
+    /// ジャッジタイミングへ移行するメソッド
+    /// </summary>
+    /// <param name="enemy">攻撃対象</param>
+    /// <param name="maneuver">攻撃内容</param>
+    /// <param name="actChara">攻撃を行うキャラ</param>
+    public void ExeAtkManeuver(Doll_blu_Nor enemy, CharaManeuver maneuver,Doll_blu_Nor actChara)
+    {
+        // actCharaのタグがAllyCharaの場合カメラやUIが出ているので、カメラを元の位置に戻しUIを消す
+        if(actChara.gameObject.CompareTag("AllyChara"))
+        {
+            ZoomOutObj();
+            this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(false);
+        }
+
 
         isSelectedChara = false;
         isStandbyEnemySelect = false;
         isStandbyCharaSelect = false;
 
         // ここからジャッジに入る
-        ProcessAccessor.Instance.jdgTiming.enabled = true;
-        ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
-        ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
-        ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
-        ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy;
-        ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
-        ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
-        ProcessAccessor.Instance.jdgTiming.ActMneuver = dollManeuver;
-
+        ProcessAccessor.Instance.rpdTiming.SetActChara(actChara);
+        ProcessAccessor.Instance.rpdTiming.ActMneuver = maneuver;
+        ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
+        ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
 
         // 要if分分け。特殊なコストでなければコストを減少させる
         // 行動値を減少させる
-        actingChara.NowCount -= dollManeuver.Cost;
+        actChara.NowCount -= maneuver.Cost;
     }
 }
