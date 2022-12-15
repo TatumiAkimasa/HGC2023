@@ -84,7 +84,7 @@ public class BattleCommand : MonoBehaviour
 
         // コマンドを取得
         actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
-        rapidCommands = this.transform.Find("Canvas/Rapid/RapidCommands").gameObject;
+        rapidCommands = this.transform.Find("Canvas/Rapid").gameObject;
         judgCommands = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
         damageCommands = this.transform.Find("Canvas/Damage/DamageCommands").gameObject;
 
@@ -296,8 +296,23 @@ public class BattleCommand : MonoBehaviour
         ProcessAccessor.Instance.rpdTiming.SetArea(thisChara.area);
         if(maneuver.MinRange==10)
         {
-            ProcessAccessor.Instance.dmgTiming.GetConfirmatButton().SetActive(true);
+            // 移動マニューバの場合、移動する方向のボタンを表示
+            if (maneuver.EffectNum.ContainsKey(EffNum.Move))
+            {
+                ProcessAccessor.Instance.actTimingMove.IsRapid = true;
+                ProcessAccessor.Instance.actTimingMove.GetMoveButtons().SetActive(true);
+            }
+            else
+            {
+                ProcessAccessor.Instance.rpdTiming.GetConfirmatButton().SetActive(true);
+            }
         }
+        else
+        {
+            ProcessAccessor.Instance.rpdTiming.StandbyEnemySelect = true;
+        }
+
+        
     }
 
     void OnClickDmgCommand(CharaManeuver maneuver)

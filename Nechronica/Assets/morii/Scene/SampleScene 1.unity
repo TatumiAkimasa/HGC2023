@@ -3631,9 +3631,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194235}
-        m_TargetAssemblyTypeName: DmgTimingProcess, Assembly-CSharp
-        m_MethodName: OnClickNextButton
+      - m_Target: {fileID: 963194237}
+        m_TargetAssemblyTypeName: RpdTimingProcess, Assembly-CSharp
+        m_MethodName: OnClickNext
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5583,6 +5583,23 @@ MonoBehaviour:
     isDmage: 0
     Atk:
       atkType: 0
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  wirelille_A:
+    Name: 
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
@@ -10757,6 +10774,23 @@ MonoBehaviour:
     isDmage: 0
     Atk:
       atkType: 0
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+  wirelille_A:
+    Name: 
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0

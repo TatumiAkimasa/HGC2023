@@ -33,6 +33,7 @@ public class Doll_blu_Nor : PartsList
         ArmParts.Add(ude_A);
         ArmParts.Add(kata_A);
         ArmParts.Add(kobusi_A);
+        ArmParts.Add(wirelille_A);
 
         //“·----------------------
         BodyParts.Add(harawata2_B);

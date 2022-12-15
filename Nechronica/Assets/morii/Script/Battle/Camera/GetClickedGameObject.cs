@@ -10,9 +10,9 @@ public class GetClickedGameObject : MonoBehaviour
     public const int CANVAS = 0;
     public const int CharaPriority = 20;       // シネマカメラの優先度用定数。キャラをズームする用のカメラの優先度を最優先にする
     public const int ACTION = 0;               // 子オブジェクト取得のための定数
-    public const int JUDGE  = 1;               // 子オブジェクト取得のための定数
-    public const int DAMAGE = 2;               // 子オブジェクト取得のための定数
-    public const int RAPID  = 3;
+    public const int RAPID  = 1;
+    public const int JUDGE  = 2;               // 子オブジェクト取得のための定数
+    public const int DAMAGE = 3;               // 子オブジェクト取得のための定数
     public const int STATUS = 0;               // 敵のステータスを取得するための定数
     public const int BUTTONS = 1;              // 敵のボタンを取得するための定数
     public const int ATKBUTTONS = 0;           // アタックボタンとかの子オブジェクトを取得するための定数

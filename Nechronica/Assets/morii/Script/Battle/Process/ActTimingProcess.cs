@@ -121,6 +121,10 @@ public class ActTimingProcess : GetClickedGameObject
                 {
                     actCharaCommand.GetActCommands().SetActive(false);
                 }
+                else if(actCharaCommand.GetRpdCommands().activeSelf)
+                {
+                    actCharaCommand.GetRpdCommands().SetActive(false);
+                }
                 else
                 {
                     MyZoomOutObj(actCharaCommand.GetActSelect());
@@ -261,6 +265,7 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.ActMneuver = maneuver;
         ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
+        ProcessAccessor.Instance.rpdTiming.SetRapidButton(true);
 
         // 要if分分け。特殊なコストでなければコストを減少させる
         // 行動値を減少させる

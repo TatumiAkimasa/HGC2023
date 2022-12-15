@@ -8,7 +8,7 @@ public class PartsList : CharaBase
     [SerializeField]
     //基礎パーツ
     protected CharaManeuver noumiso_H, medama_H, ago_H,hunnu_H,
-                            kobusi_A, ude_A, kata_A,
+                            kobusi_A, ude_A, kata_A,wirelille_A,
                             sebone_B, harawata_B, harawata2_B,
                             hone_L, hone2_L, asi_L;
     //TIMING------------------^p^
@@ -82,6 +82,13 @@ public class PartsList : CharaBase
         ude_A.MaxRange = 0;
         ude_A.Weight = 1;
 
+        wirelille_A.Name = "ワイヤーリール";
+        wirelille_A.EffectNum.Add(EffNum.Move, 1);
+        wirelille_A.Cost = 3;
+        wirelille_A.Timing = RAPID;
+        wirelille_A.MinRange = 0;
+        wirelille_A.MaxRange = 2;
+        wirelille_A.Weight = 1;
         //胴----------------------------
 
         sebone_B.Name = "せぼね";
