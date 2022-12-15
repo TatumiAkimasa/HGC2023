@@ -84,12 +84,23 @@ public class MoveEvent_Chara : MonoBehaviour
                     yield return null;
                     break;
                 case EventType.event_Type.CameraMove:
-                    Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
-                    yield return new WaitForSeconds(0.01f); ;
-                    Assistcs.ChinemaCameras[InCamera].SetActive(false);
-                    
-                    InCamera = EventTypes[i].ordes.OutCamera;
-                    yield return new WaitForSeconds(3.0f);
+                    if (EventTypes[i].ordes.OutCamera == 0)
+                    {
+                        Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
+                      
+                        yield return new WaitForSeconds(3.0f);
+                        Assistcs.ChinemaCameras[InCamera].SetActive(false);
+                        InCamera = EventTypes[i].ordes.OutCamera;
+                    }
+                    else
+                    {
+                        Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
+                        yield return new WaitForSeconds(0.01f); ;
+                        Assistcs.ChinemaCameras[InCamera].SetActive(false);
+
+                        yield return new WaitForSeconds(3.0f);
+                        InCamera = EventTypes[i].ordes.OutCamera;
+                    }
                     break;
                 case EventType.event_Type.DeleteChara:
                     Destroy(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject);
