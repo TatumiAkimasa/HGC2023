@@ -6,6 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class CharaBase : MonoBehaviour
 {
+    //定数----------------------------------
     //タイミングの定数
     public const int COUNT  = -1;
     public const int AUTO   = 0;
@@ -14,6 +15,12 @@ public class CharaBase : MonoBehaviour
     public const int RAPID  = 3;
     public const int JUDGE  = 4;
     public const int DAMAGE = 5;
+
+    //攻撃タイプの定数
+    public const int MELEE = 0;         // 白兵攻撃
+    public const int VIOLENCE = 1;      // 肉弾攻撃
+    public const int SHOOTING = 2;      // 射撃攻撃
+    //--------------------------------------
 
     //ゲッター
     public int GetMaxCount() => maxCount;
@@ -24,11 +31,17 @@ public class CharaBase : MonoBehaviour
     public List<CharaManeuver> GetArmParts() => ArmParts;   // 腕パーツ参照
     public List<CharaManeuver> GetBodyParts() => BodyParts; // 胴体パーツ参照
     public List<CharaManeuver> GetLegParts() => LegParts;   // 脚パーツ参照
+    public List<CharaManeuver> GetPotisionSkill() => positionSkill; // ポジションスキル参照
+    public List<CharaManeuver> GetClassSkill() => classSkill;   // クラススキル
 
-    public List<CharaManeuver> HeadParts;      // 頭のパーツ
-    public List<CharaManeuver> ArmParts;       // 腕のパーツ
-    public List<CharaManeuver> BodyParts;      // 胴のパーツ
-    public List<CharaManeuver> LegParts;       // 脚のパーツ
+    public List<CharaManeuver> HeadParts;       // 頭のパーツ
+    public List<CharaManeuver> ArmParts;        // 腕のパーツ
+    public List<CharaManeuver> BodyParts;       // 胴のパーツ
+    public List<CharaManeuver> LegParts;        // 脚のパーツ
+
+    public List<CharaManeuver> positionSkill;   // ポジションスキル
+
+    public List<CharaManeuver> classSkill;      // クラススキル
                                                   
     //最大行動値計算
     public void MaxCountCal()
@@ -65,6 +78,14 @@ public class CharaBase : MonoBehaviour
                 maxCount += LegParts[i].EffectNum[EffNum.Count];
             }
         }
+        for (int i = 0; i < LegParts.Count; i++)
+        {
+            //最大行動値加算
+            if (!LegParts[i].isDmage && LegParts[i].Timing == COUNT)
+            {
+                maxCount += classSkill[i].EffectNum[EffNum.Count];
+            }
+        }
     }
 
     /// <summary>
@@ -76,7 +97,7 @@ public class CharaBase : MonoBehaviour
     }
 
     protected int maxCount = 6;                   // カウント最大値 ルール上もともと最大行動値は6あるので6で初期化
-    protected int nowCount;                       // 現在のカウント
+    [SerializeField]protected int nowCount;                       // 現在のカウント
     public int NowCount
     {
         get { return nowCount; }
@@ -113,7 +134,7 @@ public class CharaManeuver
 [System.Serializable]
 public class ManeuverEffectsAtk
 {
-    public int atkType;        // 攻撃属性
+    public int atkType = -1;        // 攻撃属性
     public bool isExplosion;   // 爆発攻撃かどうか
     public bool isCutting;     // 切断攻撃かどうか
     public bool isAllAttack;   // 全体攻撃かどうか
@@ -135,6 +156,9 @@ public class EffNum
     
     // オンリーワンの効果
     public const string Protect  = "Protect";       // かばうの効果はこれで認識
+    public const string YobunnnaUde = "YobunnnaUde";   // 余分な腕、死の手はこれで認識
+
+
 }
 
 

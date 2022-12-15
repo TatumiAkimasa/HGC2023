@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class DmgTimingProcess : GetClickedGameObject
 {
+    //-------------------------------
+    // ほしい情報メモ
+    // 攻撃するenemy
+    // ターゲットになってる味方キャラ
+    //-------------------------------
+
     private int addDamage = 0;          // ダメージタイミングのマニューバ二位夜追加ダメージ
     private int giveDamage = 0;         // 与えるダメージ
     private int dmgGuard = 0;           // 与えるダメージをこの変数の値分減らす
@@ -43,7 +49,7 @@ public class DmgTimingProcess : GetClickedGameObject
     // Update is called once per frame
     void Update()
     {
-        if(standbyCharaSelect)
+        if(isStandbyCharaSelect)
         {
             CharaSelectStandby();
         }
@@ -67,8 +73,8 @@ public class DmgTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
+                    isStandbyCharaSelect = false;
                     selectedAllyChara = move.GetComponent<Doll_blu_Nor>();
-                    standbyCharaSelect = false;
                     // 選択したキャラのコマンドのオブジェクトを取得
                     childCommand = move.transform.GetChild(CANVAS).transform.GetChild(DAMAGE);
                     // 技コマンドもろもろを表示
@@ -91,50 +97,65 @@ public class DmgTimingProcess : GetClickedGameObject
         nextButton.gameObject.SetActive(false);
     }
 
-    private void ExeManeuver()
+    public void OnClickExe()
     {
-        if(dollManeuver.EffectNum.ContainsKey(EffNum.Damage))
+        ExeManeuver(dollManeuver, selectedAllyChara);
+    }
+
+
+    /// <summary>
+    /// 発動したマニューバーが何をするのかの確認をする
+    /// </summary>
+    public void ExeManeuver(CharaManeuver maneuver, Doll_blu_Nor dmgExeChara)
+    {
+        // ダメージを増加するマニューバーの処理
+        if(maneuver.EffectNum.ContainsKey(EffNum.Damage))
         {
-            DamageUPProcess();
+            DamageUPProcess(maneuver,dmgExeChara);
         }
+        // 防御値を増加するマニューバーの処理
         else if(dollManeuver.EffectNum.ContainsKey(EffNum.Guard))   
         {
-            GuardProcess();
+            GuardProcess(maneuver, dmgExeChara);
         }
         else   // 上の二つに該当しない場合、固有の効果と使用する
         {
 
         }
 
+        // 同カウントで動くキャラがダメージタイミングのマニューバーを発動した場合、同カウントに行動ができなくなるので左の表示および動ける予定のキャラのリストから削除する
         if(selectedAllyChara.NowCount==ManagerAccessor.Instance.battleSystem.NowCount)
         {
             ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
         }
+
+        confirmatButton.SetActive(false);
+        ZoomOutObj();
     }
 
-    private void DamageUPProcess()
+    private void DamageUPProcess(CharaManeuver maneuver, Doll_blu_Nor dmgExeChara)
     {
         // 与えるダメージが上がる系の処理
         // 射程が自身のみの場合、ダメージを与えるキャラとダメージタイミングで動くキャラが同じかどうか調べる
         if (dollManeuver.MinRange == 10)
         {
-            if(actingChara==selectedChara)
+            if(actingChara == dmgExeChara)
             {
-                addDamage += dollManeuver.EffectNum[EffNum.Damage];
+                addDamage += maneuver.EffectNum[EffNum.Damage];
                 // 要if文分け。特殊なコストどうか判断する
-                selectedAllyChara.NowCount -= dollManeuver.Cost;
+                dmgExeChara.NowCount -= maneuver.Cost;
             }
         }
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
-        else if ((Mathf.Abs(actingChara.area) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.area)  &&
-                  Mathf.Abs(actingChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area)) &&
-                (!dollManeuver.isUse && !dollManeuver.isDmage))
+        else if ((Mathf.Abs(actingChara.area) <= Mathf.Abs(maneuver.MaxRange + dmgExeChara.area)  &&
+                  Mathf.Abs(actingChara.area) >= Mathf.Abs(maneuver.MinRange + dmgExeChara.area)) &&
+                (!maneuver.isUse && !maneuver.isDmage))
         {
-            addDamage += dollManeuver.EffectNum[EffNum.Damage];
+            addDamage += maneuver.EffectNum[EffNum.Damage];
             // 要if文分け。特殊なコストどうか判断する
-            selectedAllyChara.NowCount -= dollManeuver.Cost;
+            dmgExeChara.NowCount -= maneuver.Cost;
         }
         else
         {
@@ -142,29 +163,29 @@ public class DmgTimingProcess : GetClickedGameObject
         }
     }
 
-    private void GuardProcess()
+    private void GuardProcess(CharaManeuver maneuver, Doll_blu_Nor dmgExeChara)
     {
         // 防御とかの処理
         // 射程が自身のみの場合、ダメージを受けるキャラとダメージタイミングで動くキャラが同じかどうか調べる
-        if (dollManeuver.MinRange == 10)
+        if (maneuver.MinRange == 10)
         {
-            if (damageChara == selectedChara)
+            if (damageChara == dmgExeChara)
             {
-                dmgGuard += dollManeuver.EffectNum[EffNum.Guard];
+                dmgGuard += maneuver.EffectNum[EffNum.Guard];
                 // 要if文分け。特殊なコストどうか判断する
-                selectedAllyChara.NowCount -= dollManeuver.Cost;
+                dmgExeChara.NowCount -= maneuver.Cost;
             }
         }
-        else if ((Mathf.Abs(damageChara.area) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.area) &&
-                  Mathf.Abs(damageChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area)) &&
-                (!dollManeuver.isUse && !dollManeuver.isDmage))
+        else if ((Mathf.Abs(damageChara.area) <= Mathf.Abs(maneuver.MaxRange + dmgExeChara.area) &&
+                  Mathf.Abs(damageChara.area) >= Mathf.Abs(maneuver.MinRange + dmgExeChara.area)) &&
+                (!maneuver.isUse && !maneuver.isDmage))
         {
-            if(dollManeuver.EffectNum.ContainsKey(EffNum.Guard))
+            if(maneuver.EffectNum.ContainsKey(EffNum.Guard))
             {
-                dmgGuard += dollManeuver.EffectNum[EffNum.Guard];
+                dmgGuard += maneuver.EffectNum[EffNum.Guard];
             }
             // 要if文分け。特殊なコストどうか判断する
-            selectedAllyChara.NowCount -= dollManeuver.Cost;
+            selectedAllyChara.NowCount -= maneuver.Cost;
         }
         else
         {
@@ -194,11 +215,18 @@ public class DmgTimingProcess : GetClickedGameObject
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
         // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められるが今は仮に頭とする
+        // 要if文分け。サヴァントかホラーかレギオンか
         if (rollResult > 10)
         {
             // ダイスロールの結果が10より上の場合の追加ダメージ処理
             int addDmg = rollResult - 10;
             giveDamage = giveDamage + addDmg;
+
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetHeadParts().Count)
+            {
+                giveDamage = damageChara.GetHeadParts().Count;
+            }
 
             for (int i = 0; i < giveDamage; i++)
             {
@@ -210,6 +238,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 10)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage>damageChara.GetHeadParts().Count)
+            {
+                giveDamage = damageChara.GetHeadParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetHeadParts()[i].isDmage)
@@ -220,6 +254,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 9)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetArmParts().Count)
+            {                               
+                giveDamage = damageChara.GetArmParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetArmParts()[i].isDmage)
@@ -230,6 +270,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 8)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetBodyParts().Count)
+            {                               
+                giveDamage = damageChara.GetBodyParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetBodyParts()[i].isDmage)
@@ -240,6 +286,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 7)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetLegParts().Count)
+            {                               
+                giveDamage = damageChara.GetLegParts().Count;
+            }
+
             for (int i = 0; i < giveDamage; i++)
             {
                 if (!damageChara.GetLegParts()[i].isDmage)
@@ -250,6 +302,12 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (rollResult == 6)
         {
+            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
+            if (giveDamage > damageChara.GetHeadParts().Count)
+            {
+                giveDamage = damageChara.GetHeadParts().Count;
+            }
+
             // 相手が選ぶ。今は仮に頭にダメージが入るようにする
             for (int i = 0; i < giveDamage; i++)
             {

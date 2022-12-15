@@ -30,6 +30,7 @@ public class Doll_blu_Nor : PartsList
         HeadParts.Add(noumiso_H);
         HeadParts.Add(medama_H);
         HeadParts.Add(ago_H);
+        HeadParts.Add(hunnu_H);
 
         //˜r----------------------
         ArmParts.Add(ude_A);

@@ -6,6 +6,13 @@ using Cinemachine;
 
 public class JdgTimingProcess : GetClickedGameObject
 {
+    //-------------------------------
+    // ほしい情報メモ
+    // 攻撃するenemy
+    // ターゲットになってる味方キャラ
+    // ダイスロールの値
+    //-------------------------------
+
     private bool isDiceRoll;
     private bool isStandbyDiceRoll;
 
@@ -33,15 +40,17 @@ public class JdgTimingProcess : GetClickedGameObject
     }
 
     [SerializeField] private Text rollResultText;
+    [SerializeField] private Text plusNumText;      // パッシブなどによるダイスロールに行われる加算
     [SerializeField] private Button nextButton;     // ジャッジタイミングを終わらせるボタン
     [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
-    [SerializeField] private Image buttonImg;       // ボタンの画像
+    [SerializeField] private Image diceRollButtonImg;       // ダイス演出などに使うボタンの画像
     [SerializeField] private GameObject confirmatButton;    // 最後に発動するか確認するボタン
     [SerializeField] private GameObject judgeButtons;       // ジャッジタイミングで扱うボタンの親オブジェクト
 
     public Button GetDiceRollButton() => diceRollButton;
     public GameObject GetConfirmatButton() => confirmatButton;
     public GameObject GetJudgeButton() => judgeButtons;
+    public GameObject GetPlusNum() => plusNumText.gameObject;
 
 
     private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
@@ -64,11 +73,11 @@ public class JdgTimingProcess : GetClickedGameObject
                 isDiceRoll = false;
 
                 // ここからジャッジタイミング
-                standbyCharaSelect = true;
+                isStandbyCharaSelect = true;
                 nextButton.gameObject.SetActive(true);
             }
         }
-        else if(standbyCharaSelect)
+        else if(isStandbyCharaSelect)
         {
             CharaSelectStandby();
         }
@@ -111,7 +120,7 @@ public class JdgTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
-                    standbyCharaSelect = false;
+                    isStandbyCharaSelect = false;
                     selectedAllyChara = move.GetComponent<Doll_blu_Nor>();
                     // 選択したキャラのコマンドのオブジェクトを取得
                     childCommand = move.transform.GetChild(CANVAS).transform.GetChild(JUDGE);
@@ -126,6 +135,7 @@ public class JdgTimingProcess : GetClickedGameObject
     {
         ZoomOutObj();
         confirmatButton.SetActive(false);
+        isStandbyCharaSelect = true;
     }
 
     /// <summary>
@@ -137,12 +147,12 @@ public class JdgTimingProcess : GetClickedGameObject
         rollResult = randoms.NextInt(1, 11);
         rollResultText.text = rollResult.ToString();
         // その後の操作を邪魔しないようにfalseにしておく
-        buttonImg.raycastTarget = false;
+        diceRollButtonImg.raycastTarget = false;
         diceRollButton.enabled = false;
         isDiceRoll = true;
     }
 
-    public void OnClickExeManeuver()
+    public void OnClickManeuver()
     {
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
@@ -152,27 +162,42 @@ public class JdgTimingProcess : GetClickedGameObject
              Mathf.Abs(actingChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area))&&
              (!dollManeuver.isUse && !dollManeuver.isDmage))
         {
-            rollResult += dollManeuver.EffectNum[EffNum.Judge];
-            rollResultText.text = rollResult.ToString();
-            dollManeuver.isUse = true; 
-            // スキルを発動したらコマンドボタンを非表示にし、キャラ選択待機状態にもどす
-            confirmatButton.SetActive(false);
-            skillSelected = false;
-            ZoomOutObj();
-            standbyCharaSelect = true;
-
-            // 行動値をコスト分減少させる
-            selectedAllyChara.NowCount -= dollManeuver.Cost;
-            if (selectedAllyChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount)
-            {
-                ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
-            }
+            ExeJudgManeuver(dollManeuver, selectedAllyChara);
         }
         else
         {
             // 射程が足りませんみたいな表記をする
         }
     }
+
+    /// <summary>
+    /// 実際にジャッジタイミングの効果を発動する処理
+    /// </summary>
+    /// <param name="maneuver"></param>
+    /// <param name="judgExeChara"></param>
+    public void ExeJudgManeuver(CharaManeuver maneuver, Doll_blu_Nor judgExeChara)
+    {
+        // ダイスロールの結果に支援、妨害の値を反映
+        rollResult += dollManeuver.EffectNum[EffNum.Judge];
+        rollResultText.text = rollResult.ToString();
+        maneuver.isUse = true;
+        // スキルを発動したらコマンドボタンを非表示にし、キャラ選択待機状態にもどす
+        confirmatButton.SetActive(false);
+        skillSelected = false;
+        if(judgExeChara.gameObject.CompareTag("AllyChara"))
+        {
+            ZoomOutObj();
+        }
+        isStandbyCharaSelect = true;
+
+        // 行動値をコスト分減少させる
+        judgExeChara.NowCount -= dollManeuver.Cost;
+        if (judgExeChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount && judgExeChara != actingChara)
+        {
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara(judgExeChara.Name);
+        }
+    }
+
 
     protected override void ZoomOutObj()
     {
@@ -202,6 +227,7 @@ public class JdgTimingProcess : GetClickedGameObject
 
             ProcessAccessor.Instance.dmgTiming.SetActChara(actingChara);
             ProcessAccessor.Instance.dmgTiming.ActMneuver = actManeuver;
+            ProcessAccessor.Instance.dmgTiming.StandbyCharaSelect = true;
             ProcessAccessor.Instance.dmgTiming.SetDamageChara(atkTargetEnemy.GetComponent<Doll_blu_Nor>());
             ProcessAccessor.Instance.dmgTiming.SetRollResult(rollResult);
             ProcessAccessor.Instance.dmgTiming.GetDamageButtons().SetActive(true);
@@ -215,12 +241,18 @@ public class JdgTimingProcess : GetClickedGameObject
         }
         else
         {
-            // 次のカウントに行く処理
+            // アクションタイミングで行動したキャラを表示から消す
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+            ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            nextButton.gameObject.SetActive(false);
+            diceRollButton.gameObject.SetActive(false);
+            judgeButtons.SetActive(false);
         }
 
         // 次のジャッジタイミングで使えるようにtrueにする
-        buttonImg.raycastTarget = true;
-        diceRollButton.enabled = true;
+        diceRollButtonImg.raycastTarget = true;
+        diceRollButton.enabled  = true;
+        isStandbyCharaSelect = false;
     }
 
 }

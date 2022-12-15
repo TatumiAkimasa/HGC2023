@@ -7,7 +7,7 @@ public class PartsList : CharaBase
 {
     [SerializeField]
     //Šî‘bƒp[ƒc
-    protected CharaManeuver noumiso_H, medama_H, ago_H,
+    protected CharaManeuver noumiso_H, medama_H, ago_H,hunnu_H,
                             kobusi_A, ude_A, kata_A,
                             sebone_B, harawata_B, harawata2_B,
                             hone_L, hone2_L, asi_L;
@@ -46,6 +46,14 @@ public class PartsList : CharaBase
         medama_H.MinRange = 10;
         medama_H.MaxRange = 10;
         medama_H.Weight = 1;
+
+        hunnu_H.Name = "•®“{";
+        hunnu_H.EffectNum.Add(EffNum.Damage, 5);
+        hunnu_H.Cost = 0;
+        hunnu_H.Timing = DAMAGE;
+        hunnu_H.MinRange = 10;
+        hunnu_H.MaxRange = 10;
+        hunnu_H.Weight = 0;
 
 
 

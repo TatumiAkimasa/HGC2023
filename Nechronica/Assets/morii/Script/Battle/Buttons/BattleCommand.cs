@@ -12,18 +12,24 @@ public class BattleCommand : MonoBehaviour
     [SerializeField]
     private Doll_blu_Nor thisChara;                 // 自身を参照するための変数
 
-    [SerializeField]
-    private BattleCommand thisCharaCommand;         // 自己参照
 
-    [SerializeField] private List<CharaManeuver> ActionManeuvers;    // 自身が持っているアクションマニューバを保存 
-    [SerializeField] private List<CharaManeuver> RapidManeuvers;     // 自身が持っているラピッドマニューバを保存
-    [SerializeField] private List<CharaManeuver> JudgeManeuvers;     // 自身が持っているジャッジマニューバを保存
-    [SerializeField] private List<CharaManeuver> DamageManeuvers;    // 自身が持っているダメージマニューバを保存
+    [SerializeField] private List<CharaManeuver> ActionManeuvers;   // 自身が持っているアクションマニューバを保存 
+    [SerializeField] private List<CharaManeuver> RapidManeuvers;    // 自身が持っているラピッドマニューバを保存
+    [SerializeField] private List<CharaManeuver> JudgeManeuvers;    // 自身が持っているジャッジマニューバを保存
+    [SerializeField] private List<CharaManeuver> DamageManeuvers;   // 自身が持っているダメージマニューバを保存
 
-    [SerializeField] private GameObject actionCommands;              // アクションタイミングのコマンドオブジェクト
-    [SerializeField] private GameObject rapidCommands;               // ラピッドタイミングのコマンドオブジェクト
-    [SerializeField] private GameObject judgeCommands;               // ジャッジタイミングのコマンドオブジェクト
-    [SerializeField] private GameObject damageCommands;              // ダメージタイミングのコマンドオブジェクト
+    private GameObject actSelect;                                   // アクションタイミングでの動きを決めるボタン
+    public GameObject GetActSelect() => actSelect;
+
+    private GameObject actionCommands;             // アクションタイミングのコマンドオブジェクト
+    public GameObject rapidCommands;              // ラピッドタイミングのコマンドオブジェクト
+    private GameObject judgCommands;               // ジャッジタイミングのコマンドオブジェクト
+    private GameObject damageCommands;             // ダメージタイミングのコマンドオブジェクト
+
+    public GameObject GetActCommands() => actionCommands;
+    public GameObject GetRpdCommands() => rapidCommands;
+    public GameObject GetJdgCommands() => judgCommands;
+    public GameObject GetDmgCommands() => damageCommands;
 
     [SerializeField] private Button actionButton;                    // アクションのボタン
     [SerializeField] private Button rapidButton;                     // ラピッドのボタン
@@ -44,6 +50,8 @@ public class BattleCommand : MonoBehaviour
     private List<GameObject> prefabJdgObjList = new List<GameObject>();                // クローンしたジャッジコマンドプレハブの保存先
     private List<GameObject> prefabDmgObjList = new List<GameObject>();                // クローンしたダメージコマンドプレハブの保存先
 
+    
+
 
     private GameObject originalParentObj;              // 上記プレハブの親Objの元となるオブジェクト
     private RectTransform backActImg;                  // 上記変数の座標となるオブジェクト
@@ -51,14 +59,10 @@ public class BattleCommand : MonoBehaviour
     private RectTransform backJdgImg;                  // 上記変数の座標となるオブジェクト
     private RectTransform backDmgImg;                  // 上記変数の座標となるオブジェクト
 
-    [SerializeField]
-    private BattleSystem battleSystem;
 
     [SerializeField]
     private bool nowSelect;                         // 選択中かどうか
     public void SetNowSelect(bool select) => nowSelect = select;
-
-    public GetClickedGameObject getClicked;
 
     private void Start()
     {
@@ -75,15 +79,18 @@ public class BattleCommand : MonoBehaviour
         rapidButton.onClick.AddListener(OnClickRapid);
         standbyButton.onClick.AddListener(OnClickStandby);
 
+        // アクション、ラピッド、待機を選ぶgameObjectを取得
+        actSelect = this.transform.Find("Canvas/Act_select").gameObject;
+
         // コマンドを取得
         actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
-        rapidCommands = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands").gameObject;
-        judgeCommands = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
+        rapidCommands = this.transform.Find("Canvas/Rapid/RapidCommands").gameObject;
+        judgCommands = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
         damageCommands = this.transform.Find("Canvas/Damage/DamageCommands").gameObject;
 
         // バックイメージを取得
         backActImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
-        backRpdImg = this.transform.Find("Canvas/Act_select/Rapid/RapidCommands/BackImg").GetComponent<RectTransform>();
+        backRpdImg = this.transform.Find("Canvas/Rapid/RapidCommands/BackImg").GetComponent<RectTransform>();
         backJdgImg = this.transform.Find("Canvas/Judge/JudgeCommands/BackImg").GetComponent<RectTransform>();
         backDmgImg = this.transform.Find("Canvas/Damage/DamageCommands/BackImg").GetComponent<RectTransform>();
 
@@ -138,7 +145,7 @@ public class BattleCommand : MonoBehaviour
     /// <param name="maneuvers"></param>
     public void AddManeuver(List<CharaManeuver> maneuvers)
     {
-        for (int i = 0; i < thisChara.GetLegParts().Count; i++)
+        for (int i = 0; i < maneuvers.Count; i++)
         {
             if (maneuvers[i].Timing == CharaBase.ACTION || maneuvers[i].Timing == CharaBase.MOVE)
             {
@@ -251,7 +258,7 @@ public class BattleCommand : MonoBehaviour
         }
         if (maneuver.Timing == CharaBase.RAPID)
         {
-
+            command.GetComponent<Button>().onClick.AddListener(() => OnClickRpdCommand(maneuver));
         }
         if (maneuver.Timing == CharaBase.JUDGE)
         {
@@ -280,7 +287,17 @@ public class BattleCommand : MonoBehaviour
         ProcessAccessor.Instance.jdgTiming.SetManeuver(maneuver);
         ProcessAccessor.Instance.jdgTiming.SetArea(thisChara.area);
         ProcessAccessor.Instance.jdgTiming.GetConfirmatButton().SetActive(true);
+    }
 
+    void OnClickRpdCommand(CharaManeuver maneuver)
+    {
+        ProcessAccessor.Instance.rpdTiming.SkillSelected = true;
+        ProcessAccessor.Instance.rpdTiming.SetManeuver(maneuver);
+        ProcessAccessor.Instance.rpdTiming.SetArea(thisChara.area);
+        if(maneuver.MinRange==10)
+        {
+            ProcessAccessor.Instance.dmgTiming.GetConfirmatButton().SetActive(true);
+        }
     }
 
     void OnClickDmgCommand(CharaManeuver maneuver)
