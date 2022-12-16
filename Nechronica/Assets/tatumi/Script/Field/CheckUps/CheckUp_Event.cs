@@ -30,9 +30,14 @@ public class CheckUp_Event : CheckUp_chara
                     Talk_cs.Set_Itemstr(Event_OUT[0]);
                 }
 
+                PL.GetComponent<EventMoveChara>().MovePlayer = false;
+                PL.GetComponent<EventMoveChara>().myanim.SetEvent = true;
+
                 StartCoroutine(Talk_cs.Talk_Set((Talk_End =>
                 {
                     talk_now = false;
+                    PL.GetComponent<EventMoveChara>().MovePlayer = true;
+                    PL.GetComponent<EventMoveChara>().myanim.SetEvent = false;
 
                     if (item_data != null)
                     {

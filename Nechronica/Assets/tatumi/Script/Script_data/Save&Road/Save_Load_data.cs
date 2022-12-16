@@ -11,12 +11,16 @@ public class Save_Load_data : MonoBehaviour
     const string filename_sub = "Nechronica_savedata_sub";
 
     [SerializeField]
-    public Doll_blueprint aa,bb;
+    public Doll_blueprint aa, bb;
 
     [SerializeField]
-    private bool DebugMode; 
+    private bool DebugMode;
 
-    void Start()
+    private Vector3 PlayerFirstPos;
+
+    public Vector3 GetFirstPos => PlayerFirstPos;
+
+    void Awake()
     {
         //‰ŠúÝ’è
         binarySaveLoad.IsZipArchive = true;
@@ -25,7 +29,8 @@ public class Save_Load_data : MonoBehaviour
         binarySaveLoad.UserDecrypt = (data) => { for (int i = 0; i < data.Length; i++) data[i] -= 1; };
         Data_Scan.Instance.save_Load_Data_cs = this;
         ClickButtonLoad();
-        if(DebugMode == false)
+        PlayerFirstPos = new Vector3(0.0f,0.0f,0.0f);
+        if (DebugMode == false)
         SceneManager.LoadScene("Title");
         DontDestroyOnLoad(this.gameObject);
     }
@@ -64,7 +69,7 @@ public class Save_Load_data : MonoBehaviour
         aa=loaddata;
     }
 
-    public void ClickButtonLoad(string filename)
+    public bool ClickButtonLoad(string filename,bool GameStart)
     {
         Doll_blueprint loaddata;
 
@@ -74,14 +79,21 @@ public class Save_Load_data : MonoBehaviour
         if (loaddata == null)
         {
             Debug.LogError("ERROR-NUll_Savedata");
+            return true;
         }
-        else
-        {
-            Debug.Log("LOAD-OK_savedata");
-        }
+       
+        Debug.Log("LOAD-OK_savedata");
+        
 
         //aa.CharaField_data.Event[0].str = "Œ®‚ðŽè‚É“ü‚êANPC2‚É˜b‚©‚¯‚æB";
         aa = loaddata;
+
+        if (GameStart)
+        {
+            SceneManager.LoadScene(aa.CharaField_data.PosStr);
+            PlayerFirstPos = new Vector3(aa.CharaField_data.Pos[0], aa.CharaField_data.Pos[1], aa.CharaField_data.Pos[2]);
+        }
+        return false;
     }
 
 

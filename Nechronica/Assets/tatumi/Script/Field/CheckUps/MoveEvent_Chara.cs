@@ -43,11 +43,18 @@ public class MoveEvent_Chara : MonoBehaviour
     //é¿ç€ÇÃèàóù(Editorä÷åWÇ»Çµ)
     public IEnumerator Event(System.Action<bool> action_end)
     {
-        for(int i=0;i!=EventTypes.Count;i++)
-        {
-            Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].MovePlayer = false;
-            Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].myanim.SetEvent = true;
+        Debug.Log("?");
 
+        for (int j = 0; j != Assistcs.Charas.Length; j++)
+        {
+            Assistcs.Charas[j].MovePlayer = false;
+            Assistcs.Charas[j].myanim.SetEvent = true;
+        }
+
+        Debug.Log("!");
+
+        for (int i=0;i!=EventTypes.Count;i++)
+        {
             switch (EventTypes[i].eventType)
             {
                 case EventType.event_Type.Nomove:
@@ -77,16 +84,28 @@ public class MoveEvent_Chara : MonoBehaviour
                     yield return null;
                     break;
                 case EventType.event_Type.CameraMove:
-                    Assistcs.ChinemaCameras[InCamera].SetActive(false);
-                    Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
-                    InCamera = EventTypes[i].ordes.OutCamera;
-                    yield return new WaitForSeconds(3.0f);
+                    if (EventTypes[i].ordes.OutCamera == 0)
+                    {
+                        Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
+                      
+                        yield return new WaitForSeconds(3.0f);
+                        Assistcs.ChinemaCameras[InCamera].SetActive(false);
+                        InCamera = EventTypes[i].ordes.OutCamera;
+                    }
+                    else
+                    {
+                        Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
+                        yield return new WaitForSeconds(0.01f); ;
+                        Assistcs.ChinemaCameras[InCamera].SetActive(false);
+
+                        yield return new WaitForSeconds(3.0f);
+                        InCamera = EventTypes[i].ordes.OutCamera;
+                    }
                     break;
                 case EventType.event_Type.DeleteChara:
                     Destroy(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject);
                     break;
             }
-
         }
         action_end(true);
     }

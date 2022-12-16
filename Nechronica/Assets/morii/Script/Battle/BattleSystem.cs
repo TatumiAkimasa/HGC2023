@@ -196,7 +196,7 @@ public class BattleSystem : MonoBehaviour
                 ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
                 battleExe = false;
             }
-            // else if(敵キャラなら…)
+            //else if(敵キャラなら…)
             // else(味方NPCなら…)
         }
     }

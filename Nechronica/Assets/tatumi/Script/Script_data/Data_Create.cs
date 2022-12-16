@@ -16,6 +16,6 @@ public class Data_Create : Scene_Change
         SaveData.ClickButtonSave();
         SaveData.ClickButtonLoad();
 
-        Scene_change("New Scene");
+        Scene_change("forest");
    }
 }

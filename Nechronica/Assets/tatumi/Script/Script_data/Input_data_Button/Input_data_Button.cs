@@ -30,8 +30,9 @@ public class Input_data_Button : ClassData_
         //ポジションSKILLパターン
         if (this.GetComponent<Wepon_Data_SaveSet>() != null)
         {
-            Chara_intput_data_cs.SetPotionSkill_(this.GetComponent<Wepon_Data_SaveSet>().GetParts());
             Chara_intput_data_cs.SetErrorData(POTITIONSKILL, false);
+            Chara_intput_data_cs.SetPotionSkill_(this.GetComponent<Wepon_Data_SaveSet>().GetParts());
+            
         }
     }
 
@@ -40,8 +41,9 @@ public class Input_data_Button : ClassData_
         output_text.text = input_text.text;
 
         //positionパターン
-        Chara_intput_data_cs.SetPosition_((short)pos);
         Chara_intput_data_cs.SetErrorData(POTITION, false);
+        Chara_intput_data_cs.SetPosition_((short)pos);
+        
     }
 
     public string Push_button_pos()

@@ -21,6 +21,7 @@ public class CheckUp_Base : Scene_Change
         if (other.gameObject.tag == "Player")
         {
             PL = other.gameObject;
+           
         }
     }
 
@@ -30,7 +31,9 @@ public class CheckUp_Base : Scene_Change
 
         if (Item.gameObject.tag == "Player")
         {
+          
             PL = null;
+           
         }
     }
 

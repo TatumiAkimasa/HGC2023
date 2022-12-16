@@ -114,9 +114,10 @@ public class CharaBase : MonoBehaviour
 [System.Serializable]
 public class CharaManeuver
 {
+
     public string Name;            // パーツ名
     //public int EffectNum;        // 効果値
-    public Dictionary<string,int> EffectNum = new Dictionary<string, int>();          // 効果値
+    public Dictionary<string, int> EffectNum = new Dictionary<string, int>();          // 効果値
     public int Cost;               // コスト
     public int Timing;             // 発動タイミング
     public int MinRange;           // 射程の最小値
@@ -126,6 +127,8 @@ public class CharaManeuver
     public bool isUse;             // 使用したかどうか
     public bool isDmage;           // 破損したかどうか
     public ManeuverEffectsAtk Atk; // 攻撃系
+    [NamedArrayAttribute(new string[] { "攻撃", "防御", "支援・回復", "妨害" ,"BOSS"})]
+    public List<short> EnemyAI; //敵行動優先順位
 }
 
 [System.Serializable]

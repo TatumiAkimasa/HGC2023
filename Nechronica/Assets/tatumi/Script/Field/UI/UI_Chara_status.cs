@@ -68,7 +68,7 @@ public class UI_Chara_status : ClassData_
         }
         else if (SITE == BODY)
         {
-            data = data_Scan_cs.my_data[0].CharaBase_data.GetBodygParts();
+            data = data_Scan_cs.my_data[0].CharaBase_data.GetBodyParts();
         }
         else if (SITE == LEG)
         {
