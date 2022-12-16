@@ -209,7 +209,7 @@ public class DmgTimingProcess : GetClickedGameObject
     {
         // 最終的なダメージの結果をだし、攻撃されたキャラクターがダメージを受ける
         // オートタイミングのものも合わせて加算する予定
-
+        bool isAnim = false;
         
 
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
@@ -319,10 +319,34 @@ public class DmgTimingProcess : GetClickedGameObject
         }
 
         // ここ、アニメーション終わってからの処理にしたいなぁ
-        // 行動したキャラを表示から消す
-        ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
-        ManagerAccessor.Instance.battleSystem.BattleExe = true;
-        nextButton.gameObject.SetActive(false);
 
+        StartCoroutine(ManeuverAnimation(actManeuver, callBack =>
+        {
+            // 行動したキャラを表示から消す
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+            ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            nextButton.gameObject.SetActive(false);
+        }));
     }
+
+    public IEnumerator ManeuverAnimation(CharaManeuver maneuver, System.Action<bool> callBack)
+    {
+        if(maneuver.AnimEffect!=null)
+        {
+            GameObject instance = Instantiate(maneuver.AnimEffect, damageChara.transform.position, Quaternion.identity, damageChara.transform);
+            EffctEnd effctEnd = instance.GetComponent<EffctEnd>();
+
+            while (!effctEnd.AnimEnd)
+            {
+                yield return null;  
+            }
+        }
+        else
+        {
+            yield break;
+        }
+
+        callBack(true);
+    }
+
 }

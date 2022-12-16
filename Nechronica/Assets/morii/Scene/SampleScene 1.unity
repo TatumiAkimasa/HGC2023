@@ -1285,7 +1285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187380965}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.8285823, y: 15.205215, z: 9.357971}
+  m_LocalPosition: {x: 6.8285823, y: 0, z: 9.357971}
   m_LocalScale: {x: 2.56, y: 3.84, z: 1}
   m_Children: []
   m_Father: {fileID: 1240950423}
@@ -3961,7 +3961,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617834580}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.508582, y: 15.205215, z: -10.372028}
+  m_LocalPosition: {x: 5.508582, y: 0, z: -10.372028}
   m_LocalScale: {x: 2.56, y: 3.84, z: 1}
   m_Children: []
   m_Father: {fileID: 1240950423}
@@ -4792,7 +4792,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7817991b427c84f409b096f5c88a4bed, type: 2}
+  - {fileID: 2100000, guid: 9604a84536978f840b9351a15335b69e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4831,7 +4831,7 @@ Transform:
   m_GameObject: {fileID: 741667014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.45, y: 18.24, z: -17.73}
-  m_LocalScale: {x: 2.56, y: 3.84, z: 1}
+  m_LocalScale: {x: 1.5, y: 3, z: 1}
   m_Children:
   - {fileID: 917146749}
   m_Father: {fileID: 0}
@@ -4906,6 +4906,8 @@ MonoBehaviour:
   CharaName: {fileID: 0}
   noumiso_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4921,8 +4923,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   medama_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4938,8 +4943,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   ago_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4955,8 +4963,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hunnu_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4972,8 +4983,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   kobusi_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -4989,8 +5003,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   ude_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5006,8 +5023,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   kata_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5023,8 +5043,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   wirelille_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5040,8 +5063,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   sebone_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5057,8 +5083,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   harawata_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5074,8 +5103,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   harawata2_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5091,8 +5123,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hone_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5108,8 +5143,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hone2_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5125,8 +5163,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   asi_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5142,12 +5183,14 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   Name: test
   hide_hint: test
   Death_year: 10
   temper: "\u30A2\u30EA\u30B9"
   Memory: 01000200
   area: 2
+  initArea: 2
   MainClass: Stacy
   SubClass: Stacy
   Armament: 0
@@ -6682,7 +6725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859660488}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.5585823, y: 15.205215, z: 24.25797}
+  m_LocalPosition: {x: 6.5585823, y: 0, z: 24.25797}
   m_LocalScale: {x: 2.56, y: 3.84, z: 1}
   m_Children: []
   m_Father: {fileID: 1240950423}
@@ -8893,7 +8936,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112908817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7285823, y: 15.205215, z: -2.1820288}
+  m_LocalPosition: {x: 1.7285823, y: 0, z: -2.1820288}
   m_LocalScale: {x: 2.56, y: 3.84, z: 1}
   m_Children: []
   m_Father: {fileID: 1240950423}
@@ -9616,6 +9659,8 @@ MonoBehaviour:
   CharaName: {fileID: 0}
   noumiso_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9631,8 +9676,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   medama_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9648,8 +9696,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   ago_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9665,8 +9716,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hunnu_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9682,8 +9736,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   kobusi_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9699,8 +9756,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   ude_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9716,8 +9776,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   kata_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9733,8 +9796,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   wirelille_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9750,8 +9816,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   sebone_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9767,8 +9836,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   harawata_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9784,8 +9856,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   harawata2_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9801,8 +9876,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hone_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9818,8 +9896,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   hone2_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9835,8 +9916,11 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   asi_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9852,12 +9936,14 @@ MonoBehaviour:
       isAllAttack: 0
       isSuccession: 0
       Num_per_Action: 0
+    EnemyAI: 
   Name: test
   hide_hint: test
   Death_year: 10
   temper: "\u30A2\u30EA\u30B9"
   Memory: 01000200
   area: 2
+  initArea: 2
   MainClass: Stacy
   SubClass: Stacy
   Armament: 0
@@ -9943,7 +10029,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d6c9aa8bec62026498c69e7fc1be9a60, type: 2}
+  - {fileID: 2100000, guid: b53271a7209d09b45a25c3d2ae830cc3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10086,7 +10172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240950422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.029291153, y: -6.6688576, z: -3.6789856}
+  m_LocalPosition: {x: -0.029291153, y: 8.2, z: -3.6789856}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 617834581}
@@ -10805,7 +10891,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30C8\u30EA\u30B9"
+  m_Text: "\u30DF\u30EA\u30AB"
 --- !u!222 &1340540735
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16022,8 +16108,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.56770325, y: 0.40249634}
+  m_SizeDelta: {x: -19.8645, y: -20.005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2082415313
 MonoBehaviour:
@@ -16047,18 +16133,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 46
+    m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 84
+    m_MaxSize: 115
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30B9\u30C6\u30FC\u30BF\u30B9\u3082\u308D\u3082\u308D"
+  m_Text: "\u540D\u524D\uFF1A\u5305\u307E\u308C\u3057\u8005\n\u30BF\u30A4\u30D7\uFF1A\u30DB\u30E9\u30FC\n\u30AB\u30A6\u30F3\u30C8\uFF1A9\n\u6B8B\u308A\u30D1\u30FC\u30C4\uFF1A15\n\n\u3061\u3087\u3063\u3068\u304B\u305F\u3044\u6575\u3002\n"
 --- !u!222 &2082415314
 CanvasRenderer:
   m_ObjectHideFlags: 0

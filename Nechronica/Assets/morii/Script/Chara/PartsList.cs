@@ -24,6 +24,8 @@ public class PartsList : CharaBase
     {
         //ì™ÉpÅ[Éc-------------------
         ago_H.Name = "Ç†Ç≤";
+        ago_H.AnimName = AnimationName.Ago;
+        ago_H.AnimEffect = NonResources.Load<GameObject>("Assets/morii/Prefab/Anim/"+ ago_H.AnimName + ".prefab");
         ago_H.EffectNum.Add(EffNum.Damage, 1);
         ago_H.Cost = 2;
         ago_H.Timing = ACTION;
@@ -32,6 +34,7 @@ public class PartsList : CharaBase
         ago_H.Weight = 1;
 
         noumiso_H.Name = "ÇÃÇ§Ç›Çª";
+        noumiso_H.AnimName = AnimationName.Null;
         noumiso_H.EffectNum.Add(EffNum.Count, 2);
         noumiso_H.Cost = 0;
         noumiso_H.Timing = COUNT;
@@ -40,6 +43,7 @@ public class PartsList : CharaBase
         noumiso_H.Weight = 1;
 
         medama_H.Name = "ÇﬂÇæÇ‹";
+        medama_H.AnimName = AnimationName.Null;
         medama_H.EffectNum.Add(EffNum.Count, 1);
         medama_H.Cost = 0;
         medama_H.Timing = COUNT;
@@ -48,6 +52,7 @@ public class PartsList : CharaBase
         medama_H.Weight = 1;
 
         hunnu_H.Name = "ïÆì{";
+        hunnu_H.AnimName = AnimationName.Null;
         hunnu_H.EffectNum.Add(EffNum.Damage, 5);
         hunnu_H.Cost = 0;
         hunnu_H.Timing = DAMAGE;
@@ -59,6 +64,8 @@ public class PartsList : CharaBase
 
         //òr---------------------------------
         kobusi_A.Name = "Ç±Ç‘Çµ";
+        kobusi_A.AnimName = AnimationName.Kobushi;
+        kobusi_A.AnimEffect = NonResources.Load<GameObject>("Assets/morii/Prefab/Anim/" + kobusi_A.AnimName + ".prefab");
         kobusi_A.EffectNum.Add(EffNum.Damage, 1);
         kobusi_A.Cost = 2;
         kobusi_A.Timing = ACTION;
@@ -67,6 +74,7 @@ public class PartsList : CharaBase
         kobusi_A.Weight = 1;
 
         kata_A.Name = "Ç©ÇΩ";
+        kata_A.AnimName = AnimationName.Null;
         kata_A.EffectNum.Add(EffNum.Move, 1);
         kata_A.Cost = 4;
         kata_A.Timing = MOVE;
@@ -75,6 +83,7 @@ public class PartsList : CharaBase
         kata_A.Weight = 1;
 
         ude_A.Name = "Ç§Ç≈";
+        ude_A.AnimName = AnimationName.Null;
         ude_A.EffectNum.Add(EffNum.Judge, 1);
         ude_A.Cost = 1;
         ude_A.Timing = JUDGE;
@@ -83,6 +92,7 @@ public class PartsList : CharaBase
         ude_A.Weight = 1;
 
         wirelille_A.Name = "ÉèÉCÉÑÅ[ÉäÅ[Éã";
+        wirelille_A.AnimName = AnimationName.Null;
         wirelille_A.EffectNum.Add(EffNum.Move, 1);
         wirelille_A.Cost = 3;
         wirelille_A.Timing = RAPID;
@@ -92,6 +102,7 @@ public class PartsList : CharaBase
         //ì∑----------------------------
 
         sebone_B.Name = "ÇπÇ⁄ÇÀ";
+        sebone_B.AnimName = AnimationName.Null;
         sebone_B.EffectNum.Add(EffNum.Extra, -1);
         sebone_B.Cost = 1;
         sebone_B.Timing = ACTION;
@@ -100,6 +111,7 @@ public class PartsList : CharaBase
         sebone_B.Weight = 1;
 
         harawata_B.Name = "ÇÕÇÁÇÌÇΩ";
+        harawata_B.AnimName = AnimationName.Null;
         harawata_B.EffectNum.Add(EffNum.Extra, 0);
         harawata_B.Cost = 0;
         harawata_B.Timing = AUTO;
@@ -108,6 +120,7 @@ public class PartsList : CharaBase
         harawata_B.Weight = 1;
 
         harawata2_B.Name = "ÇÕÇÁÇÌÇΩ";
+        harawata2_B.AnimName = AnimationName.Null;
         harawata2_B.EffectNum.Add(EffNum.Extra, 0);
         harawata2_B.Cost = 0;
         harawata2_B.Timing = AUTO;
@@ -118,6 +131,7 @@ public class PartsList : CharaBase
         //ãr------------------------------
 
         hone_L.Name = "ÇŸÇÀ";
+        hone_L.AnimName = AnimationName.Null;
         hone_L.EffectNum.Add(EffNum.Move, 1);
         hone_L.Cost = 3;
         hone_L.Timing = MOVE;
@@ -126,6 +140,7 @@ public class PartsList : CharaBase
         hone_L.Weight = 1;
 
         hone2_L.Name = "ÇŸÇÀ";
+        hone2_L.AnimName = AnimationName.Null;
         hone2_L.EffectNum.Add(EffNum.Move, 1);
         hone2_L.Cost = 3;
         hone2_L.Timing = MOVE;
@@ -134,6 +149,7 @@ public class PartsList : CharaBase
         hone2_L.Weight = 1;
 
         asi_L.Name = "Ç†Çµ";
+        asi_L.AnimName = AnimationName.Null;
         asi_L.EffectNum.Add(EffNum.Judge, -1);
         asi_L.Cost = 1;
         asi_L.MinRange = 0;

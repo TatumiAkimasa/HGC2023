@@ -281,7 +281,7 @@ public class RpdTimingProcess : GetClickedGameObject
             // 攻撃されるキャラが射程外に出たりしていなければジャッジタイミングへ移行
             if ((Mathf.Abs(cashedChara.area) <= Mathf.Abs(actManeuver.MaxRange + actingChara.area) &&
                  Mathf.Abs(cashedChara.area) >= Mathf.Abs(actManeuver.MinRange + actingChara.area)) &&
-                        (!dollManeuver.isUse && !dollManeuver.isDmage))
+                        !actManeuver.isDmage)
             {
                 //ここでジャッジタイミングへ移行
                 ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);

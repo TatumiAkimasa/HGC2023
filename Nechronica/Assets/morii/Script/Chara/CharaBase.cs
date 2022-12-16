@@ -114,8 +114,9 @@ public class CharaBase : MonoBehaviour
 [System.Serializable]
 public class CharaManeuver
 {
-
     public string Name;            // パーツ名
+    public string AnimName;        // アニメーションID
+    public GameObject AnimEffect;  // アニメーション再生用
     //public int EffectNum;        // 効果値
     public Dictionary<string, int> EffectNum = new Dictionary<string, int>();          // 効果値
     public int Cost;               // コスト
@@ -158,6 +159,15 @@ public class EffNum
     public const string Protect  = "Protect";       // かばうの効果はこれで認識
     public const string YobunnnaUde = "YobunnnaUde";   // 余分な腕、死の手はこれで認識
 
+
+}
+
+[System.Serializable]
+public class AnimationName
+{
+    public const string Null = "Null";
+    public const string Ago  = "Ago";
+    public const string Kobushi = "Kobushi";
 
 }
 
