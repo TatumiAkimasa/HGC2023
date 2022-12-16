@@ -331,9 +331,10 @@ public class DmgTimingProcess : GetClickedGameObject
 
     public IEnumerator ManeuverAnimation(CharaManeuver maneuver, System.Action<bool> callBack)
     {
-        if(maneuver.AnimEffect!=null)
+        GameObject instance;
+        if (maneuver.AnimEffect!=null)
         {
-            GameObject instance = Instantiate(maneuver.AnimEffect, damageChara.transform.position, Quaternion.identity, damageChara.transform);
+            instance = Instantiate(maneuver.AnimEffect, damageChara.transform.position, Quaternion.identity, damageChara.transform);
             EffctEnd effctEnd = instance.GetComponent<EffctEnd>();
 
             while (!effctEnd.AnimEnd)
@@ -345,6 +346,12 @@ public class DmgTimingProcess : GetClickedGameObject
         {
             yield break;
         }
+
+        if(instance!=null)
+        {
+            Destroy(instance);
+        }
+
 
         callBack(true);
     }
