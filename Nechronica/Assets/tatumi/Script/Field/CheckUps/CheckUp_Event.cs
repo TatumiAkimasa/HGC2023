@@ -9,7 +9,9 @@ public class CheckUp_Event : CheckUp_chara
     [SerializeField, Header("イベントを進ませるか")]
     private bool Event_Go;
 
- 
+    [SerializeField, Header("Effctを起動するなら中身を入れる")]
+    private GameObject EffctObj;
+
     void Update()
     {
         if (PL != null)
@@ -48,7 +50,8 @@ public class CheckUp_Event : CheckUp_chara
                         }
                        
                         ParentObj.SetActive(false);
-                        
+                        EffctObj.SetActive(true);
+
                     }
 
                     for (int i = 0; i != Talk_End.Length; i++)
