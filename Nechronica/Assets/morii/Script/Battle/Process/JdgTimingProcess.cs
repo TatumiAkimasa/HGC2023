@@ -26,6 +26,7 @@ public class JdgTimingProcess : GetClickedGameObject
     }
 
     private CharaManeuver actManeuver;     // アクションタイミングで発動されたコマンドの格納場所
+    private Animator diceRollAnim;
 
     public CharaManeuver ActMneuver
     {
@@ -143,13 +144,33 @@ public class JdgTimingProcess : GetClickedGameObject
     /// </summary>
     public void OnClickDiceRoll()
     {
+        diceRollAnim.gameObject.SetActive(true);
         randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
-        rollResult = randoms.NextInt(1, 11);
-        rollResultText.text = rollResult.ToString();
+        
         // その後の操作を邪魔しないようにfalseにしておく
         diceRollButtonImg.raycastTarget = false;
         diceRollButton.enabled = false;
-        isDiceRoll = true;
+        StartCoroutine(RollAnimStandby(diceRollAnim,callBack => 
+        {
+            rollResult = randoms.NextInt(1, 11);
+            rollResultText.text = rollResult.ToString();
+            isDiceRoll = true;
+        }));
+        
+    }
+
+    /// <summary>
+    /// ダイスの回転が終わるのを待つメソッド
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator RollAnimStandby(Animator anim, System.Action<bool> callBack)
+    {
+        while(!anim.GetCurrentAnimatorStateInfo(0).IsName("End"))
+        {
+            yield return null;
+        }
+
+        callBack(true);
     }
 
     public void OnClickManeuver()
@@ -253,6 +274,7 @@ public class JdgTimingProcess : GetClickedGameObject
         diceRollButtonImg.raycastTarget = true;
         diceRollButton.enabled  = true;
         isStandbyCharaSelect = false;
+        diceRollAnim.gameObject.SetActive(false);
     }
 
 }
