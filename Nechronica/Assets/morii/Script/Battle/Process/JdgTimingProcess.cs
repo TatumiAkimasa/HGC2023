@@ -26,7 +26,7 @@ public class JdgTimingProcess : GetClickedGameObject
     }
 
     private CharaManeuver actManeuver;     // アクションタイミングで発動されたコマンドの格納場所
-    private Animator diceRollAnim;
+    [SerializeField]private Animator diceRollAnim;
 
     public CharaManeuver ActMneuver
     {
@@ -145,6 +145,7 @@ public class JdgTimingProcess : GetClickedGameObject
     public void OnClickDiceRoll()
     {
         diceRollAnim.gameObject.SetActive(true);
+        rollResultText.text = "";   // 文字が邪魔なので一旦空データを代入
         randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
         
         // その後の操作を邪魔しないようにfalseにしておく

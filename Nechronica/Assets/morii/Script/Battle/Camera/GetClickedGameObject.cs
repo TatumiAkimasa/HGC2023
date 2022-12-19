@@ -15,7 +15,7 @@ public class GetClickedGameObject : MonoBehaviour
     public const int DAMAGE = 3;               // 子オブジェクト取得のための定数
     public const int STATUS = 0;               // 敵のステータスを取得するための定数
     public const int BUTTONS = 1;              // 敵のボタンを取得するための定数
-    public const int ATKBUTTONS = 0;           // アタックボタンとかの子オブジェクトを取得するための定数
+    public const int ATKBUTTONS = 1;           // アタックボタンとかの子オブジェクトを取得するための定数
     public const int DICEROLL = 1;             // ダイスロールボタンを取得するための定数
     //----------------------------------------------------------
 
