@@ -114,7 +114,7 @@ public class CharaBase : MonoBehaviour
 [System.Serializable]
 public class CharaManeuver
 {
-    public string Name;            // パーツ名
+    public string Name;            // パーツ名 /
     public string AnimName;        // アニメーションID
     public GameObject AnimEffect;  // アニメーション再生用
     //public int EffectNum;        // 効果値
