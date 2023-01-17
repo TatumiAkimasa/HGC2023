@@ -193,7 +193,7 @@ public class ObjEnemy : ClassData_
                 //移動以外のマニューバー
                 if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].Moving == 0)
                 {
-
+                    ;//今のところない？
                 }
                 //移動まにゅばー
                 else
@@ -351,8 +351,39 @@ public class ObjEnemy : ClassData_
         return;
     }
 
-    public void EnemyAI_Judge(CharaManeuver OpponentManeuver, Doll_blu_Nor Opponent)
+    public void EnemyAI_Judge(CharaManeuver OpponentManeuver, Doll_blu_Nor Opponent,int DiceRoll,int TargetParts,int Power)
     {
+       //もう一度要求のパターン
+        if (Power != 0)
+            ;
+        //ダイス値が即対応できる範囲(6以下で致命傷判断を入れる)
+        else if (DiceRoll >= 6)
+        {
+            //致命傷(許容できるダメージ量か)判断。問題ないならスルー
+            if (TargetParts == HEAD)
+            {
+                if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum["Action"] < me.HeadParts.Count)
+                    return;
+            }
+            else if (TargetParts == ARM)
+            {
+                if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum["Action"] < me.ArmParts.Count)
+                    return;
+            }
+            else if (TargetParts == LEG)
+            {
+                if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum["Action"] < me.LegParts.Count)
+                    return;
+            }
+            else if (TargetParts == BODY)
+            {
+                if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum["Action"] < me.BodyParts.Count)
+                    return;
+            }
+        }
+
+
+        //致命傷の場合（どうしてもさけたい)
         //全員いるわ
         List<Doll_blu_Nor> PlayerDolls = ManagerAccessor.Instance.battleSystem.GetCharaObj();
 
@@ -365,169 +396,76 @@ public class ObjEnemy : ClassData_
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
         //使用武具for文
-        for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.ERapid].Count; ActManeuvers++)
+        for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.EJudge].Count; ActManeuvers++)
         {
             //破損判定&使用判定
-            if (!Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].isDmage)
+            if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
             {
-                //移動以外のマニューバー
-                if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].Moving == 0)
-                {
 
-                }
-                //移動まにゅばー
-                else
-                {
-                    //相手の武具から射程にどっち方向かつどれだけ余裕があるか
-                    //例:狙われている武具射程が2~0で今の状況が射程の数字でいうところの2,1,0のどれかを算出
-                    differenceRange = Mathf.Abs(Opponent.area - me.area) - MaxOpponentRange;
-                    if (Mathf.Abs(differenceRange) < Mathf.Abs(Mathf.Abs(Opponent.area - me.area) - MinopponentRange))
-                        differenceRange = Mathf.Abs(Opponent.area - me.area) - MinopponentRange;
+                //相手の武具から射程にどっち方向かつどれだけ余裕があるか
+                //例:狙われている武具射程が2~0で今の状況が射程の数字でいうところの2,1,0のどれかを算出
+                differenceRange = Mathf.Abs(Opponent.area - me.area) - MaxOpponentRange;
+                if (Mathf.Abs(differenceRange) < Mathf.Abs(Mathf.Abs(Opponent.area - me.area) - MinopponentRange))
+                    differenceRange = Mathf.Abs(Opponent.area - me.area) - MinopponentRange;
 
-                    //この時点で数字=射程差,+=天国側,-地獄側が分かる,0の場合は別途
-                    //今検証中のPartsが射程外になるまで効果が及ぼせるか判定
-                    //射程が1以上余裕がある場合
-                    if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].Moving > Mathf.Abs(differenceRange))
+                //この時点で数字=射程差,+=天国側,-地獄側が分かる,0の場合は別途
+                //今検証中のPartsが射程外になるまで効果が及ぼせるか判定
+                //射程が1以上余裕がある場合
+                if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].Moving > Mathf.Abs(differenceRange))
+                {
+                    //効果が及ぼせるとき
+                    //敵の位置検索 & 射程比較(相手を動かす)
+                    if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange != 10 &&
+                (Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
+                 Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
                     {
-                        //効果が及ぼせるとき
-                        //敵の位置検索 & 射程比較(相手を動かす)
-                        if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange != 10 &&
-                    (Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MaxRange + me.area) &&
-                     Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange + me.area)))
+                        //使用武具更新
+                        if (UseManever == null)
                         {
-                            //使用武具更新
-                            if (UseManever == null)
-                            {
-                                UseManever = Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers];
-                                //優先度更新
-                                //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
-                            }
-                            else if (UseManever.EnemyAI[(int)EnemyPartsType.ERapid] < Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].EnemyAI[(int)EnemyPartsType.ERapid])
-                                UseManever = Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers];
-
-                            //相手の射程が0の場合
-                            if (Mathf.Abs(differenceRange) == 0)
-                            {
-                                if (4 >= Opponent.area + UseManever.Moving)
-                                {
-                                    //とりま地獄側へ移動
-                                    Debug.Log("Enemy:地獄にとばす");
-                                    return;
-                                }
-                                else if (0 <= Opponent.area - UseManever.Moving)
-                                {
-                                    //無理ならしぶしぶ反対へ
-                                    Debug.Log("Enemy:天国にとばす");
-                                    return;
-                                }
-
-                            }
-                            else
-                            {
-                                //天国側へ移動(移動して場外に行くかも判定)
-                                if (differenceRange > 0)
-                                {
-                                    if (0 <= Opponent.area - UseManever.Moving)
-                                    {
-                                        Debug.Log("Enemy:天国にとばす");
-                                        return;
-                                    }
-                                }
-                                //地獄側へ移動
-                                else if (differenceRange < 0)
-                                {
-                                    if (4 >= Opponent.area + UseManever.Moving)
-                                    {
-                                        Debug.Log("Enemy:地獄にとばす");
-                                        return;
-                                    }
-                                }
-                            }
-
+                            UseManever = Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers];
+                            //優先度更新
+                            //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
                         }
-                        //自身に及ぼす場合
+                        else if (UseManever.EnemyAI[(int)EnemyPartsType.EJudge] < Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EnemyAI[(int)EnemyPartsType.EJudge])
+                            UseManever = Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers];
+
+                        //マニューバー適応結果がまだ命中圏内の場合
+                        if (5 < DiceRoll - UseManever.EffectNum["Judge"] - Power)
+                        {
+                            //もう一度処理を繰り返す
+                            EnemyAI_Judge(OpponentManeuver, Opponent, DiceRoll, TargetParts, UseManever.EffectNum["Judge"]);
+                            //要求（行動
+
+                            return;
+                        }
                         else
                         {
-                            //使用武具更新
-                            if (UseManever == null)
-                            {
-                                UseManever = Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers];
-                                //優先度更新
-                                //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
-                            }
-                            else if (UseManever.EnemyAI[(int)EnemyPartsType.ERapid] < Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].EnemyAI[(int)EnemyPartsType.ERapid])
-                                UseManever = Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers];
+                            //要求（行動
+                            return;
+                        }
 
-                            //相手の射程が0の場合
-                            if (Mathf.Abs(differenceRange) == 0)
-                            {
-                                if (4 >= me.area + UseManever.Moving)
-                                {
-                                    //とりま地獄側へ移動
-                                    Debug.Log("Enemy:地獄にとばす");
-                                    return;
-                                }
-                                else if (0 <= me.area - UseManever.Moving)
-                                {
-                                    //無理ならしぶしぶ反対へ
-                                    Debug.Log("Enemy:天国にとばす");
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                //天国側へ移動(移動して場外に行くかも判定)
-                                if (differenceRange > 0)
-                                {
-                                    if (0 <= me.area - UseManever.Moving)
-                                    {
-                                        Debug.Log("Enemy:天国にとばす");
-                                        return;
-                                    }
-                                }
-                                //地獄側へ移動
-                                else if (differenceRange < 0)
-                                {
-                                    if (4 >= me.area + UseManever.Moving)
-                                    {
-                                        Debug.Log("Enemy:地獄にとばす");
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //自身では対応不可
-                    else
-                    {
-                        Debug.Log("Enemy:Help!");
-                        return;
-                        //全味方に
-                        for (int i = 0; i != PlayerDolls.Count; i++)
-                        {
-                            //他の味方に救援を送る
-                            PlayerDolls[i].GetComponent<ObjEnemy>().HelpMoveRapid(me, differenceRange);
-                        }
                     }
                 }
+               
             }
-            //自身では対応不可
-            else
-            {
-                Debug.Log("Enemy:Help!");
-                return;
-                //全味方に
-                for (int i = 0; i != PlayerDolls.Count; i++)
-                {
-                    //他の味方に救援を送る
-                    PlayerDolls[i].GetComponent<ObjEnemy>().HelpMoveRapid(me, differenceRange);
-                }
-            }
-
+           
         }
 
-        //田中さんが書いた処理なので田中さんに聞いてください
-        Debug.Log("なんでここまでこれたんや...");
+        //自身では対応不可
+        Debug.Log("Enemy:Help!");
+        return;
+        //全味方に
+        for (int i = 0; i != PlayerDolls.Count; i++)
+        {
+            //他の味方に救援を送る
+            Power += PlayerDolls[i].GetComponent<ObjEnemy>().HelpJudge_OP(me, differenceRange, OpponentManeuver.EffectNum["Action"] - Power);
+
+            //許容値なら
+            if (6 > DiceRoll - Power)
+                break;
+        }
+
+        //わんちゃん繰り返し他の味方に妨害重ねてもらう処理イルカも
         return;
     }
 
@@ -551,6 +489,7 @@ public class ObjEnemy : ClassData_
         ;
     }
 
+    //移動補助目的HELP(RAPID
     public void HelpMoveRapid(Doll_blu_Nor Follow, int NeedRange)
     {
         for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.ERapid].Count; ActManeuvers++)
@@ -568,6 +507,26 @@ public class ObjEnemy : ClassData_
                 //if()
             }
         }
+
+    }
+
+    //妨害目的HELP(JUDGE
+    public int HelpJudge_OP(Doll_blu_Nor Follow, int NeedRange,int NeedPower)
+    {
+        for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.EJudge].Count; ActManeuvers++)
+        {
+            //破損判定&使用判定
+            if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
+            {
+                //妨害まにゅばー
+                //宣言（対象に）
+
+                //妨害値を加えた状態で受けている側の奴にもう一度判断させる。
+                return Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum["Judge"];
+            }
+        }
+
+        return 0;
 
     }
 }
