@@ -109,10 +109,10 @@ public class BattleCommand : MonoBehaviour
         parentsDmgObj.Add(BuildingParent(true, backDmgImg));
 
         // パーツのマニューバとしての割り当てられているタイミングで分ける
-        AddManeuver(thisChara.GetHeadParts());
-        AddManeuver(thisChara.GetArmParts());
-        AddManeuver(thisChara.GetBodyParts());
-        AddManeuver(thisChara.GetLegParts());
+        AddManeuver(thisChara.HeadParts);
+        AddManeuver(thisChara.ArmParts);
+        AddManeuver(thisChara.BodyParts);
+        AddManeuver(thisChara.LegParts);
 
         // タイミングで分けられたマニューバ
         prefabActObjList = BuildCommands(ActionManeuvers, ref parentsActObj, prefabActObjList, backActImg);

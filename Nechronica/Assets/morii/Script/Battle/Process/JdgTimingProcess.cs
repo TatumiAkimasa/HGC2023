@@ -41,9 +41,9 @@ public class JdgTimingProcess : GetClickedGameObject
         set { isStandbyDiceRoll = value; }
     }
 
-    [SerializeField] private Text rollResultText;
     [SerializeField] private Text plusNumText;      // パッシブなどによるダイスロールに行われる加算
     [SerializeField] private Button nextButton;     // ジャッジタイミングを終わらせるボタン
+    [SerializeField] private Text rollResultText;
     [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
     [SerializeField] private Image diceRollButtonImg;       // ダイス演出などに使うボタンの画像
     [SerializeField] private GameObject confirmatButton;    // 最後に発動するか確認するボタン
@@ -155,7 +155,8 @@ public class JdgTimingProcess : GetClickedGameObject
         diceRollButton.enabled = false;
         StartCoroutine(RollAnimStandby(diceRollAnim,callBack => 
         {
-            rollResult = randoms.NextInt(6, 11);
+            rollResult = randoms.NextInt(1, 11);
+            rollResult = 11;
             rollResultText.text = rollResult.ToString();
             isDiceRoll = true;
         }));

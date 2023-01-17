@@ -26,18 +26,34 @@ public class CharaBase : MonoBehaviour
     public int GetMaxCount() => maxCount;
     public int GetNowCount() => nowCount;
     public int GetWeight() => allWeight;
-
-    public List<CharaManeuver> GetHeadParts() => HeadParts; // 頭パーツ参照
-    public List<CharaManeuver> GetArmParts() => ArmParts;   // 腕パーツ参照
-    public List<CharaManeuver> GetBodyParts() => BodyParts; // 胴体パーツ参照
-    public List<CharaManeuver> GetLegParts() => LegParts;   // 脚パーツ参照
     public List<CharaManeuver> GetPotisionSkill() => positionSkill; // ポジションスキル参照
     public List<CharaManeuver> GetClassSkill() => classSkill;   // クラススキル
 
-    public List<CharaManeuver> HeadParts;       // 頭のパーツ
-    public List<CharaManeuver> ArmParts;        // 腕のパーツ
-    public List<CharaManeuver> BodyParts;       // 胴のパーツ
-    public List<CharaManeuver> LegParts;        // 脚のパーツ
+    [SerializeField] protected List<CharaManeuver> headParts;       // 頭のパーツ
+    [SerializeField] protected List<CharaManeuver> armParts;        // 腕のパーツ
+    [SerializeField] protected List<CharaManeuver> bodyParts;       // 胴のパーツ
+    [SerializeField] protected List<CharaManeuver> legParts;        // 脚のパーツ
+
+    public List<CharaManeuver> HeadParts
+    {
+        get { return headParts; }
+        set { headParts = value; }
+    }
+    public List<CharaManeuver> ArmParts
+    {
+        get { return armParts; }
+        set { armParts = value; }
+    }
+    public List<CharaManeuver> BodyParts
+    {
+        get { return bodyParts; }
+        set { bodyParts = value; }
+    }
+    public List<CharaManeuver> LegParts
+    {
+        get { return legParts; }
+        set { legParts = value; }
+    }
 
     public List<CharaManeuver> positionSkill;   // ポジションスキル
 
@@ -152,6 +168,7 @@ public class EffNum
     public const string Move     = "Move";
     public const string Count    = "Count";
     public const string Insanity = "Insanity";      // 狂気点が関与するものはこれを入れる
+    public const string Nikunotate = "Nikunotate";
     public const string Extra    = "Extra";
     
     
