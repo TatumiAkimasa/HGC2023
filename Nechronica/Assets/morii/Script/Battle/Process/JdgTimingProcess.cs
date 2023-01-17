@@ -277,6 +277,7 @@ public class JdgTimingProcess : GetClickedGameObject
         diceRollButtonImg.raycastTarget = true;
         diceRollButton.enabled  = true;
         isStandbyCharaSelect = false;
+        rollResultText.text = "ダイスロール";
         diceRollAnim.gameObject.SetActive(false);
     }
 

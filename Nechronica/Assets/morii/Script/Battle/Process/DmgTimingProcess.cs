@@ -358,7 +358,7 @@ public class DmgTimingProcess : GetClickedGameObject
     {
         if(continuousAtk<actManeuver.Atk.Num_per_Action)
         {
-            nextButton.gameObject.SetActive(false);
+            damageButtons.SetActive(false);
             isStandbyEnemySelect = false;
             isStandbyCharaSelect = false;
 
