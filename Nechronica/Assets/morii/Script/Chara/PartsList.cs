@@ -72,6 +72,7 @@ public class PartsList : CharaBase
         kobusi_A.MinRange = 0;
         kobusi_A.MaxRange = 0;
         kobusi_A.Weight = 1;
+        kobusi_A.Atk.Num_per_Action = 2;
 
         kata_A.Name = "‚©‚½";
         kata_A.AnimName = AnimationName.Null;

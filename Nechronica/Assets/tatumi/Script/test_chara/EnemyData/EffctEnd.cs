@@ -13,7 +13,7 @@ public class EffctEnd : MonoBehaviour
 
     private void OnParticleSystemStopped()
     {
-
+        animEnd = true;
         print("パーティクルの再生が終了したよ！");
     }
 }

@@ -15,6 +15,7 @@ public class JdgTimingProcess : GetClickedGameObject
 
     private bool isDiceRoll;
     private bool isStandbyDiceRoll;
+    private int continuousAtk;
 
     private GameObject atkTargetEnemy;      // 攻撃する敵オブジェクトを格納場所
 
@@ -52,6 +53,7 @@ public class JdgTimingProcess : GetClickedGameObject
     public GameObject GetConfirmatButton() => confirmatButton;
     public GameObject GetJudgeButton() => judgeButtons;
     public GameObject GetPlusNum() => plusNumText.gameObject;
+    public int SetContinuousAtk(int num) => continuousAtk = num;
 
 
     private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
@@ -153,7 +155,7 @@ public class JdgTimingProcess : GetClickedGameObject
         diceRollButton.enabled = false;
         StartCoroutine(RollAnimStandby(diceRollAnim,callBack => 
         {
-            rollResult = randoms.NextInt(1, 11);
+            rollResult = randoms.NextInt(6, 11);
             rollResultText.text = rollResult.ToString();
             isDiceRoll = true;
         }));

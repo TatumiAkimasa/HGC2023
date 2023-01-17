@@ -25,6 +25,8 @@ public class DmgTimingProcess : GetClickedGameObject
     private Doll_blu_Nor damageChara;   // ダメージを受ける予定のキャラ
     private CharaManeuver actManeuver;     // アクションタイミングで発動されたコマンドの格納場所
 
+    private int continuousAtk = 0;      // 連撃
+    public int SetContinuousAtk(int num) => continuousAtk = num;
     public GameObject GetConfirmatButton() => confirmatButton;
     public GameObject GetDamageButtons() => damageButtons;
     public void SetDamageChara(Doll_blu_Nor value) => damageChara = value;
@@ -210,7 +212,8 @@ public class DmgTimingProcess : GetClickedGameObject
         // 最終的なダメージの結果をだし、攻撃されたキャラクターがダメージを受ける
         // オートタイミングのものも合わせて加算する予定
         bool isAnim = false;
-        
+
+        isStandbyCharaSelect = false;
 
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
@@ -318,15 +321,10 @@ public class DmgTimingProcess : GetClickedGameObject
             }
         }
 
+
         // ここ、アニメーション終わってからの処理にしたいなぁ
 
-        StartCoroutine(ManeuverAnimation(actManeuver, callBack =>
-        {
-            // 行動したキャラを表示から消す
-            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
-            ManagerAccessor.Instance.battleSystem.BattleExe = true;
-            nextButton.gameObject.SetActive(false);
-        }));
+        StartCoroutine(ManeuverAnimation(actManeuver, callBack => EndFlowProcess()));
     }
 
     public IEnumerator ManeuverAnimation(CharaManeuver maneuver, System.Action<bool> callBack)
@@ -354,6 +352,41 @@ public class DmgTimingProcess : GetClickedGameObject
 
 
         callBack(true);
+    }
+
+    void EndFlowProcess()
+    {
+        if(continuousAtk<actManeuver.Atk.Num_per_Action)
+        {
+            nextButton.gameObject.SetActive(false);
+            isStandbyEnemySelect = false;
+            isStandbyCharaSelect = false;
+
+            //ここでジャッジタイミングへ移行
+            ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
+            ProcessAccessor.Instance.jdgTiming.ActMneuver = actManeuver;
+            ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
+            ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = damageChara.gameObject;
+            ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
+            ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
+            ProcessAccessor.Instance.jdgTiming.SetContinuousAtk(continuousAtk++);
+            if (actingChara.gameObject.CompareTag("EnemyChara")/*||自動ダイスロール的な？設定参照用*/)
+            {
+                ProcessAccessor.Instance.jdgTiming.OnClickDiceRoll();
+            }
+        }
+        else
+        {
+            // もろもろを初期化
+            addDamage = 0;
+            giveDamage = 0;
+            dmgGuard = 0;
+            // 行動したキャラを表示から消す
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+            ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            nextButton.gameObject.SetActive(false);
+        }
+        
     }
 
 }
