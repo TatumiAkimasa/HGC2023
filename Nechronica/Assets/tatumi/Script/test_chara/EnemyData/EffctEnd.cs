@@ -6,6 +6,6 @@ public class EffctEnd : MonoBehaviour
 {
     private void OnParticleSystemStopped()
     {
-        print("パーティクルの再生が終了したよ！");
+        Debug.Log("パーティクルの再生が終了したよ！");
     }
 }

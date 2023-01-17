@@ -80819,6 +80819,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 120b628707d512840ac2d40f8aca21ed, type: 3}
   m_PrefabInstance: {fileID: 2147050127}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2085109868 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2045402843818913063, guid: ac2484c4444886c43b4abf876590166b, type: 3}
+  m_PrefabInstance: {fileID: 2045402843638510031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2085109869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085109868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 723665f87fb64d94b98d1aba857c035d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2091495881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -82787,7 +82804,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: kamituki
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 464143337665043065, guid: 8cf876d78f257894182208fb6d9583c6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 464143337665043045, guid: 8cf876d78f257894182208fb6d9583c6, type: 3}
+    - {fileID: 464143338953092298, guid: 8cf876d78f257894182208fb6d9583c6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8cf876d78f257894182208fb6d9583c6, type: 3}
 --- !u!1 &954255021711638530
 GameObject:
@@ -82942,9 +82965,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2045402843818913061, guid: ac2484c4444886c43b4abf876590166b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045402843818913061, guid: ac2484c4444886c43b4abf876590166b, type: 3}
+      propertyPath: lengthInSec
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2045402843818913063, guid: ac2484c4444886c43b4abf876590166b, type: 3}
       propertyPath: m_Name
       value: Punch
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045402844514746558, guid: ac2484c4444886c43b4abf876590166b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045402844514746558, guid: ac2484c4444886c43b4abf876590166b, type: 3}
+      propertyPath: stopAction
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045402844514746558, guid: ac2484c4444886c43b4abf876590166b, type: 3}
+      propertyPath: lengthInSec
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045402844514746558, guid: ac2484c4444886c43b4abf876590166b, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045402844625523122, guid: ac2484c4444886c43b4abf876590166b, type: 3}
+      propertyPath: looping
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac2484c4444886c43b4abf876590166b, type: 3}
