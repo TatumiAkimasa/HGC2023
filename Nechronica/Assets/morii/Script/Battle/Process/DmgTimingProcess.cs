@@ -53,6 +53,8 @@ public class DmgTimingProcess : GetClickedGameObject
     [SerializeField] private Image diceRollButtonImg;       // ダイス演出などに使うボタンの画像
     [SerializeField] private Animator diceRollAnim;         // ダイスロールのアニメ
 
+    private List<Doll_blu_Nor> damageCharas = new List<Doll_blu_Nor>();
+
     private int continuousAtk = 0;      // 連撃
     public int SetContinuousAtk(int num) => continuousAtk = num;
     public GameObject GetConfirmatButton() => confirmatButton;
@@ -347,28 +349,86 @@ public class DmgTimingProcess : GetClickedGameObject
     /// <param name="site"></param>
     void SortDamageParts(int site)
     {
-        if (site==HEAD)
+        if(actManeuver.Atk.isAllAttack)
         {
-            damageChara.HeadParts = GiveDamageParts(damageChara.HeadParts);
+            for(int i=0;i<ManagerAccessor.Instance.battleSystem.GetCharaObj().Count;i++)
+            {
+                if(ManagerAccessor.Instance.battleSystem.GetCharaObj()[i].area==damageChara.area)
+                {
+                    damageCharas.Add(ManagerAccessor.Instance.battleSystem.GetCharaObj()[i]);
+                }
+            }
+
+            SortDamageParts(site, ref damageCharas);
+        }
+        else
+        {
+            if (site == HEAD)
+            {
+                damageChara.HeadParts = GiveDamageParts(damageChara.HeadParts);
+            }
+            else if (site == ARM)
+            {
+                damageChara.ArmParts = GiveDamageParts(damageChara.ArmParts);
+            }
+            else if (site == BODY)
+            {
+                damageChara.BodyParts = GiveDamageParts(damageChara.BodyParts);
+            }
+            else if (site == LEG)
+            {
+                damageChara.LegParts = GiveDamageParts(damageChara.LegParts);
+            }
+
+            if (exprosionSite != 0)
+            {
+                int buf = exprosionSite;
+                exprosionSite = 0;
+                SortDamageParts(buf);
+            }
+            else
+            {
+                StartCoroutine(ManeuverAnimation(actManeuver, callBack => EndFlowProcess()));
+            }
+        }
+    }
+
+    void SortDamageParts(int site, ref List<Doll_blu_Nor> listChara)
+    {
+        if (site == HEAD)
+        {
+            for(int i=0;i<listChara.Count;i++)
+            {
+                listChara[i].HeadParts = GiveDamageParts(listChara[i].HeadParts);
+            }
         }
         else if (site == ARM)
         {
-            damageChara.ArmParts = GiveDamageParts(damageChara.ArmParts);
+            for (int i = 0; i < listChara.Count; i++)
+            {
+                listChara[i].ArmParts = GiveDamageParts(listChara[i].ArmParts);
+            }
         }
         else if (site == BODY)
         {
-            damageChara.BodyParts = GiveDamageParts(damageChara.BodyParts);
+            for (int i = 0; i < listChara.Count; i++)
+            {
+                listChara[i].BodyParts = GiveDamageParts(listChara[i].BodyParts);
+            }
         }
         else if (site == LEG)
         {
-            damageChara.LegParts = GiveDamageParts(damageChara.LegParts);
+            for (int i = 0; i < listChara.Count; i++)
+            {
+                listChara[i].LegParts = GiveDamageParts(listChara[i].LegParts);
+            }
         }
 
         if (exprosionSite != 0)
         {
             int buf = exprosionSite;
             exprosionSite = 0;
-            SortDamageParts(buf);
+            SortDamageParts(buf, ref damageCharas);
         }
         else
         {
