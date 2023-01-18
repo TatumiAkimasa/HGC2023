@@ -280,6 +280,8 @@ public class JdgTimingProcess : GetClickedGameObject
         isStandbyCharaSelect = false;
         rollResultText.text = "ダイスロール";
         diceRollAnim.gameObject.SetActive(false);
+
+        nextButton.gameObject.SetActive(false);
     }
 
 }

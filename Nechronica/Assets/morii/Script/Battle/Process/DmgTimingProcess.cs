@@ -12,18 +12,20 @@ public class DmgTimingProcess : GetClickedGameObject
     //-------------------------------
 
     // 定数
-    const int HEAD = 1;
-    const int ARM  = 2;
-    const int BODY = 3;
-    const int LEG  = 4;
+    const int HEAD = 10;
+    const int ARM  = 9;
+    const int BODY = 8;
+    const int LEG  = 7;
     //--------------------------------
 
     private bool siteSelect = false;    // ダイスロールの値が10より多いときにtrueにする
-    private int siteSelectNum = 0;      // 部位選択を数値で決める
 
     private int addDamage = 0;          // ダメージタイミングのマニューバ二位夜追加ダメージ
     private int giveDamage = 0;         // 与えるダメージ
     private int dmgGuard = 0;           // 与えるダメージをこの変数の値分減らす
+
+    private bool isAddEffectStep;       // 追加効果があるか確認するステップ
+    private int exprosionSite;          // 爆発による追加ダメージの部位選択  
 
     private Unity.Mathematics.Random randoms;
 
@@ -83,13 +85,20 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if(isStandbyCutRoll)
         {
+            // 用意if分分け。敵か味方か。
+            // 敵の場合は敵の切断判定処理へ移行
+            // 味方の場合はプレイヤーが切断判定の処理を行う
             if (isCutRoll)
             {
                 isStandbyCutRoll = false;
                 isCutRoll = false;
 
-                
+                CutRollJudge();
             }
+        }
+        else if(isAddEffectStep)
+        {
+            JudgeAddEffect();
         }
     }
 
@@ -253,9 +262,9 @@ public class DmgTimingProcess : GetClickedGameObject
         diceRollButton.enabled = false;
         StartCoroutine(RollAnimStandby(diceRollAnim, callBack =>
         {
-            rollResult = randoms.NextInt(1, 11);
-            rollResult = 11;
-            rollResultText.text = rollResult.ToString();
+            cutRollResult = randoms.NextInt(1, 11);
+            cutRollResult = 8;
+            rollResultText.text = cutRollResult.ToString();
             isCutRoll = true;
         }));
 
@@ -264,31 +273,38 @@ public class DmgTimingProcess : GetClickedGameObject
     public void OnClickHead()
     {
         siteSelect = true;
-        siteSelectNum = HEAD;
+        // rollResultの値を変えて、攻撃する部位を選択
+        rollResult = HEAD;
         SiteSelectButtonsActive(false);
     }
 
     public void OnClickArm()
     {
         siteSelect = true;
-        siteSelectNum = ARM;
+        // rollResultの値を変えて、攻撃する部位を選択
+        rollResult = ARM;
         SiteSelectButtonsActive(false);
     }
 
     public void OnClickBody()
     {
         siteSelect = true;
-        siteSelectNum = BODY;
+        // rollResultの値を変えて、攻撃する部位を選択
+        rollResult = BODY;
         SiteSelectButtonsActive(false);
     }
 
     public void OnClickLeg()
     {
         siteSelect = true;
-        siteSelectNum = LEG;
+        // rollResultの値を変えて、攻撃する部位を選択
+        rollResult = LEG;
         SiteSelectButtonsActive(false);
     }
 
+    /// <summary>
+    /// 部位選択の有無を判定する処理
+    /// </summary>
     public void OnClickNextButton()
     {
         // 最終的なダメージの結果をだし、攻撃されたキャラクターがダメージを受ける
@@ -297,58 +313,30 @@ public class DmgTimingProcess : GetClickedGameObject
 
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
-        
-
-        // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められるが今は仮に頭とする
+        // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められる
         // 要if文分け。サヴァントかホラーかレギオンか
         if (rollResult > 10)
         {
             // ダイスロールの結果が10より上の場合の追加ダメージ処理
-            int addDmg = rollResult - 10;
-            giveDamage = giveDamage + addDmg;
+            giveDamage = giveDamage + rollResult - 10;
             SiteSelectButtonsActive(true);
 
-            StartCoroutine(SelectDamageSite(callBack =>
+            // 部位選択待機
+            StartCoroutine(SelectDamageSite(callBack=>
             {
-                SortDamageParts(siteSelectNum);
+                isAddEffectStep = true;
             }));
-        }
-        else if (rollResult == 10)
-        {
-            SortDamageParts(HEAD);
-        }
-        else if (rollResult == 9)
-        {
-            SortDamageParts(ARM);
-        }
-        else if (rollResult == 8)
-        {
-            SortDamageParts(BODY);
-        }
-        else if (rollResult == 7)
-        {
-            SortDamageParts(LEG);
         }
         else if (rollResult == 6)
         {
-            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
-            if (giveDamage > damageChara.HeadParts.Count)
-            {
-                giveDamage = damageChara.HeadParts.Count;
-            }
-
-            // 相手が選ぶ。今は仮に頭にダメージが入るようにする
-            for (int i = 0; i < giveDamage; i++)
-            {
-                if (!damageChara.HeadParts[i].isDmage)
-                {
-                    damageChara.HeadParts[i].isDmage = true;
-                }
-            }
+            rollResult = 10;
+            isAddEffectStep = true;
         }
-
-        siteSelect = false;
-        siteSelectNum = 0;
+        else
+        {
+            // 部位選択がなければそのまま追加効果判定へ移行させる
+            isAddEffectStep = true;
+        }
     }
 
 
@@ -359,58 +347,28 @@ public class DmgTimingProcess : GetClickedGameObject
     /// <param name="site"></param>
     void SortDamageParts(int site)
     {
-        randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
         if (site==HEAD)
         {
-            damageChara.HeadParts = DamagingParts(damageChara.HeadParts);
-            // 爆発による追加ダメージ
-            if (actManeuver.Atk.isExplosion)
-            {
-                DamagingParts(damageChara.ArmParts);
-            }
+            damageChara.HeadParts = GiveDamageParts(damageChara.HeadParts);
         }
         else if (site == ARM)
         {
-            int isChoices = randoms.NextInt(1, 2);
-            damageChara.ArmParts = DamagingParts(damageChara.ArmParts);
-            if(isChoices==1)
-            {
-                DamagingParts(damageChara.HeadParts);
-            }
-            else
-            {
-                DamagingParts(damageChara.BodyParts);
-            }
-
+            damageChara.ArmParts = GiveDamageParts(damageChara.ArmParts);
         }
         else if (site == BODY)
         {
-            int isChoices = randoms.NextInt(1, 2);
-            damageChara.BodyParts = DamagingParts(damageChara.BodyParts);
-            if (isChoices == 1)
-            {
-                DamagingParts(damageChara.ArmParts);
-            }
-            else
-            {
-                DamagingParts(damageChara.LegParts);
-            }
+            damageChara.BodyParts = GiveDamageParts(damageChara.BodyParts);
         }
         else if (site == LEG)
         {
-            damageChara.LegParts = DamagingParts(damageChara.LegParts);
-            // 爆発による追加ダメージ
-            if (actManeuver.Atk.isExplosion)
-            {
-                DamagingParts(damageChara.BodyParts);
-            }
+            damageChara.LegParts = GiveDamageParts(damageChara.LegParts);
         }
 
-        if(actManeuver.Atk.isCutting)
+        if (exprosionSite != 0)
         {
-            cutSite = site;
-            isStandbyCutRoll = true;
-            diceRollButton.gameObject.SetActive(true);
+            int buf = exprosionSite;
+            exprosionSite = 0;
+            SortDamageParts(buf);
         }
         else
         {
@@ -422,7 +380,7 @@ public class DmgTimingProcess : GetClickedGameObject
     /// 実際にダメージを入れる
     /// </summary>
     /// <param name="site"></param>
-    List<CharaManeuver> DamagingParts(List<CharaManeuver> site)
+    List<CharaManeuver> GiveDamageParts(List<CharaManeuver> site)
     {
         for (int i = 0; i < giveDamage; i++)
         {
@@ -438,6 +396,33 @@ public class DmgTimingProcess : GetClickedGameObject
 
         return site;
     }
+
+    /// <summary>
+    /// 追加効果があるかどうか判定する処理
+    /// </summary>
+    void JudgeAddEffect()
+    {
+        if (actManeuver.Atk.isExplosion)
+        {
+            StartCoroutine(SelectExplosionSite(callBack =>
+            {
+                isAddEffectStep = false;
+                SortDamageParts(rollResult);
+            }));
+        }
+        else if (actManeuver.Atk.isCutting)
+        {
+            isStandbyCutRoll = true;
+            diceRollButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            SortDamageParts(rollResult);
+        }
+
+        isAddEffectStep = false;
+    }
+
 
     /// <summary>
     /// アニメーション終了まで待つ処理
@@ -479,33 +464,72 @@ public class DmgTimingProcess : GetClickedGameObject
             yield return null;
         }
 
+        siteSelect = false;
         callBack(true);
     }
 
+    /// <summary>
+    /// 爆発による追加ダメージがどこに入るか、また選択の有無があれば選択させるための処理
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    public IEnumerator SelectExplosionSite(System.Action<bool> callBack)
+    {
+        int roll = rollResult;
+
+        if(rollResult==HEAD)
+        {
+            exprosionSite = ARM;
+        }
+        else if(rollResult==ARM)
+        {
+            siteSelectHead.gameObject.SetActive(true);
+            siteSelectBody.gameObject.SetActive(true);
+
+            while (!siteSelect)
+            {
+                yield return null;
+            }
+
+            exprosionSite = rollResult;
+            
+        }
+        else if (rollResult == BODY)
+        {
+            siteSelectArm.gameObject.SetActive(true);
+            siteSelectLeg.gameObject.SetActive(true);
+
+            while (!siteSelect)
+            {
+                yield return null;
+            }
+
+            exprosionSite = rollResult;
+        }
+        else if (rollResult == LEG)
+        {
+            exprosionSite = BODY;
+        }
+
+        rollResult = roll;
+        siteSelect = false;
+        callBack(true);
+    }
+
+    /// <summary>
+    /// 切断判定の成否。成功してたら99ダメージという判定にし、すべてのパーツを破損させる
+    /// </summary>
     public void CutRollJudge()
     {
         if(cutRollResult>=6)
         {
             giveDamage = 99;
-            if(cutSite==HEAD)
-            {
-                
-            }
-            else if (cutSite == ARM)
-            {
-
-            }
-            else if (cutSite == BODY)
-            {
-
-            }
-            else if (cutSite == LEG)
-            {
-
-            }
+            SortDamageParts(rollResult);
         }
-
-        StartCoroutine(ManeuverAnimation(actManeuver, callBack => EndFlowProcess()));
+        else
+        {
+            SortDamageParts(rollResult);
+        }
     }
 
     public void SiteSelectButtonsActive(bool isActive)
@@ -527,10 +551,15 @@ public class DmgTimingProcess : GetClickedGameObject
         addDamage = 0;
         giveDamage = 0;
         dmgGuard = 0;
-        siteSelectNum = 0;
         siteSelect = false;
 
-        if (continuousAtk<actManeuver.Atk.Num_per_Action)
+        diceRollButton.gameObject.SetActive(false);
+        diceRollButtonImg.raycastTarget = true;
+        diceRollButton.enabled = true;
+        rollResultText.text = "ダイスロール";
+        diceRollAnim.gameObject.SetActive(false);
+
+        if (continuousAtk < actManeuver.Atk.Num_per_Action)
         {
             damageButtons.SetActive(false);
             isStandbyEnemySelect = false;
