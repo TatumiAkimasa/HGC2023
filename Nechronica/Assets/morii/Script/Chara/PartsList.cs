@@ -73,7 +73,7 @@ public class PartsList : CharaBase
         kobusi_A.MaxRange = 0;
         kobusi_A.Weight = 1;
         kobusi_A.Atk.Num_per_Action = 2;
-        kobusi_A.Atk.isCutting = true;
+        kobusi_A.Atk.isFallDown = true;
         kobusi_A.Atk.isAllAttack = true;
 
         kata_A.Name = "‚©‚½";

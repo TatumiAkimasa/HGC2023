@@ -213,9 +213,7 @@ public class ActTimingProcess : GetClickedGameObject
                     // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
-                    if (isStandbyEnemySelect && dollManeuver.MinRange != 10 && 
-                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.area) &&
-                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) >= Mathf.Abs(dollManeuver.MinRange + actingChara.area)))
+                    if (isStandbyEnemySelect && dollManeuver.MinRange != 10 && RangeCheck(move.GetComponent<Doll_blu_Nor>(), dollManeuver, actingChara))
                     {
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);

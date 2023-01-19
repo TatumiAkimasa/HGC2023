@@ -179,13 +179,14 @@ public class JdgTimingProcess : GetClickedGameObject
 
     public void OnClickManeuver()
     {
+        if(dollManeuver.MinRange==10 && actingChara == selectedAllyChara)
+        {
+            ExeJudgManeuver(dollManeuver, selectedAllyChara);
+        }
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
-        if (dollManeuver.MinRange != 10 &&
-            (Mathf.Abs(actingChara.area) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.area) &&
-             Mathf.Abs(actingChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area))&&
-             (!dollManeuver.isUse && !dollManeuver.isDmage))
+        if (dollManeuver.MinRange != 10 && RangeCheck(actingChara, dollManeuver, selectedAllyChara))
         {
             ExeJudgManeuver(dollManeuver, selectedAllyChara);
         }

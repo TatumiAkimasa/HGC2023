@@ -246,4 +246,35 @@ public class GetClickedGameObject : MonoBehaviour
         // 複製したプレハブカメラを消す。
         StartCoroutine(DstroyCamera());
     }
+
+    /// <summary>
+    /// マニューバを使用したキャラクターの射程内に選択されたキャラがいるかどうか
+    /// </summary>
+    /// <param name="targetChara">マニューバのターゲットに選択されたキャラ</param>
+    /// <param name="maneuver">マニューバの情報</param>
+    /// <param name="exeChara">マニューバを使用したキャラ</param>
+    /// <returns>射程内であればtrueで返す</returns>
+    public bool RangeCheck(Doll_blu_Nor targetChara, CharaManeuver maneuver, Doll_blu_Nor exeChara)
+    {
+        if(maneuver.Timing==CharaBase.ACTION)
+        {
+            if ((Mathf.Abs(targetChara.area) <= Mathf.Abs(maneuver.MaxRange + exeChara.area) &&
+                 Mathf.Abs(targetChara.area) >= Mathf.Abs(maneuver.MinRange + exeChara.area)) &&
+               !maneuver.isDmage)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if ((Mathf.Abs(targetChara.area) <= Mathf.Abs(maneuver.MaxRange + exeChara.area) &&
+                 Mathf.Abs(targetChara.area) >= Mathf.Abs(maneuver.MinRange + exeChara.area)) &&
+               (!maneuver.isUse && !maneuver.isDmage))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

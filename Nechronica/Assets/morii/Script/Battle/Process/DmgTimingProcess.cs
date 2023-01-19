@@ -20,6 +20,11 @@ public class DmgTimingProcess : GetClickedGameObject
 
     private bool siteSelect = false;    // ダイスロールの値が10より多いときにtrueにする
 
+    private bool deleteAddEff = false;  // 肉の盾などによる追加効果の打消し効果のマニューバが発動されたかどうかの有無
+    private bool deleteCutEff = false;  // オートタイミングなどによる切断打消し効果のマニューバが発動されたかどうかの有無
+    private bool deleteExproEff = false;// オートタイミングなどによる爆発打消し効果のマニューバが発動されたかどうかの有無
+    private bool deleteFDEff = false;   // オートタイミングなどによる転倒打消し効果のマニューバが発動されたかどうかの有無（FDはFallDownの略）
+
     private int addDamage = 0;          // ダメージタイミングのマニューバ二位夜追加ダメージ
     private int giveDamage = 0;         // 与えるダメージ
     private int dmgGuard = 0;           // 与えるダメージをこの変数の値分減らす
@@ -46,8 +51,8 @@ public class DmgTimingProcess : GetClickedGameObject
 
     private bool isStandbyCutRoll = false;     // 切断判定待機
     private bool isCutRoll = false;     // 切断判定待機
-    [SerializeField] private int  cutRollResult = 0;          // 切断判定のリザルト
-    private int cutSite = 0;                 // 切断されそうな部位
+    [SerializeField] private int  cutRollResult = 0;          // 切断判定の結果の値
+
     [SerializeField] private Text rollResultText;
     [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
     [SerializeField] private Image diceRollButtonImg;       // ダイス演出などに使うボタンの画像
@@ -153,8 +158,10 @@ public class DmgTimingProcess : GetClickedGameObject
 
 
     /// <summary>
-    /// 発動したマニューバーが何をするのかの確認をする
+    /// 発動したマニューバが何をするものか確認する
     /// </summary>
+    /// <param name="maneuver">マニューバの内容</param>
+    /// <param name="dmgExeChara">マニューバを使用したキャラの情報</param>
     public void ExeManeuver(CharaManeuver maneuver, Doll_blu_Nor dmgExeChara)
     {
         // ダメージを増加するマニューバーの処理
@@ -167,13 +174,17 @@ public class DmgTimingProcess : GetClickedGameObject
         {
             GuardProcess(maneuver, dmgExeChara);
         }
+        
         else   // 上の二つに該当しない場合、固有の効果と使用する
         {
 
         }
 
+        // 要if文分け。特殊なコストどうか判断する
+        dmgExeChara.NowCount -= maneuver.Cost;
+
         // 同カウントで動くキャラがダメージタイミングのマニューバーを発動した場合、同カウントに行動ができなくなるので左の表示および動ける予定のキャラのリストから削除する
-        if(selectedAllyChara.NowCount==ManagerAccessor.Instance.battleSystem.NowCount)
+        if (dmgExeChara.NowCount==ManagerAccessor.Instance.battleSystem.NowCount)
         {
             ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
         }
@@ -191,20 +202,14 @@ public class DmgTimingProcess : GetClickedGameObject
             if(actingChara == dmgExeChara)
             {
                 addDamage += maneuver.EffectNum[EffNum.Damage];
-                // 要if文分け。特殊なコストどうか判断する
-                dmgExeChara.NowCount -= maneuver.Cost;
             }
         }
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
-        else if ((Mathf.Abs(actingChara.area) <= Mathf.Abs(maneuver.MaxRange + dmgExeChara.area)  &&
-                  Mathf.Abs(actingChara.area) >= Mathf.Abs(maneuver.MinRange + dmgExeChara.area)) &&
-                (!maneuver.isUse && !maneuver.isDmage))
+        else if (!RangeCheck(actingChara, maneuver, dmgExeChara))
         {
             addDamage += maneuver.EffectNum[EffNum.Damage];
-            // 要if文分け。特殊なコストどうか判断する
-            dmgExeChara.NowCount -= maneuver.Cost;
         }
         else
         {
@@ -221,20 +226,14 @@ public class DmgTimingProcess : GetClickedGameObject
             if (damageChara == dmgExeChara)
             {
                 dmgGuard += maneuver.EffectNum[EffNum.Guard];
-                // 要if文分け。特殊なコストどうか判断する
-                dmgExeChara.NowCount -= maneuver.Cost;
             }
         }
-        else if ((Mathf.Abs(damageChara.area) <= Mathf.Abs(maneuver.MaxRange + dmgExeChara.area) &&
-                  Mathf.Abs(damageChara.area) >= Mathf.Abs(maneuver.MinRange + dmgExeChara.area)) &&
-                (!maneuver.isUse && !maneuver.isDmage))
+        else if (RangeCheck(damageChara, maneuver, dmgExeChara))
         {
             if(maneuver.EffectNum.ContainsKey(EffNum.Guard))
             {
                 dmgGuard += maneuver.EffectNum[EffNum.Guard];
             }
-            // 要if文分け。特殊なコストどうか判断する
-            selectedAllyChara.NowCount -= maneuver.Cost;
         }
         else
         {
@@ -242,7 +241,7 @@ public class DmgTimingProcess : GetClickedGameObject
         }
     }
 
-    private void EXProcess()
+    private void EXProcess(CharaManeuver maneuver, Doll_blu_Nor dmgExeChara)
     {
         // かばうの処理
         if (dollManeuver.EffectNum.ContainsKey(EffNum.Protect))
@@ -250,6 +249,17 @@ public class DmgTimingProcess : GetClickedGameObject
             // ここかばうの処理入るかも
             // 要if文分け。特殊なコストどうか判断する
             selectedAllyChara.NowCount -= dollManeuver.Cost;
+        }
+        else if (dollManeuver.EffectNum.ContainsKey(EffNum.Nikunotate))
+        {
+            if (RangeCheck(damageChara, maneuver, dmgExeChara))
+            {
+                deleteAddEff = true;
+            }
+            else
+            {
+                // 射程が足りませんみたいな表記する
+            }
         }
     }
 
@@ -349,7 +359,7 @@ public class DmgTimingProcess : GetClickedGameObject
     /// <param name="site"></param>
     void SortDamageParts(int site)
     {
-        if(actManeuver.Atk.isAllAttack)
+        if(actManeuver.Atk.isAllAttack　&& !deleteAddEff)
         {
             for(int i=0;i<ManagerAccessor.Instance.battleSystem.GetCharaObj().Count;i++)
             {
@@ -378,6 +388,18 @@ public class DmgTimingProcess : GetClickedGameObject
             else if (site == LEG)
             {
                 damageChara.LegParts = GiveDamageParts(damageChara.LegParts);
+            }
+
+            // 追加効果に転倒がある攻撃であり
+            // 追加効果を打消しされていない状態で
+            // 爆発による追加ダメージが終了、もしくはない場合に処理
+            if (actManeuver.Atk.isFallDown && exprosionSite == 0 && !DeleteEffCheck(deleteAddEff, deleteFDEff))
+            {
+                if (damageChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount)
+                {
+                    ManagerAccessor.Instance.battleSystem.DeleteMoveChara(damageChara.Name);
+                }
+                damageChara.NowCount -= 2;
             }
 
             if (exprosionSite != 0)
@@ -424,6 +446,21 @@ public class DmgTimingProcess : GetClickedGameObject
             }
         }
 
+        // 追加効果に転倒がある攻撃且つ
+        // 追加効果を打消しされていない状態で
+        // 爆発による追加ダメージが終了、もしくはない場合に処理
+        if (actManeuver.Atk.isFallDown && exprosionSite == 0 && !deleteFDEff)
+        {
+            for (int i = 0; i < listChara.Count; i++)
+            {
+                if(listChara[i].NowCount == ManagerAccessor.Instance.battleSystem.NowCount)
+                {
+                    ManagerAccessor.Instance.battleSystem.DeleteMoveChara(listChara[i].Name);
+                }
+                listChara[i].NowCount -= 2;
+            }
+        }
+
         if (exprosionSite != 0)
         {
             int buf = exprosionSite;
@@ -462,22 +499,32 @@ public class DmgTimingProcess : GetClickedGameObject
     /// </summary>
     void JudgeAddEffect()
     {
-        if (actManeuver.Atk.isExplosion)
+        // 追加効果打消しが発動しているかどうか
+        if(deleteAddEff)
         {
-            StartCoroutine(SelectExplosionSite(callBack =>
-            {
-                isAddEffectStep = false;
-                SortDamageParts(rollResult);
-            }));
-        }
-        else if (actManeuver.Atk.isCutting)
-        {
-            isStandbyCutRoll = true;
-            diceRollButton.gameObject.SetActive(true);
+            SortDamageParts(rollResult);
         }
         else
         {
-            SortDamageParts(rollResult);
+            if (actManeuver.Atk.isExplosion && !deleteExproEff)
+            {
+                // 爆発によってどこの部位にダメージが入るか判定する処理。
+                // 攻撃部位が腕、胴のどちらかなら選択肢を出す
+                StartCoroutine(SelectExplosionSite(callBack =>
+                {
+                    isAddEffectStep = false;
+                    SortDamageParts(rollResult);
+                }));
+            }
+            else if (actManeuver.Atk.isCutting && !deleteCutEff)
+            {
+                isStandbyCutRoll = true;
+                diceRollButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                SortDamageParts(rollResult);
+            }
         }
 
         isAddEffectStep = false;
@@ -526,6 +573,19 @@ public class DmgTimingProcess : GetClickedGameObject
 
         siteSelect = false;
         callBack(true);
+    }
+
+    public bool DeleteEffCheck(params bool[] isSuccess)
+    {
+        foreach(bool isOk in isSuccess)
+        {
+            if (isOk)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

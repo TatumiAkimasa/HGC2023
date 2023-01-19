@@ -155,7 +155,7 @@ public class ManeuverEffectsAtk
     public bool isExplosion;   // 爆発攻撃かどうか
     public bool isCutting;     // 切断攻撃かどうか
     public bool isAllAttack;   // 全体攻撃かどうか
-    public bool isSuccession;  // 連撃かどうか
+    public bool isFallDown;    // 転倒かどうか
     public int Num_per_Action; // 連撃回数
 }
 
@@ -168,13 +168,13 @@ public class EffNum
     public const string Move     = "Move";
     public const string Count    = "Count";
     public const string Insanity = "Insanity";      // 狂気点が関与するものはこれを入れる
-    public const string Nikunotate = "Nikunotate";
     public const string Extra    = "Extra";
     
     
     // オンリーワンの効果
     public const string Protect  = "Protect";       // かばうの効果はこれで認識
     public const string YobunnnaUde = "YobunnnaUde";   // 余分な腕、死の手はこれで認識
+    public const string Nikunotate = "Nikunotate";  // 肉の盾はこれで認識
 
 
 }
