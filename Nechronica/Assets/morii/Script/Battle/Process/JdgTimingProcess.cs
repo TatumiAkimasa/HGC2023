@@ -156,9 +156,19 @@ public class JdgTimingProcess : GetClickedGameObject
         StartCoroutine(RollAnimStandby(diceRollAnim,callBack => 
         {
             rollResult = randoms.NextInt(1, 11);
-            rollResult = 11;
+            rollResult = 8;
             rollResultText.text = rollResult.ToString();
             isDiceRoll = true;
+
+            if(atkTargetEnemy.CompareTag("EnemyChara"))
+            {
+                atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Judge(actManeuver, actingChara, rollResult, 0, 0);
+            }
+            else if(rollResult<=5&&actingChara.CompareTag("EnemyChara"))
+            {
+                actingChara.GetComponent<ObjEnemy>().EnemyAI_Judge(actManeuver, actingChara, rollResult, 0);
+            }
+
         }));
         
     }
@@ -204,7 +214,7 @@ public class JdgTimingProcess : GetClickedGameObject
     public void ExeJudgManeuver(CharaManeuver maneuver, Doll_blu_Nor judgExeChara)
     {
         // ダイスロールの結果に支援、妨害の値を反映
-        rollResult += dollManeuver.EffectNum[EffNum.Judge];
+        rollResult += maneuver.EffectNum[EffNum.Judge];
         rollResultText.text = rollResult.ToString();
         maneuver.isUse = true;
         // スキルを発動したらコマンドボタンを非表示にし、キャラ選択待機状態にもどす
@@ -217,7 +227,7 @@ public class JdgTimingProcess : GetClickedGameObject
         isStandbyCharaSelect = true;
 
         // 行動値をコスト分減少させる
-        judgExeChara.NowCount -= dollManeuver.Cost;
+        judgExeChara.NowCount -= maneuver.Cost;
         if (judgExeChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount && judgExeChara != actingChara)
         {
             ManagerAccessor.Instance.battleSystem.DeleteMoveChara(judgExeChara.Name);
@@ -257,6 +267,14 @@ public class JdgTimingProcess : GetClickedGameObject
             ProcessAccessor.Instance.dmgTiming.SetDamageChara(atkTargetEnemy.GetComponent<Doll_blu_Nor>());
             ProcessAccessor.Instance.dmgTiming.SetRollResult(rollResult);
             ProcessAccessor.Instance.dmgTiming.GetDamageButtons().SetActive(true);
+            if(atkTargetEnemy.CompareTag("EnemyChara"))
+            {
+                atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, true);
+            }
+            if(atkTargetEnemy.CompareTag("AllyChara"))
+            {
+                atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, false);
+            }
             diceRollButton.gameObject.SetActive(false);
             judgeButtons.SetActive(false);
             

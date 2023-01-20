@@ -196,9 +196,13 @@ public class BattleSystem : MonoBehaviour
                 ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
                 battleExe = false;
             }
-            //else if(“GƒLƒƒƒ‰‚È‚çc)
+            //else if (CountMoveChara[i].gameObject.CompareTag("EnemyChara"))
+            //{
+            //    CountMoveChara[i].gameObject.GetComponent<ObjEnemy>().EnemyAI_Action();
+            //}
             // else(–¡•ûNPC‚È‚çc)
         }
+        battleExe = false;
     }
 
     /// <summary>

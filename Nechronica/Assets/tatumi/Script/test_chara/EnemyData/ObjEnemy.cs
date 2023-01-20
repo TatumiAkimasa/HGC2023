@@ -36,8 +36,6 @@ public class ObjEnemy : ClassData_
            
             //me.HeadParts.Add(kihon.Base_Head_parts[i]);
 
-            Maneuvers[(int)EnemyPartsType.EAction].Add(me.HeadParts[i]);
-
             if (me.HeadParts[i].Timing == ACTION)
                 Maneuvers[(int)EnemyPartsType.EAction].Add(me.HeadParts[i]);
             else if (me.HeadParts[i].Timing == RAPID)
@@ -130,13 +128,22 @@ public class ObjEnemy : ClassData_
             }
         }
 
-        EnemyAI_Judge(opponentManeuver, opponent,8,1,1);
+       
     }
 
-    public CharaManeuver EnemyAI_Action()
+    public void EnemyAI_Action()
     {
+        List<Doll_blu_Nor> PlayerDolls = new List<Doll_blu_Nor>();
+        Doll_blu_Nor target = null;
         //のちにPLのみ取得するよう依頼
-        List<Doll_blu_Nor> PlayerDolls = ManagerAccessor.Instance.battleSystem.GetCharaObj();
+        for (int i=0;i< ManagerAccessor.Instance.battleSystem.GetCharaObj().Count;i++)
+        {
+            if(ManagerAccessor.Instance.battleSystem.GetCharaObj()[i].gameObject.CompareTag("AllyChara"))
+            {
+                PlayerDolls.Add(ManagerAccessor.Instance.battleSystem.GetCharaObj()[i]);
+            }
+        }
+        
 
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
@@ -162,15 +169,19 @@ public class ObjEnemy : ClassData_
                             //優先度更新
                             //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
                         }
-                        else if (UseManever.EnemyAI[(int)EnemyPartsType.EAction] < Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers].EnemyAI[(int)EnemyPartsType.EAction])
-                            UseManever = Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers];
+                        //基本パーツEnemyAI追加出来てない
+                        //else if (UseManever.EnemyAI[(int)EnemyPartsType.EAction] < Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers].EnemyAI[(int)EnemyPartsType.EAction])
+                        //    UseManever = Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers];
+                        target = PlayerDolls[i];
+
                     }
                 }
             }
         }
 
         //田中さんが書いた処理なので田中さんに聞いてください
-        return UseManever;
+        ProcessAccessor.Instance.actTiming.ExeAtkManeuver(target, UseManever, me);
+        return;
     }
     //移動逃げ
     public void EnemyAI_Rapid(CharaManeuver OpponentManeuver, Doll_blu_Nor Opponent)
@@ -234,6 +245,7 @@ public class ObjEnemy : ClassData_
                                 {
                                     //とりま地獄側へ移動
                                     Debug.Log("Enemy:地獄にとばす");
+                                    //ProcessAccessor.Instance.rpdTiming.
                                     return;
                                 }
                                 else if(0 <= Opponent.area - UseManever.Moving)
@@ -423,13 +435,14 @@ public class ObjEnemy : ClassData_
                         //もう一度処理を繰り返す
                         EnemyAI_Judge(OpponentManeuver, Opponent, DiceRoll, TargetParts, UseManever.EffectNum["Judge"]);
                         //要求（行動
-
+                        ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(UseManever, me);
 
                     }
                     else
                     {
                         //要求（行動
                         Debug.Log("妨害チャレンジ完了");
+                        ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(UseManever, me);
                         return;
                     }
 
@@ -537,7 +550,7 @@ public class ObjEnemy : ClassData_
             if (!Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].isDmage)
             {
                 //選択したものがガード系の技なら
-                if (Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EffectNum.ContainsKey(EffNum.Guard)&&ATorDF)
+                if (/*Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EffectNum.ContainsKey(EffNum.Guard)&&*/ATorDF)
                 { 
                     //使用武具更新
                     if (UseManever == null)
@@ -548,6 +561,8 @@ public class ObjEnemy : ClassData_
                     }
                     else if (UseManever.EnemyAI[(int)EnemyPartsType.Edamage] < Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EnemyAI[(int)EnemyPartsType.Edamage])
                         UseManever = Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers];
+
+
                 }
                 //ダメージ追加系の場合
                 else if(Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EffectNum.ContainsKey(EffNum.Damage) && !ATorDF)
@@ -561,13 +576,19 @@ public class ObjEnemy : ClassData_
                     }
                     else if (UseManever.EnemyAI[(int)EnemyPartsType.Edamage] < Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EnemyAI[(int)EnemyPartsType.Edamage])
                         UseManever = Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers];
+
+
                 }
+
+                
             }
 
         }
 
+        ProcessAccessor.Instance.dmgTiming.ExeManeuver(UseManever, me);
+
         //防御のタイミングかつ助けてほしい場合HELPする
-        if(UseManever==null&&ATorDF)
+        if (UseManever==null&&ATorDF)
         {
             //自身では対応不可
             Debug.Log("Enemy:Help!");

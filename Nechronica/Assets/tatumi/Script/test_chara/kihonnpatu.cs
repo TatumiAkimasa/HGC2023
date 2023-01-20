@@ -140,6 +140,16 @@ public class kihonnpatu : CharaBase
         Base_Head_parts[0].EnemyAI.Add(1);
         Base_Head_parts[0].EnemyAI.Add(3);
 
+        Base_Head_parts[1].EnemyAI.Add(5);
+        Base_Head_parts[1].EnemyAI.Add(1);
+        Base_Head_parts[1].EnemyAI.Add(1);
+        Base_Head_parts[1].EnemyAI.Add(3);
+
+        Base_Head_parts[2].EnemyAI.Add(5);
+        Base_Head_parts[2].EnemyAI.Add(1);
+        Base_Head_parts[2].EnemyAI.Add(1);
+        Base_Head_parts[2].EnemyAI.Add(3);
+
         Base_Arm_parts[0].EnemyAI.Add(5);
         Base_Arm_parts[0].EnemyAI.Add(1);
         Base_Arm_parts[0].EnemyAI.Add(1);

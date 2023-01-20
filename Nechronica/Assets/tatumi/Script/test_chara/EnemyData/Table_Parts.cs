@@ -9,11 +9,22 @@ public class Table_Parts : ScriptableObject
     public enum EffctNumString
     {
         Damage,
-        Judge,
-        Move,
-        Countt,
-        Extraa,
+        Guard ,
+        Judge ,
+        Move ,
+        Count ,
+        Insanity  ,   // 狂気点が関与するものはこれを入れる
+        Extra ,
+
+
+        // オンリーワンの効果
+        Protect,  // かばうの効果はこれで認識
+        YobunnnaUde  ,  // 余分な腕、死の手はこれで認識
+        Nikunotate,  // 肉の盾はこれで認識
     }
+
+
+
 
    
     [SerializeField, Header("EeffctNum設定")]
