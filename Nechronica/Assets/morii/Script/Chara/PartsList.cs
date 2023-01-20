@@ -66,7 +66,7 @@ public class PartsList : CharaBase
         kobusi_A.Name = "‚±‚Ô‚µ";
         kobusi_A.AnimName = AnimationName.Kobushi;
         kobusi_A.AnimEffect = NonResources.Load<GameObject>("Assets/morii/Prefab/Anim/" + kobusi_A.AnimName + ".prefab");
-        kobusi_A.EffectNum.Add(EffNum.Damage, 1);
+        kobusi_A.EffectNum.Add(EffNum.Damage, 10);
         kobusi_A.Cost = 2;
         kobusi_A.Timing = ACTION;
         kobusi_A.MinRange = 0;

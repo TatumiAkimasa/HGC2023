@@ -327,7 +327,7 @@ public class DmgTimingProcess : GetClickedGameObject
 
         // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められる
         // 要if文分け。サヴァントかホラーかレギオンか
-        if (rollResult > 10)
+        if (rollResult > 10 )
         {
             // ダイスロールの結果が10より上の場合の追加ダメージ処理
             giveDamage = giveDamage + rollResult - 10;
@@ -346,6 +346,15 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else
         {
+            // 攻撃対象部位にパーツが残っていなければ部位選択に移行
+            if(SiteRemainingParts(rollResult))
+            {
+                // 部位選択待機
+                StartCoroutine(SelectDamageSite(callBack =>
+                {
+                    isAddEffectStep = true;
+                }));
+            }
             // 部位選択がなければそのまま追加効果判定へ移行させる
             isAddEffectStep = true;
         }
@@ -654,12 +663,65 @@ public class DmgTimingProcess : GetClickedGameObject
 
     public void SiteSelectButtonsActive(bool isActive)
     {
-        siteSelectHead.gameObject.SetActive(isActive);
-        siteSelectArm.gameObject.SetActive(isActive);
-        siteSelectBody.gameObject.SetActive(isActive);
-        siteSelectLeg.gameObject.SetActive(isActive);
+        if(!SiteRemainingParts(HEAD))
+        {
+            siteSelectHead.gameObject.SetActive(isActive);
+        }
+        if (!SiteRemainingParts(ARM))
+        {
+            siteSelectArm.gameObject.SetActive(isActive);
+        }
+        if (!SiteRemainingParts(BODY))
+        {
+            siteSelectBody.gameObject.SetActive(isActive);
+        }
+        if (!SiteRemainingParts(LEG))
+        {
+            siteSelectLeg.gameObject.SetActive(isActive);
+        }
     }
 
+    /// <summary>
+    /// パーツに部位が残っているかどうか確認する
+    /// </summary>
+    /// <param name="site">残ってるかどうか確認したい部位</param>
+    /// <returns>残っていればfalse、残っていなければtrueで返す</returns>
+    private bool SiteRemainingParts(int site)
+    {
+        if(site==HEAD)
+        {
+            for(int i=0;i< damageChara.HeadParts.Count;i++)
+            {
+                if(!damageChara.HeadParts[i].isDmage)
+                {
+                    return false;
+                }
+            }
+        }
+        else if (site == ARM)
+        {
+            if (damageChara.ArmParts.Count > 0)
+            {
+                return false;
+            }
+        }
+        else if (site == BODY)
+        {
+            if (damageChara.BodyParts.Count > 0)
+            {
+                return false;
+            }
+        }
+        else if (site == LEG)
+        {
+            if (damageChara.LegParts.Count > 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     /// <summary>
     /// カウントの流れ終了時の処理.
