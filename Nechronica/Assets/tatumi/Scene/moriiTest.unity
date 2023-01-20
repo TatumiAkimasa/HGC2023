@@ -444,7 +444,7 @@ RectTransform:
   - {fileID: 1313495665}
   - {fileID: 878159052}
   m_Father: {fileID: 53693747}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -481,6 +481,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1870435104}
   - {fileID: 516886049}
   - {fileID: 751194951}
   - {fileID: 1720303611}
@@ -4069,7 +4070,7 @@ RectTransform:
   m_Children:
   - {fileID: 979750896}
   m_Father: {fileID: 53693747}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5067,6 +5068,9 @@ MonoBehaviour:
   ArmParts: []
   BodyParts: []
   LegParts: []
+  positionSkill: []
+  classSkill: []
+  nowCount: 0
   CharaImg: {fileID: 0}
   CharaName: {fileID: 0}
 --- !u!114 &741667022
@@ -5085,10 +5089,15 @@ MonoBehaviour:
   ArmParts: []
   BodyParts: []
   LegParts: []
+  positionSkill: []
+  classSkill: []
+  nowCount: 0
   CharaImg: {fileID: 0}
   CharaName: {fileID: 0}
   noumiso_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5107,6 +5116,8 @@ MonoBehaviour:
     EnemyAI: 
   medama_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5125,6 +5136,8 @@ MonoBehaviour:
     EnemyAI: 
   ago_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5141,8 +5154,30 @@ MonoBehaviour:
       isSuccession: 0
       Num_per_Action: 0
     EnemyAI: 
+  hunnu_H:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+    EnemyAI: 
   kobusi_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5161,6 +5196,8 @@ MonoBehaviour:
     EnemyAI: 
   ude_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5179,6 +5216,8 @@ MonoBehaviour:
     EnemyAI: 
   kata_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5195,8 +5234,30 @@ MonoBehaviour:
       isSuccession: 0
       Num_per_Action: 0
     EnemyAI: 
+  wirelille_A:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+    EnemyAI: 
   sebone_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5215,6 +5276,8 @@ MonoBehaviour:
     EnemyAI: 
   harawata_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5233,6 +5296,8 @@ MonoBehaviour:
     EnemyAI: 
   harawata2_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5251,6 +5316,8 @@ MonoBehaviour:
     EnemyAI: 
   hone_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5269,6 +5336,8 @@ MonoBehaviour:
     EnemyAI: 
   hone2_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5287,6 +5356,8 @@ MonoBehaviour:
     EnemyAI: 
   asi_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -5329,15 +5400,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisChara: {fileID: 741667022}
-  thisCharaCommand: {fileID: 741667023}
   ActionManeuvers: []
   RapidManeuvers: []
   JudgeManeuvers: []
   DamageManeuvers: []
-  actionCommands: {fileID: 0}
   rapidCommands: {fileID: 0}
-  judgeCommands: {fileID: 0}
-  damageCommands: {fileID: 0}
   actionButton: {fileID: 0}
   rapidButton: {fileID: 0}
   standbyButton: {fileID: 0}
@@ -5349,9 +5416,7 @@ MonoBehaviour:
   parentsRpdObj: []
   parentsJdgObj: []
   parentsDmgObj: []
-  battleSystem: {fileID: 0}
   nowSelect: 0
-  getClicked: {fileID: 0}
 --- !u!1 &744534229
 GameObject:
   m_ObjectHideFlags: 0
@@ -5793,7 +5858,7 @@ RectTransform:
   - {fileID: 1514427782}
   - {fileID: 374136819}
   m_Father: {fileID: 53693747}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7833,9 +7898,10 @@ MonoBehaviour:
   childCommand: {fileID: 0}
   actingChara: {fileID: 0}
   rollResultText: {fileID: 712961769}
+  plusNumText: {fileID: 0}
   nextButton: {fileID: 374136820}
   diceRollButton: {fileID: 1399939938}
-  buttonImg: {fileID: 1399939939}
+  diceRollButtonImg: {fileID: 0}
   confirmatButton: {fileID: 1514427781}
   judgeButtons: {fileID: 751194950}
 --- !u!114 &963194235
@@ -9697,10 +9763,15 @@ MonoBehaviour:
   ArmParts: []
   BodyParts: []
   LegParts: []
+  positionSkill: []
+  classSkill: []
+  nowCount: 0
   CharaImg: {fileID: 0}
   CharaName: {fileID: 0}
   noumiso_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9719,6 +9790,8 @@ MonoBehaviour:
     EnemyAI: 
   medama_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9737,6 +9810,8 @@ MonoBehaviour:
     EnemyAI: 
   ago_H:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9753,8 +9828,30 @@ MonoBehaviour:
       isSuccession: 0
       Num_per_Action: 0
     EnemyAI: 
+  hunnu_H:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+    EnemyAI: 
   kobusi_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9773,6 +9870,8 @@ MonoBehaviour:
     EnemyAI: 
   ude_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9791,6 +9890,8 @@ MonoBehaviour:
     EnemyAI: 
   kata_A:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9807,8 +9908,30 @@ MonoBehaviour:
       isSuccession: 0
       Num_per_Action: 0
     EnemyAI: 
+  wirelille_A:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isSuccession: 0
+      Num_per_Action: 0
+    EnemyAI: 
   sebone_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9827,6 +9950,8 @@ MonoBehaviour:
     EnemyAI: 
   harawata_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9845,6 +9970,8 @@ MonoBehaviour:
     EnemyAI: 
   harawata2_B:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9863,6 +9990,8 @@ MonoBehaviour:
     EnemyAI: 
   hone_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9881,6 +10010,8 @@ MonoBehaviour:
     EnemyAI: 
   hone2_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9899,6 +10030,8 @@ MonoBehaviour:
     EnemyAI: 
   asi_L:
     Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -9944,6 +10077,9 @@ MonoBehaviour:
   ArmParts: []
   BodyParts: []
   LegParts: []
+  positionSkill: []
+  classSkill: []
+  nowCount: 0
   CharaImg: {fileID: 0}
   CharaName: {fileID: 0}
 --- !u!114 &1228964201
@@ -10067,6 +10203,8 @@ MonoBehaviour:
   me: {fileID: 1228964199}
   opponentManeuver:
     Name: "\u76F8\u624B\u306E\u653B\u6483"
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 0
     MinRange: 0
@@ -11611,7 +11749,7 @@ RectTransform:
   m_Children:
   - {fileID: 712961768}
   m_Father: {fileID: 53693747}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14048,7 +14186,7 @@ RectTransform:
   - {fileID: 816339258}
   - {fileID: 744749894}
   m_Father: {fileID: 53693747}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15133,6 +15271,101 @@ Transform:
   m_Father: {fileID: 2029115392}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1870435103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1870435104}
+  - component: {fileID: 1870435107}
+  - component: {fileID: 1870435106}
+  - component: {fileID: 1870435105}
+  m_Layer: 6
+  m_Name: diceImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1870435104
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870435103}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 53693747}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 172}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1870435105
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870435103}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe618dfc508d3904e9151d4fa7de475f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1870435106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870435103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 4783443246025957694, guid: 5627756d10e4565419cfabf585d4437c, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1870435107
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870435103}
+  m_CullTransparentMesh: 1
 --- !u!1 &1874245334
 GameObject:
   m_ObjectHideFlags: 0

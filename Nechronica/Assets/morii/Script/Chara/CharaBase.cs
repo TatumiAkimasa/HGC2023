@@ -26,18 +26,34 @@ public class CharaBase : MonoBehaviour
     public int GetMaxCount() => maxCount;
     public int GetNowCount() => nowCount;
     public int GetWeight() => allWeight;
-
-    public List<CharaManeuver> GetHeadParts() => HeadParts; // 頭パーツ参照
-    public List<CharaManeuver> GetArmParts() => ArmParts;   // 腕パーツ参照
-    public List<CharaManeuver> GetBodyParts() => BodyParts; // 胴体パーツ参照
-    public List<CharaManeuver> GetLegParts() => LegParts;   // 脚パーツ参照
     public List<CharaManeuver> GetPotisionSkill() => positionSkill; // ポジションスキル参照
     public List<CharaManeuver> GetClassSkill() => classSkill;   // クラススキル
 
-    public List<CharaManeuver> HeadParts;       // 頭のパーツ
-    public List<CharaManeuver> ArmParts;        // 腕のパーツ
-    public List<CharaManeuver> BodyParts;       // 胴のパーツ
-    public List<CharaManeuver> LegParts;        // 脚のパーツ
+    [SerializeField] protected List<CharaManeuver> headParts;       // 頭のパーツ
+    [SerializeField] protected List<CharaManeuver> armParts;        // 腕のパーツ
+    [SerializeField] protected List<CharaManeuver> bodyParts;       // 胴のパーツ
+    [SerializeField] protected List<CharaManeuver> legParts;        // 脚のパーツ
+
+    public List<CharaManeuver> HeadParts
+    {
+        get { return headParts; }
+        set { headParts = value; }
+    }
+    public List<CharaManeuver> ArmParts
+    {
+        get { return armParts; }
+        set { armParts = value; }
+    }
+    public List<CharaManeuver> BodyParts
+    {
+        get { return bodyParts; }
+        set { bodyParts = value; }
+    }
+    public List<CharaManeuver> LegParts
+    {
+        get { return legParts; }
+        set { legParts = value; }
+    }
 
     public List<CharaManeuver> positionSkill;   // ポジションスキル
 
@@ -114,8 +130,9 @@ public class CharaBase : MonoBehaviour
 [System.Serializable]
 public class CharaManeuver
 {
-
-    public string Name;            // パーツ名
+    public string Name;            // パーツ名 /
+    public string AnimName;        // アニメーションID
+    public GameObject AnimEffect;  // アニメーション再生用
     //public int EffectNum;        // 効果値
     public Dictionary<string, int> EffectNum = new Dictionary<string, int>();          // 効果値
     public int Cost;               // コスト
@@ -138,7 +155,7 @@ public class ManeuverEffectsAtk
     public bool isExplosion;   // 爆発攻撃かどうか
     public bool isCutting;     // 切断攻撃かどうか
     public bool isAllAttack;   // 全体攻撃かどうか
-    public bool isSuccession;  // 連撃かどうか
+    public bool isFallDown;    // 転倒かどうか
     public int Num_per_Action; // 連撃回数
 }
 
@@ -157,7 +174,17 @@ public class EffNum
     // オンリーワンの効果
     public const string Protect  = "Protect";       // かばうの効果はこれで認識
     public const string YobunnnaUde = "YobunnnaUde";   // 余分な腕、死の手はこれで認識
+    public const string Nikunotate = "Nikunotate";  // 肉の盾はこれで認識
 
+
+}
+
+[System.Serializable]
+public class AnimationName
+{
+    public const string Null = "Null";
+    public const string Ago  = "Ago";
+    public const string Kobushi = "Kobushi";
 
 }
 

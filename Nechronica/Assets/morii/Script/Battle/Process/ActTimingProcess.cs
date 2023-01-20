@@ -121,6 +121,10 @@ public class ActTimingProcess : GetClickedGameObject
                 {
                     actCharaCommand.GetActCommands().SetActive(false);
                 }
+                else if(actCharaCommand.GetRpdCommands().activeSelf)
+                {
+                    actCharaCommand.GetRpdCommands().SetActive(false);
+                }
                 else
                 {
                     MyZoomOutObj(actCharaCommand.GetActSelect());
@@ -209,9 +213,7 @@ public class ActTimingProcess : GetClickedGameObject
                     // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
-                    if (isStandbyEnemySelect && dollManeuver.MinRange != 10 && 
-                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.area) &&
-                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) >= Mathf.Abs(dollManeuver.MinRange + actingChara.area)))
+                    if (isStandbyEnemySelect && dollManeuver.MinRange != 10 && RangeCheck(move.GetComponent<Doll_blu_Nor>(), dollManeuver, actingChara))
                     {
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
@@ -261,6 +263,7 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.ActMneuver = maneuver;
         ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
+        ProcessAccessor.Instance.rpdTiming.SetRapidButton(true);
 
         // 要if分分け。特殊なコストでなければコストを減少させる
         // 行動値を減少させる

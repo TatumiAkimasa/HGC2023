@@ -11,9 +11,28 @@ public class DmgTimingProcess : GetClickedGameObject
     // ターゲットになってる味方キャラ
     //-------------------------------
 
+    // 定数
+    const int HEAD = 10;
+    const int ARM  = 9;
+    const int BODY = 8;
+    const int LEG  = 7;
+    //--------------------------------
+
+    private bool siteSelect = false;    // ダイスロールの値が10より多いときにtrueにする
+
+    private bool deleteAddEff = false;  // 肉の盾などによる追加効果の打消し効果のマニューバが発動されたかどうかの有無
+    private bool deleteCutEff = false;  // オートタイミングなどによる切断打消し効果のマニューバが発動されたかどうかの有無
+    private bool deleteExproEff = false;// オートタイミングなどによる爆発打消し効果のマニューバが発動されたかどうかの有無
+    private bool deleteFDEff = false;   // オートタイミングなどによる転倒打消し効果のマニューバが発動されたかどうかの有無（FDはFallDownの略）
+
     private int addDamage = 0;          // ダメージタイミングのマニューバ二位夜追加ダメージ
     private int giveDamage = 0;         // 与えるダメージ
     private int dmgGuard = 0;           // 与えるダメージをこの変数の値分減らす
+
+    private bool isAddEffectStep;       // 追加効果があるか確認するステップ
+    private int exprosionSite;          // 爆発による追加ダメージの部位選択  
+
+    private Unity.Mathematics.Random randoms;
 
     Doll_blu_Nor selectedAllyChara;
 
@@ -21,10 +40,28 @@ public class DmgTimingProcess : GetClickedGameObject
     [SerializeField] private GameObject confirmatButton;    // 発動するかどうかの確認するボタンのゲームオブジェクト
     [SerializeField] private GameObject damageButtons;      // ダメージタイミングのボタンの親オブジェクト
 
+    [SerializeField] private GameObject siteSelectHead;  // 部位選択のボタン
+    [SerializeField] private GameObject siteSelectArm;   // 部位選択のボタン
+    [SerializeField] private GameObject siteSelectBody;  // 部位選択のボタン
+    [SerializeField] private GameObject siteSelectLeg;   // 部位選択のボタン
+
     private int rollResult;             // ダイスロールの結果の値
     private Doll_blu_Nor damageChara;   // ダメージを受ける予定のキャラ
     private CharaManeuver actManeuver;     // アクションタイミングで発動されたコマンドの格納場所
 
+    private bool isStandbyCutRoll = false;     // 切断判定待機
+    private bool isCutRoll = false;     // 切断判定待機
+    [SerializeField] private int  cutRollResult = 0;          // 切断判定の結果の値
+
+    [SerializeField] private Text rollResultText;
+    [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
+    [SerializeField] private Image diceRollButtonImg;       // ダイス演出などに使うボタンの画像
+    [SerializeField] private Animator diceRollAnim;         // ダイスロールのアニメ
+
+    private List<Doll_blu_Nor> damageCharas = new List<Doll_blu_Nor>();
+
+    private int continuousAtk = 0;      // 連撃
+    public int SetContinuousAtk(int num) => continuousAtk = num;
     public GameObject GetConfirmatButton() => confirmatButton;
     public GameObject GetDamageButtons() => damageButtons;
     public void SetDamageChara(Doll_blu_Nor value) => damageChara = value;
@@ -52,6 +89,23 @@ public class DmgTimingProcess : GetClickedGameObject
         if(isStandbyCharaSelect)
         {
             CharaSelectStandby();
+        }
+        else if(isStandbyCutRoll)
+        {
+            // 用意if分分け。敵か味方か。
+            // 敵の場合は敵の切断判定処理へ移行
+            // 味方の場合はプレイヤーが切断判定の処理を行う
+            if (isCutRoll)
+            {
+                isStandbyCutRoll = false;
+                isCutRoll = false;
+
+                CutRollJudge();
+            }
+        }
+        else if(isAddEffectStep)
+        {
+            JudgeAddEffect();
         }
     }
 
@@ -104,8 +158,10 @@ public class DmgTimingProcess : GetClickedGameObject
 
 
     /// <summary>
-    /// 発動したマニューバーが何をするのかの確認をする
+    /// 発動したマニューバが何をするものか確認する
     /// </summary>
+    /// <param name="maneuver">マニューバの内容</param>
+    /// <param name="dmgExeChara">マニューバを使用したキャラの情報</param>
     public void ExeManeuver(CharaManeuver maneuver, Doll_blu_Nor dmgExeChara)
     {
         // ダメージを増加するマニューバーの処理
@@ -118,13 +174,17 @@ public class DmgTimingProcess : GetClickedGameObject
         {
             GuardProcess(maneuver, dmgExeChara);
         }
+        
         else   // 上の二つに該当しない場合、固有の効果と使用する
         {
 
         }
 
+        // 要if文分け。特殊なコストどうか判断する
+        dmgExeChara.NowCount -= maneuver.Cost;
+
         // 同カウントで動くキャラがダメージタイミングのマニューバーを発動した場合、同カウントに行動ができなくなるので左の表示および動ける予定のキャラのリストから削除する
-        if(selectedAllyChara.NowCount==ManagerAccessor.Instance.battleSystem.NowCount)
+        if (dmgExeChara.NowCount==ManagerAccessor.Instance.battleSystem.NowCount)
         {
             ManagerAccessor.Instance.battleSystem.DeleteMoveChara(selectedAllyChara.Name);
         }
@@ -142,20 +202,14 @@ public class DmgTimingProcess : GetClickedGameObject
             if(actingChara == dmgExeChara)
             {
                 addDamage += maneuver.EffectNum[EffNum.Damage];
-                // 要if文分け。特殊なコストどうか判断する
-                dmgExeChara.NowCount -= maneuver.Cost;
             }
         }
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
-        else if ((Mathf.Abs(actingChara.area) <= Mathf.Abs(maneuver.MaxRange + dmgExeChara.area)  &&
-                  Mathf.Abs(actingChara.area) >= Mathf.Abs(maneuver.MinRange + dmgExeChara.area)) &&
-                (!maneuver.isUse && !maneuver.isDmage))
+        else if (!RangeCheck(actingChara, maneuver, dmgExeChara))
         {
             addDamage += maneuver.EffectNum[EffNum.Damage];
-            // 要if文分け。特殊なコストどうか判断する
-            dmgExeChara.NowCount -= maneuver.Cost;
         }
         else
         {
@@ -172,20 +226,14 @@ public class DmgTimingProcess : GetClickedGameObject
             if (damageChara == dmgExeChara)
             {
                 dmgGuard += maneuver.EffectNum[EffNum.Guard];
-                // 要if文分け。特殊なコストどうか判断する
-                dmgExeChara.NowCount -= maneuver.Cost;
             }
         }
-        else if ((Mathf.Abs(damageChara.area) <= Mathf.Abs(maneuver.MaxRange + dmgExeChara.area) &&
-                  Mathf.Abs(damageChara.area) >= Mathf.Abs(maneuver.MinRange + dmgExeChara.area)) &&
-                (!maneuver.isUse && !maneuver.isDmage))
+        else if (RangeCheck(damageChara, maneuver, dmgExeChara))
         {
             if(maneuver.EffectNum.ContainsKey(EffNum.Guard))
             {
                 dmgGuard += maneuver.EffectNum[EffNum.Guard];
             }
-            // 要if文分け。特殊なコストどうか判断する
-            selectedAllyChara.NowCount -= maneuver.Cost;
         }
         else
         {
@@ -193,7 +241,7 @@ public class DmgTimingProcess : GetClickedGameObject
         }
     }
 
-    private void EXProcess()
+    private void EXProcess(CharaManeuver maneuver, Doll_blu_Nor dmgExeChara)
     {
         // かばうの処理
         if (dollManeuver.EffectNum.ContainsKey(EffNum.Protect))
@@ -202,127 +250,481 @@ public class DmgTimingProcess : GetClickedGameObject
             // 要if文分け。特殊なコストどうか判断する
             selectedAllyChara.NowCount -= dollManeuver.Cost;
         }
-        
+        else if (dollManeuver.EffectNum.ContainsKey(EffNum.Nikunotate))
+        {
+            if (RangeCheck(damageChara, maneuver, dmgExeChara))
+            {
+                deleteAddEff = true;
+            }
+            else
+            {
+                // 射程が足りませんみたいな表記する
+            }
+        }
     }
 
+    public void OnClickDiceRoll()
+    {
+        diceRollAnim.gameObject.SetActive(true);
+        rollResultText.text = "";   // 文字が邪魔なので一旦空データを代入
+        randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
+
+        // その後の操作を邪魔しないようにfalseにしておく
+        diceRollButtonImg.raycastTarget = false;
+        diceRollButton.enabled = false;
+        StartCoroutine(RollAnimStandby(diceRollAnim, callBack =>
+        {
+            cutRollResult = randoms.NextInt(1, 11);
+            cutRollResult = 8;
+            rollResultText.text = cutRollResult.ToString();
+            isCutRoll = true;
+        }));
+
+    }
+
+    public void OnClickHead()
+    {
+        siteSelect = true;
+        // rollResultの値を変えて、攻撃する部位を選択
+        rollResult = HEAD;
+        SiteSelectButtonsActive(false);
+    }
+
+    public void OnClickArm()
+    {
+        siteSelect = true;
+        // rollResultの値を変えて、攻撃する部位を選択
+        rollResult = ARM;
+        SiteSelectButtonsActive(false);
+    }
+
+    public void OnClickBody()
+    {
+        siteSelect = true;
+        // rollResultの値を変えて、攻撃する部位を選択
+        rollResult = BODY;
+        SiteSelectButtonsActive(false);
+    }
+
+    public void OnClickLeg()
+    {
+        siteSelect = true;
+        // rollResultの値を変えて、攻撃する部位を選択
+        rollResult = LEG;
+        SiteSelectButtonsActive(false);
+    }
+
+    /// <summary>
+    /// 部位選択の有無を判定する処理
+    /// </summary>
     public void OnClickNextButton()
     {
         // 最終的なダメージの結果をだし、攻撃されたキャラクターがダメージを受ける
         // オートタイミングのものも合わせて加算する予定
-
-        
+        isStandbyCharaSelect = false;
 
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
-        // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められるが今は仮に頭とする
+        // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められる
         // 要if文分け。サヴァントかホラーかレギオンか
         if (rollResult > 10)
         {
             // ダイスロールの結果が10より上の場合の追加ダメージ処理
-            int addDmg = rollResult - 10;
-            giveDamage = giveDamage + addDmg;
+            giveDamage = giveDamage + rollResult - 10;
+            SiteSelectButtonsActive(true);
 
-            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
-            if (giveDamage > damageChara.GetHeadParts().Count)
+            // 部位選択待機
+            StartCoroutine(SelectDamageSite(callBack=>
             {
-                giveDamage = damageChara.GetHeadParts().Count;
-            }
-
-            for (int i = 0; i < giveDamage; i++)
-            {
-                if (!damageChara.GetHeadParts()[i].isDmage)
-                {
-                    damageChara.GetHeadParts()[i].isDmage = true;
-                }
-            }
-        }
-        else if (rollResult == 10)
-        {
-            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
-            if (giveDamage>damageChara.GetHeadParts().Count)
-            {
-                giveDamage = damageChara.GetHeadParts().Count;
-            }
-
-            for (int i = 0; i < giveDamage; i++)
-            {
-                if (!damageChara.GetHeadParts()[i].isDmage)
-                {
-                    damageChara.GetHeadParts()[i].isDmage = true;
-                }
-            }
-        }
-        else if (rollResult == 9)
-        {
-            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
-            if (giveDamage > damageChara.GetArmParts().Count)
-            {                               
-                giveDamage = damageChara.GetArmParts().Count;
-            }
-
-            for (int i = 0; i < giveDamage; i++)
-            {
-                if (!damageChara.GetArmParts()[i].isDmage)
-                {
-                    damageChara.GetArmParts()[i].isDmage = true;
-                }
-            }
-        }
-        else if (rollResult == 8)
-        {
-            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
-            if (giveDamage > damageChara.GetBodyParts().Count)
-            {                               
-                giveDamage = damageChara.GetBodyParts().Count;
-            }
-
-            for (int i = 0; i < giveDamage; i++)
-            {
-                if (!damageChara.GetBodyParts()[i].isDmage)
-                {
-                    damageChara.GetBodyParts()[i].isDmage = true;
-                }
-            }
-        }
-        else if (rollResult == 7)
-        {
-            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
-            if (giveDamage > damageChara.GetLegParts().Count)
-            {                               
-                giveDamage = damageChara.GetLegParts().Count;
-            }
-
-            for (int i = 0; i < giveDamage; i++)
-            {
-                if (!damageChara.GetLegParts()[i].isDmage)
-                {
-                    damageChara.GetLegParts()[i].isDmage = true;
-                }
-            }
+                isAddEffectStep = true;
+            }));
         }
         else if (rollResult == 6)
         {
-            // 与えるダメージがパーツの数より多い場合、要素数より多い数を参照しないようにする。
-            if (giveDamage > damageChara.GetHeadParts().Count)
+            rollResult = 10;
+            isAddEffectStep = true;
+        }
+        else
+        {
+            // 部位選択がなければそのまま追加効果判定へ移行させる
+            isAddEffectStep = true;
+        }
+    }
+
+
+
+    /// <summary>
+    /// どこの部位にダメージが入るか
+    /// </summary>
+    /// <param name="site"></param>
+    void SortDamageParts(int site)
+    {
+        if(actManeuver.Atk.isAllAttack　&& !deleteAddEff)
+        {
+            for(int i=0;i<ManagerAccessor.Instance.battleSystem.GetCharaObj().Count;i++)
             {
-                giveDamage = damageChara.GetHeadParts().Count;
+                if(ManagerAccessor.Instance.battleSystem.GetCharaObj()[i].area==damageChara.area)
+                {
+                    damageCharas.Add(ManagerAccessor.Instance.battleSystem.GetCharaObj()[i]);
+                }
             }
 
-            // 相手が選ぶ。今は仮に頭にダメージが入るようにする
-            for (int i = 0; i < giveDamage; i++)
+            SortDamageParts(site, ref damageCharas);
+        }
+        else
+        {
+            if (site == HEAD)
             {
-                if (!damageChara.GetHeadParts()[i].isDmage)
+                damageChara.HeadParts = GiveDamageParts(damageChara.HeadParts);
+            }
+            else if (site == ARM)
+            {
+                damageChara.ArmParts = GiveDamageParts(damageChara.ArmParts);
+            }
+            else if (site == BODY)
+            {
+                damageChara.BodyParts = GiveDamageParts(damageChara.BodyParts);
+            }
+            else if (site == LEG)
+            {
+                damageChara.LegParts = GiveDamageParts(damageChara.LegParts);
+            }
+
+            // 追加効果に転倒がある攻撃であり
+            // 追加効果を打消しされていない状態で
+            // 爆発による追加ダメージが終了、もしくはない場合に処理
+            if (actManeuver.Atk.isFallDown && exprosionSite == 0 && !DeleteEffCheck(deleteAddEff, deleteFDEff))
+            {
+                if (damageChara.NowCount == ManagerAccessor.Instance.battleSystem.NowCount)
                 {
-                    damageChara.GetHeadParts()[i].isDmage = true;
+                    ManagerAccessor.Instance.battleSystem.DeleteMoveChara(damageChara.Name);
                 }
+                damageChara.NowCount -= 2;
+            }
+
+            if (exprosionSite != 0)
+            {
+                int buf = exprosionSite;
+                exprosionSite = 0;
+                SortDamageParts(buf);
+            }
+            else
+            {
+                StartCoroutine(ManeuverAnimation(actManeuver, callBack => EndFlowProcess()));
+            }
+        }
+    }
+
+    void SortDamageParts(int site, ref List<Doll_blu_Nor> listChara)
+    {
+        if (site == HEAD)
+        {
+            for(int i=0;i<listChara.Count;i++)
+            {
+                listChara[i].HeadParts = GiveDamageParts(listChara[i].HeadParts);
+            }
+        }
+        else if (site == ARM)
+        {
+            for (int i = 0; i < listChara.Count; i++)
+            {
+                listChara[i].ArmParts = GiveDamageParts(listChara[i].ArmParts);
+            }
+        }
+        else if (site == BODY)
+        {
+            for (int i = 0; i < listChara.Count; i++)
+            {
+                listChara[i].BodyParts = GiveDamageParts(listChara[i].BodyParts);
+            }
+        }
+        else if (site == LEG)
+        {
+            for (int i = 0; i < listChara.Count; i++)
+            {
+                listChara[i].LegParts = GiveDamageParts(listChara[i].LegParts);
             }
         }
 
-        // ここ、アニメーション終わってからの処理にしたいなぁ
-        // 行動したキャラを表示から消す
-        ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
-        ManagerAccessor.Instance.battleSystem.BattleExe = true;
-        nextButton.gameObject.SetActive(false);
+        // 追加効果に転倒がある攻撃且つ
+        // 追加効果を打消しされていない状態で
+        // 爆発による追加ダメージが終了、もしくはない場合に処理
+        if (actManeuver.Atk.isFallDown && exprosionSite == 0 && !deleteFDEff)
+        {
+            for (int i = 0; i < listChara.Count; i++)
+            {
+                if(listChara[i].NowCount == ManagerAccessor.Instance.battleSystem.NowCount)
+                {
+                    ManagerAccessor.Instance.battleSystem.DeleteMoveChara(listChara[i].Name);
+                }
+                listChara[i].NowCount -= 2;
+            }
+        }
 
+        if (exprosionSite != 0)
+        {
+            int buf = exprosionSite;
+            exprosionSite = 0;
+            SortDamageParts(buf, ref damageCharas);
+        }
+        else
+        {
+            StartCoroutine(ManeuverAnimation(actManeuver, callBack => EndFlowProcess()));
+        }
     }
+
+    /// <summary>
+    /// 実際にダメージを入れる
+    /// </summary>
+    /// <param name="site"></param>
+    List<CharaManeuver> GiveDamageParts(List<CharaManeuver> site)
+    {
+        for (int i = 0; i < giveDamage; i++)
+        {
+            if (i >= site.Count)
+            {
+                break;
+            }
+            else if (!site[i].isDmage)
+            {
+                site[i].isDmage = true;
+            }
+        }
+
+        return site;
+    }
+
+    /// <summary>
+    /// 追加効果があるかどうか判定する処理
+    /// </summary>
+    void JudgeAddEffect()
+    {
+        // 追加効果打消しが発動しているかどうか
+        if(deleteAddEff)
+        {
+            SortDamageParts(rollResult);
+        }
+        else
+        {
+            if (actManeuver.Atk.isExplosion && !deleteExproEff)
+            {
+                // 爆発によってどこの部位にダメージが入るか判定する処理。
+                // 攻撃部位が腕、胴のどちらかなら選択肢を出す
+                StartCoroutine(SelectExplosionSite(callBack =>
+                {
+                    isAddEffectStep = false;
+                    SortDamageParts(rollResult);
+                }));
+            }
+            else if (actManeuver.Atk.isCutting && !deleteCutEff)
+            {
+                isStandbyCutRoll = true;
+                diceRollButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                SortDamageParts(rollResult);
+            }
+        }
+
+        isAddEffectStep = false;
+    }
+
+
+    /// <summary>
+    /// アニメーション終了まで待つ処理
+    /// </summary>
+    /// <param name="maneuver"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    public IEnumerator ManeuverAnimation(CharaManeuver maneuver, System.Action<bool> callBack)
+    {
+        GameObject instance;
+        if (maneuver.AnimEffect!=null)
+        {
+            instance = Instantiate(maneuver.AnimEffect, damageChara.transform.position, Quaternion.identity, damageChara.transform);
+            EffctEnd effctEnd = instance.GetComponent<EffctEnd>();
+
+            while (!effctEnd.AnimEnd)
+            {
+                yield return null;  
+            }
+        }
+        else
+        {
+            yield break;
+        }
+
+        if(instance!=null)
+        {
+            Destroy(instance);
+        }
+
+
+        callBack(true);
+    }
+
+    public IEnumerator SelectDamageSite(System.Action<bool> callBack)
+    {
+        while(!siteSelect)
+        {
+            yield return null;
+        }
+
+        siteSelect = false;
+        callBack(true);
+    }
+
+    public bool DeleteEffCheck(params bool[] isSuccess)
+    {
+        foreach(bool isOk in isSuccess)
+        {
+            if (isOk)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 爆発による追加ダメージがどこに入るか、また選択の有無があれば選択させるための処理
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    public IEnumerator SelectExplosionSite(System.Action<bool> callBack)
+    {
+        int roll = rollResult;
+
+        if(rollResult==HEAD)
+        {
+            exprosionSite = ARM;
+        }
+        else if(rollResult==ARM)
+        {
+            siteSelectHead.gameObject.SetActive(true);
+            siteSelectBody.gameObject.SetActive(true);
+
+            while (!siteSelect)
+            {
+                yield return null;
+            }
+
+            exprosionSite = rollResult;
+            
+        }
+        else if (rollResult == BODY)
+        {
+            siteSelectArm.gameObject.SetActive(true);
+            siteSelectLeg.gameObject.SetActive(true);
+
+            while (!siteSelect)
+            {
+                yield return null;
+            }
+
+            exprosionSite = rollResult;
+        }
+        else if (rollResult == LEG)
+        {
+            exprosionSite = BODY;
+        }
+
+        rollResult = roll;
+        siteSelect = false;
+        callBack(true);
+    }
+
+    /// <summary>
+    /// 切断判定の成否。成功してたら99ダメージという判定にし、すべてのパーツを破損させる
+    /// </summary>
+    public void CutRollJudge()
+    {
+        if(cutRollResult>=6)
+        {
+            giveDamage = 99;
+            SortDamageParts(rollResult);
+        }
+        else
+        {
+            SortDamageParts(rollResult);
+        }
+    }
+
+    public void SiteSelectButtonsActive(bool isActive)
+    {
+        siteSelectHead.gameObject.SetActive(isActive);
+        siteSelectArm.gameObject.SetActive(isActive);
+        siteSelectBody.gameObject.SetActive(isActive);
+        siteSelectLeg.gameObject.SetActive(isActive);
+    }
+
+
+    /// <summary>
+    /// カウントの流れ終了時の処理.
+    /// 連撃があるならジャッジタイミングへ移行し、もう一度同じ処理をする。
+    /// </summary>
+    void EndFlowProcess()
+    {
+        // もろもろを初期化
+        addDamage = 0;
+        giveDamage = 0;
+        dmgGuard = 0;
+        siteSelect = false;
+
+        diceRollButton.gameObject.SetActive(false);
+        diceRollButtonImg.raycastTarget = true;
+        diceRollButton.enabled = true;
+        rollResultText.text = "ダイスロール";
+        diceRollAnim.gameObject.SetActive(false);
+
+        if (continuousAtk < actManeuver.Atk.Num_per_Action)
+        {
+            damageButtons.SetActive(false);
+            isStandbyEnemySelect = false;
+            isStandbyCharaSelect = false;
+
+            //ここでジャッジタイミングへ移行
+            ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
+            ProcessAccessor.Instance.jdgTiming.ActMneuver = actManeuver;
+            ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
+            ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = damageChara.gameObject;
+            ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
+            ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
+            ProcessAccessor.Instance.jdgTiming.SetContinuousAtk(continuousAtk++);
+            if (actingChara.gameObject.CompareTag("EnemyChara")/*||自動ダイスロール的な？設定参照用*/)
+            {
+                ProcessAccessor.Instance.jdgTiming.OnClickDiceRoll();
+            }
+        }
+        else
+        {
+            
+            continuousAtk = 0;
+            // 連撃の数のカウントをジャッジ側で管理できないのでここで初期化
+            SetContinuousAtk(continuousAtk);
+            // 行動したキャラを表示から消す
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+            ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            nextButton.gameObject.SetActive(false);
+            
+        }
+        
+    }
+
+    /// <summary>
+    /// ダイスの回転が終わるのを待つメソッド
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator RollAnimStandby(Animator anim, System.Action<bool> callBack)
+    {
+        while (!anim.GetCurrentAnimatorStateInfo(0).IsName("End"))
+        {
+            yield return null;
+        }
+
+        callBack(true);
+    }
+
 }

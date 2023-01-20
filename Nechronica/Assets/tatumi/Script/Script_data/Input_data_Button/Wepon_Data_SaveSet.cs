@@ -12,7 +12,7 @@ public class Wepon_Data_SaveSet : MonoBehaviour
     private string Name;//パーツ名
 
     [SerializeField]
-    private bool isExplosion, isCotting, isAllAttack, isSuccession;//使用したかどうか
+    private bool isExplosion, isCotting, isAllAttack, isFallDown;//使用したかどうか
 
     //データセット（シリアライズ抜くと機能せず）
     [SerializeField]
@@ -39,7 +39,7 @@ public class Wepon_Data_SaveSet : MonoBehaviour
         Set_Parts.Atk.isAllAttack = item.Atk.isAllAttack;
         Set_Parts.Atk.isCutting = item.Atk.isCutting;
         Set_Parts.Atk.isExplosion = item.Atk.isExplosion;
-        Set_Parts.Atk.isSuccession = item.Atk.isSuccession;
+        Set_Parts.Atk.isFallDown = item.Atk.isFallDown;
         Set_Parts.Atk.Num_per_Action = item.Atk.Num_per_Action;
     }
     public string GetName() => Set_Parts.Name;
@@ -82,7 +82,7 @@ public class Wepon_Data_SaveSet : MonoBehaviour
         Set_Parts.Atk.isAllAttack = isAllAttack;
         Set_Parts.Atk.isCutting = isCotting;
         Set_Parts.Atk.isExplosion = isExplosion;
-        Set_Parts.Atk.isSuccession = isSuccession;
+        Set_Parts.Atk.isFallDown = isFallDown;
         Set_Parts.Atk.Num_per_Action = Num_per_Action;
     }
 

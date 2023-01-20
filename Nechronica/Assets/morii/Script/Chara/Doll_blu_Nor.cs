@@ -7,7 +7,8 @@ public class Doll_blu_Nor : PartsList
     //げったー
     public string GetName() => Name;
 
-    public string Name="test";                    //ドール名 
+    
+    public string Name;                    //ドール名 
     public string hide_hint="test";              //暗示
     public string Death_year="10";              //享年
     public string temper="アリス";                  //ポジション
@@ -18,9 +19,16 @@ public class Doll_blu_Nor : PartsList
     public short Armament = 0, Variant = 0, Alter = 0; //武装,変異,改造(Skill)
     public List<CharaManeuver> Skill;              //スキル
 
-    
     private void Awake()
     {
+        if(this.CompareTag("AllyChara"))
+        {
+            Name = "ミリカ";
+        }
+        else if(this.CompareTag("EnemyChara"))
+        {
+            Name = "包まれし者";
+        }
         InitParts();
 
         //初期位置を現在位置に代入
@@ -36,6 +44,7 @@ public class Doll_blu_Nor : PartsList
         ArmParts.Add(ude_A);
         ArmParts.Add(kata_A);
         ArmParts.Add(kobusi_A);
+        ArmParts.Add(wirelille_A);
 
         //胴----------------------
         BodyParts.Add(harawata2_B);

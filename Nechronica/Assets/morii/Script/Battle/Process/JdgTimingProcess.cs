@@ -15,6 +15,7 @@ public class JdgTimingProcess : GetClickedGameObject
 
     private bool isDiceRoll;
     private bool isStandbyDiceRoll;
+    private int continuousAtk;
 
     private GameObject atkTargetEnemy;      // 攻撃する敵オブジェクトを格納場所
 
@@ -26,6 +27,7 @@ public class JdgTimingProcess : GetClickedGameObject
     }
 
     private CharaManeuver actManeuver;     // アクションタイミングで発動されたコマンドの格納場所
+    [SerializeField]private Animator diceRollAnim;
 
     public CharaManeuver ActMneuver
     {
@@ -39,9 +41,9 @@ public class JdgTimingProcess : GetClickedGameObject
         set { isStandbyDiceRoll = value; }
     }
 
-    [SerializeField] private Text rollResultText;
     [SerializeField] private Text plusNumText;      // パッシブなどによるダイスロールに行われる加算
     [SerializeField] private Button nextButton;     // ジャッジタイミングを終わらせるボタン
+    [SerializeField] private Text rollResultText;
     [SerializeField] private Button diceRollButton; // ダイスロールを行うボタン
     [SerializeField] private Image diceRollButtonImg;       // ダイス演出などに使うボタンの画像
     [SerializeField] private GameObject confirmatButton;    // 最後に発動するか確認するボタン
@@ -51,6 +53,7 @@ public class JdgTimingProcess : GetClickedGameObject
     public GameObject GetConfirmatButton() => confirmatButton;
     public GameObject GetJudgeButton() => judgeButtons;
     public GameObject GetPlusNum() => plusNumText.gameObject;
+    public int SetContinuousAtk(int num) => continuousAtk = num;
 
 
     private Unity.Mathematics.Random randoms;       // 再現可能な乱数の内部状態を保持するインスタンス
@@ -143,24 +146,47 @@ public class JdgTimingProcess : GetClickedGameObject
     /// </summary>
     public void OnClickDiceRoll()
     {
+        diceRollAnim.gameObject.SetActive(true);
+        rollResultText.text = "";   // 文字が邪魔なので一旦空データを代入
         randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
-        rollResult = randoms.NextInt(1, 11);
-        rollResultText.text = rollResult.ToString();
+        
         // その後の操作を邪魔しないようにfalseにしておく
         diceRollButtonImg.raycastTarget = false;
         diceRollButton.enabled = false;
-        isDiceRoll = true;
+        StartCoroutine(RollAnimStandby(diceRollAnim,callBack => 
+        {
+            rollResult = randoms.NextInt(1, 11);
+            rollResult = 11;
+            rollResultText.text = rollResult.ToString();
+            isDiceRoll = true;
+        }));
+        
+    }
+
+    /// <summary>
+    /// ダイスの回転が終わるのを待つメソッド
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator RollAnimStandby(Animator anim, System.Action<bool> callBack)
+    {
+        while(!anim.GetCurrentAnimatorStateInfo(0).IsName("End"))
+        {
+            yield return null;
+        }
+
+        callBack(true);
     }
 
     public void OnClickManeuver()
     {
+        if(dollManeuver.MinRange==10 && actingChara == selectedAllyChara)
+        {
+            ExeJudgManeuver(dollManeuver, selectedAllyChara);
+        }
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら発動する
-        if (dollManeuver.MinRange != 10 &&
-            (Mathf.Abs(actingChara.area) <= Mathf.Abs(dollManeuver.MaxRange + selectedAllyChara.area) &&
-             Mathf.Abs(actingChara.area) >= Mathf.Abs(dollManeuver.MinRange + selectedAllyChara.area))&&
-             (!dollManeuver.isUse && !dollManeuver.isDmage))
+        if (dollManeuver.MinRange != 10 && RangeCheck(actingChara, dollManeuver, selectedAllyChara))
         {
             ExeJudgManeuver(dollManeuver, selectedAllyChara);
         }
@@ -253,6 +279,10 @@ public class JdgTimingProcess : GetClickedGameObject
         diceRollButtonImg.raycastTarget = true;
         diceRollButton.enabled  = true;
         isStandbyCharaSelect = false;
+        rollResultText.text = "ダイスロール";
+        diceRollAnim.gameObject.SetActive(false);
+
+        nextButton.gameObject.SetActive(false);
     }
 
 }
