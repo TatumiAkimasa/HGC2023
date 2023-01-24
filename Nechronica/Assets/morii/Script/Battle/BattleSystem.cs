@@ -17,10 +17,13 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private List<Doll_blu_Nor> charaObject = new List<Doll_blu_Nor>();
 
-    public List<Doll_blu_Nor> GetCharaObj()
-    {
-        return charaObject;
-    }
+    private List<Doll_blu_Nor> enemyCharaObjs = new List<Doll_blu_Nor>();
+    private List<Doll_blu_Nor> AllyCharaObjs = new List<Doll_blu_Nor>();
+
+    public List<Doll_blu_Nor> GetCharaObj() { return charaObject; }
+    public List<Doll_blu_Nor> GetEnemyCharaObj() { return enemyCharaObjs; }
+    public List<Doll_blu_Nor> GetAllyCharaObj() { return AllyCharaObjs; }
+    
 
     // キャラスポーンスクリプト参照用
     [SerializeField]
@@ -100,12 +103,14 @@ public class BattleSystem : MonoBehaviour
         for (int i = 0; i < charaObjectsBuffer.Length; i++)
         {
             charaObject.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+            AllyCharaObjs.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
         // EnemyCharaというタグがついたキャラをすべて取得
         charaObjectsBuffer = GameObject.FindGameObjectsWithTag("EnemyChara");
         for (int i = 0; i < charaObjectsBuffer.Length; i++)
         {
             charaObject.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+            enemyCharaObjs.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
 
         // キャラをスポーン

@@ -190,14 +190,17 @@ public class DmgTimingProcess : GetClickedGameObject
         }
 
         confirmatButton.SetActive(false);
-        ZoomOutObj();
+        if(dmgExeChara.gameObject.CompareTag("AllyChara"))
+        {
+            ZoomOutObj();
+        }
     }
 
     private void DamageUPProcess(CharaManeuver maneuver, Doll_blu_Nor dmgExeChara)
     {
         // 与えるダメージが上がる系の処理
         // 射程が自身のみの場合、ダメージを与えるキャラとダメージタイミングで動くキャラが同じかどうか調べる
-        if (dollManeuver.MinRange == 10)
+        if (maneuver.MinRange == 10)
         {
             if(actingChara == dmgExeChara)
             {

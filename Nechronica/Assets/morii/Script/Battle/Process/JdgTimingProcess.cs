@@ -254,13 +254,7 @@ public class JdgTimingProcess : GetClickedGameObject
     {
         if(rollResult>=6)
         {
-            int addDmg = 0;
-
-            if (rollResult > 10)
-            {
-                addDmg = rollResult - 10;
-            }
-
+            
             ProcessAccessor.Instance.dmgTiming.SetActChara(actingChara);
             ProcessAccessor.Instance.dmgTiming.ActMneuver = actManeuver;
             ProcessAccessor.Instance.dmgTiming.StandbyCharaSelect = true;
