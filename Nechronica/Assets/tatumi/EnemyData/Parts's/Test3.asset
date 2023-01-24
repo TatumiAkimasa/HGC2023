@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Test3
   m_EditorClassIdentifier: 
   effcrnums:
-  - Eff_String: 0
-    Eff_int: 3
+  - Eff_String: 3
+    Eff_int: 1
   Maneuver:
     Name: "\u3089\u3074\u3063\u3069\u3067\u306B\u3052\u308B\u3084\u3064"
     AnimName: 
@@ -22,9 +22,9 @@ MonoBehaviour:
     Cost: 0
     Timing: 3
     MinRange: 0
-    MaxRange: 1
+    MaxRange: 0
     Weight: 0
-    Moving: 2
+    Moving: 0
     isUse: 0
     isDmage: 0
     Atk:
@@ -34,4 +34,4 @@ MonoBehaviour:
       isAllAttack: 0
       isFallDown: 0
       Num_per_Action: 0
-    EnemyAI: 
+    EnemyAI: 0100010004000400

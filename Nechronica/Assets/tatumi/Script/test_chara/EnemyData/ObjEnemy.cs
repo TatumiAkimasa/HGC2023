@@ -205,7 +205,7 @@ public class ObjEnemy : ClassData_
             if (!Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].isDmage)
             {
                 //移動以外のマニューバー
-                if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].Moving == 0)
+                if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].EffectNum[EffNum.Move] == 0)
                 {
                     ;//今のところない？
                 }
@@ -221,7 +221,7 @@ public class ObjEnemy : ClassData_
                     //この時点で数字=射程差,+=天国側,-地獄側が分かる,0の場合は別途
                     //今検証中のPartsが射程外になるまで効果が及ぼせるか判定
                     //射程が1以上余裕がある場合
-                    if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].Moving > Mathf.Abs(differenceRange))
+                    if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].EffectNum[EffNum.Move] > Mathf.Abs(differenceRange))
                     {
                         //効果が及ぼせるとき
                         //敵の位置検索 & 射程比較(相手を動かす)
@@ -242,17 +242,18 @@ public class ObjEnemy : ClassData_
                             //相手の射程が0の場合
                             if (Mathf.Abs(differenceRange) == 0)
                             {
-                                if (4 >= Opponent.area + UseManever.Moving)
+                                if (4 >= Opponent.area + UseManever.EffectNum[EffNum.Move])
                                 {
                                     //とりま地獄側へ移動
                                     Debug.Log("Enemy:地獄にとばす");
-                                    //ProcessAccessor.Instance.rpdTiming.
+                                    ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Opponent, UseManever);
                                     return;
                                 }
-                                else if(0 <= Opponent.area - UseManever.Moving)
+                                else if(0 <= Opponent.area - UseManever.EffectNum[EffNum.Move])
                                 {
                                     //無理ならしぶしぶ反対へ
                                     Debug.Log("Enemy:天国にとばす");
+                                    ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Opponent, UseManever);
                                     return;
                                 }
 
@@ -262,18 +263,20 @@ public class ObjEnemy : ClassData_
                                 //天国側へ移動(移動して場外に行くかも判定)
                                 if (differenceRange > 0)
                                 {
-                                    if (0 <= Opponent.area - UseManever.Moving)
+                                    if (0 <= Opponent.area - UseManever.EffectNum[EffNum.Move])
                                     {
                                         Debug.Log("Enemy:天国にとばす");
+                                        ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Opponent, UseManever);
                                         return;
                                     }
                                 }
                                 //地獄側へ移動
                                 else if (differenceRange < 0)
                                 {
-                                    if (4 >= Opponent.area + UseManever.Moving)
+                                    if (4 >= Opponent.area + UseManever.EffectNum[EffNum.Move])
                                     {
                                         Debug.Log("Enemy:地獄にとばす");
+                                        ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Opponent, UseManever);
                                         return;
                                     }
                                 }
@@ -296,13 +299,13 @@ public class ObjEnemy : ClassData_
                             //相手の射程が0の場合
                             if (Mathf.Abs(differenceRange) == 0)
                             {
-                                if (4 >= me.area + UseManever.Moving)
+                                if (4 >= me.area + UseManever.EffectNum[EffNum.Move])
                                 {
                                     //とりま地獄側へ移動
                                     Debug.Log("Enemy:地獄にとばす");
                                     return;
                                 }
-                                else if (0 <= me.area - UseManever.Moving)
+                                else if (0 <= me.area - UseManever.EffectNum[EffNum.Move])
                                 {
                                     //無理ならしぶしぶ反対へ
                                     Debug.Log("Enemy:天国にとばす");
@@ -314,7 +317,7 @@ public class ObjEnemy : ClassData_
                                 //天国側へ移動(移動して場外に行くかも判定)
                                 if (differenceRange > 0)
                                 {
-                                    if (0 <= me.area - UseManever.Moving)
+                                    if (0 <= me.area - UseManever.EffectNum[EffNum.Move])
                                     {
                                         Debug.Log("Enemy:天国にとばす");
                                         return;
@@ -323,7 +326,7 @@ public class ObjEnemy : ClassData_
                                 //地獄側へ移動
                                 else if (differenceRange < 0)
                                 {
-                                    if (4 >= me.area + UseManever.Moving)
+                                    if (4 >= me.area + UseManever.EffectNum[EffNum.Move])
                                     {
                                         Debug.Log("Enemy:地獄にとばす");
                                         return;
@@ -695,22 +698,25 @@ public class ObjEnemy : ClassData_
         }
     }
 
-    //public List<CharaManeuver> GetDamageUPList(int TargetParts,int sonsyoukazu)
+    //public List<CharaManeuver> GetDamageUPList(int TargetParts, int sonsyoukazu)
     //{
     //    List<CharaManeuver> DamageParts = new List<CharaManeuver>();
     //    int[] Discarded_num = new int[sonsyoukazu];
 
-    //    int nowsonsyou=0;
+    //    for (int i = 0; i != sonsyoukazu; i++)
+    //        Discarded_num = 0;
+
+    //    int nowsonsyou = 0;
     //    if (TargetParts == HEAD)
     //    {
     //        //必須廃棄
-    //        for(int i=0;i!= me.HeadParts.Count;i++)
+    //        for (int i = 0; i != me.HeadParts.Count; i++)
     //        {
     //            //選考0,損傷して欲しい物
     //            if (i == 1200000000)
     //            {
-    //                if(74)
-    //                DamageParts.Add(me.HeadParts[i]);
+    //                if (74)
+    //                    DamageParts.Add(me.HeadParts[i]);
     //                Discarded_num[nowsonsyou] = 1500;
     //                nowsonsyou++;
     //            }
@@ -763,7 +769,11 @@ public class ObjEnemy : ClassData_
         //必須廃棄
         for (int i = 0; i != aa.Length; i++)
         {
-            if (aa[i] < a)
+            //上からマニューバーをなけりゃとりあえず登録
+            if(aa[i]==0)
+                return true;
+            //候補が既存のものより優先度が高ければ入れ替え
+            else if (aa[i] < a)
                 return true;
         }
         return false;
