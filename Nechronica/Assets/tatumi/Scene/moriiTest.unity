@@ -5064,10 +5064,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ede7bc87ed29f43b8aada3a2336ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeadParts: []
-  ArmParts: []
-  BodyParts: []
-  LegParts: []
+  headParts: []
+  armParts: []
+  bodyParts: []
+  legParts: []
   positionSkill: []
   classSkill: []
   nowCount: 0
@@ -5085,10 +5085,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df026921c8baa4c4d99cfde00ffe72f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeadParts: []
-  ArmParts: []
-  BodyParts: []
-  LegParts: []
+  headParts: []
+  armParts: []
+  bodyParts: []
+  legParts: []
   positionSkill: []
   classSkill: []
   nowCount: 0
@@ -5111,7 +5111,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   medama_H:
@@ -5131,7 +5131,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   ago_H:
@@ -5151,7 +5151,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   hunnu_H:
@@ -5171,7 +5171,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   kobusi_A:
@@ -5191,7 +5191,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   ude_A:
@@ -5211,7 +5211,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   kata_A:
@@ -5231,7 +5231,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   wirelille_A:
@@ -5251,7 +5251,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   sebone_B:
@@ -5271,7 +5271,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   harawata_B:
@@ -5291,7 +5291,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   harawata2_B:
@@ -5311,7 +5311,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   hone_L:
@@ -5331,7 +5331,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   hone2_L:
@@ -5351,7 +5351,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   asi_L:
@@ -5371,7 +5371,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   Name: test
@@ -7897,9 +7897,10 @@ MonoBehaviour:
   battleSystem: {fileID: 766473211}
   childCommand: {fileID: 0}
   actingChara: {fileID: 0}
-  rollResultText: {fileID: 712961769}
+  diceRollAnim: {fileID: 0}
   plusNumText: {fileID: 0}
   nextButton: {fileID: 374136820}
+  rollResultText: {fileID: 712961769}
   diceRollButton: {fileID: 1399939938}
   diceRollButtonImg: {fileID: 0}
   confirmatButton: {fileID: 1514427781}
@@ -7925,6 +7926,15 @@ MonoBehaviour:
   nextButton: {fileID: 744749891}
   confirmatButton: {fileID: 816339257}
   damageButtons: {fileID: 1720303610}
+  siteSelectHead: {fileID: 0}
+  siteSelectArm: {fileID: 0}
+  siteSelectBody: {fileID: 0}
+  siteSelectLeg: {fileID: 0}
+  cutRollResult: 0
+  rollResultText: {fileID: 0}
+  diceRollButton: {fileID: 0}
+  diceRollButtonImg: {fileID: 0}
+  diceRollAnim: {fileID: 0}
 --- !u!114 &963194236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9759,10 +9769,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df026921c8baa4c4d99cfde00ffe72f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeadParts: []
-  ArmParts: []
-  BodyParts: []
-  LegParts: []
+  headParts: []
+  armParts: []
+  bodyParts: []
+  legParts: []
   positionSkill: []
   classSkill: []
   nowCount: 0
@@ -9785,7 +9795,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   medama_H:
@@ -9805,7 +9815,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   ago_H:
@@ -9825,7 +9835,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   hunnu_H:
@@ -9845,7 +9855,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   kobusi_A:
@@ -9865,7 +9875,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   ude_A:
@@ -9885,7 +9895,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   kata_A:
@@ -9905,7 +9915,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   wirelille_A:
@@ -9925,7 +9935,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   sebone_B:
@@ -9945,7 +9955,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   harawata_B:
@@ -9965,7 +9975,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   harawata2_B:
@@ -9985,7 +9995,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   hone_L:
@@ -10005,7 +10015,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   hone2_L:
@@ -10025,7 +10035,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   asi_L:
@@ -10045,7 +10055,7 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   Name: test
@@ -10073,10 +10083,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ede7bc87ed29f43b8aada3a2336ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeadParts: []
-  ArmParts: []
-  BodyParts: []
-  LegParts: []
+  headParts: []
+  armParts: []
+  bodyParts: []
+  legParts: []
   positionSkill: []
   classSkill: []
   nowCount: 0
@@ -10218,10 +10228,11 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
   opponent: {fileID: 741667022}
+  Expected_FatalDamage: 0
 --- !u!1 &1236681391
 GameObject:
   m_ObjectHideFlags: 0

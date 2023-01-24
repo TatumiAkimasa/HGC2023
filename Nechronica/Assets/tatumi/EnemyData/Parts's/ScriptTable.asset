@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090cf4860d422d34093f820d7003e1b0, type: 3}
   m_Name: ScriptTable
   m_EditorClassIdentifier: 
-  Eff_String: 1
-  Eff_int: 5
+  effcrnums:
+  - Eff_String: 1
+    Eff_int: 0
   Maneuver:
     Name: honnyaku
     AnimName: 

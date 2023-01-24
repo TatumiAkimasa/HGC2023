@@ -900,3 +900,23 @@ candidates check time : 45ms
 console write time    : 0ms
 
 >>>>>>> _bonten
+[api-updater (non-obsolete-error-filter)] 2023/01/24 10:33:24 : Starting C:/Program Files/Unity/Hub/Editor/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 846.9445ms
+moved types parse time: 48ms
+candidates parse time : 1ms
+C# parse time         : 212ms
+candidates check time : 42ms
+console write time    : 0ms
+
+[api-updater (non-obsolete-error-filter)] 2023/01/24 10:45:35 : Starting C:/Program Files/Unity/Hub/Editor/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 64.2701ms
+moved types parse time: 44ms
+candidates parse time : 1ms
+C# parse time         : 141ms
+candidates check time : 34ms
+console write time    : 0ms
+

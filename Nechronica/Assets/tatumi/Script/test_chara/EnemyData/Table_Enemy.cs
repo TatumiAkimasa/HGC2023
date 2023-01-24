@@ -10,6 +10,7 @@ public class MultiWepon
 
     public MultiWepon(List<Table_Parts> _multisite)
     {
+        
         Parts = _multisite;
     }
 }
@@ -19,6 +20,4 @@ public class Table_Enemy : ScriptableObject
 {
     [SerializeField, Header("•”ˆÊ(0~3,“ª~‹r-4,SKILL)")]
     public List<MultiWepon> Wepons;
-
-   
 }

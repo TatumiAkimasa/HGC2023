@@ -80,4 +80,21 @@ public class ClassData_ : MonoBehaviour
         else
             return "error";
     }
+
+    //TableEnemy“à‚ÌEffctNum‚ğˆêÄ‚Éİ’è‚·‚é
+    //ScriptObj“à‚ÌInspectorã‚ÅEffcnum‚ğİ’è‚·‚é‚½‚ß
+    public void TableParts_EffctUp(Table_Enemy value)
+    {
+        for (int i = 0; i != value.Wepons.Count; i++)
+        {
+            for (int j = 0; j != value.Wepons[i].Parts.Count; j++)
+            {
+                for (int k = 0; k != value.Wepons[i].Parts[j].effcrnums.Count; k++)
+                {
+                    if(!value.Wepons[i].Parts[j].Maneuver.EffectNum.ContainsKey(value.Wepons[i].Parts[j].effcrnums[k].Eff_String.ToString()))
+                    value.Wepons[i].Parts[j].Maneuver.EffectNum.Add(value.Wepons[i].Parts[j].effcrnums[k].Eff_String.ToString(), value.Wepons[i].Parts[j].effcrnums[k].Eff_int);
+                }
+            }
+        }
+    }
 }
