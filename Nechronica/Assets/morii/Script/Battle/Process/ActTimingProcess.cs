@@ -265,7 +265,7 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
         ProcessAccessor.Instance.rpdTiming.SetRapidButton(true);
         // ここでラピッドタイミングのマニューバーを敵が発動するかどうか判断
-        enemy.GetComponent<ObjEnemy>().EnemyAI_Rapid(maneuver, actChara);
+        //enemy.GetComponent<ObjEnemy>().EnemyAI_Rapid(maneuver, actChara);
 
         // 要if分分け。特殊なコストでなければコストを減少させる
         // 行動値を減少させる

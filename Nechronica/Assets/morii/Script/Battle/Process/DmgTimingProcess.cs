@@ -779,9 +779,9 @@ public class DmgTimingProcess : GetClickedGameObject
             // 連撃の数のカウントをジャッジ側で管理できないのでここで初期化
             SetContinuousAtk(continuousAtk);
             // 行動したキャラを表示から消す
-            ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+            ManagerAccessor.Instance.battleSystem.DeleteMoveChara(actingChara.Name);
             ManagerAccessor.Instance.battleSystem.BattleExe = true;
-            nextButton.gameObject.SetActive(false);
+            damageButtons.gameObject.SetActive(false);
             
         }
         
