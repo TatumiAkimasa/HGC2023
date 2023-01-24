@@ -288,11 +288,14 @@ public class RpdTimingProcess : GetClickedGameObject
                 ProcessAccessor.Instance.jdgTiming.ActMneuver = actManeuver;
                 ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
                 ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy.gameObject;
-                ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
                 ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
                 if (actingChara.gameObject.CompareTag("EnemyChara")/*||自動ダイスロール的な？設定参照用*/)
                 {
                     ProcessAccessor.Instance.jdgTiming.OnClickDiceRoll();
+                }
+                else if(actingChara.gameObject.CompareTag("AllyChara"))
+                {
+                    ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
                 }
             }
             else

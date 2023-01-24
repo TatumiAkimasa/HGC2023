@@ -74,7 +74,6 @@ public class PartsList : CharaBase
         kobusi_A.Weight = 1;
         kobusi_A.Atk.Num_per_Action = 2;
         kobusi_A.Atk.isFallDown = true;
-        kobusi_A.Atk.isAllAttack = true;
 
         kata_A.Name = "‚©‚½";
         kata_A.AnimName = AnimationName.Null;
