@@ -700,23 +700,32 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else if (site == ARM)
         {
-            if (damageChara.ArmParts.Count > 0)
+            for (int i = 0; i < damageChara.ArmParts.Count; i++)
             {
-                return false;
+                if (!damageChara.ArmParts[i].isDmage)
+                {
+                    return false;
+                }
             }
         }
         else if (site == BODY)
         {
-            if (damageChara.BodyParts.Count > 0)
+            for (int i = 0; i < damageChara.BodyParts.Count; i++)
             {
-                return false;
+                if (!damageChara.BodyParts[i].isDmage)
+                {
+                    return false;
+                }
             }
         }
         else if (site == LEG)
         {
-            if (damageChara.LegParts.Count > 0)
+            for (int i = 0; i < damageChara.LegParts.Count; i++)
             {
-                return false;
+                if (!damageChara.LegParts[i].isDmage)
+                {
+                    return false;
+                }
             }
         }
 
