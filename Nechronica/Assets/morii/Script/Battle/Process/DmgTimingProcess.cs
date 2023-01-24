@@ -352,14 +352,19 @@ public class DmgTimingProcess : GetClickedGameObject
             // 攻撃対象部位にパーツが残っていなければ部位選択に移行
             if(SiteRemainingParts(rollResult))
             {
+                SiteSelectButtonsActive(true);
                 // 部位選択待機
                 StartCoroutine(SelectDamageSite(callBack =>
                 {
                     isAddEffectStep = true;
                 }));
             }
-            // 部位選択がなければそのまま追加効果判定へ移行させる
-            isAddEffectStep = true;
+            else
+            {
+                // 部位選択がなければそのまま追加効果判定へ移行させる
+                isAddEffectStep = true;
+            }
+           
         }
     }
 
