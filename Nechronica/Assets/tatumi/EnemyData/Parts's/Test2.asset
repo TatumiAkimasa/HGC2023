@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090cf4860d422d34093f820d7003e1b0, type: 3}
   m_Name: Test2
   m_EditorClassIdentifier: 
-  Eff_String: 0
-  Eff_int: 5
+  effcrnums:
+  - Eff_String: 1
+    Eff_int: 2
   Maneuver:
     Name: "\u3059\u3054\u3044\u9632\u5FA1"
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 2
     Timing: 4
     MinRange: 0
@@ -29,6 +32,6 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 0200040004000200

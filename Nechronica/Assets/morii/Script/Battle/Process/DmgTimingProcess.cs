@@ -170,7 +170,7 @@ public class DmgTimingProcess : GetClickedGameObject
             DamageUPProcess(maneuver,dmgExeChara);
         }
         // 防御値を増加するマニューバーの処理
-        else if(dollManeuver.EffectNum.ContainsKey(EffNum.Guard))   
+        else if(maneuver.EffectNum.ContainsKey(EffNum.Guard))   
         {
             GuardProcess(maneuver, dmgExeChara);
         }

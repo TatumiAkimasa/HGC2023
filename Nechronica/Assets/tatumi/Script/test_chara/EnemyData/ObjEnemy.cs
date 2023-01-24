@@ -20,6 +20,7 @@ public class ObjEnemy : ClassData_
 
     public CharaManeuver opponentManeuver;
     public Doll_blu_Nor opponent;
+    public int Expected_FatalDamage;//致命傷ダメージ数
 
     private void Start()
     {
@@ -79,6 +80,8 @@ public class ObjEnemy : ClassData_
                 Maneuvers[(int)EnemyPartsType.Edamage].Add(me.LegParts[i]);
         }
 
+        TableParts_EffctUp(Enemy);
+
         //データから解析し、マニューバーを追加する
         //追加武装追記
         for (int SITE = 0; SITE != 4; SITE++)
@@ -128,14 +131,13 @@ public class ObjEnemy : ClassData_
             }
         }
 
-       
     }
 
     public void EnemyAI_Action()
     {
         List<Doll_blu_Nor> PlayerDolls = new List<Doll_blu_Nor>();
         Doll_blu_Nor target = null;
-        //のちにPLのみ取得するよう依頼
+       //PLのみ取得
         for (int i=0;i< ManagerAccessor.Instance.battleSystem.GetCharaObj().Count;i++)
         {
             if(ManagerAccessor.Instance.battleSystem.GetCharaObj()[i].gameObject.CompareTag("AllyChara"))
@@ -169,9 +171,8 @@ public class ObjEnemy : ClassData_
                             //優先度更新
                             //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
                         }
-                        //基本パーツEnemyAI追加出来てない
-                        //else if (UseManever.EnemyAI[(int)EnemyPartsType.EAction] < Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers].EnemyAI[(int)EnemyPartsType.EAction])
-                        //    UseManever = Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers];
+                        else if (UseManever.EnemyAI[(int)EnemyPartsType.EAction] < Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers].EnemyAI[(int)EnemyPartsType.EAction])
+                            UseManever = Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers];
                         target = PlayerDolls[i];
 
                     }
@@ -179,7 +180,7 @@ public class ObjEnemy : ClassData_
             }
         }
 
-        //田中さんが書いた処理なので田中さんに聞いてください
+        //全ACTION吟味し、一番有効値が高い物を使用する
         ProcessAccessor.Instance.actTiming.ExeAtkManeuver(target, UseManever, me);
         return;
     }
@@ -373,7 +374,7 @@ public class ObjEnemy : ClassData_
         //ダイス値が即対応できる範囲(6以下で致命傷判断を入れる)
         else if (DiceRoll >= 6)
         {
-            //致命傷(許容できるダメージ量か)判断。問題ないならスルー
+            //致命傷1(現在のパーツ数で許容できるダメージ量か)判断。問題ないならスルー
             if (TargetParts == HEAD)
             {
                 if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.HeadParts.Count)
@@ -394,6 +395,10 @@ public class ObjEnemy : ClassData_
                 if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.BodyParts.Count)
                     return;
             }
+
+            //致命傷2(許容できるダメージ量か)判断。問題ないならスルー
+            if (opponentManeuver.EffectNum[EffNum.Damage] < Expected_FatalDamage)
+                return;
         }
 
 
@@ -418,15 +423,8 @@ public class ObjEnemy : ClassData_
              Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
                 {
                     //使用武具更新
-                    if (UseManever == null)
-                    {
-                        UseManever = Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers];
-                        //優先度更新
-                        //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
-                    }
-                    else if (UseManever.EnemyAI[(int)EnemyPartsType.EJudge] < Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EnemyAI[(int)EnemyPartsType.EJudge])
-                        UseManever = Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers];
-
+                    UseManever = UseManuber_Change((int)EnemyPartsType.EJudge, ActManeuvers, UseManever);
+                   
                     //マニューバー適応結果がまだ命中圏内の場合
                     if (5 < DiceRoll - UseManever.EffectNum["Judge"] - Power)
                     {
@@ -489,15 +487,8 @@ public class ObjEnemy : ClassData_
                       Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
                 {
                     //使用武具更新
-                    if (UseManever == null)
-                    {
-                        UseManever = Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers];
-                        //優先度更新
-                        //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
-                    }
-                    else if (UseManever.EnemyAI[(int)EnemyPartsType.EJudge] < Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EnemyAI[(int)EnemyPartsType.EJudge])
-                        UseManever = Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers];
-
+                    UseManever = UseManuber_Change((int)EnemyPartsType.EJudge, ActManeuvers, UseManever);
+                   
                     //マニューバー適応結果がまだ命中圏内の場合
                     if (5 > DiceRoll - UseManever.EffectNum["Judge"] - Power)
                     {
@@ -537,7 +528,7 @@ public class ObjEnemy : ClassData_
         //わんちゃん繰り返し他の味方に妨害重ねてもらう処理イルカも
         return;
     }
-    //ダメージ時の場合
+    //ダメージタイミングの場合
     public void EnemyAI_Damage(CharaManeuver OpponentManeuver, Doll_blu_Nor Opponent,bool ATorDF)
     {
         //全員いるわ
@@ -550,33 +541,17 @@ public class ObjEnemy : ClassData_
             if (!Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].isDmage)
             {
                 //選択したものがガード系の技なら
-                if (/*Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EffectNum.ContainsKey(EffNum.Guard)&&*/ATorDF)
-                { 
+                if (Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EffectNum.ContainsKey(EffNum.Guard) && ATorDF)
+                {
                     //使用武具更新
-                    if (UseManever == null)
-                    {
-                        UseManever = Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers];
-                        //優先度更新
-                        //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
-                    }
-                    else if (UseManever.EnemyAI[(int)EnemyPartsType.Edamage] < Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EnemyAI[(int)EnemyPartsType.Edamage])
-                        UseManever = Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers];
-
+                    UseManever = UseManuber_Change((int)EnemyPartsType.Edamage, ActManeuvers, UseManever);
 
                 }
                 //ダメージ追加系の場合
                 else if(Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EffectNum.ContainsKey(EffNum.Damage) && !ATorDF)
                 {
                     //使用武具更新
-                    if (UseManever == null)
-                    {
-                        UseManever = Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers];
-                        //優先度更新
-                        //UseManever.EnemyAI[(int)EnemyPartsType.EAction] = 0;
-                    }
-                    else if (UseManever.EnemyAI[(int)EnemyPartsType.Edamage] < Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].EnemyAI[(int)EnemyPartsType.Edamage])
-                        UseManever = Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers];
-
+                    UseManever = UseManuber_Change((int)EnemyPartsType.Edamage, ActManeuvers, UseManever);
 
                 }
 
@@ -585,6 +560,8 @@ public class ObjEnemy : ClassData_
 
         }
 
+        //上記でマニューバーがあれば送る
+        if(UseManever!=null)
         ProcessAccessor.Instance.dmgTiming.ExeManeuver(UseManever, me);
 
         //防御のタイミングかつ助けてほしい場合HELPする
@@ -716,6 +693,80 @@ public class ObjEnemy : ClassData_
                 }
             }
         }
+    }
+
+    //public List<CharaManeuver> GetDamageUPList(int TargetParts,int sonsyoukazu)
+    //{
+    //    List<CharaManeuver> DamageParts = new List<CharaManeuver>();
+    //    int[] Discarded_num = new int[sonsyoukazu];
+
+    //    int nowsonsyou=0;
+    //    if (TargetParts == HEAD)
+    //    {
+    //        //必須廃棄
+    //        for(int i=0;i!= me.HeadParts.Count;i++)
+    //        {
+    //            //選考0,損傷して欲しい物
+    //            if (i == 1200000000)
+    //            {
+    //                if(74)
+    //                DamageParts.Add(me.HeadParts[i]);
+    //                Discarded_num[nowsonsyou] = 1500;
+    //                nowsonsyou++;
+    //            }
+    //            //選考1,はらわた系統
+    //            else if (me.HeadParts[i].EnemyAI == null)
+    //            {
+    //                DamageParts.Add(me.HeadParts[i]);
+    //                Discarded_num[nowsonsyou] = 1000;
+    //                nowsonsyou++;
+    //            }
+
+    //        }
+
+    //        //泣く泣く廃棄
+    //        for (int i = 0; i != me.HeadParts.Count; i++)
+    //        {
+    //            //選考2-1,使用済みか
+    //            //選考2-2,使用済みなら廃棄期待値増加
+    //            //選考3,未使用で効果期待値が低い物
+    //        }
+    //    }
+
+    //    else if (TargetParts == ARM)
+    //        Maneuvers[(int)EnemyPartsType.ERapid].Add(me.LegParts[i]);
+    //    else if (TargetParts == BODY)
+    //        Maneuvers[(int)EnemyPartsType.EJudge].Add(me.LegParts[i]);
+    //    else if (TargetParts == LEG)
+    //        Maneuvers[(int)EnemyPartsType.Edamage].Add(me.LegParts[i]);
+    //}
+
+    private CharaManeuver UseManuber_Change(int ActionType,int ActManuber,CharaManeuver NowManuver)
+    {
+        //使用武具更新
+        //何も決まってない場合
+        if (NowManuver == null)
+        {
+            return Maneuvers[ActionType][ActManuber];
+           
+        }
+        //あって、かつ優先度が高い場合
+        else if (NowManuver.EnemyAI[ActionType] < Maneuvers[ActionType][ActManuber].EnemyAI[ActionType])
+            return Maneuvers[ActionType][ActManuber];
+
+        //特になにもない場合
+        return NowManuver;
+    }
+
+    private bool DiscardedManuber_comparison(int a,int[] aa)
+    {
+        //必須廃棄
+        for (int i = 0; i != aa.Length; i++)
+        {
+            if (aa[i] < a)
+                return true;
+        }
+        return false;
     }
 }
 

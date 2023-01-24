@@ -5,9 +5,9 @@ MINIMAP→LINER移植で〇
 不足データ構築設定時、LOAD不可→〇
 会話時、PL動き×→〇
 FADE演出→Animのみ〇SC管理は多分パッとできる
-敵のAI→BattleSystemのBattle.exeにて処理（ダメージまで)
-あとジャッジのRoll処理をいれとこう
-FOREST→傾きをただす。Event、NPCの置き方見直し
+敵のAI→部位選択、ダメージ割り振り法、HELPの見直し
+
+FOREST→Event、NPCの置き方見直し
 
 複雑EVENT機能↓
 複数人会話実装→〇
