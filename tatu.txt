@@ -5,7 +5,7 @@ MINIMAP→LINER移植で〇
 不足データ構築設定時、LOAD不可→〇
 会話時、PL動き×→〇
 FADE演出→Animのみ〇SC管理は多分パッとできる
-敵のAI→HELPの見直し,部位被ダメージ選択で余剰ダメージ分特出来る処理
+敵のAI→DebugTIME！！
 
 FOREST→Event、NPCの置き方見直し
 

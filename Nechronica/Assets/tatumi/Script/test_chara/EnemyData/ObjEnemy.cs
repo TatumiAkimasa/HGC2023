@@ -237,7 +237,7 @@ public class ObjEnemy : ClassData_
 
                         }
                         //自身に及ぼす場合
-                        else if(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange == 10 || (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MaxRange == 0 && Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange == 0))
+                        else if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange == 10 || (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MaxRange == 0 && Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange == 0))
                         {
                             //使用武具更新
                             UseManever = UseManuber_Change((int)EnemyPartsType.ERapid, ActManeuvers, UseManever);
@@ -259,8 +259,15 @@ public class ObjEnemy : ClassData_
                 me = item;
             }
 
+            bool direction = false;
+
+            if (differenceRange > 0)
+                direction = false;
+            else
+                direction = true;
+
             //相手の射程が0の場合
-            if (4 >= Opponent.area + UseManever.EffectNum[EffNum.Move])
+            if (4 >= Opponent.area + UseManever.EffectNum[EffNum.Move] && direction == false)
             {
                 //とりま地獄側へ移動
                 Debug.Log("Enemy:地獄にとばす");
@@ -268,7 +275,7 @@ public class ObjEnemy : ClassData_
                 ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Opponent, UseManever);
                 return;
             }
-            else if (0 <= Opponent.area - UseManever.EffectNum[EffNum.Move])
+            else if (0 <= Opponent.area - UseManever.EffectNum[EffNum.Move] && direction == true)
             {
                 //無理ならしぶしぶ反対へ
                 Debug.Log("Enemy:天国にとばす");
@@ -277,6 +284,10 @@ public class ObjEnemy : ClassData_
                 return;
             }
 
+
+
+
+            //逃げたいが端で逃げられない場合諦める
             //自分に使うときの影響処理
             if (MeorOp == false)
             {
@@ -287,17 +298,30 @@ public class ObjEnemy : ClassData_
 
             //自身では対応不可
             Debug.Log("Enemy:Help!");
-            return;
+           
+            //動いた分計算用
+            int movenum = 0;
+
             //全味方に
             for (int i = 0; i != PlayerDolls.Count; i++)
             {
                 //他の味方に救援を送る
-                PlayerDolls[i].GetComponent<ObjEnemy>().HelpMoveRapid(me, Opponent, differenceRange);
+                movenum+=PlayerDolls[i].GetComponent<ObjEnemy>().HelpMoveRapid(me, Opponent, differenceRange, direction);
+
+                if ((Mathf.Abs(me.area + movenum) <= Mathf.Abs(opponentManeuver.MaxRange + opponent.area) &&
+                     Mathf.Abs(me.area + movenum) >= Mathf.Abs(OpponentManeuver.MinRange + opponent.area)))
+                {
+                    //相手の攻撃の射程内ならまだ救援信号
+                    ;
+                }
+                else
+                    break;
             }
+
         }
 
+        //避けれない無理★
         return;
-
     }
     //妨害処理
     public void EnemyAI_Judge(CharaManeuver OpponentManeuver, Doll_blu_Nor Opponent,int DiceRoll,int TargetParts,int Power)
@@ -352,18 +376,22 @@ public class ObjEnemy : ClassData_
         //使用武具for文
         for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.EJudge].Count; ActManeuvers++)
         {
-            //破損判定&使用判定
-            if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
+            //支援タイプ
+            if (UseManever.EffectNum[EffNum.Judge] < 0)
             {
-                if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange != 10 &&
-            (Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
-             Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
+                //破損判定&使用判定
+                if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
                 {
-                    //使用武具更新
-                    UseManever = UseManuber_Change((int)EnemyPartsType.EJudge, ActManeuvers, UseManever);
-                   
-                }
+                    if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange != 10 &&
+                (Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
+                 Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
+                    {
+                        //使用武具更新
+                        UseManever = UseManuber_Change((int)EnemyPartsType.EJudge, ActManeuvers, UseManever);
 
+                    }
+
+                }
             }
            
         }
@@ -374,12 +402,11 @@ public class ObjEnemy : ClassData_
             if (5 < DiceRoll - UseManever.EffectNum["Judge"] - Power)
             {
                 Debug.Log("もう一度妨害できるかチャレンジ！");
-                return;
                 //もう一度処理を繰り返す
                 EnemyAI_Judge(OpponentManeuver, Opponent, DiceRoll, TargetParts, UseManever.EffectNum["Judge"]);
                 //要求（行動
                 ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(UseManever, me);
-
+                return;
             }
             else
             {
@@ -392,12 +419,12 @@ public class ObjEnemy : ClassData_
 
         //自身では対応不可
         Debug.Log("Enemy:JudgeHelp!");
-        return;
+        
         //全味方に
         for (int i = 0; i != PlayerDolls.Count; i++)
         {
             //他の味方に救援を送る
-            Power += PlayerDolls[i].GetComponent<ObjEnemy>().HelpJudge_OP(Opponent,OpponentManeuver.EffectNum["Action"] - Power);
+            Power += PlayerDolls[i].GetComponent<ObjEnemy>().HelpJudge_OP(Opponent,OpponentManeuver.EffectNum[EffNum.Damage] - Power);
 
             //許容値なら
             if (6 > DiceRoll - Power)
@@ -425,13 +452,17 @@ public class ObjEnemy : ClassData_
             //破損判定&使用判定
             if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
             {
-                //自身の位置と射程比較
-                if ( (Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
-                      Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
+                //支援タイプ
+                if (UseManever.EffectNum[EffNum.Judge] > 0)
                 {
-                    //使用武具更新
-                    UseManever = UseManuber_Change((int)EnemyPartsType.EJudge, ActManeuvers, UseManever);
-                   
+                    //自身の位置と射程比較
+                    if ((Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
+                      Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
+                    {
+                        //使用武具更新
+                        UseManever = UseManuber_Change((int)EnemyPartsType.EJudge, ActManeuvers, UseManever);
+
+                    }
                 }
             }
 
@@ -439,27 +470,27 @@ public class ObjEnemy : ClassData_
 
         if (UseManever != null)
         {
-            //マニューバー適応結果がまだ命中圏内の場合
-            if (5 > DiceRoll - UseManever.EffectNum["Judge"] - Power)
+            //マニューバー適応結果が命中圏内の場合
+            if (5 < DiceRoll + UseManever.EffectNum["Judge"] + Power)
             {
-                //もう一度処理を繰り返す
-
                 //要求（行動
-
+                ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(UseManever, Opponent);
                 return;
             }
+            //圏外
             else
             {
+                //もう一度処理を繰り返す
                 EnemyAI_Judge(OpponentManeuver, Opponent, DiceRoll, UseManever.EffectNum["Judge"]);
-
                 //要求（行動
+                ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(UseManever, Opponent);
                 return;
             }
         }
 
         //自身では対応不可
         Debug.Log("Enemy:Help!");
-        return;
+       
         //全味方に
         for (int i = 0; i != PlayerDolls.Count; i++)
         {
@@ -471,7 +502,7 @@ public class ObjEnemy : ClassData_
                 break;
         }
 
-        //わんちゃん繰り返し他の味方に妨害重ねてもらう処理イルカも
+        
         return;
     }
     //ダメージタイミングの場合
@@ -550,7 +581,7 @@ public class ObjEnemy : ClassData_
     }
 
     //移動補助目的HELP(RAPID
-    public void HelpMoveRapid(Doll_blu_Nor Follow, Doll_blu_Nor Opponent, int NeedRange)
+    public int HelpMoveRapid(Doll_blu_Nor Follow, Doll_blu_Nor Opponent, int NeedRange,bool Needdirection)
     {
         for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.ERapid].Count; ActManeuvers++)
         {
@@ -562,20 +593,55 @@ public class ObjEnemy : ClassData_
             (Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MaxRange + me.area) &&
              Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange + me.area)))
                 {
-                    //宣言（対象に）+=天国へ,-は地獄へ飛ばす
-                    //return 相手にラピットかけて回避する的な関数？に送る（自分,自分まにゅ,対象味方）
+                    //宣言（敵に）+=天国へ,-は地獄へ飛ばす
+                    if (4 >= Opponent.area + UseManever.EffectNum[EffNum.Move] && Needdirection == false)
+                    {
+                        //とりま地獄側へ移動
+                        Debug.Log("Enemy:地獄にとばす");
+                        ProcessAccessor.Instance.rpdTiming.SetDirection(false);
+                        ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Opponent, Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers]);
+                        return UseManever.EffectNum[EffNum.Move];
+                    }
+                    else if (0 <= Opponent.area - UseManever.EffectNum[EffNum.Move] && Needdirection == true)
+                    {
+                        //無理ならしぶしぶ反対へ
+                        Debug.Log("Enemy:天国にとばす");
+                        ProcessAccessor.Instance.rpdTiming.SetDirection(true);
+                        ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Opponent, Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers]);
+                        return -UseManever.EffectNum[EffNum.Move];
+                    }
+                    
                 }
                 //敵の位置検索 & 射程比較(味方を動かす)
                 else if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange != 10 &&
             (Mathf.Abs(Follow.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MaxRange + me.area) &&
              Mathf.Abs(Follow.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange + me.area)))
                 {
-                    //宣言（対象に）+=天国へ,-は地獄へ飛ばす
-                    //return 相手にラピットかけて回避する的な関数？に送る（自分,自分まにゅ,対象味方）
+                    //宣言（味方に）+=天国へ,-は地獄へ飛ばす
+                    if (4 >= Opponent.area + UseManever.EffectNum[EffNum.Move] && Needdirection == false)
+                    {
+                        //とりま地獄側へ移動
+                        Debug.Log("Enemy:味方を地獄にとばす");
+                        ProcessAccessor.Instance.rpdTiming.SetDirection(false);
+                        ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Follow, Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers]);
+                        return UseManever.EffectNum[EffNum.Move];
+                    }
+                    else if (0 <= Opponent.area - UseManever.EffectNum[EffNum.Move] && Needdirection == true)
+                    {
+                        //無理ならしぶしぶ反対へ
+                        Debug.Log("Enemy:味方を天国にとばす");
+                        ProcessAccessor.Instance.rpdTiming.SetDirection(true);
+                        ProcessAccessor.Instance.rpdTiming.AddRapidManeuver(me, Follow, Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers]);
+                        return -UseManever.EffectNum[EffNum.Move];
+                    }
+                    
                 }
                
             }
         }
+
+        //逃げたいがそもそも使えるものが無かったり、端で逃げさせられない場合諦める
+        return 0;
 
     }
 
@@ -587,16 +653,21 @@ public class ObjEnemy : ClassData_
             //破損判定&使用判定
             if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
             {
-                //敵の位置検索 & 射程比較(敵を動かす)
-                if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange != 10 &&
+                //支援タイプ
+                if (UseManever.EffectNum[EffNum.Judge] < 0)
+                {
+                    //敵の位置検索 & 射程比較(敵を動かす)
+                    if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange != 10 &&
             (Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
              Mathf.Abs(Opponent.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
-                {
-                    //妨害まにゅばー
-                    //宣言（対象に）
+                    {
+                        //妨害まにゅばー
+                        //要求（行動
+                        ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers], Opponent);
 
-                    //妨害値を加えた状態で受けている側の奴にもう一度判断させる。
-                    return Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum["Judge"];
+                        //妨害値を加えた状態で受けている側の奴にもう一度判断させる。
+                        return Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum["Judge"];
+                    }
                 }
             }
         }
@@ -609,14 +680,25 @@ public class ObjEnemy : ClassData_
     {
         for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.EJudge].Count; ActManeuvers++)
         {
-            //破損判定&使用判定
-            if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
+            //支援タイプ
+            if (UseManever.EffectNum[EffNum.Judge] > 0)
             {
-                //支援まにゅばー
-                //宣言（対象に）
+                //破損判定&使用判定
+                if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
+                {
+                    //敵の位置検索 & 射程比較(敵を動かす)
+                    if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange != 10 &&
+            (Mathf.Abs(Follow.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
+             Mathf.Abs(Follow.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange + me.area)))
+                    {
+                        //支援まにゅばー
+                        //要求（行動
+                        ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers], Follow);
 
-                //妨害値を加えた状態で受けている側の奴にもう一度判断させる。
-                return Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum["Judge"];
+                        //妨害値を加えた状態で受けている側の奴にもう一度判断させる。
+                        return Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum["Judge"];
+                    }
+                }
             }
         }
 
@@ -626,17 +708,18 @@ public class ObjEnemy : ClassData_
     //多分庇うぐらいしかない
     public void HelpDamege(Doll_blu_Nor Follow)
     {
-        for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.ERapid].Count; ActManeuvers++)
+        for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.Edamage].Count; ActManeuvers++)
         {
             //破損判定&使用判定
-            if (!Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].isDmage)
+            if (!Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].isDmage)
             {
                 //敵の位置検索 & 射程比較(味方を動かす)-なお今のところ「庇う」ぐらい
-                if (Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange != 10 &&
-            (Mathf.Abs(Follow.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MaxRange + me.area) &&
-             Mathf.Abs(Follow.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.ERapid][ActManeuvers].MinRange + me.area)))
+                if (Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].MinRange != 10 &&
+            (Mathf.Abs(Follow.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].MaxRange + me.area) &&
+             Mathf.Abs(Follow.area) >= Mathf.Abs(Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers].MinRange + me.area)))
                 {
                     //ROLL処理
+                    ProcessAccessor.Instance.dmgTiming.ExeManeuver(Maneuvers[(int)EnemyPartsType.Edamage][ActManeuvers], Follow);
                     return;
                 }
             }
@@ -644,31 +727,56 @@ public class ObjEnemy : ClassData_
     }
 
     //部位選択できる場合
-    //損傷余裕が一番あるところ（今のところ）
     public List<CharaManeuver> GetDamageUPList_ALL(int sonsyoukazu)
     {
         int num = 0;
         int tmp = 0;
-        if (num < me.HeadParts.Count)
+        int[] lowtmp = new int[2];
+
+        if (num < me.HeadParts.Count && me.HeadParts.Count!=0)
         {
             num = HEAD;
             tmp = me.HeadParts.Count;
         } 
-        if (num < me.ArmParts.Count)
+        else if(num>me.HeadParts.Count)
+        {
+            lowtmp[0] = me.HeadParts.Count;
+            lowtmp[1] = HEAD;
+        }
+        if (num < me.ArmParts.Count && me.ArmParts.Count != 0)
         {
             num = ARM;
             tmp = me.ArmParts.Count;
         }
-        if (num < me.BodyParts.Count)
+        else if (num > me.ArmParts.Count)
+        {
+            lowtmp[0] = me.ArmParts.Count;
+            lowtmp[1] = ARM;
+        }
+        if (num < me.BodyParts.Count && me.BodyParts.Count!=0)
         {
             num = BODY;
             tmp = me.BodyParts.Count;
         }
-        if (num < me.LegParts.Count)
+        else if (num > me.BodyParts.Count)
+        {
+            lowtmp[0] = me.BodyParts.Count;
+            lowtmp[1] = BODY;
+        }
+        if (num < me.LegParts.Count&&me.LegParts.Count!=0)
         {
             num = LEG;
             tmp = me.LegParts.Count;
         }
+        else if (num > me.LegParts.Count)
+        {
+            lowtmp[0] = me.LegParts.Count;
+            lowtmp[1] = LEG;
+        }
+
+        //損傷数が予定受ける部位より他部位の方が総ダメージが低くなる場合そちら優先
+        if ((tmp - sonsyoukazu) < lowtmp[0])
+            num = lowtmp[1];
 
         return GetDamageUPList(num,sonsyoukazu);
     }
@@ -693,7 +801,7 @@ public class ObjEnemy : ClassData_
 
         return DamageParts;
     }
-
+    //優先率順で使用。HELP時は無視
     private CharaManeuver UseManuber_Change(int ActionType,int ActManuber,CharaManeuver NowManuver)
     {
         //使用武具更新
