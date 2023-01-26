@@ -5448,6 +5448,10 @@ GameObject:
   - component: {fileID: 741667021}
   - component: {fileID: 741667022}
   - component: {fileID: 741667023}
+  - component: {fileID: 741667024}
+  - component: {fileID: 741667025}
+  - component: {fileID: 741667026}
+  - component: {fileID: 741667027}
   m_Layer: 0
   m_Name: PLChara
   m_TagString: AllyChara
@@ -5840,6 +5844,26 @@ MonoBehaviour:
       isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
+  hone1_L:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isFallDown: 0
+      Num_per_Action: 0
+    EnemyAI: 
   hone2_L:
     Name: 
     AnimName: 
@@ -5854,6 +5878,46 @@ MonoBehaviour:
     isDmage: 0
     Atk:
       atkType: 0
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isFallDown: 0
+      Num_per_Action: 0
+    EnemyAI: 
+  hone3_L:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isFallDown: 0
+      Num_per_Action: 0
+    EnemyAI: 
+  hone4_L:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
@@ -5906,22 +5970,92 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisChara: {fileID: 741667022}
-  ActionManeuvers: []
-  RapidManeuvers: []
-  JudgeManeuvers: []
-  DamageManeuvers: []
-  rapidCommands: {fileID: 0}
-  actionButton: {fileID: 0}
-  rapidButton: {fileID: 0}
-  standbyButton: {fileID: 0}
-  prefabActButton: {fileID: 0}
-  prefabRpdButton: {fileID: 0}
-  prefabJdgButton: {fileID: 0}
-  prefabDmgButton: {fileID: 0}
-  parentsActObj: []
-  parentsRpdObj: []
-  parentsJdgObj: []
-  parentsDmgObj: []
+  maneuvers: []
+  commands: {fileID: 0}
+  parentCommand: []
+  originalParentObj: {fileID: 0}
+  backImg: {fileID: 0}
+  prefabButton: {fileID: 0}
+  nowSelect: 0
+--- !u!114 &741667024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741667014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0099d4d2b450d6a4486647e8c9c73cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisChara: {fileID: 0}
+  maneuvers: []
+  commands: {fileID: 1286299467}
+  parentCommand: []
+  originalParentObj: {fileID: 1714571061986301308, guid: a9a88a7c487c801428fea80c2b939a87, type: 3}
+  backImg: {fileID: 1821982440}
+  prefabButton: {fileID: 1179347317746501306, guid: fa0564d04a886a34f97bdca18148ebe4, type: 3}
+  nowSelect: 0
+--- !u!114 &741667025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741667014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc03560554724e40b47a66cc57d70db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisChara: {fileID: 0}
+  maneuvers: []
+  commands: {fileID: 1485464367}
+  parentCommand: []
+  originalParentObj: {fileID: 1714571061986301308, guid: a9a88a7c487c801428fea80c2b939a87, type: 3}
+  backImg: {fileID: 2045608807}
+  prefabButton: {fileID: 1179347317746501306, guid: fa0564d04a886a34f97bdca18148ebe4, type: 3}
+  nowSelect: 0
+--- !u!114 &741667026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741667014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e0ccd2221bf5d4aa47d6f5d43f9788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisChara: {fileID: 0}
+  maneuvers: []
+  commands: {fileID: 1250827295}
+  parentCommand: []
+  originalParentObj: {fileID: 1714571061986301308, guid: a9a88a7c487c801428fea80c2b939a87, type: 3}
+  backImg: {fileID: 89725811}
+  prefabButton: {fileID: 1179347317746501306, guid: fa0564d04a886a34f97bdca18148ebe4, type: 3}
+  nowSelect: 0
+--- !u!114 &741667027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741667014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74febebfb4b8f0541b63d3205c074343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisChara: {fileID: 0}
+  maneuvers: []
+  commands: {fileID: 197714853}
+  parentCommand: []
+  originalParentObj: {fileID: 1714571061986301308, guid: a9a88a7c487c801428fea80c2b939a87, type: 3}
+  backImg: {fileID: 178048938}
+  prefabButton: {fileID: 1179347317746501306, guid: fa0564d04a886a34f97bdca18148ebe4, type: 3}
   nowSelect: 0
 --- !u!1 &744534229
 GameObject:
@@ -10870,6 +11004,26 @@ MonoBehaviour:
       isFallDown: 0
       Num_per_Action: 0
     EnemyAI: 
+  hone1_L:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isFallDown: 0
+      Num_per_Action: 0
+    EnemyAI: 
   hone2_L:
     Name: 
     AnimName: 
@@ -10884,6 +11038,46 @@ MonoBehaviour:
     isDmage: 0
     Atk:
       atkType: 0
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isFallDown: 0
+      Num_per_Action: 0
+    EnemyAI: 
+  hone3_L:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isFallDown: 0
+      Num_per_Action: 0
+    EnemyAI: 
+  hone4_L:
+    Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: -1
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
