@@ -396,18 +396,50 @@ public class DmgTimingProcess : GetClickedGameObject
         {
             if (site == HEAD)
             {
+                if(damageChara.CompareTag("EnemyChara"))
+                {
+                    damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, giveDamage);
+                }
+                else
+                {
+
+                }
                 damageChara.HeadParts = GiveDamageParts(damageChara.HeadParts);
             }
             else if (site == ARM)
             {
+                if (damageChara.CompareTag("EnemyChara"))
+                {
+                    damageChara.GetComponent<ObjEnemy>().GetDamageUPList(1, giveDamage);
+                }
+                else
+                {
+
+                }
                 damageChara.ArmParts = GiveDamageParts(damageChara.ArmParts);
             }
             else if (site == BODY)
             {
+                if (damageChara.CompareTag("EnemyChara"))
+                {
+                    damageChara.GetComponent<ObjEnemy>().GetDamageUPList(2, giveDamage);
+                }
+                else
+                {
+
+                }
                 damageChara.BodyParts = GiveDamageParts(damageChara.BodyParts);
             }
             else if (site == LEG)
             {
+                if (damageChara.CompareTag("EnemyChara"))
+                {
+                    damageChara.GetComponent<ObjEnemy>().GetDamageUPList(3, giveDamage);
+                }
+                else
+                {
+
+                }
                 damageChara.LegParts = GiveDamageParts(damageChara.LegParts);
             }
 
@@ -540,7 +572,14 @@ public class DmgTimingProcess : GetClickedGameObject
             else if (actManeuver.Atk.isCutting && !deleteCutEff)
             {
                 isStandbyCutRoll = true;
-                diceRollButton.gameObject.SetActive(true);
+                if(damageChara.CompareTag("EnemyChara"))
+                {
+                    OnClickDiceRoll();
+                }
+                else
+                {
+                    diceRollButton.gameObject.SetActive(true);
+                }
             }
             else
             {
@@ -761,6 +800,7 @@ public class DmgTimingProcess : GetClickedGameObject
         diceRollButton.enabled = true;
         rollResultText.text = "ダイスロール";
         diceRollAnim.gameObject.SetActive(false);
+        isStandbyCutRoll = false;
 
         if (continuousAtk < actManeuver.Atk.Num_per_Action)
         {

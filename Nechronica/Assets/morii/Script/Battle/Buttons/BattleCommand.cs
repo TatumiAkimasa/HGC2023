@@ -24,10 +24,13 @@ public class BattleCommand : MonoBehaviour
     
     [SerializeField] protected GameObject commands;
     [SerializeField] protected List<GameObject> parentCommand = new List<GameObject>();
-    private List<GameObject> prefabObjList = new List<GameObject>();
+    private List<GameObject> prefabObjList = new List<GameObject>();      // タイミングごとにわけられたマニューバの内容が格納されているリスト
     [SerializeField] protected GameObject originalParentObj;              // 上記プレハブの親Objの元となるオブジェクト
     [SerializeField] protected RectTransform backImg;
     [SerializeField] protected GameObject prefabButton;
+
+    private List<GameObject> partsObjList = new List<GameObject>();     // 部位ごとに分けられたマニューバの内容が格納されているリスト
+    private List<GameObject> parentParts = new List<GameObject>();
 
     private GameObject actionCommands;             // アクションタイミングのコマンドオブジェクト
     private GameObject rapidCommands;              // ラピッドタイミングのコマンドオブジェクト
@@ -46,41 +49,6 @@ public class BattleCommand : MonoBehaviour
     private Button standbyButton;                   // 待機のボタン
 
 
-    private GameObject prefabActButton;                               // actionコマンドのプレハブ
-    private GameObject prefabRpdButton;                               // rapidコマンドのプレハブ
-    private GameObject prefabJdgButton;                               // judgeコマンドのプレハブ
-    private GameObject prefabDmgButton;                               // Damageコマンドのプレハブ
-
-
-    private List<GameObject> parentsActObj = new List<GameObject>();  // アクションコマンドの親オブジェクトリスト
-    private List<GameObject> parentsRpdObj = new List<GameObject>();  // ラピッドコマンドの親オブジェクト
-    private List<GameObject> parentsJdgObj = new List<GameObject>();  // ジャッジコマンドの親オブジェクト
-    private List<GameObject> parentsDmgObj = new List<GameObject>();  // ダメージコマンドの親オブジェクト
-
-
-    private List<GameObject> prefabActObjList = new List<GameObject>();                // クローンしたアクションコマンドプレハブの保存先
-    private List<GameObject> prefabRpdObjList = new List<GameObject>();                // クローンしたラピッドコマンドプレハブの保存先
-    private List<GameObject> prefabJdgObjList = new List<GameObject>();                // クローンしたジャッジコマンドプレハブの保存先
-    private List<GameObject> prefabDmgObjList = new List<GameObject>();                // クローンしたダメージコマンドプレハブの保存先
-
-
-
-    private RectTransform backActImg;                  // 上記変数の座標となるオブジェクト
-    private RectTransform backRpdImg;                  // 上記変数の座標となるオブジェクト
-    private RectTransform backJdgImg;                  // 上記変数の座標となるオブジェクト
-    private RectTransform backDmgImg;                  // 上記変数の座標となるオブジェクト
-
-    protected int page=0;
-
-    private int actManeuvarPage;                        // マニューバリストのページ
-    private int rpdaneuvarPage;                         // マニューバリストのページ
-    private int jdgManeuvarPage;                        // マニューバリストのページ
-    private int dmgManeuvarPage;                        // マニューバリストのページ
-
-
-    [SerializeField]
-    private bool nowSelect;                         // 選択中かどうか
-    public void SetNowSelect(bool select) => nowSelect = select;
 
     private void Start()
     {
@@ -100,46 +68,7 @@ public class BattleCommand : MonoBehaviour
         // アクション、ラピッド、待機を選ぶgameObjectを取得
         actSelect = this.transform.Find("Canvas/Act_select").gameObject;
 
-        //// コマンドを取得
-        //actionCommands = this.transform.Find("Canvas/Act_select/Action/ActionCommands").gameObject;
-        //rapidCommands = this.transform.Find("Canvas/Rapid").gameObject;
-        //judgCommands = this.transform.Find("Canvas/Judge/JudgeCommands").gameObject;
-        //damageCommands = this.transform.Find("Canvas/Damage/DamageCommands").gameObject;
-
-        //// バックイメージを取得
-        //backActImg = this.transform.Find("Canvas/Act_select/Action/ActionCommands/BackImg").GetComponent<RectTransform>();
-        //backRpdImg = this.transform.Find("Canvas/Rapid/RapidCommands/BackImg").GetComponent<RectTransform>();
-        //backJdgImg = this.transform.Find("Canvas/Judge/JudgeCommands/BackImg").GetComponent<RectTransform>();
-        //backDmgImg = this.transform.Find("Canvas/Damage/DamageCommands/BackImg").GetComponent<RectTransform>();
-
         
-
-        //// 独自のプレハブフォルダからクローンオブジェクトを取得
-        //prefabActButton = NonResources.Load<GameObject>("Assets/morii/Prefab/Commands/ActionButton.prefab");
-        //prefabRpdButton = NonResources.Load<GameObject>("Assets/morii/Prefab/Commands/RapidButton.prefab");
-
-        //// 独自のプレハブフォルダから上記プレハブの親Objの元となるオブジェクトを取得
-        //originalParentObj = NonResources.Load<GameObject>("Assets/morii/Prefab/UIparent/VerticalParent.prefab");
-
-
-        //// 各親オブジェクトを1つずつあらかじめ作る
-        
-        //parentsActObj.Add(BuildingParent(true, backActImg));
-        //parentsRpdObj.Add(BuildingParent(true, backRpdImg));
-        //parentsJdgObj.Add(BuildingParent(true, backJdgImg));
-        //parentsDmgObj.Add(BuildingParent(true, backDmgImg));
-
-        //// パーツのマニューバとしての割り当てられているタイミングで分ける
-        //AddManeuver(thisChara.HeadParts);
-        //AddManeuver(thisChara.ArmParts);
-        //AddManeuver(thisChara.BodyParts);
-        //AddManeuver(thisChara.LegParts);
-
-        //// タイミングで分けられたマニューバ
-        //prefabActObjList = BuildCommands(ActionManeuvers, ref parentsActObj, prefabActObjList, backActImg);
-        //prefabRpdObjList = BuildCommands(RapidManeuvers, ref parentsRpdObj, prefabRpdObjList, backRpdImg);
-        //prefabJdgObjList = BuildCommands(JudgeManeuvers, ref parentsJdgObj, prefabJdgObjList, backJdgImg);
-        //prefabDmgObjList = BuildCommands(DamageManeuvers, ref parentsDmgObj, prefabDmgObjList, backDmgImg);
     }
 
     protected virtual void InitCommand(int timing)
@@ -155,6 +84,31 @@ public class BattleCommand : MonoBehaviour
         // タイミングで分けられたマニューバ
         prefabObjList = BuildCommands(maneuvers, ref parentCommand, prefabObjList, backImg);
 
+    }
+
+    protected virtual void InitParts(int parts)
+    {
+        parentParts.Add(BuildingParent(true, backImg));
+
+        if(parts==DmgTimingProcess.HEAD)
+        {
+            partsObjList = BuildParts(thisChara.HeadParts, ref parentCommand, prefabObjList, backImg);
+        }
+        else if (parts == DmgTimingProcess.ARM)
+        {
+            partsObjList = BuildParts(thisChara.ArmParts, ref parentCommand, prefabObjList, backImg);
+        }
+        else if (parts == DmgTimingProcess.BODY)
+        {
+            partsObjList = BuildParts(thisChara.BodyParts, ref parentCommand, prefabObjList, backImg);
+        }
+        else if (parts == DmgTimingProcess.LEG)
+        {
+            partsObjList = BuildParts(thisChara.LegParts, ref parentCommand, prefabObjList, backImg);
+        }
+
+        int a = 0;
+        a++;
     }
 
     public void OnClickStandby()
@@ -251,6 +205,58 @@ public class BattleCommand : MonoBehaviour
             // 親を設定
             clone.transform.SetParent(parentObj[countParent].transform, false);
             AddFuncToButton(ref clone, maneuvers[i]);
+
+            // コマンド5個区切りでコマンドの親オブジェクトを複製する。
+            if ((i + 1) % 5 == 0)
+            {
+                countParent++;
+                parentObj.Add(BuildingParent(false, backImg));
+            }
+
+            //リストに保存
+            prefabList.Add(clone.gameObject);
+        }
+
+        return prefabList;
+    }
+
+    /// <summary>
+    /// コマンドを生成するメソッド
+    /// </summary>
+    /// <param name="maneuvers">マニューバの内容をクローンオブジェクトにする</param>
+    /// <param name="prefabList">上記オブジェクトを格納し、管理するリスト</param>
+    /// <param name="parentObj">上記オブジェクトリストを格納し、コマンド選択のページとしての扱いをする。</param>
+    /// <returns><param name="prefabList"></returns>
+    public List<GameObject> BuildParts(List<CharaManeuver> maneuvers, ref List<GameObject> parentObj, List<GameObject> prefabList, RectTransform backImg)
+    {
+        GameObject Instance;
+        // 親の数
+        int countParent = 0;
+        for (int i = 0; i < maneuvers.Count; i++)
+        {
+            Instance = Instantiate(prefabButton, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
+            ButtonTexts clone = Instance.GetComponent<ButtonTexts>();
+            clone.SetName(maneuvers[i].Name);
+            clone.SetCost(maneuvers[i].Cost.ToString());
+
+            // ここでボタンにオンクリックを追加。内容はマニューバ発動
+
+            // 射程が複数存在する場合と、一か所にしか存在しない場合、もしくは自身に効果が及ぶ場合で処理を分ける
+            if (maneuvers[i].MinRange == 10)
+            {
+                clone.SetRange("自身");
+            }
+            else if (maneuvers[i].MinRange != maneuvers[i].MaxRange)
+            {
+                clone.SetRange(maneuvers[i].MinRange.ToString() + "～" + maneuvers[i].MaxRange.ToString());
+            }
+            else
+            {
+                clone.SetRange(maneuvers[i].MinRange.ToString());
+            }
+            // 親を設定
+            clone.transform.SetParent(parentObj[countParent].transform, false);
+            clone.GetComponent<Button>().onClick.AddListener(() => OnClickReflectDamage(maneuvers[i]));
 
             // コマンド5個区切りでコマンドの親オブジェクトを複製する。
             if ((i + 1) % 5 == 0)
@@ -377,6 +383,10 @@ public class BattleCommand : MonoBehaviour
         ProcessAccessor.Instance.actTimingMove.SetManeuver(maneuver);
     }
 
+    void OnClickReflectDamage(CharaManeuver maneuver)
+    {
+
+    }
 
     /// <summary>
     /// コマンドのネクストボタンを押されたときに反応するメソッド
