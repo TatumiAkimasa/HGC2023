@@ -58,5 +58,7 @@ public class Doll_blu_Nor : PartsList
 
         MaxCountCal();
         Debug.Log(maxCount);
+
+
     }
 }

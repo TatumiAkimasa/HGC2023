@@ -199,9 +199,17 @@ public class ActTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
-                    // 技コマンドもろもろを表示
-                    actCharaCommand.GetActSelect().SetActive(true);
                     isAllyOrEnemy = ALLY;
+                    for (int j=0;j< ManagerAccessor.Instance.battleSystem.GetMoveChara().Count;j++)
+                    {
+                        if (move.name == ManagerAccessor.Instance.battleSystem.GetMoveChara()[j].name)
+                        {
+                            // 技コマンドもろもろを表示
+                            actCharaCommand.GetActSelect().SetActive(true);
+                            break;
+                        }
+                    }
+                    
                 }
                 else if (move.CompareTag("EnemyChara"))
                 {

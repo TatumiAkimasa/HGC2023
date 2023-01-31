@@ -33,7 +33,9 @@ public class BattleSystem : MonoBehaviour
     private BattleSpone battleSpone;
 
     // カウント中に動くキャラをこのリストに入れる
-    private List<Doll_blu_Nor> CountMoveChara = new List<Doll_blu_Nor>();
+    private List<Doll_blu_Nor> countMoveChara = new List<Doll_blu_Nor>();
+
+    public List<Doll_blu_Nor> GetMoveChara() { return countMoveChara; }
 
 
     // カウント処理パートに移行するかの成否
@@ -181,7 +183,7 @@ public class BattleSystem : MonoBehaviour
             {
                 IndicateMoveChara(charaObject[i]);
                 // 表示カウントで行動できるキャラをこのリストに格納
-                CountMoveChara.Add(charaObject[i]);
+                countMoveChara.Add(charaObject[i]);
                 battleExe = true;
             }
         }
@@ -194,7 +196,7 @@ public class BattleSystem : MonoBehaviour
     public void CountLast()
     {
         nowCount--;
-        CountMoveChara.Clear();
+        countMoveChara.Clear();
         if (nowCount<=0)
         {
             nowCount += 20;
@@ -211,16 +213,16 @@ public class BattleSystem : MonoBehaviour
     {
         //for文でweightが小さい順に処理していく
         //プレイアブルキャラになったらクリックガードを外す
-        for (int i = 0; i < CountMoveChara.Count; i++)
+        for (int i = 0; i < countMoveChara.Count; i++)
         {
-            if (CountMoveChara[i].gameObject.CompareTag("AllyChara"))
+            if (countMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
                 ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
                 break;
             }
-            else if (CountMoveChara[i].gameObject.CompareTag("EnemyChara"))
+            else if (countMoveChara[i].gameObject.CompareTag("EnemyChara"))
             {
-                CountMoveChara[i].gameObject.GetComponent<ObjEnemy>().EnemyAI_Action();
+                countMoveChara[i].gameObject.GetComponent<ObjEnemy>().EnemyAI_Action();
                 break;
             }
             // else(味方NPCなら…)
@@ -248,15 +250,15 @@ public class BattleSystem : MonoBehaviour
 
     void CharaCountSort()
     {
-        for (int i = 0; i < CountMoveChara.Count; i++) 
+        for (int i = 0; i < countMoveChara.Count; i++) 
         {
-            for (int j = i + 1; j < CountMoveChara.Count; j++) 
+            for (int j = i + 1; j < countMoveChara.Count; j++) 
             {
-                if(CountMoveChara[i].GetWeight()>CountMoveChara[j].GetWeight())
+                if(countMoveChara[i].GetWeight()>countMoveChara[j].GetWeight())
                 {
-                    Doll_blu_Nor buff = CountMoveChara[i];
-                    CountMoveChara[i] = CountMoveChara[j];
-                    CountMoveChara[j] = buff;
+                    Doll_blu_Nor buff = countMoveChara[i];
+                    countMoveChara[i] = countMoveChara[j];
+                    countMoveChara[j] = buff;
                 }
             }
         }
@@ -283,11 +285,11 @@ public class BattleSystem : MonoBehaviour
                 break;
             }
         }
-        for (int i = 0; i < CountMoveChara.Count; i++)
+        for (int i = 0; i < countMoveChara.Count; i++)
         {
-            if(name==CountMoveChara[i].Name)
+            if(name==countMoveChara[i].Name)
             {
-                CountMoveChara.RemoveAt(i);
+                countMoveChara.RemoveAt(i);
                 break;
             }
         }

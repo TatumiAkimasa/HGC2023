@@ -188,4 +188,21 @@ public class AnimationName
 
 }
 
+/// <summary>
+/// ‹¶‹C‚Ìí—Ş
+/// </summary>
+[System.Serializable]
+public class InsanityElement
+{
+    public const string disgust = "disgust";            // Œ™ˆ«
+    public const string monopoly = "monopoly";          // “Æè
+    public const string reliance = "reliance";          // ˆË‘¶
+    public const string obsession = "obsession";        // ·’…   
+    public const string love = "love";                  // —öS
+    public const string opposition = "opposition";      // ‘ÎR
+    public const string friendship = "friendship";      // —Fî   
+    public const string protection = "protection";      // •ÛŒì
+    public const string admiration = "admiration";      // “²œÛ
+    public const string trust = "trust";                // M—Š
+}
 
