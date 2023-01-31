@@ -12,10 +12,10 @@ public class DmgTimingProcess : GetClickedGameObject
     //-------------------------------
 
     // 定数
-    const int HEAD = 10;
-    const int ARM  = 9;
-    const int BODY = 8;
-    const int LEG  = 7;
+    public const int HEAD = 10;
+    public const int ARM  = 9;
+    public const int BODY = 8;
+    public const int LEG  = 7;
     //--------------------------------
 
     private bool siteSelect = false;    // ダイスロールの値が10より多いときにtrueにする
@@ -328,6 +328,11 @@ public class DmgTimingProcess : GetClickedGameObject
 
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
+        if(actingChara.CompareTag("AllyChara"))
+        {
+
+        }
+
         // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められる
         // 要if文分け。サヴァントかホラーかレギオンか
         if (rollResult > 10 )
@@ -364,7 +369,6 @@ public class DmgTimingProcess : GetClickedGameObject
                 // 部位選択がなければそのまま追加効果判定へ移行させる
                 isAddEffectStep = true;
             }
-           
         }
     }
 

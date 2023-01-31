@@ -31,7 +31,7 @@ public class Doll_blu_Nor : PartsList
             Death_year = SaveData.aa.Death_year;
             temper = SaveData.aa.temper;
             Memory= SaveData.aa.Memory;
-            initArea = SaveData.aa.InitArea;
+            initArea = 2;
             MainClass = SaveData.aa.MainClass;
             SubClass = SaveData.aa.SubClass;
             Armament = SaveData.aa.Armament;
