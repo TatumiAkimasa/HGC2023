@@ -21,9 +21,34 @@ public class Doll_blu_Nor : PartsList
 
     private void Awake()
     {
-        if(this.CompareTag("AllyChara"))
+        if (this.CompareTag("AllyChara"))
         {
-            Name = "ミリカ";
+            //                                                          SaveData的なものいる？今のところAllyCharaが基本だが
+            Save_Load_data SaveData = GameObject.FindGameObjectWithTag("SaveData").GetComponent<Save_Load_data>();
+
+            Name = SaveData.aa.Name;
+            hide_hint = SaveData.aa.hide_hint;
+            Death_year = SaveData.aa.Death_year;
+            temper = SaveData.aa.temper;
+            Memory= SaveData.aa.Memory;
+            initArea = SaveData.aa.InitArea;
+            MainClass = SaveData.aa.MainClass;
+            SubClass = SaveData.aa.SubClass;
+            Armament = SaveData.aa.Armament;
+            Variant = SaveData.aa.Variant;
+            Alter = SaveData.aa.Alter;
+
+            for(int i=0;i!= SaveData.aa.CharaBase_data.HeadParts.Count;i++)
+                headParts.Add(SaveData.aa.CharaBase_data.HeadParts[i]);
+
+            for (int i = 0; i != SaveData.aa.CharaBase_data.ArmParts.Count; i++)
+                armParts.Add(SaveData.aa.CharaBase_data.ArmParts[i]);
+
+            for (int i = 0; i != SaveData.aa.CharaBase_data.BodyParts.Count; i++)
+                bodyParts.Add(SaveData.aa.CharaBase_data.BodyParts[i]);
+
+            for (int i = 0; i != SaveData.aa.CharaBase_data.LegParts.Count; i++)
+                legParts.Add(SaveData.aa.CharaBase_data.LegParts[i]);
         }
         else if(this.CompareTag("EnemyChara"))
         {

@@ -53,7 +53,7 @@ public class Save_Load_data : MonoBehaviour
     {
         Doll_blueprint loaddata;
 
-        binarySaveLoad.Load(filename_sub, out loaddata);
+        binarySaveLoad.Load(filename, out loaddata);
 
         // display load data
         if (loaddata == null)
