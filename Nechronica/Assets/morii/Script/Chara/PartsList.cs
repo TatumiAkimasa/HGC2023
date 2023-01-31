@@ -10,7 +10,7 @@ public class PartsList : CharaBase
     protected CharaManeuver noumiso_H, medama_H, ago_H,hunnu_H,
                             kobusi_A, ude_A, kata_A,wirelille_A,
                             sebone_B, harawata_B, harawata2_B,
-                            hone_L, hone2_L, asi_L;
+                            hone_L, hone1_L, hone2_L, hone3_L, hone4_L, asi_L;
     //TIMING------------------^p^
    
     //0=オート,1=アクション,2=ラピッド,3=ジャッジ,4=ダメージ(処理順でわける)
@@ -191,6 +191,45 @@ public class PartsList : CharaBase
         asi_L.EnemyAI.Add(2);
         asi_L.EnemyAI.Add(2);
         asi_L.EnemyAI.Add(2);
+
+        hone1_L.Name = "ほね";
+        hone1_L.AnimName = AnimationName.Null;
+        hone1_L.EffectNum.Add(EffNum.Move, 1);
+        hone1_L.Cost = 3;
+        hone1_L.Timing = MOVE;
+        hone1_L.MinRange = 10;
+        hone1_L.MaxRange = 10;
+        hone1_L.Weight = 1;
+        hone1_L.EnemyAI.Add(2);
+        hone1_L.EnemyAI.Add(2);
+        hone1_L.EnemyAI.Add(2);
+        hone1_L.EnemyAI.Add(2);
+
+        hone3_L.Name = "ほね";
+        hone3_L.AnimName = AnimationName.Null;
+        hone3_L.EffectNum.Add(EffNum.Move, 1);
+        hone3_L.Cost = 3;
+        hone3_L.Timing = MOVE;
+        hone3_L.MinRange = 10;
+        hone3_L.MaxRange = 10;
+        hone3_L.Weight = 1;
+        hone3_L.EnemyAI.Add(2);
+        hone3_L.EnemyAI.Add(2);
+        hone3_L.EnemyAI.Add(2);
+        hone3_L.EnemyAI.Add(2);
+
+        hone4_L.Name = "ほね";
+        hone4_L.AnimName = AnimationName.Null;
+        hone4_L.EffectNum.Add(EffNum.Move, 1);
+        hone4_L.Cost = 3;
+        hone4_L.Timing = MOVE;
+        hone4_L.MinRange = 10;
+        hone4_L.MaxRange = 10;
+        hone4_L.Weight = 1;
+        hone4_L.EnemyAI.Add(2);
+        hone4_L.EnemyAI.Add(2);
+        hone4_L.EnemyAI.Add(2);
+        hone4_L.EnemyAI.Add(2);
     }
 
 

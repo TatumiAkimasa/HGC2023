@@ -254,13 +254,7 @@ public class JdgTimingProcess : GetClickedGameObject
     {
         if(rollResult>=6)
         {
-            int addDmg = 0;
-
-            if (rollResult > 10)
-            {
-                addDmg = rollResult - 10;
-            }
-
+            
             ProcessAccessor.Instance.dmgTiming.SetActChara(actingChara);
             ProcessAccessor.Instance.dmgTiming.ActMneuver = actManeuver;
             ProcessAccessor.Instance.dmgTiming.StandbyCharaSelect = true;
@@ -273,10 +267,9 @@ public class JdgTimingProcess : GetClickedGameObject
             }
             if(atkTargetEnemy.CompareTag("AllyChara"))
             {
-                atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, false);
+                actingChara.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, false);
             }
             diceRollButton.gameObject.SetActive(false);
-            judgeButtons.SetActive(false);
             
         }
         else if(rollResult==1)
@@ -290,7 +283,6 @@ public class JdgTimingProcess : GetClickedGameObject
             ManagerAccessor.Instance.battleSystem.BattleExe = true;
             nextButton.gameObject.SetActive(false);
             diceRollButton.gameObject.SetActive(false);
-            judgeButtons.SetActive(false);
         }
 
         // 次のジャッジタイミングで使えるようにtrueにする
