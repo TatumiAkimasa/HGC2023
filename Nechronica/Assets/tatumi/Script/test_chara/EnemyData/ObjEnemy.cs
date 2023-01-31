@@ -18,68 +18,70 @@ public class ObjEnemy : ClassData_
     private List<CharaManeuver>[] Maneuvers;
     private CharaManeuver UseManever;
 
-    public CharaManeuver opponentManeuver;
-    public Doll_blu_Nor opponent;
+    //public CharaManeuver opponentManeuver;
+    //public Doll_blu_Nor opponent;
     public int Expected_FatalDamage;//致命傷ダメージ数
+    public bool DOOLmode;//敵の分類がドールか否か
 
     private void Start()
     {
-        opponentManeuver.EffectNum.Add(EffNum.Damage, 1);
-
         //部位×4+Skill1
         Maneuvers = new List<CharaManeuver>[(int)EnemyPartsType.EPartsMax];
         for (int i = 0; i != Maneuvers.Length; i++)
             Maneuvers[i] = new List<CharaManeuver>();
 
-        //初期武装追記
-        for (int i = 0; i != 3; i++)
+        if (DOOLmode)
         {
-           
-            //me.HeadParts.Add(kihon.Base_Head_parts[i]);
+            //初期武装追記
+            for (int i = 0; i != 3; i++)
+            {
 
-            if (me.HeadParts[i].Timing == ACTION)
-                Maneuvers[(int)EnemyPartsType.EAction].Add(me.HeadParts[i]);
-            else if (me.HeadParts[i].Timing == RAPID)
-                Maneuvers[(int)EnemyPartsType.ERapid].Add(me.HeadParts[i]);
-            else if (me.HeadParts[i].Timing == JUDGE)
-                Maneuvers[(int)EnemyPartsType.EJudge].Add(me.HeadParts[i]);
-            else if (me.HeadParts[i].Timing == DAMAGE)
-                Maneuvers[(int)EnemyPartsType.Edamage].Add(me.HeadParts[i]);
+                //me.HeadParts.Add(kihon.Base_Head_parts[i]);
 
-            //me.ArmParts.Add(kihon.Base_Arm_parts[i]);
+                if (me.HeadParts[i].Timing == ACTION)
+                    Maneuvers[(int)EnemyPartsType.EAction].Add(me.HeadParts[i]);
+                else if (me.HeadParts[i].Timing == RAPID)
+                    Maneuvers[(int)EnemyPartsType.ERapid].Add(me.HeadParts[i]);
+                else if (me.HeadParts[i].Timing == JUDGE)
+                    Maneuvers[(int)EnemyPartsType.EJudge].Add(me.HeadParts[i]);
+                else if (me.HeadParts[i].Timing == DAMAGE)
+                    Maneuvers[(int)EnemyPartsType.Edamage].Add(me.HeadParts[i]);
 
-            if (me.ArmParts[i].Timing == ACTION)
-                Maneuvers[(int)EnemyPartsType.EAction].Add(me.ArmParts[i]);
-            else if (me.ArmParts[i].Timing == RAPID)
-                Maneuvers[(int)EnemyPartsType.ERapid].Add(me.ArmParts[i]);
-            else if (me.ArmParts[i].Timing == JUDGE)
-                Maneuvers[(int)EnemyPartsType.EJudge].Add(me.ArmParts[i]);
-            else if (me.ArmParts[i].Timing == DAMAGE)
-                Maneuvers[(int)EnemyPartsType.Edamage].Add(me.ArmParts[i]);
+                //me.ArmParts.Add(kihon.Base_Arm_parts[i]);
 
-            //me.BodyParts.Add(kihon.Base_Body_parts[i]);
+                if (me.ArmParts[i].Timing == ACTION)
+                    Maneuvers[(int)EnemyPartsType.EAction].Add(me.ArmParts[i]);
+                else if (me.ArmParts[i].Timing == RAPID)
+                    Maneuvers[(int)EnemyPartsType.ERapid].Add(me.ArmParts[i]);
+                else if (me.ArmParts[i].Timing == JUDGE)
+                    Maneuvers[(int)EnemyPartsType.EJudge].Add(me.ArmParts[i]);
+                else if (me.ArmParts[i].Timing == DAMAGE)
+                    Maneuvers[(int)EnemyPartsType.Edamage].Add(me.ArmParts[i]);
 
-            if (me.BodyParts[i].Timing == ACTION)
-                Maneuvers[(int)EnemyPartsType.EAction].Add(me.BodyParts[i]);
-            else if (me.BodyParts[i].Timing == RAPID)
-                Maneuvers[(int)EnemyPartsType.ERapid].Add(me.BodyParts[i]);
-            else if (me.BodyParts[i].Timing == JUDGE)
-                Maneuvers[(int)EnemyPartsType.EJudge].Add(me.BodyParts[i]);
-            else if (me.BodyParts[i].Timing == DAMAGE)
-                Maneuvers[(int)EnemyPartsType.Edamage].Add(me.BodyParts[i]);
+                //me.BodyParts.Add(kihon.Base_Body_parts[i]);
 
-           // me.LegParts.Add(kihon.Base_Leg_parts[i]);
+                if (me.BodyParts[i].Timing == ACTION)
+                    Maneuvers[(int)EnemyPartsType.EAction].Add(me.BodyParts[i]);
+                else if (me.BodyParts[i].Timing == RAPID)
+                    Maneuvers[(int)EnemyPartsType.ERapid].Add(me.BodyParts[i]);
+                else if (me.BodyParts[i].Timing == JUDGE)
+                    Maneuvers[(int)EnemyPartsType.EJudge].Add(me.BodyParts[i]);
+                else if (me.BodyParts[i].Timing == DAMAGE)
+                    Maneuvers[(int)EnemyPartsType.Edamage].Add(me.BodyParts[i]);
 
-            if (me.LegParts[i].Timing == ACTION)
-                Maneuvers[(int)EnemyPartsType.EAction].Add(me.LegParts[i]);
-            else if (me.LegParts[i].Timing == RAPID)
-                Maneuvers[(int)EnemyPartsType.ERapid].Add(me.LegParts[i]);
-            else if (me.LegParts[i].Timing == JUDGE)
-                Maneuvers[(int)EnemyPartsType.EJudge].Add(me.LegParts[i]);
-            else if (me.LegParts[i].Timing == DAMAGE)
-                Maneuvers[(int)EnemyPartsType.Edamage].Add(me.LegParts[i]);
+                // me.LegParts.Add(kihon.Base_Leg_parts[i]);
+
+                if (me.LegParts[i].Timing == ACTION)
+                    Maneuvers[(int)EnemyPartsType.EAction].Add(me.LegParts[i]);
+                else if (me.LegParts[i].Timing == RAPID)
+                    Maneuvers[(int)EnemyPartsType.ERapid].Add(me.LegParts[i]);
+                else if (me.LegParts[i].Timing == JUDGE)
+                    Maneuvers[(int)EnemyPartsType.EJudge].Add(me.LegParts[i]);
+                else if (me.LegParts[i].Timing == DAMAGE)
+                    Maneuvers[(int)EnemyPartsType.Edamage].Add(me.LegParts[i]);
+            }
         }
-
+       
         TableParts_EffctUp(Enemy);
 
         //データから解析し、マニューバーを追加する
@@ -89,33 +91,45 @@ public class ObjEnemy : ClassData_
             for (int i = 0; i != Enemy.Wepons[SITE].Parts.Count; i++)
             {
                 CharaManeuver AddManuver = null;
-                //None情報を抜きにして整理
-                if (SITE == HEAD)
-                {
-                    //追記するマニューバー
-                    AddManuver = Enemy.Wepons[HEAD].Parts[i].Maneuver;
-                    me.HeadParts.Add(AddManuver);
-                    
-                }
-                if (SITE == ARM)
-                {
-                    //追記するマニューバー
-                    AddManuver = Enemy.Wepons[ARM].Parts[i].Maneuver;
-                    me.ArmParts.Add(Enemy.Wepons[ARM].Parts[i].Maneuver);
 
-                }
-                if (SITE == BODY)
+                //ドールなら部位を分ける
+                if (DOOLmode)
                 {
-                    //追記するマニューバー
-                    AddManuver = Enemy.Wepons[BODY].Parts[i].Maneuver;
-                    me.BodyParts.Add(Enemy.Wepons[BODY].Parts[i].Maneuver);
+                    //None情報を抜きにして整理
+                    if (SITE == HEAD)
+                    {
+                        //追記するマニューバー
+                        AddManuver = Enemy.Wepons[HEAD].Parts[i].Maneuver;
+                        me.HeadParts.Add(AddManuver);
 
+                    }
+                    if (SITE == ARM)
+                    {
+                        //追記するマニューバー
+                        AddManuver = Enemy.Wepons[ARM].Parts[i].Maneuver;
+                        me.ArmParts.Add(Enemy.Wepons[ARM].Parts[i].Maneuver);
+
+                    }
+                    if (SITE == BODY)
+                    {
+                        //追記するマニューバー
+                        AddManuver = Enemy.Wepons[BODY].Parts[i].Maneuver;
+                        me.BodyParts.Add(Enemy.Wepons[BODY].Parts[i].Maneuver);
+
+                    }
+                    if (SITE == LEG)
+                    {
+                        //追記するマニューバー
+                        AddManuver = Enemy.Wepons[LEG].Parts[i].Maneuver;
+                        me.LegParts.Add(Enemy.Wepons[LEG].Parts[i].Maneuver);
+                    }
                 }
-                if (SITE == LEG)
+                //ドールでないなら頭に集約
+                else
                 {
                     //追記するマニューバー
-                    AddManuver = Enemy.Wepons[LEG].Parts[i].Maneuver;
-                    me.LegParts.Add(Enemy.Wepons[LEG].Parts[i].Maneuver);
+                    AddManuver = Enemy.Wepons[SITE].Parts[i].Maneuver;
+                    me.HeadParts.Add(Enemy.Wepons[SITE].Parts[i].Maneuver);
                 }
                 //追記
                 if (AddManuver.Timing == ACTION)
@@ -308,8 +322,8 @@ public class ObjEnemy : ClassData_
                 //他の味方に救援を送る
                 movenum+=PlayerDolls[i].GetComponent<ObjEnemy>().HelpMoveRapid(me, Opponent, differenceRange, direction);
 
-                if ((Mathf.Abs(me.area + movenum) <= Mathf.Abs(opponentManeuver.MaxRange + opponent.area) &&
-                     Mathf.Abs(me.area + movenum) >= Mathf.Abs(OpponentManeuver.MinRange + opponent.area)))
+                if ((Mathf.Abs(me.area + movenum) <= Mathf.Abs(OpponentManeuver.MaxRange + Opponent.area) &&
+                     Mathf.Abs(me.area + movenum) >= Mathf.Abs(OpponentManeuver.MinRange + Opponent.area)))
                 {
                     //相手の攻撃の射程内ならまだ救援信号
                     ;
@@ -336,29 +350,32 @@ public class ObjEnemy : ClassData_
         else if (DiceRoll >= 6)
         {
             //致命傷1(現在のパーツ数で許容できるダメージ量か)判断。問題ないならスルー
-            if (TargetParts == HEAD)
+            if (DOOLmode)
             {
-                if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.HeadParts.Count)
-                    return;
+                if (TargetParts == HEAD)
+                {
+                    if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.HeadParts.Count)
+                        return;
+                }
+                else if (TargetParts == ARM)
+                {
+                    if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.ArmParts.Count)
+                        return;
+                }
+                else if (TargetParts == LEG)
+                {
+                    if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.LegParts.Count)
+                        return;
+                }
+                else if (TargetParts == BODY)
+                {
+                    if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.BodyParts.Count)
+                        return;
+                }
             }
-            else if (TargetParts == ARM)
-            {
-                if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.ArmParts.Count)
-                    return;
-            }
-            else if (TargetParts == LEG)
-            {
-                if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.LegParts.Count)
-                    return;
-            }
-            else if (TargetParts == BODY)
-            {
-                if (OpponentManeuver.Moving == 0 && OpponentManeuver.EffectNum[EffNum.Damage] < me.BodyParts.Count)
-                    return;
-            }
-
+            
             //致命傷2(許容できるダメージ量か)判断。問題ないならスルー
-            if (opponentManeuver.EffectNum[EffNum.Damage] < Expected_FatalDamage)
+            if (OpponentManeuver.EffectNum[EffNum.Damage] < Expected_FatalDamage)
                 return;
         }
 
@@ -727,6 +744,7 @@ public class ObjEnemy : ClassData_
     }
 
     //部位選択できる場合
+    //不随効果は考えれない
     public List<CharaManeuver> GetDamageUPList_ALL(int sonsyoukazu)
     {
         int num = 0;
@@ -886,6 +904,12 @@ public class ObjEnemy : ClassData_
             DamageList[Lownum2] = NowManuver;
         }
             return;
+    }
+
+    public int Damage(Doll_blu_Nor jij)
+    {
+        //PL側の有効値もしくは、損傷期待値を参照すればいける
+        return UnityEngine.Random.Range(0, 3);
     }
 }
 
