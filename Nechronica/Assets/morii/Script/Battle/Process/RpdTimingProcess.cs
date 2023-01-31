@@ -108,7 +108,6 @@ public class RpdTimingProcess : GetClickedGameObject
             //クリックしたゲームオブジェクトが味方キャラなら
             if (clickedObj.CompareTag("AllyChara"))
             {
-                clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
                 ZoomUpObj(clickedObj);
                 isSelectedChara = true;
                 childCommand = clickedObj.transform.GetChild(CANVAS).transform.GetChild(RAPID);
