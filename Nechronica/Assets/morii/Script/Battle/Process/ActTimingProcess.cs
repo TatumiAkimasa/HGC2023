@@ -13,6 +13,8 @@ public class ActTimingProcess : GetClickedGameObject
 
     // キャラクターのアクションコマンドを取得
     private BattleCommand actCharaCommand;
+    private ActCommands actCommand;
+    private RpdCommand rpdCommand;
     private bool isAllyOrEnemy;                       // 選んだキャラが敵か味方かの判断
 
     private GameObject atkTargetEnemy;                // 攻撃する敵オブジェクトを格納場所
@@ -72,6 +74,8 @@ public class ActTimingProcess : GetClickedGameObject
             {
                 // コマンドを表示し、選んだキャラに近づく
                 actCharaCommand = clickedObj.GetComponent<BattleCommand>();
+                actCommand = clickedObj.GetComponent<ActCommands>();
+                rpdCommand = clickedObj.GetComponent<RpdCommand>();
                 ZoomUpObj(clickedObj);
                 // ここでコマンド表示
                 StartCoroutine(MoveStandby(clickedObj));
@@ -117,13 +121,13 @@ public class ActTimingProcess : GetClickedGameObject
             if(isAllyOrEnemy==ALLY)
             {
                 // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
-                if (actCharaCommand.GetActCommands().activeSelf)
+                if (actCommand.GetCommands().activeSelf)
                 {
-                    actCharaCommand.GetActCommands().SetActive(false);
+                    actCommand.GetCommands().SetActive(false);
                 }
-                else if(actCharaCommand.GetRpdCommands().activeSelf)
-                {
-                    actCharaCommand.GetRpdCommands().SetActive(false);
+                else if(rpdCommand.GetCommands().activeSelf)
+                { 
+                    rpdCommand.GetCommands().SetActive(false);
                 }
                 else
                 {
@@ -244,6 +248,13 @@ public class ActTimingProcess : GetClickedGameObject
         ExeAtkManeuver(atkTargetEnemy.GetComponent<Doll_blu_Nor>(), dollManeuver, actingChara);
     }
 
+    /// <summary>
+    /// 待機をするボタン
+    /// </summary>
+    public void OnClickStandby()
+    {
+        ExeStandby(actingChara);
+    }
 
 
     /// <summary>
@@ -279,4 +290,14 @@ public class ActTimingProcess : GetClickedGameObject
         // 行動値を減少させる
         actChara.NowCount -= maneuver.Cost;
     }
+
+    /// <summary>
+    /// 待機をおこなう処理
+    /// </summary>
+    public void ExeStandby(Doll_blu_Nor chara)
+    {
+        ManagerAccessor.Instance.battleSystem.DeleteMoveChara(chara.Name);
+        chara.NowCount -= 1;
+    }
+
 }
