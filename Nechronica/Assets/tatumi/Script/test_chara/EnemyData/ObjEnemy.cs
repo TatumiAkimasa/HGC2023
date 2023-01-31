@@ -817,6 +817,8 @@ public class ObjEnemy : ClassData_
         else if (TargetParts == LEG)
             DiscardedManuber_omoto(Discarded_num, DamageParts, me.LegParts);
 
+       
+
         return DamageParts;
     }
     //優先率順で使用。HELP時は無視
@@ -906,10 +908,13 @@ public class ObjEnemy : ClassData_
             return;
     }
 
-    public int Damage(Doll_blu_Nor jij)
+    //相手の部位指定
+    public int SiteDamageUP(Doll_blu_Nor jij)
     {
         //PL側の有効値もしくは、損傷期待値を参照すればいける
+        //けど今はランダムで返す
         return UnityEngine.Random.Range(0, 3);
+
     }
 }
 
