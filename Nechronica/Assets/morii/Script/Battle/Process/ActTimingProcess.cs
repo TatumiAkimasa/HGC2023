@@ -69,8 +69,13 @@ public class ActTimingProcess : GetClickedGameObject
         {
             GameObject clickedObj = ShotRay();
 
+
+            if(clickedObj==null)
+            {
+                return;
+            }
             //クリックしたゲームオブジェクトが味方キャラなら
-            if (clickedObj.CompareTag("AllyChara")　|| clickedObj.CompareTag("EnemyChara"))
+            else if (clickedObj.CompareTag("AllyChara")　|| clickedObj.CompareTag("EnemyChara"))
             {
                 // コマンドを表示し、選んだキャラに近づく
                 actCharaCommand = clickedObj.GetComponent<BattleCommand>();

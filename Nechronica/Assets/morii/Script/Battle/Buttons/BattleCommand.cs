@@ -30,7 +30,6 @@ public class BattleCommand : MonoBehaviour
     [SerializeField] protected GameObject prefabButton;
 
     private List<GameObject> partsObjList = new List<GameObject>();     // 部位ごとに分けられたマニューバの内容が格納されているリスト
-    private List<GameObject> parentParts = new List<GameObject>();
 
     private GameObject actionCommands;             // アクションタイミングのコマンドオブジェクト
     private GameObject rapidCommands;              // ラピッドタイミングのコマンドオブジェクト
@@ -88,23 +87,23 @@ public class BattleCommand : MonoBehaviour
 
     protected virtual void InitParts(int parts)
     {
-        parentParts.Add(BuildingParent(true, backImg));
+        parentCommand.Add(BuildingParent(true, backImg));
 
         if(parts==DmgTimingProcess.HEAD)
         {
-            partsObjList = BuildParts(thisChara.HeadParts, ref parentCommand, prefabObjList, backImg);
+            partsObjList = BuildParts(thisChara.HeadParts, ref parentCommand, partsObjList, backImg, parts); 
         }
         else if (parts == DmgTimingProcess.ARM)
         {
-            partsObjList = BuildParts(thisChara.ArmParts, ref parentCommand, prefabObjList, backImg);
+            partsObjList = BuildParts(thisChara.ArmParts, ref parentCommand, partsObjList, backImg, parts);
         }
         else if (parts == DmgTimingProcess.BODY)
         {
-            partsObjList = BuildParts(thisChara.BodyParts, ref parentCommand, prefabObjList, backImg);
+            partsObjList = BuildParts(thisChara.BodyParts, ref parentCommand, partsObjList, backImg, parts);
         }
         else if (parts == DmgTimingProcess.LEG)
         {
-            partsObjList = BuildParts(thisChara.LegParts, ref parentCommand, prefabObjList, backImg);
+            partsObjList = BuildParts(thisChara.LegParts, ref parentCommand, partsObjList, backImg, parts);
         }
 
         int a = 0;
@@ -227,7 +226,7 @@ public class BattleCommand : MonoBehaviour
     /// <param name="prefabList">上記オブジェクトを格納し、管理するリスト</param>
     /// <param name="parentObj">上記オブジェクトリストを格納し、コマンド選択のページとしての扱いをする。</param>
     /// <returns><param name="prefabList"></returns>
-    public List<GameObject> BuildParts(List<CharaManeuver> maneuvers, ref List<GameObject> parentObj, List<GameObject> prefabList, RectTransform backImg)
+    public List<GameObject> BuildParts(List<CharaManeuver> maneuvers, ref List<GameObject> parentObj, List<GameObject> prefabList, RectTransform backImg, int parts)
     {
         GameObject Instance;
         // 親の数
@@ -256,7 +255,10 @@ public class BattleCommand : MonoBehaviour
             }
             // 親を設定
             clone.transform.SetParent(parentObj[countParent].transform, false);
-            clone.GetComponent<Button>().onClick.AddListener(() => OnClickReflectDamage(maneuvers[i]));
+            ManeuverAndParts buff;
+            buff.maneuver = maneuvers[i];
+            buff.parts = parts;
+            clone.GetComponent<Button>().onClick.AddListener(() => OnClickReflectDamage(buff));
 
             // コマンド5個区切りでコマンドの親オブジェクトを複製する。
             if ((i + 1) % 5 == 0)
@@ -383,9 +385,48 @@ public class BattleCommand : MonoBehaviour
         ProcessAccessor.Instance.actTimingMove.SetManeuver(maneuver);
     }
 
-    void OnClickReflectDamage(CharaManeuver maneuver)
+    void OnClickReflectDamage(ManeuverAndParts maneuver)
     {
-
+        if(maneuver.parts==DmgTimingProcess.HEAD)
+        {
+            for (int i = 0; i < thisChara.HeadParts.Count; i++)
+            {
+                if(maneuver.maneuver.Name==thisChara.HeadParts[i].Name)
+                {
+                    thisChara.HeadParts[i].isDmage = true;
+                }
+            }
+        }
+        else if (maneuver.parts == DmgTimingProcess.ARM)
+        {
+            for (int i = 0; i < thisChara.ArmParts.Count; i++)
+            {
+                if (maneuver.maneuver.Name == thisChara.ArmParts[i].Name)
+                {
+                    thisChara.ArmParts[i].isDmage = true;
+                }
+            }
+        }
+        else if (maneuver.parts == DmgTimingProcess.BODY)
+        {
+            for (int i = 0; i < thisChara.BodyParts.Count; i++)
+            {
+                if (maneuver.maneuver.Name == thisChara.BodyParts[i].Name)
+                {
+                    thisChara.BodyParts[i].isDmage = true;
+                }
+            }
+        }
+        else if (maneuver.parts == DmgTimingProcess.LEG)
+        {
+            for (int i = 0; i < thisChara.LegParts.Count; i++)
+            {
+                if (maneuver.maneuver.Name == thisChara.LegParts[i].Name)
+                {
+                    thisChara.LegParts[i].isDmage = true;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -408,8 +449,8 @@ public class BattleCommand : MonoBehaviour
     }
 }
 
-public struct ManeuverAndArea
+public struct ManeuverAndParts
 {
     public CharaManeuver maneuver;
-    public int area;
+    public int parts;
 }
