@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class RpdCommand : BattleCommand
 {
+    public GameObject GetCommands()
+    {
+        return commands;
+    }
+
     private void Awake()
     {
         CommandAccessor.Instance.rpdCommands = this;

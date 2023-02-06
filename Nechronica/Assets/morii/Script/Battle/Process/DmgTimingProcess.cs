@@ -45,6 +45,17 @@ public class DmgTimingProcess : GetClickedGameObject
     [SerializeField] private GameObject siteSelectBody;  // 部位選択のボタン
     [SerializeField] private GameObject siteSelectLeg;   // 部位選択のボタン
 
+    private GameObject reflectParts;        // だめーじを受ける部位のバッファ
+    private bool isStanbyReflectSelect;     // プレイヤーがダメージを受けたパーツを選択するのを待つための変数
+    private int damageSelectCnt;            // ダメージを受けたパーツを数える
+    private string siteName;               // ダメージを受ける部位の名前
+
+    public int DamageSelectCnt
+    {
+        get { return damageSelectCnt; }
+        set { damageSelectCnt = value; }
+    }
+
     private int rollResult;             // ダイスロールの結果の値
     private Doll_blu_Nor damageChara;   // ダメージを受ける予定のキャラ
     private CharaManeuver actManeuver;     // アクションタイミングで発動されたコマンドの格納場所
@@ -59,6 +70,7 @@ public class DmgTimingProcess : GetClickedGameObject
     [SerializeField] private Animator diceRollAnim;         // ダイスロールのアニメ
 
     private List<Doll_blu_Nor> damageCharas = new List<Doll_blu_Nor>();
+    private List<Doll_blu_Nor> damageAllyCharas = new List<Doll_blu_Nor>();
 
     private int continuousAtk = 0;      // 連撃
     public int SetContinuousAtk(int num) => continuousAtk = num;
@@ -106,6 +118,29 @@ public class DmgTimingProcess : GetClickedGameObject
         else if(isAddEffectStep)
         {
             JudgeAddEffect();
+        }
+        else if(isStanbyReflectSelect)
+        {
+            // 回数分ダメージを受けるパーツを選択したらダメージタイミングを終了する
+            if (reflectParts == null && damageAllyCharas.Count != 0)
+            {
+                ReflectPartsIndecation(damageAllyCharas[0].gameObject, siteName);
+            }
+
+            if(giveDamage==damageSelectCnt)
+            {
+                reflectParts.SetActive(false);
+                if (damageAllyCharas.Count != 0)
+                {
+                    damageAllyCharas.RemoveAt(0);
+                    reflectParts = null;
+                }
+                else
+                {
+                    isStanbyReflectSelect = false;
+                    EndFlowProcess();
+                }
+            }
         }
     }
 
@@ -270,7 +305,7 @@ public class DmgTimingProcess : GetClickedGameObject
     {
         diceRollAnim.gameObject.SetActive(true);
         rollResultText.text = "";   // 文字が邪魔なので一旦空データを代入
-        randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));
+        randoms = new Unity.Mathematics.Random((uint)Random.Range(0, 468446876));   //適当にシード値設定
 
         // その後の操作を邪魔しないようにfalseにしておく
         diceRollButtonImg.raycastTarget = false;
@@ -402,9 +437,10 @@ public class DmgTimingProcess : GetClickedGameObject
                 }
                 else
                 {
-
+                    isStanbyReflectSelect = true;
+                    ReflectPartsIndecation(damageChara.gameObject, "Head");
                 }
-                damageChara.HeadParts = GiveDamageParts(damageChara.HeadParts);
+                //damageChara.HeadParts = GiveDamageParts(damageChara.HeadParts);
             }
             else if (site == ARM)
             {
@@ -414,9 +450,10 @@ public class DmgTimingProcess : GetClickedGameObject
                 }
                 else
                 {
-
+                    isStanbyReflectSelect = true;
+                    ReflectPartsIndecation(damageChara.gameObject, "Arm");
                 }
-                damageChara.ArmParts = GiveDamageParts(damageChara.ArmParts);
+                //damageChara.ArmParts = GiveDamageParts(damageChara.ArmParts);
             }
             else if (site == BODY)
             {
@@ -426,9 +463,10 @@ public class DmgTimingProcess : GetClickedGameObject
                 }
                 else
                 {
-
+                    isStanbyReflectSelect = true;
+                    ReflectPartsIndecation(damageChara.gameObject, "Body");
                 }
-                damageChara.BodyParts = GiveDamageParts(damageChara.BodyParts);
+                //damageChara.BodyParts = GiveDamageParts(damageChara.BodyParts);
             }
             else if (site == LEG)
             {
@@ -438,9 +476,10 @@ public class DmgTimingProcess : GetClickedGameObject
                 }
                 else
                 {
-
+                    isStanbyReflectSelect = true;
+                    ReflectPartsIndecation(damageChara.gameObject, "Leg");
                 }
-                damageChara.LegParts = GiveDamageParts(damageChara.LegParts);
+                //damageChara.LegParts = GiveDamageParts(damageChara.LegParts);
             }
 
             // 追加効果に転倒がある攻撃であり
@@ -461,40 +500,82 @@ public class DmgTimingProcess : GetClickedGameObject
                 exprosionSite = 0;
                 SortDamageParts(buf);
             }
-            else
+            else if(!isStanbyReflectSelect)
             {
                 StartCoroutine(ManeuverAnimation(actManeuver, callBack => EndFlowProcess()));
             }
         }
     }
 
+    /// <summary>
+    /// 全体攻撃によるダメージを受ける
+    /// </summary>
+    /// <param name="site"></param>
+    /// <param name="listChara"></param>
     void SortDamageParts(int site, ref List<Doll_blu_Nor> listChara)
     {
         if (site == HEAD)
         {
             for(int i=0;i<listChara.Count;i++)
             {
-                listChara[i].HeadParts = GiveDamageParts(listChara[i].HeadParts);
+                if(listChara[i].CompareTag("EnemyChara"))
+                {
+                    listChara[i].GetComponent<ObjEnemy>().GetDamageUPList(0, giveDamage);
+                }
+                else
+                {
+                    isStanbyReflectSelect = true;
+                    damageAllyCharas.Add(listChara[i]);
+                    siteName = "Head";
+                }
             }
         }
         else if (site == ARM)
         {
             for (int i = 0; i < listChara.Count; i++)
             {
-                listChara[i].ArmParts = GiveDamageParts(listChara[i].ArmParts);
+                if (listChara[i].CompareTag("EnemyChara"))
+                {
+                    listChara[i].GetComponent<ObjEnemy>().GetDamageUPList(1, giveDamage);
+                }
+                else
+                {
+                    isStanbyReflectSelect = true; 
+                    damageAllyCharas.Add(listChara[i]);
+                    siteName = "Arm";
+                }
             }
         }
         else if (site == BODY)
         {
             for (int i = 0; i < listChara.Count; i++)
             {
-                listChara[i].BodyParts = GiveDamageParts(listChara[i].BodyParts);
+                if (listChara[i].CompareTag("EnemyChara"))
+                {
+                    listChara[i].GetComponent<ObjEnemy>().GetDamageUPList(2, giveDamage);
+                }
+                else
+                {
+                    isStanbyReflectSelect = true;
+                    damageAllyCharas.Add(listChara[i]);
+                    siteName = "Body";
+                }
             }
         }
         else if (site == LEG)
         {
             for (int i = 0; i < listChara.Count; i++)
             {
+                if (listChara[i].CompareTag("EnemyChara"))
+                {
+                    listChara[i].GetComponent<ObjEnemy>().GetDamageUPList(3, giveDamage);
+                }
+                else
+                {
+                    isStanbyReflectSelect = true;
+                    damageAllyCharas.Add(listChara[i]);
+                    siteName = "Leg";
+                }
                 listChara[i].LegParts = GiveDamageParts(listChara[i].LegParts);
             }
         }
@@ -624,6 +705,11 @@ public class DmgTimingProcess : GetClickedGameObject
         callBack(true);
     }
 
+    /// <summary>
+    /// ダメージを与える部位を選択するのを待つ処理
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
     public IEnumerator SelectDamageSite(System.Action<bool> callBack)
     {
         while(!siteSelect)
@@ -635,6 +721,25 @@ public class DmgTimingProcess : GetClickedGameObject
         callBack(true);
     }
 
+    public void ReflectPartsIndecation(GameObject chara, string partsName)
+    {
+        Transform children = chara.transform.GetChild(0).GetComponentInChildren<Transform>();
+        foreach (Transform child in children)
+        {
+            if(child.name==partsName)
+            {
+                reflectParts = child.gameObject;
+                reflectParts.SetActive(true);
+                break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 追加効果を打ち消すマニューバがあるかどうかチェックするメソッド
+    /// </summary>
+    /// <param name="isSuccess"></param>
+    /// <returns></returns>
     public bool DeleteEffCheck(params bool[] isSuccess)
     {
         foreach(bool isOk in isSuccess)
@@ -712,6 +817,10 @@ public class DmgTimingProcess : GetClickedGameObject
         }
     }
 
+    /// <summary>
+    /// 敵にダメージを与える時、どのパーツにダメージを与えるかを選ぶ処理
+    /// </summary>
+    /// <param name="isActive"></param>
     public void SiteSelectButtonsActive(bool isActive)
     {
         if(!SiteRemainingParts(HEAD))
@@ -849,5 +958,13 @@ public class DmgTimingProcess : GetClickedGameObject
 
         callBack(true);
     }
+
+    public void OnClickBack()
+    {
+        ZoomOutObj();
+        confirmatButton.SetActive(false);
+        isStandbyCharaSelect = true;
+    }
+
 
 }

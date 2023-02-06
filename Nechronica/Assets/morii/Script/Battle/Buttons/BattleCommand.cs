@@ -24,6 +24,7 @@ public class BattleCommand : MonoBehaviour
     
     [SerializeField] protected GameObject commands;
     [SerializeField] protected List<GameObject> parentCommand = new List<GameObject>();
+    protected int parentCnt = 0;
     private List<GameObject> prefabObjList = new List<GameObject>();      // タイミングごとにわけられたマニューバの内容が格納されているリスト
     [SerializeField] protected GameObject originalParentObj;              // 上記プレハブの親Objの元となるオブジェクト
     [SerializeField] protected RectTransform backImg;
@@ -105,15 +106,12 @@ public class BattleCommand : MonoBehaviour
         {
             partsObjList = BuildParts(thisChara.LegParts, ref parentCommand, partsObjList, backImg, parts);
         }
-
-        int a = 0;
-        a++;
     }
 
     public void OnClickStandby()
     {
         // カウントを1減らして待機
-        thisChara.NowCount = thisChara.NowCount - 1;
+        ProcessAccessor.Instance.actTiming.ExeStandby(thisChara);
     }
 
     public void OnClickAction()
@@ -427,16 +425,21 @@ public class BattleCommand : MonoBehaviour
                 }
             }
         }
+
+        ProcessAccessor.Instance.dmgTiming.DamageSelectCnt++;
     }
 
     /// <summary>
     /// コマンドのネクストボタンを押されたときに反応するメソッド
     /// </summary>
-    public void OnClickNext(List<GameObject> parentObj)
+    public void OnClickNext()
     {
-        if(parentObj.Count >= 2)
-        {
 
+        if (parentCnt < parentCommand.Count)
+        {
+            parentCommand[parentCnt].SetActive(false);
+            parentCnt++;
+            parentCommand[parentCnt].SetActive(true);
         }
     }
 
@@ -445,7 +448,12 @@ public class BattleCommand : MonoBehaviour
     /// </summary>
     public void OnClickBack()
     {
-
+        if (parentCnt != 0)
+        {
+            parentCommand[parentCnt].SetActive(false);
+            parentCnt--;
+            parentCommand[parentCnt].SetActive(true);
+        }
     }
 }
 
