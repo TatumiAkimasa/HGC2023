@@ -600,7 +600,7 @@ public class ObjEnemy : ClassData_
     }
 
     //ゲームオブジェクトごと消す処理。
-    //サヴァントはスルーする
+    //サヴァント・ホラーはスルーする
     public void Deletme()
     {
         if(!DOOLmode&&arrmyFlag)
@@ -878,18 +878,18 @@ public class ObjEnemy : ClassData_
 
             }
             //選考1,はらわた系統
-            else if (me.HeadParts[i].EnemyAI == null)
+            else if (SiteList[i].EnemyAI == null)
             {
                 DiscardedManuber_comparison(80, aa, SiteList[i], DamageList);
 
             }
-            else if (me.HeadParts[i].isUse)
+            else if (SiteList[i].isUse)
             {
                 //損傷優先度が高い状態からスタート
                 DiscardedManuber_comparison(10 - SiteList[i].EnemyAI[4], aa, me.HeadParts[i], DamageList);
 
             }
-            else if (!me.HeadParts[i].isUse)
+            else if (!SiteList[i].isUse)
             {
                 //損傷優先度が低い状態からスタート
                 DiscardedManuber_comparison(2 - SiteList[i].EnemyAI[4], aa, me.HeadParts[i], DamageList);
