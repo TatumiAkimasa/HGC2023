@@ -10,12 +10,9 @@ public class ObjEnemy : ClassData_
     [SerializeField]
     private kihonnpatu kihon;
 
-    [SerializeField]
-    private int EnemyAI;                  
-
     public Doll_blu_Nor me;
-
-    private List<CharaManeuver>[] Maneuvers;
+  
+    public List<CharaManeuver>[] Maneuvers;
     private CharaManeuver UseManever;
 
     //public CharaManeuver opponentManeuver;
@@ -878,7 +875,7 @@ public class ObjEnemy : ClassData_
 
             }
             //選考1,はらわた系統
-            else if (SiteList[i].EnemyAI == null)
+            else if (SiteList[i].EnemyAI.Count == 0)
             {
                 DiscardedManuber_comparison(80, aa, SiteList[i], DamageList);
 
@@ -886,13 +883,15 @@ public class ObjEnemy : ClassData_
             else if (SiteList[i].isUse)
             {
                 //損傷優先度が高い状態からスタート
-                DiscardedManuber_comparison(10 - SiteList[i].EnemyAI[4], aa, me.HeadParts[i], DamageList);
+                DiscardedManuber_comparison(10 - SiteList[i].EnemyAI[4], aa, SiteList[i], DamageList);
 
             }
             else if (!SiteList[i].isUse)
             {
+                
                 //損傷優先度が低い状態からスタート
-                DiscardedManuber_comparison(2 - SiteList[i].EnemyAI[4], aa, me.HeadParts[i], DamageList);
+                DiscardedManuber_comparison(2 - SiteList[i].EnemyAI[4], aa, SiteList[i], DamageList);
+                
 
             }
         }
