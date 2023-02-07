@@ -34,4 +34,4 @@ MonoBehaviour:
       isAllAttack: 0
       isFallDown: 0
       Num_per_Action: 0
-    EnemyAI: 0100010004000400
+    EnemyAI: 01000100040004000600

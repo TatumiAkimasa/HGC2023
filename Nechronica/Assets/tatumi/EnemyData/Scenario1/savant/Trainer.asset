@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: Trainer
   m_EditorClassIdentifier: 
   Wepons:
-  - Parts: []
-  - Parts: []
-  - Parts: []
-  - Parts: []
+  - Parts:
+    - {fileID: 11400000, guid: 1b8b8d6def7b7f649a92d40abdcc6941, type: 2}
+    - {fileID: 11400000, guid: a1f6a1f116d1a854a8f27ed2ee22853d, type: 2}
+  - Parts:
+    - {fileID: 11400000, guid: ba9f24380fe109d42882570cff8abcde, type: 2}
+    - {fileID: 11400000, guid: 1dca6b15848a9574fa7a0556ddce7afb, type: 2}
+  - Parts:
+    - {fileID: 11400000, guid: d5ab5958ff30dcf43bbf33696a70c2e3, type: 2}
+  - Parts:
+    - {fileID: 11400000, guid: 8cca2d04d5b2c1449bf17823446ac07b, type: 2}
