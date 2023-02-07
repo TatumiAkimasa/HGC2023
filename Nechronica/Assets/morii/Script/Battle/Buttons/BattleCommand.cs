@@ -32,23 +32,13 @@ public class BattleCommand : MonoBehaviour
 
     private List<GameObject> partsObjList = new List<GameObject>();     // 部位ごとに分けられたマニューバの内容が格納されているリスト
 
-    private GameObject actionCommands;             // アクションタイミングのコマンドオブジェクト
-    private GameObject rapidCommands;              // ラピッドタイミングのコマンドオブジェクト
-    private GameObject judgCommands;               // ジャッジタイミングのコマンドオブジェクト
-    private GameObject damageCommands;             // ダメージタイミングのコマンドオブジェクト
-
     public GameObject GetCommands() => commands;
 
-    public GameObject GetActCommands() => actionCommands;
-    public GameObject GetRpdCommands() => rapidCommands;
-    public GameObject GetJdgCommands() => judgCommands;
-    public GameObject GetDmgCommands() => damageCommands;
-
     private Button actionButton;                    // アクションのボタン
-    private Button rapidButton;                     // ラピッドのボタン
     private Button standbyButton;                   // 待機のボタン
 
-
+    [SerializeField] Text nowPageTxt;
+    [SerializeField] Text maxPageTxt;
 
     private void Start()
     {
@@ -57,18 +47,14 @@ public class BattleCommand : MonoBehaviour
 
         // ボタンを取得
         actionButton = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
-        rapidButton = this.transform.Find("Canvas/Act_select/Rapid").gameObject.GetComponent<Button>();
         standbyButton = this.transform.Find("Canvas/Act_select/Standby").gameObject.GetComponent<Button>();
 
         // ボタンにメソッドを加える
         actionButton.onClick.AddListener(OnClickAction);
-        rapidButton.onClick.AddListener(OnClickRapid);
         standbyButton.onClick.AddListener(OnClickStandby);
 
         // アクション、ラピッド、待機を選ぶgameObjectを取得
         actSelect = this.transform.Find("Canvas/Act_select").gameObject;
-
-        
     }
 
     protected virtual void InitCommand(int timing)
@@ -84,6 +70,8 @@ public class BattleCommand : MonoBehaviour
         // タイミングで分けられたマニューバ
         prefabObjList = BuildCommands(maneuvers, ref parentCommand, prefabObjList, backImg);
 
+        maxPageTxt.text = parentCommand.Count.ToString();
+        nowPageTxt.text = 1.ToString();
     }
 
     protected virtual void InitParts(int parts)
@@ -106,6 +94,9 @@ public class BattleCommand : MonoBehaviour
         {
             partsObjList = BuildParts(thisChara.LegParts, ref parentCommand, partsObjList, backImg, parts);
         }
+
+        maxPageTxt.text = parentCommand.Count.ToString();
+        nowPageTxt.text = 1.ToString();
     }
 
     public void OnClickStandby()
@@ -118,12 +109,6 @@ public class BattleCommand : MonoBehaviour
     {
         // アクションのコマンドを表示
         CommandAccessor.Instance.actCommands.GetCommands().SetActive(true);
-    }
-
-    public void OnClickRapid()
-    {
-        // ラピッドのコマンドを表示
-        CommandAccessor.Instance.rpdCommands.GetCommands().SetActive(true);
     }
 
     /// <summary>
@@ -439,6 +424,8 @@ public class BattleCommand : MonoBehaviour
         {
             parentCommand[parentCnt].SetActive(false);
             parentCnt++;
+            int num = parentCnt + 1;
+            nowPageTxt.text = num.ToString();
             parentCommand[parentCnt].SetActive(true);
         }
     }
@@ -452,6 +439,8 @@ public class BattleCommand : MonoBehaviour
         {
             parentCommand[parentCnt].SetActive(false);
             parentCnt--;
+            int num = parentCnt + 1;
+            nowPageTxt.text = num.ToString();
             parentCommand[parentCnt].SetActive(true);
         }
     }

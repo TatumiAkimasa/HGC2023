@@ -363,11 +363,6 @@ public class DmgTimingProcess : GetClickedGameObject
 
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
-        if(actingChara.CompareTag("AllyChara"))
-        {
-
-        }
-
         // rollResultが10より多い場合は攻撃するキャラがどこの部位に当てるか決められる
         // 要if文分け。サヴァントかホラーかレギオンか
         if (rollResult > 10 )
