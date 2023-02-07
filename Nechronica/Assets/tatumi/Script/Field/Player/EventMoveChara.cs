@@ -40,7 +40,7 @@ public class EventMoveChara : MOve_chara
             moveDirection = moveDirection * speed;
             controller.Move(moveDirection * Time.deltaTime);
 
-            Vector2 animstate = new Vector2(1.0f * UporDown, 0.0f);
+            Vector2 animstate = new Vector2(0.0f, 1.0f * UporDown);
 
             myanim.setStateEventToAnimator(animstate);
             yield return null;//1ÉtÉåÅ[ÉÄë“ã@

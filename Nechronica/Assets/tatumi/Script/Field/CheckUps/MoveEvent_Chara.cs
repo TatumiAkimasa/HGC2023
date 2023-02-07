@@ -43,15 +43,13 @@ public class MoveEvent_Chara : MonoBehaviour
     //ÀÛ‚Ìˆ—(EditorŠÖŒW‚È‚µ)
     public IEnumerator Event(System.Action<bool> action_end)
     {
-        Debug.Log("?");
+       
 
         for (int j = 0; j != Assistcs.Charas.Length; j++)
         {
             Assistcs.Charas[j].MovePlayer = false;
             Assistcs.Charas[j].myanim.SetEvent = true;
         }
-
-        Debug.Log("!");
 
         for (int i=0;i!=EventTypes.Count;i++)
         {

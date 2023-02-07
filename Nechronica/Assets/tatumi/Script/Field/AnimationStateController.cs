@@ -74,7 +74,7 @@ public class AnimationStateController : MonoBehaviour
             return;
         }
        
-        this.animator.speed = 1.0f;
+        this.animator.speed = 1.5f;
 
       
         this.animator.SetFloat("X", vector.Value.x);

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 
 [System.Serializable]
 public class Doll_blueprint
@@ -128,10 +128,11 @@ public class CharaBase_SaveData
     }
     protected int allWeight;                      // èdÇ≥
 
-    [SerializeField]
-    protected Image CharaImg;
-    [SerializeField]
-    protected Text CharaName;
+    //SaveâªOUT
+    //[SerializeField]
+    //protected Image CharaImg;
+    //[SerializeField]
+    //protected Text CharaName;
 }
 
 

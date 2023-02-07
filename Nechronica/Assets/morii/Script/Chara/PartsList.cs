@@ -36,6 +36,8 @@ public class PartsList : CharaBase
         ago_H.EnemyAI.Add(2);
         ago_H.EnemyAI.Add(2);
         ago_H.EnemyAI.Add(2);
+        ago_H.EnemyAI.Add(2);
+        ago_H.EnemyAI.Add(10);
 
         noumiso_H.Name = "ÇÃÇ§Ç›Çª";
         noumiso_H.AnimName = AnimationName.Null;
@@ -83,6 +85,8 @@ public class PartsList : CharaBase
         kobusi_A.EnemyAI.Add(2);
         kobusi_A.EnemyAI.Add(2);
         kobusi_A.EnemyAI.Add(2);
+        kobusi_A.EnemyAI.Add(10);
+
 
         kata_A.Name = "Ç©ÇΩ";
         kata_A.AnimName = AnimationName.Null;
@@ -96,6 +100,7 @@ public class PartsList : CharaBase
         kata_A.EnemyAI.Add(2);
         kata_A.EnemyAI.Add(2);
         kata_A.EnemyAI.Add(2);
+        kata_A.EnemyAI.Add(10);
 
         ude_A.Name = "Ç§Ç≈";
         ude_A.AnimName = AnimationName.Null;
@@ -109,6 +114,7 @@ public class PartsList : CharaBase
         ude_A.EnemyAI.Add(2);
         ude_A.EnemyAI.Add(2);
         ude_A.EnemyAI.Add(2);
+        ude_A.EnemyAI.Add(10);
 
         wirelille_A.Name = "ÉèÉCÉÑÅ[ÉäÅ[Éã";
         wirelille_A.AnimName = AnimationName.Null;
@@ -132,6 +138,7 @@ public class PartsList : CharaBase
         sebone_B.EnemyAI.Add(2);
         sebone_B.EnemyAI.Add(2);
         sebone_B.EnemyAI.Add(2);
+        sebone_B.EnemyAI.Add(10);
 
         harawata_B.Name = "ÇÕÇÁÇÌÇΩ";
         harawata_B.AnimName = AnimationName.Null;
@@ -165,6 +172,7 @@ public class PartsList : CharaBase
         hone_L.EnemyAI.Add(2);
         hone_L.EnemyAI.Add(2);
         hone_L.EnemyAI.Add(2);
+        hone_L.EnemyAI.Add(10);
 
         hone2_L.Name = "ÇŸÇÀ";
         hone2_L.AnimName = AnimationName.Null;
@@ -178,6 +186,7 @@ public class PartsList : CharaBase
         hone2_L.EnemyAI.Add(2);
         hone2_L.EnemyAI.Add(2);
         hone2_L.EnemyAI.Add(2);
+        hone2_L.EnemyAI.Add(10);
 
         asi_L.Name = "Ç†Çµ";
         asi_L.AnimName = AnimationName.Null;
@@ -191,6 +200,7 @@ public class PartsList : CharaBase
         asi_L.EnemyAI.Add(2);
         asi_L.EnemyAI.Add(2);
         asi_L.EnemyAI.Add(2);
+        asi_L.EnemyAI.Add(10);
 
         hone1_L.Name = "ÇŸÇÀ";
         hone1_L.AnimName = AnimationName.Null;
@@ -204,6 +214,7 @@ public class PartsList : CharaBase
         hone1_L.EnemyAI.Add(2);
         hone1_L.EnemyAI.Add(2);
         hone1_L.EnemyAI.Add(2);
+        hone1_L.EnemyAI.Add(10);
 
         hone3_L.Name = "ÇŸÇÀ";
         hone3_L.AnimName = AnimationName.Null;
@@ -217,6 +228,7 @@ public class PartsList : CharaBase
         hone3_L.EnemyAI.Add(2);
         hone3_L.EnemyAI.Add(2);
         hone3_L.EnemyAI.Add(2);
+        hone3_L.EnemyAI.Add(10);
 
         hone4_L.Name = "ÇŸÇÀ";
         hone4_L.AnimName = AnimationName.Null;
@@ -230,6 +242,7 @@ public class PartsList : CharaBase
         hone4_L.EnemyAI.Add(2);
         hone4_L.EnemyAI.Add(2);
         hone4_L.EnemyAI.Add(2);
+        hone4_L.EnemyAI.Add(10);
     }
 
 
