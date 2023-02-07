@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83343766a2dd38478138e526f66b17f, type: 3}
+  m_Name: slave
+  m_EditorClassIdentifier: 
+  Wepons:
+  - Parts:
+    - {fileID: 11400000, guid: 9cd98e1e6381f744b988c0d7db9b2c59, type: 2}
+    - {fileID: 11400000, guid: 68b2cad0b86cc364481d2ea050d6b9b0, type: 2}
+    - {fileID: 11400000, guid: 590d1a548b1ef8842ba01c0a8bd0ee74, type: 2}
+    - {fileID: 11400000, guid: 3664b06830afc014983fc52a8e681799, type: 2}
+    - {fileID: 11400000, guid: 09b24b1c150b77744b2384ced914ac8e, type: 2}
+    - {fileID: 11400000, guid: 49b9cc1629a0a004e9fdd4b4d179ca31, type: 2}

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 090cf4860d422d34093f820d7003e1b0, type: 3}
-  m_Name: ScriptTable
+  m_Name: Action1
   m_EditorClassIdentifier: 
   effcrnums:
-  - Eff_String: 1
-    Eff_int: 0
+  - Eff_String: 0
+    Eff_int: 1
   Maneuver:
-    Name: honnyaku
+    Name: "\u307E\u304D\u3053\u307E\u308C"
     AnimName: 
     AnimEffect: {fileID: 0}
-    Cost: 9
-    Timing: 5
+    Cost: 3
+    Timing: 1
     MinRange: 0
     MaxRange: 0
-    Weight: 0
+    Weight: 5
     Moving: 0
     isUse: 0
     isDmage: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
       isAllAttack: 0
       isFallDown: 0
       Num_per_Action: 0
-    EnemyAI: 04000400050004000600
+    EnemyAI: 08000200020002000000

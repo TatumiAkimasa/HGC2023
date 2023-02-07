@@ -12166,7 +12166,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headParts: []
-  armParts: []
+  armParts:
+  - Name: 
+    AnimName: 
+    AnimEffect: {fileID: 0}
+    Cost: 0
+    Timing: 0
+    MinRange: 0
+    MaxRange: 0
+    Weight: 0
+    Moving: 0
+    isUse: 0
+    isDmage: 0
+    Atk:
+      atkType: 0
+      isExplosion: 0
+      isCutting: 0
+      isAllAttack: 0
+      isFallDown: 0
+      Num_per_Action: 0
+    EnemyAI: 
   bodyParts: []
   legParts: []
   positionSkill: []
@@ -12679,11 +12698,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 11400000, guid: 09df2fa75f689d742b1d30b2ce50dcdf, type: 2}
   kihon: {fileID: 0}
-  EnemyAI: 0
   me: {fileID: 1228964199}
   Expected_FatalDamage: 0
-  DOOLmode: 0
+  DOOLmode: 1
   armynum: 0
+  arrmyFlag: 0
 --- !u!1 &1236681391
 GameObject:
   m_ObjectHideFlags: 0
