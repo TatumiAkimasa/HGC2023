@@ -292,7 +292,7 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
         ProcessAccessor.Instance.rpdTiming.SetRapidButton(true); 
-        ProcessAccessor.Instance.rpdTiming.SetTimingText("ラピッド");
+        ManagerAccessor.Instance.battleSystem.SetTimingText("ラピッド");
         if (rpdCommand!=null)
         {
             rpdCommand.GetCommands().SetActive(true);

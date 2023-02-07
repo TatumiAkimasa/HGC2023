@@ -22,6 +22,9 @@ public class BattleSystem : MonoBehaviour
 
     private List<GameObject> charaStatusList = new List<GameObject>();
 
+    [SerializeField] private Text timingText;                 // プレイアブルキャラのコマンドオブジェクト
+    public void SetTimingText(string set) { timingText.text = set; }
+
     public List<Doll_blu_Nor> GetCharaObj() { return charaObjects; }
     public List<Doll_blu_Nor> GetEnemyCharaObj() { return enemyCharaObjs; }
     public List<Doll_blu_Nor> GetAllyCharaObj() { return allyCharaObjs; }
@@ -222,7 +225,7 @@ public class BattleSystem : MonoBehaviour
             if (countMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
                 ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
-                ProcessAccessor.Instance.actTiming.SetTimingText("アクション");
+                timingText.text = "アクション";
                 break;
             }
             else if (countMoveChara[i].gameObject.CompareTag("EnemyChara"))

@@ -27,7 +27,7 @@ public class ButtonTexts : MonoBehaviour
 
     private void Update()
     {
-        if(myManeuver.isUse)
+        if (myManeuver.isUse)
         {
             useCheckBox.isOn = true;
         }

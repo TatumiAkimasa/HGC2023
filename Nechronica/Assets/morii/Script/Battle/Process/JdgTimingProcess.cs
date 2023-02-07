@@ -261,7 +261,8 @@ public class JdgTimingProcess : GetClickedGameObject
             ProcessAccessor.Instance.dmgTiming.SetDamageChara(atkTargetEnemy.GetComponent<Doll_blu_Nor>());
             ProcessAccessor.Instance.dmgTiming.SetRollResult(rollResult);
             ProcessAccessor.Instance.dmgTiming.GetDamageButtons().SetActive(true);
-            if(atkTargetEnemy.CompareTag("EnemyChara"))
+            ManagerAccessor.Instance.battleSystem.SetTimingText("ƒ_ƒ[ƒW");
+            if (atkTargetEnemy.CompareTag("EnemyChara"))
             {
                 atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, true);
             }
@@ -271,10 +272,6 @@ public class JdgTimingProcess : GetClickedGameObject
             }
             diceRollButton.gameObject.SetActive(false);
             
-        }
-        else if(rollResult==1)
-        {
-            // ‘å¸”s‚Ìˆ—
         }
         else
         {

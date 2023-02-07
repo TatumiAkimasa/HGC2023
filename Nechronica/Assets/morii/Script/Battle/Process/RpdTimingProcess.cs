@@ -290,7 +290,7 @@ public class RpdTimingProcess : GetClickedGameObject
                 ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
                 ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy.gameObject;
                 ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
-                ProcessAccessor.Instance.jdgTiming.SetTimingText("ジャッジ");
+                ManagerAccessor.Instance.battleSystem.SetTimingText("ジャッジ");
                 if (actingChara.gameObject.CompareTag("EnemyChara")/*||自動ダイスロール的な？設定参照用*/)
                 {
                     ProcessAccessor.Instance.jdgTiming.OnClickDiceRoll();
