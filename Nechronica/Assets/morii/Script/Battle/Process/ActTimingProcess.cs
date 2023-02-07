@@ -292,7 +292,11 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
         ProcessAccessor.Instance.rpdTiming.SetRapidButton(true);
-        rpdCommand.GetCommands().SetActive(true);
+        if(rpdCommand!=null)
+        {
+            rpdCommand.GetCommands().SetActive(true);
+        }
+        
         //actChara.GetComponent<RpdCommand>
 
         // ここでラピッドタイミングのマニューバーを敵が発動するかどうか判断
