@@ -62,6 +62,7 @@ public class DmgTimingProcess : GetClickedGameObject
 
     private bool isStandbyCutRoll = false;     // 切断判定待機
     private bool isCutRoll = false;     // 切断判定待機
+    private bool cutSuccess = false;
     [SerializeField] private int  cutRollResult = 0;          // 切断判定の結果の値
 
     [SerializeField] private Text rollResultText;
@@ -70,7 +71,13 @@ public class DmgTimingProcess : GetClickedGameObject
     [SerializeField] private Animator diceRollAnim;         // ダイスロールのアニメ
 
     private List<Doll_blu_Nor> damageCharas = new List<Doll_blu_Nor>();
+    private List<Doll_blu_Nor> isDestryDamageCharas = new List<Doll_blu_Nor>();
     private List<Doll_blu_Nor> damageAllyCharas = new List<Doll_blu_Nor>();
+
+    private bool isLegion = false;
+    private bool isHorror = false;
+    private bool isSavant = false;
+
 
     private int continuousAtk = 0;      // 連撃
     public int SetContinuousAtk(int num) => continuousAtk = num;
@@ -313,7 +320,6 @@ public class DmgTimingProcess : GetClickedGameObject
         StartCoroutine(RollAnimStandby(diceRollAnim, callBack =>
         {
             cutRollResult = randoms.NextInt(1, 11);
-            cutRollResult = 8;
             rollResultText.text = cutRollResult.ToString();
             isCutRoll = true;
         }));
@@ -360,6 +366,22 @@ public class DmgTimingProcess : GetClickedGameObject
         // 最終的なダメージの結果をだし、攻撃されたキャラクターがダメージを受ける
         // オートタイミングのものも合わせて加算する予定
         isStandbyCharaSelect = false;
+
+        if(damageChara.CompareTag("EnemyChara") && actManeuver.Atk.isAllAttack && !deleteAddEff)
+        {
+            if(!damageChara.GetComponent<ObjEnemy>().DOOLmode && damageChara.GetComponent<ObjEnemy>().armynum>=1)
+            {
+                isLegion = true;
+            }
+            else if (!damageChara.GetComponent<ObjEnemy>().DOOLmode && damageChara.GetComponent<ObjEnemy>().armynum == 0)
+            {
+                isHorror = true;
+            }
+            else if (damageChara.GetComponent<ObjEnemy>().DOOLmode)
+            {
+                isSavant = true;
+            }
+        }
 
         giveDamage = actManeuver.EffectNum[EffNum.Damage] + addDamage - dmgGuard;
 
@@ -420,15 +442,28 @@ public class DmgTimingProcess : GetClickedGameObject
                 }
             }
 
+            isDestryDamageCharas = damageCharas;
             SortDamageParts(site, ref damageCharas);
         }
         else
         {
-            if (site == HEAD)
+            // ホラー、レギオン、サヴァントの判断
+            if (isLegion || isHorror)
+            {
+                int dmg = giveDamage;
+
+                if(actManeuver.Atk.isCutting && !deleteAddEff)
+                {
+                    dmg = dmg * 2;
+                }
+
+                damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, dmg);
+            }
+            else if (site == HEAD )
             {
                 if(damageChara.CompareTag("EnemyChara"))
                 {
-                    damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, giveDamage);
+                    damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, giveDamage);    
                 }
                 else
                 {
@@ -509,6 +544,39 @@ public class DmgTimingProcess : GetClickedGameObject
     /// <param name="listChara"></param>
     void SortDamageParts(int site, ref List<Doll_blu_Nor> listChara)
     {
+        for(int i=0;i<listChara.Count;i++)
+        {
+            if (listChara[i].CompareTag("EnemyChara"))
+            {
+                int dmg = giveDamage;
+                if (!damageChara.GetComponent<ObjEnemy>().DOOLmode && damageChara.GetComponent<ObjEnemy>().armynum >= 1)
+                {
+                    // レギオンは全体攻撃ダメージ2倍
+                    dmg = giveDamage * 2;
+
+                    if (actManeuver.Atk.isCutting && !deleteAddEff)
+                    {
+                        dmg = dmg * 2;
+                    }
+
+                    damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, dmg);
+                    listChara.RemoveAt(i);
+                    i = 0;
+                }
+                else if (!damageChara.GetComponent<ObjEnemy>().DOOLmode && damageChara.GetComponent<ObjEnemy>().armynum == 0)
+                {
+                    if (actManeuver.Atk.isCutting && !deleteAddEff)
+                    {
+                        dmg = dmg * 2;
+                    }
+
+                    damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, dmg);
+                    listChara.RemoveAt(i);
+                    i = 0;
+                }
+            }
+        }
+
         if (site == HEAD)
         {
             for(int i=0;i<listChara.Count;i++)
@@ -801,9 +869,9 @@ public class DmgTimingProcess : GetClickedGameObject
     /// </summary>
     public void CutRollJudge()
     {
-        if(cutRollResult>=6)
+        if(cutRollResult<=6)
         {
-            giveDamage = 99;
+            cutSuccess = true;
             SortDamageParts(rollResult);
         }
         else
@@ -888,6 +956,57 @@ public class DmgTimingProcess : GetClickedGameObject
     }
 
     /// <summary>
+    /// パーツに部位が残っているかどうか確認する
+    /// </summary>
+    /// <param name="site">残ってるかどうか確認したい部位</param>
+    /// <returns>残っていればfalse、残っていなければtrueで返す</returns>
+    private bool SiteRemainingParts(int site, Doll_blu_Nor chara)
+    {
+        if (site == HEAD)
+        {
+            for (int i = 0; i < chara.HeadParts.Count; i++)
+            {
+                if (!chara.HeadParts[i].isDmage)
+                {
+                    return false;
+                }
+            }
+        }
+        else if (site == ARM)
+        {
+            for (int i = 0; i < chara.ArmParts.Count; i++)
+            {
+                if (!chara.ArmParts[i].isDmage)
+                {
+                    return false;
+                }
+            }
+        }
+        else if (site == BODY)
+        {
+            for (int i = 0; i < chara.BodyParts.Count; i++)
+            {
+                if (!chara.BodyParts[i].isDmage)
+                {
+                    return false;
+                }
+            }
+        }
+        else if (site == LEG)
+        {
+            for (int i = 0; i < chara.LegParts.Count; i++)
+            {
+                if (!chara.LegParts[i].isDmage)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
     /// カウントの流れ終了時の処理.
     /// 連撃があるならジャッジタイミングへ移行し、もう一度同じ処理をする。
     /// </summary>
@@ -927,7 +1046,6 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else
         {
-            
             continuousAtk = 0;
             // 連撃の数のカウントをジャッジ側で管理できないのでここで初期化
             SetContinuousAtk(continuousAtk);
@@ -935,6 +1053,17 @@ public class DmgTimingProcess : GetClickedGameObject
             ManagerAccessor.Instance.battleSystem.DeleteMoveChara(actingChara.Name);
             ManagerAccessor.Instance.battleSystem.BattleExe = true;
             damageButtons.gameObject.SetActive(false);
+            if(actManeuver.Atk.isAllAttack)
+            {
+                for (int i = 0; i < isDestryDamageCharas.Count; i++)
+                {
+                    IsDestroy(isDestryDamageCharas[i]);
+                }
+            }
+            else
+            {
+                IsDestroy(damageChara);
+            }
             
         }
         
@@ -961,5 +1090,44 @@ public class DmgTimingProcess : GetClickedGameObject
         isStandbyCharaSelect = true;
     }
 
-
+    public void IsDestroy(Doll_blu_Nor chara)
+    {
+        if (chara.CompareTag("EnemyChara"))
+        {
+            if (chara.GetComponent<ObjEnemy>().DOOLmode)
+            {
+                if (SiteRemainingParts(HEAD, chara) &&
+                SiteRemainingParts(ARM,  chara) &&
+                SiteRemainingParts(BODY, chara) &&
+                SiteRemainingParts(LEG,  chara))
+                {
+                    Destroy(chara);
+                }
+            }
+            else if (!chara.GetComponent<ObjEnemy>().DOOLmode && chara.GetComponent<ObjEnemy>().armynum == 0)
+            {
+                if (SiteRemainingParts(HEAD, chara))
+                {
+                    Destroy(chara);
+                }
+            }
+            else if (!chara.GetComponent<ObjEnemy>().DOOLmode && chara.GetComponent<ObjEnemy>().armynum >= 1)
+            {
+                if (SiteRemainingParts(HEAD, chara))
+                {
+                    Destroy(chara);
+                }
+            }
+        }
+        else if(chara.CompareTag("AllyChara"))
+        {
+            if (SiteRemainingParts(HEAD, chara) &&
+                SiteRemainingParts(ARM, chara) &&
+                SiteRemainingParts(BODY, chara) &&
+                SiteRemainingParts(LEG, chara))
+            {
+                Destroy(chara);
+            }
+        }
+    }
 }
