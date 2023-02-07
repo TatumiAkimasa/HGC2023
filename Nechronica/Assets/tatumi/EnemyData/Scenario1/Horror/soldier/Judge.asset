@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 090cf4860d422d34093f820d7003e1b0, type: 3}
-  m_Name: Judge2
+  m_Name: Judge
   m_EditorClassIdentifier: 
-  effcrnums: []
+  effcrnums:
+  - Eff_String: 2
+    Eff_int: 1
   Maneuver:
-    Name: 
+    Name: "\u6307\u63EE"
     AnimName: 
     AnimEffect: {fileID: 0}
-    Cost: 0
-    Timing: 0
+    Cost: 1
+    Timing: 4
     MinRange: 0
-    MaxRange: 0
-    Weight: 0
+    MaxRange: 1
+    Weight: 3
     Moving: 0
     isUse: 0
     isDmage: 0
@@ -32,4 +34,4 @@ MonoBehaviour:
       isAllAttack: 0
       isFallDown: 0
       Num_per_Action: 0
-    EnemyAI: 
+    EnemyAI: 04000500070004000500
