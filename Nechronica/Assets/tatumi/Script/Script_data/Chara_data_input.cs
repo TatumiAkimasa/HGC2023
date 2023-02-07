@@ -164,16 +164,16 @@ public class Chara_data_input : CharaBase
         Doll_data.CharaBase_data.LegParts.Clear();
 
         //‰Šú•‘•’Ç‹L
-        for (int i = 0; i != ALL_Base_Parts.GET_MAX_BASE_PARTS(); i++)
-        {
-            Doll_data.CharaBase_data.HeadParts.Add(ALL_Base_Parts.Base_Head_parts[i]);
+        //for (int i = 0; i != ALL_Base_Parts.GET_MAX_BASE_PARTS(); i++)
+        //{
+        //    Doll_data.CharaBase_data.HeadParts.Add(ALL_Base_Parts.Base_Head_parts[i]);
 
-            Doll_data.CharaBase_data.ArmParts.Add(ALL_Base_Parts.Base_Arm_parts[i]);
+        //    Doll_data.CharaBase_data.ArmParts.Add(ALL_Base_Parts.Base_Arm_parts[i]);
 
-            Doll_data.CharaBase_data.BodyParts.Add(ALL_Base_Parts.Base_Body_parts[i]);
+        //    Doll_data.CharaBase_data.BodyParts.Add(ALL_Base_Parts.Base_Body_parts[i]);
 
-            Doll_data.CharaBase_data.LegParts.Add(ALL_Base_Parts.Base_Leg_parts[i]);
-        }
+        //    Doll_data.CharaBase_data.LegParts.Add(ALL_Base_Parts.Base_Leg_parts[i]);
+        //}
 
         //’Ç‰Á•‘•’Ç‹L
         for (int SITE = 0; SITE != 4; SITE++)

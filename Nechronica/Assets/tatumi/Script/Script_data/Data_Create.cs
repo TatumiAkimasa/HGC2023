@@ -12,7 +12,7 @@ public class Data_Create : Scene_Change
         if (!Maneger_Accessor.Instance.chara_Data_Input_cs.input())
             return;
 
-        Save_Load_data SaveData = GameObject.FindGameObjectWithTag("AllyChara").GetComponent<Save_Load_data>();
+        Save_Load_data SaveData = GameObject.FindGameObjectWithTag("SaveData").GetComponent<Save_Load_data>();
         SaveData.ClickButtonSave();
         SaveData.ClickButtonLoad();
 

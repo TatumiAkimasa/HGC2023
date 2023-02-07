@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class WeponData_Set : CharaBase
+public class WeponData_Set : MonoBehaviour
 {
 
     [SerializeField]

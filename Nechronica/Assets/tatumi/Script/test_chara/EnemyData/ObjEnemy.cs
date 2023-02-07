@@ -22,6 +22,7 @@ public class ObjEnemy : ClassData_
     //public Doll_blu_Nor opponent;
     public int Expected_FatalDamage;//致命傷ダメージ数
     public bool DOOLmode;//敵の分類がドールか否か
+    public int armynum;//レギオンの場合の人数
 
     private void Start()
     {
@@ -743,8 +744,10 @@ public class ObjEnemy : ClassData_
         }
     }
 
+    //ダメージ部位選択本関数-------------------------------------------------------------------
     //部位選択できる場合
     //不随効果は考えれない
+    //敵がサヴァント型の場合かつ、こちらが受けるパーツを選択する場合使用
     public List<CharaManeuver> GetDamageUPList_ALL(int sonsyoukazu)
     {
         int num = 0;
@@ -799,7 +802,8 @@ public class ObjEnemy : ClassData_
         return GetDamageUPList(num,sonsyoukazu);
     }
 
-    //ダメージ部位選択本関数
+    //部位選択された場合
+    //もしくは、ホラー、レギオンの場合にこいつを選択（なおTarget先変えれないパターンあると思うからその場合は連絡
     public List<CharaManeuver> GetDamageUPList(int TargetParts, int sonsyoukazu)
     {
         List<CharaManeuver> DamageParts = new List<CharaManeuver>();
@@ -807,6 +811,13 @@ public class ObjEnemy : ClassData_
 
         for (int i = 0; i != sonsyoukazu; i++)
             Discarded_num[i] = 0;
+
+        //レギオンの場合NULLデータを返す
+        if (armynum != 0)
+        {
+            armynum -= sonsyoukazu;
+            return null;
+        }
 
         if (TargetParts == HEAD)
             DiscardedManuber_omoto(Discarded_num, DamageParts, me.HeadParts);
@@ -821,6 +832,8 @@ public class ObjEnemy : ClassData_
 
         return DamageParts;
     }
+    //------------------------------------------------------------------------------------------------
+
     //優先率順で使用。HELP時は無視
     private CharaManeuver UseManuber_Change(int ActionType,int ActManuber,CharaManeuver NowManuver)
     {
@@ -860,7 +873,7 @@ public class ObjEnemy : ClassData_
             }
             else if (me.HeadParts[i].isUse)
             {
-                //損傷優先度が低い状態からスタート
+                //損傷優先度が高い状態からスタート
                 DiscardedManuber_comparison(10 - SiteList[i].EnemyAI[4], aa, me.HeadParts[i], DamageList);
 
             }

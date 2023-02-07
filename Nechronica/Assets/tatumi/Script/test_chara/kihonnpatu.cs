@@ -139,52 +139,51 @@ public class kihonnpatu : CharaBase
         Base_Head_parts[0].EnemyAI.Add(1);
         Base_Head_parts[0].EnemyAI.Add(1);
         Base_Head_parts[0].EnemyAI.Add(3);
+        Base_Head_parts[0].EnemyAI.Add(10);
 
-        Base_Head_parts[1].EnemyAI.Add(5);
-        Base_Head_parts[1].EnemyAI.Add(1);
-        Base_Head_parts[1].EnemyAI.Add(1);
-        Base_Head_parts[1].EnemyAI.Add(3);
-
-        Base_Head_parts[2].EnemyAI.Add(5);
-        Base_Head_parts[2].EnemyAI.Add(1);
-        Base_Head_parts[2].EnemyAI.Add(1);
-        Base_Head_parts[2].EnemyAI.Add(3);
+       
 
         Base_Arm_parts[0].EnemyAI.Add(5);
         Base_Arm_parts[0].EnemyAI.Add(1);
         Base_Arm_parts[0].EnemyAI.Add(1);
         Base_Arm_parts[0].EnemyAI.Add(3);
+        Base_Arm_parts[0].EnemyAI.Add(10);
 
         Base_Arm_parts[1].EnemyAI.Add(3);
         Base_Arm_parts[1].EnemyAI.Add(1);
         Base_Arm_parts[1].EnemyAI.Add(1);
         Base_Arm_parts[1].EnemyAI.Add(3);
+        Base_Arm_parts[1].EnemyAI.Add(10);
 
         Base_Arm_parts[2].EnemyAI.Add(2);
         Base_Arm_parts[2].EnemyAI.Add(3);
         Base_Arm_parts[2].EnemyAI.Add(5);
         Base_Arm_parts[2].EnemyAI.Add(1);
+        Base_Arm_parts[2].EnemyAI.Add(10);
 
         Base_Body_parts[0].EnemyAI.Add(2);
         Base_Body_parts[0].EnemyAI.Add(2);
         Base_Body_parts[0].EnemyAI.Add(2);
         Base_Body_parts[0].EnemyAI.Add(2);
-       
-        Base_Leg_parts[0].EnemyAI.Add(2);
-        Base_Leg_parts[0].EnemyAI.Add(1);
-        Base_Leg_parts[0].EnemyAI.Add(1);
-        Base_Leg_parts[0].EnemyAI.Add(2);
+        Base_Body_parts[0].EnemyAI.Add(10);
 
         Base_Leg_parts[0].EnemyAI.Add(2);
         Base_Leg_parts[0].EnemyAI.Add(1);
         Base_Leg_parts[0].EnemyAI.Add(1);
         Base_Leg_parts[0].EnemyAI.Add(2);
+        Base_Leg_parts[0].EnemyAI.Add(10);
 
-        Base_Leg_parts[0].EnemyAI.Add(3);
-        Base_Leg_parts[0].EnemyAI.Add(1);
-        Base_Leg_parts[0].EnemyAI.Add(2);
-        Base_Leg_parts[0].EnemyAI.Add(5);
+        Base_Leg_parts[1].EnemyAI.Add(2);
+        Base_Leg_parts[1].EnemyAI.Add(1);
+        Base_Leg_parts[1].EnemyAI.Add(1);
+        Base_Leg_parts[1].EnemyAI.Add(2);
+        Base_Leg_parts[1].EnemyAI.Add(10);
 
+        Base_Leg_parts[2].EnemyAI.Add(3);
+        Base_Leg_parts[2].EnemyAI.Add(1);
+        Base_Leg_parts[2].EnemyAI.Add(2);
+        Base_Leg_parts[2].EnemyAI.Add(5);
+        Base_Leg_parts[2].EnemyAI.Add(10);
     }
 
 

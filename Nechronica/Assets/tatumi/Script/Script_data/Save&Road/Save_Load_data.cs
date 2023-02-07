@@ -40,7 +40,7 @@ public class Save_Load_data : MonoBehaviour
     public void ClickButtonSave()
     {
         Doll_blueprint test = Maneger_Accessor.Instance.chara_Data_Input_cs.Doll_data;
-        binarySaveLoad.Save(filename_sub, test);
+        binarySaveLoad.Save(filename, test);
     }
 
     public void ClickButtonSave(string filename)
