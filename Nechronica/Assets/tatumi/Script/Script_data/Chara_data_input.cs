@@ -72,6 +72,7 @@ public class Chara_data_input : CharaBase
         //参照渡しでいったん解決（Copyがうまくいかない...）
         Doll_data.Memory = Memory_;
         Treasure = ALL_Base_Parts.Treasure_parts;
+        Treasure.Name = "おたから";
 
         Maneger_Accessor.Instance.chara_Data_Input_cs = this;
         ErrorData = new bool[(int)ErrorStr.MAX];
@@ -164,16 +165,16 @@ public class Chara_data_input : CharaBase
         Doll_data.CharaBase_data.LegParts.Clear();
 
         //初期武装追記
-        //for (int i = 0; i != ALL_Base_Parts.GET_MAX_BASE_PARTS(); i++)
-        //{
-        //    Doll_data.CharaBase_data.HeadParts.Add(ALL_Base_Parts.Base_Head_parts[i]);
+        for (int i = 0; i != ALL_Base_Parts.GET_MAX_BASE_PARTS(); i++)
+        {
+            Doll_data.CharaBase_data.HeadParts.Add(ALL_Base_Parts.Base_Head_parts[i]);
 
-        //    Doll_data.CharaBase_data.ArmParts.Add(ALL_Base_Parts.Base_Arm_parts[i]);
+            Doll_data.CharaBase_data.ArmParts.Add(ALL_Base_Parts.Base_Arm_parts[i]);
 
-        //    Doll_data.CharaBase_data.BodyParts.Add(ALL_Base_Parts.Base_Body_parts[i]);
+            Doll_data.CharaBase_data.BodyParts.Add(ALL_Base_Parts.Base_Body_parts[i]);
 
-        //    Doll_data.CharaBase_data.LegParts.Add(ALL_Base_Parts.Base_Leg_parts[i]);
-        //}
+            Doll_data.CharaBase_data.LegParts.Add(ALL_Base_Parts.Base_Leg_parts[i]);
+        }
 
         //追加武装追記
         for (int SITE = 0; SITE != 4; SITE++)
@@ -183,7 +184,7 @@ public class Chara_data_input : CharaBase
                 for (int k = 0; k != 3; k++)
                 {
                     //None情報を抜きにして整理
-                    if (WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetName()!="None")
+                    if (WE_Maneger.Site_[SITE].Step[i].Text[k].text/*GetComponent<Wepon_Data_SaveSet>().GetName()*/!="None")
                     {
                         if (SITE == HEAD)
                         {

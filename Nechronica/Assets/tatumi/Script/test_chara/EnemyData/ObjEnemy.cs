@@ -23,6 +23,7 @@ public class ObjEnemy : ClassData_
     public int Expected_FatalDamage;//致命傷ダメージ数
     public bool DOOLmode;//敵の分類がドールか否か
     public int armynum;//レギオンの場合の人数
+    public bool arrmyFlag=false;
 
     private void Start()
     {
@@ -598,6 +599,14 @@ public class ObjEnemy : ClassData_
         ;
     }
 
+    //ゲームオブジェクトごと消す処理。
+    //サヴァントはスルーする
+    public void Deletme()
+    {
+        if(!DOOLmode&&arrmyFlag)
+        Destroy(this.gameObject);
+    }
+
     //移動補助目的HELP(RAPID
     public int HelpMoveRapid(Doll_blu_Nor Follow, Doll_blu_Nor Opponent, int NeedRange,bool Needdirection)
     {
@@ -816,6 +825,9 @@ public class ObjEnemy : ClassData_
         if (armynum != 0)
         {
             armynum -= sonsyoukazu;
+
+            if (armynum < 1)
+                arrmyFlag = true;
             return null;
         }
 

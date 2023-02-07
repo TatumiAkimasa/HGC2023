@@ -13,9 +13,9 @@ public class Data_Create : Scene_Change
             return;
 
         Save_Load_data SaveData = GameObject.FindGameObjectWithTag("SaveData").GetComponent<Save_Load_data>();
-        SaveData.ClickButtonSave();
-        SaveData.ClickButtonLoad();
+        //SaveData.ClickButtonSave();
+        //SaveData.ClickButtonLoad();
 
-        Scene_change("forest");
+        //Scene_change("forest");
    }
 }
