@@ -460,7 +460,12 @@ public class DmgTimingProcess : GetClickedGameObject
 
                 damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, dmg);
             }
-            else if (site == HEAD )
+            else if(cutSuccess)
+            {
+                giveDamage = 99;
+            }
+
+            if (site == HEAD )
             {
                 if(damageChara.CompareTag("EnemyChara"))
                 {
@@ -721,6 +726,7 @@ public class DmgTimingProcess : GetClickedGameObject
                 isStandbyCutRoll = true;
                 if(damageChara.CompareTag("EnemyChara"))
                 {
+                    diceRollButton.gameObject.SetActive(true);
                     OnClickDiceRoll();
                 }
                 else
@@ -757,6 +763,7 @@ public class DmgTimingProcess : GetClickedGameObject
         }
         else
         {
+            callBack(true);
             yield break;
         }
 
@@ -1018,7 +1025,7 @@ public class DmgTimingProcess : GetClickedGameObject
         giveDamage = 0;
         dmgGuard = 0;
         siteSelect = false;
-
+        cutSuccess = false;
         diceRollButton.gameObject.SetActive(false);
         diceRollButtonImg.raycastTarget = true;
         diceRollButton.enabled = true;

@@ -23,31 +23,14 @@ public class Doll_blu_Nor : PartsList
     {
         if (this.CompareTag("AllyChara"))
         {
-            // 
-
-            Name = "ミリカ";
-            //hide_hint = SaveData.aa.hide_hint;
-            //Death_year = SaveData.aa.Death_year;
-            //temper = SaveData.aa.temper;
-            //Memory= SaveData.aa.Memory;
-            //initArea = 2;
-            //MainClass = SaveData.aa.MainClass;
-            //SubClass = SaveData.aa.SubClass;
-            //Armament = SaveData.aa.Armament;
-            //Variant = SaveData.aa.Variant;
-            //Alter = SaveData.aa.Alter;
-
-            //for(int i=0;i!= SaveData.aa.CharaBase_data.HeadParts.Count;i++)
-            //    headParts.Add(SaveData.aa.CharaBase_data.HeadParts[i]);
-
-            //for (int i = 0; i != SaveData.aa.CharaBase_data.ArmParts.Count; i++)
-            //    armParts.Add(SaveData.aa.CharaBase_data.ArmParts[i]);
-
-            //for (int i = 0; i != SaveData.aa.CharaBase_data.BodyParts.Count; i++)
-            //    bodyParts.Add(SaveData.aa.CharaBase_data.BodyParts[i]);
-
-            //for (int i = 0; i != SaveData.aa.CharaBase_data.LegParts.Count; i++)
-            //    legParts.Add(SaveData.aa.CharaBase_data.LegParts[i]);
+            if(this.name=="PLChara")
+            {
+                Name = "ミリカ";
+            }
+            else if (this.name == "PLChara2")
+            {
+                Name = "ネアン";
+            }
         }
         else if(this.CompareTag("EnemyChara"))
         {
@@ -79,6 +62,23 @@ public class Doll_blu_Nor : PartsList
         LegParts.Add(hone2_L);
         LegParts.Add(hone_L);
         LegParts.Add(asi_L);
+
+        if(Name=="ミリカ")
+        {
+            ArmParts.Add(bearGun_U);
+            ArmParts.Add(shotGun_U); 
+            ArmParts.Add(doubleGun_U);
+            HeadParts.Add(scope_H);
+            HeadParts.Add(kanhu_H);
+        }
+        else if(Name=="ネアン")
+        {
+            ArmParts.Add(meitou_U);
+            ArmParts.Add(wirelille_A);
+            ArmParts.Add(uroko_B);
+            BodyParts.Add(tale_B);
+            HeadParts.Add(kanhu2_H);
+        }
 
         MaxCountCal();
     }

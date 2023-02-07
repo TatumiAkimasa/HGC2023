@@ -239,7 +239,6 @@ public class ActTimingProcess : GetClickedGameObject
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
 
-                        exeButton.onClick.AddListener(() => OnClickAtkRequest());
 
                         this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(true);
                     }
@@ -252,7 +251,7 @@ public class ActTimingProcess : GetClickedGameObject
     /// <summary>
     /// 次のジャッジタイミングに移行をリクエストするボタン
     /// </summary>
-    private void OnClickAtkRequest()
+    public void OnClickAtkRequest()
     {
         ExeAtkManeuver(atkTargetEnemy.GetComponent<Doll_blu_Nor>(), dollManeuver, actingChara);
     }
