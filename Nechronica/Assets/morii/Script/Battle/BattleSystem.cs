@@ -342,15 +342,15 @@ public class BattleSystem : MonoBehaviour
             {
                 charaObjects[i].HeadParts[j].isUse = false;
             }
-            for (int j = 0; j < charaObjects[i].HeadParts.Count; j++)
+            for (int j = 0; j < charaObjects[i].ArmParts.Count; j++)
             {
                 charaObjects[i].ArmParts[j].isUse = false;
             }
-            for (int j = 0; j < charaObjects[i].HeadParts.Count; j++)
+            for (int j = 0; j < charaObjects[i].BodyParts.Count; j++)
             {
                 charaObjects[i].BodyParts[j].isUse = false;
             }
-            for (int j = 0; j < charaObjects[i].HeadParts.Count; j++)
+            for (int j = 0; j < charaObjects[i].LegParts.Count; j++)
             {
                 charaObjects[i].LegParts[j].isUse = false;
             }

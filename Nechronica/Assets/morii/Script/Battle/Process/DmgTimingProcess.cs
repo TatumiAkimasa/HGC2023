@@ -366,6 +366,7 @@ public class DmgTimingProcess : GetClickedGameObject
         // 最終的なダメージの結果をだし、攻撃されたキャラクターがダメージを受ける
         // オートタイミングのものも合わせて加算する予定
         isStandbyCharaSelect = false;
+        nextButton.interactable = false;
 
         if(damageChara.CompareTag("EnemyChara") && actManeuver.Atk.isAllAttack && !deleteAddEff)
         {
@@ -1024,9 +1025,11 @@ public class DmgTimingProcess : GetClickedGameObject
         rollResultText.text = "ダイスロール";
         diceRollAnim.gameObject.SetActive(false);
         isStandbyCutRoll = false;
+        
 
         if (continuousAtk < actManeuver.Atk.Num_per_Action)
         {
+            nextButton.interactable = true;
             damageButtons.SetActive(false);
             isStandbyEnemySelect = false;
             isStandbyCharaSelect = false;
@@ -1052,8 +1055,9 @@ public class DmgTimingProcess : GetClickedGameObject
             // 行動したキャラを表示から消す
             ManagerAccessor.Instance.battleSystem.DeleteMoveChara(actingChara.Name);
             ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            nextButton.interactable = true;
             damageButtons.gameObject.SetActive(false);
-            if(actManeuver.Atk.isAllAttack)
+            if (actManeuver.Atk.isAllAttack)
             {
                 for (int i = 0; i < isDestryDamageCharas.Count; i++)
                 {

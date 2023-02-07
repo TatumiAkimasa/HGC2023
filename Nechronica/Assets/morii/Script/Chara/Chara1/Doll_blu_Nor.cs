@@ -73,7 +73,7 @@ public class Doll_blu_Nor : PartsList
         //“·----------------------
         BodyParts.Add(harawata2_B);
         BodyParts.Add(harawata_B);
-        BodyParts.Add(sebone_B);
+        BodyParts.Add(harawata3_B);
 
         //‹r----------------------
         LegParts.Add(hone2_L);

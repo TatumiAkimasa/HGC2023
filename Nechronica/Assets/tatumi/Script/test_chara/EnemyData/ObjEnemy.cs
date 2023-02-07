@@ -199,10 +199,16 @@ public class ObjEnemy : ClassData_
 
         //全ACTION吟味し、一番有効値が高い物を使用する
         if (UseManever != null)
+        {
             ProcessAccessor.Instance.actTiming.ExeAtkManeuver(target, UseManever, me);
+        }
+        else
+        {
+            ProcessAccessor.Instance.actTiming.ExeStandby(me);
+        }
 
         Debug.Log("AIはうごいえる？");
-        return;
+        
     }
     //移動逃げ
     public void EnemyAI_Rapid(CharaManeuver OpponentManeuver, Doll_blu_Nor Opponent)

@@ -164,7 +164,10 @@ public class GetClickedGameObject : MonoBehaviour
             }
             else
             {
-                Destroy(CharaCamera.gameObject);
+                if(CharaCamera!=null)
+                {
+                    Destroy(CharaCamera.gameObject);
+                }
                 //priority‚ğŒ³‚Ì”’l‚É‚·‚é
                 cinemaCamera.Priority = 10;
                 isSelectedChara = false;

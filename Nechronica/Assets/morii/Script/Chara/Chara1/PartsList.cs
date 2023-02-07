@@ -9,7 +9,7 @@ public class PartsList : CharaBase
     //äÓëbÉpÅ[Éc
     protected CharaManeuver noumiso_H, medama_H, ago_H,hunnu_H,
                             kobusi_A, ude_A, kata_A,wirelille_A,
-                            sebone_B, harawata_B, harawata2_B,
+                            harawata_B, harawata2_B,harawata3_B,
                             hone_L, hone1_L, hone2_L, hone3_L, hone4_L, asi_L;
     //TIMING------------------^p^
    
@@ -126,20 +126,6 @@ public class PartsList : CharaBase
         wirelille_A.Weight = 1;
         //ì∑----------------------------
 
-        sebone_B.Name = "ÇπÇ⁄ÇÀ";
-        sebone_B.AnimName = AnimationName.Null;
-        sebone_B.EffectNum.Add(EffNum.Extra, -1);
-        sebone_B.Cost = 1;
-        sebone_B.Timing = ACTION;
-        sebone_B.MinRange = 0;
-        sebone_B.MaxRange = 0;
-        sebone_B.Weight = 1;
-        sebone_B.EnemyAI.Add(2);
-        sebone_B.EnemyAI.Add(2);
-        sebone_B.EnemyAI.Add(2);
-        sebone_B.EnemyAI.Add(2);
-        sebone_B.EnemyAI.Add(10);
-
         harawata_B.Name = "ÇÕÇÁÇÌÇΩ";
         harawata_B.AnimName = AnimationName.Null;
         harawata_B.EffectNum.Add(EffNum.Extra, 0);
@@ -157,6 +143,15 @@ public class PartsList : CharaBase
         harawata2_B.MinRange = 10;
         harawata2_B.MaxRange = 10;
         harawata2_B.Weight = 1;
+
+        harawata3_B.Name = "ÇÕÇÁÇÌÇΩ";
+        harawata3_B.AnimName = AnimationName.Null;
+        harawata3_B.EffectNum.Add(EffNum.Extra, 0);
+        harawata3_B.Cost = 0;
+        harawata3_B.Timing = AUTO;
+        harawata3_B.MinRange = 10;
+        harawata3_B.MaxRange = 10;
+        harawata3_B.Weight = 1;
 
         //ãr------------------------------
 
