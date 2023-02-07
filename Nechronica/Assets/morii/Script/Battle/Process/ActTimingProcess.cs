@@ -69,8 +69,13 @@ public class ActTimingProcess : GetClickedGameObject
         {
             GameObject clickedObj = ShotRay();
 
+
+            if(clickedObj==null)
+            {
+                return;
+            }
             //クリックしたゲームオブジェクトが味方キャラなら
-            if (clickedObj.CompareTag("AllyChara")　|| clickedObj.CompareTag("EnemyChara"))
+            else if (clickedObj.CompareTag("AllyChara")　|| clickedObj.CompareTag("EnemyChara"))
             {
                 // コマンドを表示し、選んだキャラに近づく
                 actCharaCommand = clickedObj.GetComponent<BattleCommand>();
@@ -121,7 +126,11 @@ public class ActTimingProcess : GetClickedGameObject
             if(isAllyOrEnemy==ALLY)
             {
                 // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
-                if (actCommand.GetCommands().activeSelf)
+                if (ProcessAccessor.Instance.actTimingMove.GetMoveButtons().activeSelf)
+                {
+                    ProcessAccessor.Instance.actTimingMove.GetMoveButtons().SetActive(false);
+                }
+                else if (actCommand.GetCommands().activeSelf)
                 {
                     actCommand.GetCommands().SetActive(false);
                 }
@@ -283,6 +292,13 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
         ProcessAccessor.Instance.rpdTiming.SetRapidButton(true);
+        if(rpdCommand!=null)
+        {
+            rpdCommand.GetCommands().SetActive(true);
+        }
+        
+        //actChara.GetComponent<RpdCommand>
+
         // ここでラピッドタイミングのマニューバーを敵が発動するかどうか判断
         //enemy.GetComponent<ObjEnemy>().EnemyAI_Rapid(maneuver, actChara);
 
@@ -298,6 +314,8 @@ public class ActTimingProcess : GetClickedGameObject
     {
         ManagerAccessor.Instance.battleSystem.DeleteMoveChara(chara.Name);
         chara.NowCount -= 1;
+        MyZoomOutObj(actCharaCommand.GetActSelect());
+        ManagerAccessor.Instance.battleSystem.BattleExe = true;
     }
 
 }

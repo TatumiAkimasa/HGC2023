@@ -106,7 +106,6 @@ public class GetClickedGameObject : MonoBehaviour
             //クリックしたゲームオブジェクトが味方キャラなら
             if (clickedObj.CompareTag("AllyChara"))
             {
-                clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
                 ZoomUpObj(clickedObj);
                 isSelectedChara = true;
                 isStandbyCharaSelect = false;

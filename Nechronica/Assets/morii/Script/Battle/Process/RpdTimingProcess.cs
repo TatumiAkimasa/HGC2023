@@ -11,6 +11,8 @@ public class RpdTimingProcess : GetClickedGameObject
     private GameObject atkTargetEnemy;      // 攻撃する敵オブジェクトを格納場所
     private GameObject charaCommand;     // 選んだキャラのコマンド格納用
 
+
+
     Doll_blu_Nor selectedAllyChara;         // 選択した味方キャラ
     Doll_blu_Nor selectedTargetChara;       // 選択した敵キャラ
 
@@ -108,7 +110,6 @@ public class RpdTimingProcess : GetClickedGameObject
             //クリックしたゲームオブジェクトが味方キャラなら
             if (clickedObj.CompareTag("AllyChara"))
             {
-                clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
                 ZoomUpObj(clickedObj);
                 isSelectedChara = true;
                 childCommand = clickedObj.transform.GetChild(CANVAS).transform.GetChild(RAPID);
