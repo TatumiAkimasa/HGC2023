@@ -16,7 +16,7 @@ public static class NonResources
     /// </summary>
     public static T Load<T>(string path) where T : Object
     {
-        return AssetDatabase.LoadAssetAtPath<T>(path);
+        return Load<T>(path);
     }
 
     /// <summary>
