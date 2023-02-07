@@ -1113,10 +1113,7 @@ public class DmgTimingProcess : GetClickedGameObject
             }
             else if (!chara.GetComponent<ObjEnemy>().DOOLmode && chara.GetComponent<ObjEnemy>().armynum >= 1)
             {
-                if (SiteRemainingParts(HEAD, chara))
-                {
-                    Destroy(chara);
-                }
+                chara.GetComponent<ObjEnemy>().Deletme();
             }
         }
         else if(chara.CompareTag("AllyChara"))
