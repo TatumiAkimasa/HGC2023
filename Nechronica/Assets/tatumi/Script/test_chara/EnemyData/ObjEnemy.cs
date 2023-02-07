@@ -404,9 +404,7 @@ public class ObjEnemy : ClassData_
                     {
                         //使用武具更新
                         UseManever = UseManuber_Change((int)EnemyPartsType.EJudge, ActManeuvers, UseManever);
-
                     }
-
                 }
             }
            

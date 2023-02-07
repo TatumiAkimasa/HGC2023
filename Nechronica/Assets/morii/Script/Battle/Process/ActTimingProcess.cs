@@ -291,8 +291,9 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.ActMneuver = maneuver;
         ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
-        ProcessAccessor.Instance.rpdTiming.SetRapidButton(true);
-        if(rpdCommand!=null)
+        ProcessAccessor.Instance.rpdTiming.SetRapidButton(true); 
+        ProcessAccessor.Instance.rpdTiming.SetTimingText("ƒ‰ƒsƒbƒh");
+        if (rpdCommand!=null)
         {
             rpdCommand.GetCommands().SetActive(true);
         }

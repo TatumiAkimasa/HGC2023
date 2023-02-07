@@ -222,6 +222,7 @@ public class BattleSystem : MonoBehaviour
             if (countMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
                 ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
+                ProcessAccessor.Instance.actTiming.SetTimingText("ƒAƒNƒVƒ‡ƒ“");
                 break;
             }
             else if (countMoveChara[i].gameObject.CompareTag("EnemyChara"))

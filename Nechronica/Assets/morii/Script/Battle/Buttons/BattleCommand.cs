@@ -184,6 +184,7 @@ public class BattleCommand : MonoBehaviour
             {
                 clone.SetRange(maneuvers[i].MinRange.ToString());
             }
+            clone.ColorChange(maneuvers[i]);
             // e‚ğİ’è
             clone.transform.SetParent(parentObj[countParent].transform, false);
             AddFuncToButton(ref clone, maneuvers[i]);
@@ -236,6 +237,7 @@ public class BattleCommand : MonoBehaviour
             {
                 clone.SetRange(maneuvers[i].MinRange.ToString());
             }
+            clone.ColorChange(maneuvers[i]);
             // e‚ğİ’è
             clone.transform.SetParent(parentObj[countParent].transform, false);
             ManeuverAndParts buff;

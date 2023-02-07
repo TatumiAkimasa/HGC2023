@@ -696,8 +696,10 @@ public class DmgTimingProcess : GetClickedGameObject
     /// </summary>
     void JudgeAddEffect()
     {
+
+        isAddEffectStep = false;
         // í«â¡å¯â ë≈è¡ÇµÇ™î≠ìÆÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
-        if(deleteAddEff)
+        if (deleteAddEff)
         {
             SortDamageParts(rollResult);
         }
@@ -730,8 +732,6 @@ public class DmgTimingProcess : GetClickedGameObject
                 SortDamageParts(rollResult);
             }
         }
-
-        isAddEffectStep = false;
     }
 
 
