@@ -50,6 +50,7 @@ public class ButtonTexts : MonoBehaviour
     {
         Color col;
         col.a = 1.0f;
+        myManeuver = maneuver;
         if (maneuver.EffectNum.ContainsKey(EffNum.Damage))
         {
             col.r = 1.0f;
