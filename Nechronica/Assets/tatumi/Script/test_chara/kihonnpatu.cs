@@ -40,7 +40,7 @@ public class kihonnpatu : CharaBase
         Base_Leg_parts[0].Name = "ほね";
         Base_Leg_parts[1].Name = "ほね";
         Base_Leg_parts[2].Name = "あし";
-        Treasure_parts.Name = "";
+        Treasure_parts.Name = "おたから";
 
         //ダメージ値----------------------
         Base_Head_parts[0].EffectNum.Add("肉弾攻撃1",1);
