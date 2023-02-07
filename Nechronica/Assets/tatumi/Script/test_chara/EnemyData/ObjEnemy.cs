@@ -82,6 +82,7 @@ public class ObjEnemy : ClassData_
         }
        
         TableParts_EffctUp(Enemy);
+        Debug.Log(Maneuvers[(int)EnemyPartsType.EAction].Count);
 
         //データから解析し、マニューバーを追加する
         //追加武装追記
@@ -143,7 +144,7 @@ public class ObjEnemy : ClassData_
                     ;//登録の必要ないタイミング
             }
         }
-
+        Debug.Log(Maneuvers[(int)EnemyPartsType.EAction].Count);
     }
 
     public void EnemyAI_Action()
@@ -161,20 +162,27 @@ public class ObjEnemy : ClassData_
                 PlayerDolls.Add(ManagerAccessor.Instance.battleSystem.GetCharaObj()[i]);
             }
         }
-        
+
+        Debug.Log("はいってるよね？");
 
         // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
         // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
         // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
 
+        Debug.Log(Maneuvers[(int)EnemyPartsType.EAction].Count);
+
         //使用武具for文
-        for(int ActManeuvers=0;ActManeuvers!=Maneuvers[(int)EnemyPartsType.EAction].Count;ActManeuvers++)
-        { 
+        for (int ActManeuvers=0;ActManeuvers!=Maneuvers[(int)EnemyPartsType.EAction].Count;ActManeuvers++)
+        {
+            Debug.Log(Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers].Name);
             for (int i = 0; i != PlayerDolls.Count; i++)
             {
+                Debug.Log(i);
                 //破損判定
                 if (!Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers].isDmage)
                 {
+                   
+
                     //敵の位置検索 & 射程比較
                     if (Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers].MinRange != 10 &&                                  
                     (Mathf.Abs(PlayerDolls[i].area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EAction][ActManeuvers].MaxRange + me.area) &&
@@ -183,7 +191,7 @@ public class ObjEnemy : ClassData_
                         //使用武具更新
                         UseManever = UseManuber_Change((int)EnemyPartsType.EAction, ActManeuvers, UseManever);
                         target = PlayerDolls[i];
-
+                        Debug.Log("AIはうごいえる？");
                     }
                 }
             }
@@ -193,6 +201,7 @@ public class ObjEnemy : ClassData_
         if (UseManever != null)
             ProcessAccessor.Instance.actTiming.ExeAtkManeuver(target, UseManever, me);
 
+        Debug.Log("AIはうごいえる？");
         return;
     }
     //移動逃げ
