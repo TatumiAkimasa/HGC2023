@@ -34,7 +34,19 @@ public class Doll_blu_Nor : PartsList
         }
         else if(this.CompareTag("EnemyChara"))
         {
-            Name = "•ï‚Ü‚ê‚µŽÒ";
+            if(this.GetComponent<ObjEnemy>().DOOLmode)
+            {
+                Name = "ŽwŠöŠ¯";
+            }
+            else if(!this.GetComponent<ObjEnemy>().DOOLmode && this.GetComponent<ObjEnemy>().armynum==0)
+            {
+                Name = "•ºŽm";
+            }
+            else
+            {
+
+            }
+            //Name = "•ï‚Ü‚ê‚µŽÒ";
         }
         InitParts();
 
@@ -51,7 +63,6 @@ public class Doll_blu_Nor : PartsList
         ArmParts.Add(ude_A);
         ArmParts.Add(kata_A);
         ArmParts.Add(kobusi_A);
-        ArmParts.Add(wirelille_A);
 
         //“·----------------------
         BodyParts.Add(harawata2_B);

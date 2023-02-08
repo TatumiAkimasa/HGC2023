@@ -120,11 +120,15 @@ public class BattleSystem : MonoBehaviour
 
         // キャラをスポーン
         charaObjects =battleSpone.CharaSpone(charaObjects);
+    }
 
+    private void Start()
+    {
         GameObject instance = null;
-        for(int i=0;i<allyCharaObjs.Count;i++)
+        for (int i = 0; i < allyCharaObjs.Count; i++)
         {
             instance = Instantiate(charaStatus);
+            Debug.Log(allyCharaObjs[i].Name + "だよ");
             instance.GetComponent<CharaStatusLabels>().SetNameText(allyCharaObjs[i].Name);
             instance.GetComponent<CharaStatusLabels>().SetPartsText(CharaResidueParts(allyCharaObjs[i]));
             instance.GetComponent<CharaStatusLabels>().SetCountText(allyCharaObjs[i].NowCount);
@@ -133,11 +137,6 @@ public class BattleSystem : MonoBehaviour
 
             charaStatusList.Add(instance);
         }
-        
-    }
-
-    private void Start()
-    {
         TurnStart();
     }
 

@@ -74,6 +74,7 @@ public class PartsList : CharaBase
         kobusi_A.MinRange = 0;
         kobusi_A.MaxRange = 0;
         kobusi_A.Weight = 1;
+
         kobusi_A.EnemyAI.Add(2);
         kobusi_A.EnemyAI.Add(2);
         kobusi_A.EnemyAI.Add(2);
@@ -128,7 +129,7 @@ public class PartsList : CharaBase
         harawata2_B.MaxRange = 10;
         harawata2_B.Weight = 1;
 
-        harawata3_B.Name = "‚Í‚ç‚í‚½";
+        harawata3_B.Name = "‚¹‚Ú‚Ë";
         harawata3_B.AnimName = AnimationName.Null;
         harawata3_B.EffectNum.Add(EffNum.Extra, 0);
         harawata3_B.Cost = 0;

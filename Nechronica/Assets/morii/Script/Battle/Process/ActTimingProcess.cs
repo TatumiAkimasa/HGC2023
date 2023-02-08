@@ -17,6 +17,8 @@ public class ActTimingProcess : GetClickedGameObject
     private RpdCommand rpdCommand;
     private bool isAllyOrEnemy;                       // 選んだキャラが敵か味方かの判断
 
+    [SerializeField] GameObject buttons;
+
     private GameObject atkTargetEnemy;                // 攻撃する敵オブジェクトを格納場所
     public GameObject AtkTargetEnemy
     {
@@ -178,7 +180,7 @@ public class ActTimingProcess : GetClickedGameObject
     {
         // カメラを元の位置に戻し、UIを消す
         ZoomOutObj();
-        this.transform.GetChild(CANVAS).transform.GetChild(0).gameObject.SetActive(false);
+        buttons.SetActive(false);
         // childCommandの中身をなくす
         if (childCommand != null)
         {

@@ -18,8 +18,12 @@ public class ButtonTexts : MonoBehaviour
     private Toggle dmgCheckBox;
     [SerializeField]
     private Toggle useCheckBox;
-
+    [SerializeField]
     private CharaManeuver myManeuver;
+
+    [SerializeField]
+    private Button myButton;
+
 
     public void SetName(string text) { name.text = text; }
     public void SetCost(string text) { cost.text = text; }
@@ -35,15 +39,16 @@ public class ButtonTexts : MonoBehaviour
         {
             useCheckBox.isOn = false;
         }
+    }
 
-        if (myManeuver.isDmage)
+    public void OnClickDamage()
+    {
+        if (!myManeuver.isDmage)
         {
-            dmgCheckBox.isOn = true;
+            ProcessAccessor.Instance.dmgTiming.DamageSelectCnt++;
         }
-        else
-        {
-            dmgCheckBox.isOn = false;
-        }
+        myManeuver.isDmage = true;
+        dmgCheckBox.isOn = true;
     }
 
     public void ColorChange(CharaManeuver maneuver)

@@ -86,7 +86,7 @@ public class ObjEnemy : ClassData_
 
         //データから解析し、マニューバーを追加する
         //追加武装追記
-        for (int SITE = 0; SITE != 4; SITE++)
+        for (int SITE = 0; SITE != Enemy.Wepons.Count; SITE++)
         {
             for (int i = 0; i != Enemy.Wepons[SITE].Parts.Count; i++)
             {
@@ -408,10 +408,10 @@ public class ObjEnemy : ClassData_
         for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.EJudge].Count; ActManeuvers++)
         {
             //支援タイプ
-            if (UseManever.EffectNum[EffNum.Judge] < 0)
+            if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum[EffNum.Judge] < 0)
             {
                 //破損判定&使用判定
-                if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
+                if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isUse)
                 {
                     if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange != 10 &&
                 (Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
@@ -428,13 +428,13 @@ public class ObjEnemy : ClassData_
         if (UseManever != null)
         {
             //マニューバー適応結果がまだ命中圏内の場合
-            if (5 < DiceRoll - UseManever.EffectNum["Judge"] - Power)
+            if (5 < DiceRoll - UseManever.EffectNum[EffNum.Judge] - Power)
             {
                 Debug.Log("もう一度妨害できるかチャレンジ！");
-                //もう一度処理を繰り返す
-                EnemyAI_Judge(OpponentManeuver, Opponent, DiceRoll, TargetParts, UseManever.EffectNum["Judge"]);
                 //要求（行動
                 ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(UseManever, me);
+                //もう一度処理を繰り返す
+                EnemyAI_Judge(OpponentManeuver, Opponent, DiceRoll, TargetParts, UseManever.EffectNum["Judge"]);
                 return;
             }
             else
@@ -452,8 +452,9 @@ public class ObjEnemy : ClassData_
         //全味方に
         for (int i = 0; i != PlayerDolls.Count; i++)
         {
-            //他の味方に救援を送る
-            Power += PlayerDolls[i].GetComponent<ObjEnemy>().HelpJudge_OP(Opponent,OpponentManeuver.EffectNum[EffNum.Damage] - Power);
+            if (PlayerDolls[i].CompareTag("EnemyChara"))
+                //他の味方に救援を送る
+                Power += PlayerDolls[i].GetComponent<ObjEnemy>().HelpJudge_OP(Opponent, DiceRoll - Power);
 
             //許容値なら
             if (6 > DiceRoll - Power)
@@ -479,10 +480,10 @@ public class ObjEnemy : ClassData_
         for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.EJudge].Count; ActManeuvers++)
         {
             //破損判定&使用判定
-            if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
+            if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isUse)
             {
                 //支援タイプ
-                if (UseManever.EffectNum[EffNum.Judge] > 0)
+                if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum[EffNum.Judge] > 0)
                 {
                     //自身の位置と射程比較
                     if ((Mathf.Abs(Opponent.area) <= Mathf.Abs(Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MaxRange + me.area) &&
@@ -509,10 +510,10 @@ public class ObjEnemy : ClassData_
             //圏外
             else
             {
-                //もう一度処理を繰り返す
-                EnemyAI_Judge(OpponentManeuver, Opponent, DiceRoll, UseManever.EffectNum["Judge"]);
                 //要求（行動
                 ProcessAccessor.Instance.jdgTiming.ExeJudgManeuver(UseManever, Opponent);
+                //もう一度処理を繰り返す
+                EnemyAI_Judge(OpponentManeuver, Opponent, DiceRoll, UseManever.EffectNum[EffNum.Judge]);
                 return;
             }
         }
@@ -524,7 +525,8 @@ public class ObjEnemy : ClassData_
         for (int i = 0; i != PlayerDolls.Count; i++)
         {
             //他の味方に救援を送る
-            Power += PlayerDolls[i].GetComponent<ObjEnemy>().HelpJudge_ME(me, OpponentManeuver.EffectNum["Action"] - Power);
+            if(PlayerDolls[i].CompareTag("EnemyChara"))
+            Power += PlayerDolls[i].GetComponent<ObjEnemy>().HelpJudge_ME(me, DiceRoll - Power);
 
             //許容値なら
             if (6 > DiceRoll - Power)

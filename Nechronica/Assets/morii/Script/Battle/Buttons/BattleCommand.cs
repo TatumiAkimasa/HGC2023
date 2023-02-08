@@ -235,7 +235,7 @@ public class BattleCommand : MonoBehaviour
             ManeuverAndParts buff;
             buff.maneuver = maneuvers[i];
             buff.parts = parts;
-            clone.GetComponent<Button>().onClick.AddListener(() => OnClickReflectDamage(buff));
+            clone.GetComponent<Button>().onClick.AddListener(() => clone.OnClickDamage());
 
             // コマンド5個区切りでコマンドの親オブジェクトを複製する。
             if ((i + 1) % 5 == 0)
