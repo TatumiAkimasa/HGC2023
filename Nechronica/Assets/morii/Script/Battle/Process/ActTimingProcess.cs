@@ -113,13 +113,6 @@ public class ActTimingProcess : GetClickedGameObject
                 StartCoroutine(MoveStandby(clickedObj));
             }
         }
-        else if(Input.GetMouseButtonDown(1))
-        {
-            if (saveCharaCamera != null)
-            {
-                OnClickBack();
-            }
-        }
     }
 
     /// <summary>
@@ -160,7 +153,7 @@ public class ActTimingProcess : GetClickedGameObject
             }
             else
             {
-                ZoomOutObj();
+                OnClickBack();
             }
         }
     }
