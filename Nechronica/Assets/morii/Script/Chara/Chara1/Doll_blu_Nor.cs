@@ -32,22 +32,6 @@ public class Doll_blu_Nor : PartsList
                 Name = "ネアン";
             }
         }
-        else if(this.CompareTag("EnemyChara"))
-        {
-            if(this.GetComponent<ObjEnemy>().DOOLmode)
-            {
-                Name = "指揮官";
-            }
-            else if(!this.GetComponent<ObjEnemy>().DOOLmode && this.GetComponent<ObjEnemy>().armynum==0)
-            {
-                Name = "兵士";
-            }
-            else
-            {
-
-            }
-            //Name = "包まれし者";
-        }
         InitParts();
 
         //初期位置を現在位置に代入

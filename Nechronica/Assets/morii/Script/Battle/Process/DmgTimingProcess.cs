@@ -454,7 +454,7 @@ public class DmgTimingProcess : GetClickedGameObject
         {
             List<CharaManeuver> dmgParts;
             // ホラー、レギオン、サヴァントの判断
-            if (isLegion || isHorror)
+            if (isHorror)
             {
                 int dmg = giveDamage;
 
@@ -469,6 +469,25 @@ public class DmgTimingProcess : GetClickedGameObject
 
                 dmgParts = damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, giveDamage);
                 damageChara.HeadParts = GiveDamageParts(dmgParts);
+            }
+            else if (isLegion)
+            {
+                int dmg = giveDamage;
+
+                if (actManeuver.Atk.isCutting && !deleteAddEff)
+                {
+                    dmg = dmg * 2;
+                }
+                else if (actManeuver.Atk.isExplosion && !deleteAddEff)
+                {
+                    dmg = dmg * 2;
+                }
+                else if (actManeuver.Atk.isAllAttack && !deleteAddEff)
+                {
+                    dmg = dmg * 2;
+                }
+
+                dmgParts = damageChara.GetComponent<ObjEnemy>().GetDamageUPList(0, giveDamage);
             }
             else
             {
@@ -1131,6 +1150,10 @@ public class DmgTimingProcess : GetClickedGameObject
             }
             ManagerAccessor.Instance.battleSystem.DeleteMoveChara(actingChara.Name);
             ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            if(actingChara.CompareTag("AllyChara"))
+            {
+                ManagerAccessor.Instance.battleSystem.StatusLabelUpdate(actingChara);
+            }
         }
         
     }

@@ -113,6 +113,13 @@ public class ActTimingProcess : GetClickedGameObject
                 StartCoroutine(MoveStandby(clickedObj));
             }
         }
+        else if(Input.GetMouseButtonDown(1))
+        {
+            if (saveCharaCamera != null)
+            {
+                OnClickBack();
+            }
+        }
     }
 
     /// <summary>
@@ -229,7 +236,7 @@ public class ActTimingProcess : GetClickedGameObject
                 else if (move.CompareTag("EnemyChara"))
                 {
                     // ステータスを取得し、表示。後にOnClickAtkで使うのでメンバ変数に格納
-                    childCommand = move.transform.GetChild(CANVAS);
+                    childCommand = move.transform.GetChild(CANVAS).GetChild(0);
                     childCommand.gameObject.SetActive(true);
                     isAllyOrEnemy = ENEMY;
 
