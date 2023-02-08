@@ -25,11 +25,11 @@ public class Doll_blu_Nor : PartsList
         {
             if(this.name=="PLChara")
             {
-                Name = "ミリカ";
+                Name = "アン";
             }
             else if (this.name == "PLChara2")
             {
-                Name = "ネアン";
+                Name = "ミリカ";
             }
         }
         InitParts();
@@ -58,7 +58,7 @@ public class Doll_blu_Nor : PartsList
         LegParts.Add(hone_L);
         LegParts.Add(asi_L);
 
-        if(Name=="ミリカ")
+        if(Name=="アン")
         {
             ArmParts.Add(bearGun_U);
             ArmParts.Add(shotGun_U); 
@@ -66,7 +66,7 @@ public class Doll_blu_Nor : PartsList
             HeadParts.Add(scope_H);
             HeadParts.Add(kanhu_H);
         }
-        else if(Name=="ネアン")
+        else if(Name=="ミリカ")
         {
             ArmParts.Add(meitou_U);
             ArmParts.Add(wirelille_A);

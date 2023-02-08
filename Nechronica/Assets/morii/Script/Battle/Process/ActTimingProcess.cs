@@ -147,6 +147,7 @@ public class ActTimingProcess : GetClickedGameObject
                     isSelectedChara = false;
                     if(skillSelected)
                     {
+
                         skillSelected = false;
                     }
                 }

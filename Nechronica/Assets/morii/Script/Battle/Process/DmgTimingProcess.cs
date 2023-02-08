@@ -1107,6 +1107,9 @@ public class DmgTimingProcess : GetClickedGameObject
         rollResultText.text = "ダイスロール";
         diceRollAnim.gameObject.SetActive(false);
         isStandbyCutRoll = false;
+        isLegion = false;
+        isSavant = false;
+        isHorror = false;
         
 
         if (continuousAtk < actManeuver.Atk.Num_per_Action)
@@ -1226,11 +1229,30 @@ public class DmgTimingProcess : GetClickedGameObject
             }
         }
 
-        for(int i=0;i<ManagerAccessor.Instance.battleSystem.GetCharaObj().Count;i++)
+        ListRemove(ManagerAccessor.Instance.battleSystem.GetCharaObj(), Name);
+        ListRemove(ManagerAccessor.Instance.battleSystem.GetAllyCharaObj(), Name);
+        ListRemove(ManagerAccessor.Instance.battleSystem.GetEnemyCharaObj(), Name);
+        ListRemove(ManagerAccessor.Instance.battleSystem.GetStatusList(), Name);
+    }
+
+    void ListRemove(List<Doll_blu_Nor> chara, string name)
+    {
+        for (int i = 0; i < chara.Count; i++)
         {
-            if(Name== ManagerAccessor.Instance.battleSystem.GetCharaObj()[i].Name)
+            if (name == chara[i].Name)
             {
-                ManagerAccessor.Instance.battleSystem.GetCharaObj().RemoveAt(i);
+                chara.RemoveAt(i);
+            }
+        }
+    }
+
+    void ListRemove(List<CharaStatusLabels> chara, string name)
+    {
+        for (int i = 0; i < chara.Count; i++)
+        {
+            if (name == chara[i].GetNameText())
+            {
+                chara.RemoveAt(i);
             }
         }
     }
