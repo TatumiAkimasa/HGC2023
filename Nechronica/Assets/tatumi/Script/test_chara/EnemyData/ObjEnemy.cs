@@ -687,7 +687,7 @@ public class ObjEnemy : ClassData_
             if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)
             {
                 //Žx‰‡ƒ^ƒCƒv
-                if (UseManever.EffectNum[EffNum.Judge] < 0)
+                if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum[EffNum.Judge] < 0)
                 {
                     //“G‚ÌˆÊ’uŒŸõ & ŽË’ö”äŠr(“G‚ð“®‚©‚·)
                     if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].MinRange != 10 &&
@@ -714,7 +714,7 @@ public class ObjEnemy : ClassData_
         for (int ActManeuvers = 0; ActManeuvers != Maneuvers[(int)EnemyPartsType.EJudge].Count; ActManeuvers++)
         {
             //Žx‰‡ƒ^ƒCƒv
-            if (UseManever.EffectNum[EffNum.Judge] > 0)
+            if (Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].EffectNum[EffNum.Judge] > 0)
             {
                 //”j‘¹”»’è&Žg—p”»’è
                 if (!Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage && !Maneuvers[(int)EnemyPartsType.EJudge][ActManeuvers].isDmage)

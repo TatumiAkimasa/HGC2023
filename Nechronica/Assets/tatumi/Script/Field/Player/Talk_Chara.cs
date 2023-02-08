@@ -15,20 +15,23 @@ public class Players_Item
 
 public class Talk_Chara : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject Parent3DObj,Parent2DObj, EndProText;
-
-    [SerializeField]
+    [SerializeField, Header("3D会話文")]
     private string[] Talk;
 
-    [SerializeField, Header("3D上での表示")]
+    [SerializeField, Header("3D上での表示-----------------")]
     private TextMeshPro ProText;
 
-    [SerializeField, Header("UI上での表示")]
+    [SerializeField]
+    private GameObject Parent3DObj;
+
+    [SerializeField, Header("UI上での表示---------------")]
     private string UI_str;
 
     [SerializeField]
     private TextMeshProUGUI ItemGetText,GetText;
+
+    [SerializeField]
+    private GameObject Parent2DObj, EndProText;
 
     [SerializeField, Header("会話によるアイテム入手（必須ではない")]
     private Players_Item[] Item;
@@ -64,6 +67,9 @@ public class Talk_Chara : MonoBehaviour
 
     public IEnumerator Talk_Set(System.Action<Item[]> End)
     {
+        if (GetText != null)
+            GetText.gameObject.SetActive(true);
+
         if (Parent2DObj == null)
             Parent3DObj.SetActive(true);
         if (Parent3DObj == null)
@@ -71,10 +77,13 @@ public class Talk_Chara : MonoBehaviour
         else
             Parent3DObj.SetActive(true);
 
+        EndProText.SetActive(true);
+
         StartCoroutine(Talk_Active((action=>
         {
             if (GetText != null)
                 GetText.gameObject.SetActive(false);
+           
             EndProText.SetActive(false);
           
             if (Parent2DObj == null)
