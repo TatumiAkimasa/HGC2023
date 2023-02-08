@@ -3,7 +3,14 @@ guid: 0099d4d2b450d6a4486647e8c9c73cc8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - thisChara: {instanceID: 0}
+  - commands: {instanceID: 0}
+  - originalParentObj: {fileID: 1714571061986301308, guid: a9a88a7c487c801428fea80c2b939a87, type: 3}
+  - backImg: {instanceID: 0}
+  - prefabButton: {fileID: 1179347317746501306, guid: fa0564d04a886a34f97bdca18148ebe4, type: 3}
+  - nowPageTxt: {instanceID: 0}
+  - maxPageTxt: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -7,12 +7,16 @@ public class PartsList : CharaBase
 {
     [SerializeField]
     //基礎パーツ
-    protected CharaManeuver noumiso_H, medama_H, ago_H,hunnu_H,
-                            kobusi_A, ude_A, kata_A,wirelille_A,
-                            sebone_B, harawata_B, harawata2_B,
-                            hone_L, hone1_L, hone2_L, hone3_L, hone4_L, asi_L;
+    protected CharaManeuver noumiso_H, medama_H, ago_H, hunnu_H,
+                            kobusi_A, ude_A, kata_A,
+                            harawata_B, harawata2_B, harawata3_B,
+                            hone_L, hone1_L, hone2_L, asi_L,
+
+                            
+                            shotGun_U, doubleGun_U, bearGun_U, scope_H, kanhu_H,
+                            meitou_U, kanhu2_H, tale_B, uroko_B, wirelille_A;
     //TIMING------------------^p^
-   
+
     //0=オート,1=アクション,2=ラピッド,3=ジャッジ,4=ダメージ(処理順でわける)
     //攻撃範囲-------------------------------
     //最小(10=自身)
@@ -58,29 +62,19 @@ public class PartsList : CharaBase
         medama_H.MaxRange = 10;
         medama_H.Weight = 1;
 
-        hunnu_H.Name = "憤怒";
-        hunnu_H.AnimName = AnimationName.Null;
-        hunnu_H.EffectNum.Add(EffNum.Damage, 5);
-        hunnu_H.Cost = 0;
-        hunnu_H.Timing = DAMAGE;
-        hunnu_H.MinRange = 10;
-        hunnu_H.MaxRange = 10;
-        hunnu_H.Weight = 0;
-
 
 
         //腕---------------------------------
         kobusi_A.Name = "こぶし";
         kobusi_A.AnimName = AnimationName.Kobushi;
         kobusi_A.AnimEffect = NonResources.Load<GameObject>("Assets/morii/Prefab/Anim/" + kobusi_A.AnimName + ".prefab");
-        kobusi_A.EffectNum.Add(EffNum.Damage, 10);
+        kobusi_A.EffectNum.Add(EffNum.Damage, 1);
         kobusi_A.Cost = 2;
         kobusi_A.Timing = ACTION;
         kobusi_A.MinRange = 0;
         kobusi_A.MaxRange = 0;
         kobusi_A.Weight = 1;
-        kobusi_A.Atk.Num_per_Action = 2;
-        kobusi_A.Atk.isFallDown = true;
+
         kobusi_A.EnemyAI.Add(2);
         kobusi_A.EnemyAI.Add(2);
         kobusi_A.EnemyAI.Add(2);
@@ -115,30 +109,7 @@ public class PartsList : CharaBase
         ude_A.EnemyAI.Add(2);
         ude_A.EnemyAI.Add(2);
         ude_A.EnemyAI.Add(10);
-
-        wirelille_A.Name = "ワイヤーリール";
-        wirelille_A.AnimName = AnimationName.Null;
-        wirelille_A.EffectNum.Add(EffNum.Move, 1);
-        wirelille_A.Cost = 3;
-        wirelille_A.Timing = RAPID;
-        wirelille_A.MinRange = 0;
-        wirelille_A.MaxRange = 2;
-        wirelille_A.Weight = 1;
         //胴----------------------------
-
-        sebone_B.Name = "せぼね";
-        sebone_B.AnimName = AnimationName.Null;
-        sebone_B.EffectNum.Add(EffNum.Extra, -1);
-        sebone_B.Cost = 1;
-        sebone_B.Timing = ACTION;
-        sebone_B.MinRange = 0;
-        sebone_B.MaxRange = 0;
-        sebone_B.Weight = 1;
-        sebone_B.EnemyAI.Add(2);
-        sebone_B.EnemyAI.Add(2);
-        sebone_B.EnemyAI.Add(2);
-        sebone_B.EnemyAI.Add(2);
-        sebone_B.EnemyAI.Add(10);
 
         harawata_B.Name = "はらわた";
         harawata_B.AnimName = AnimationName.Null;
@@ -157,6 +128,15 @@ public class PartsList : CharaBase
         harawata2_B.MinRange = 10;
         harawata2_B.MaxRange = 10;
         harawata2_B.Weight = 1;
+
+        harawata3_B.Name = "せぼね";
+        harawata3_B.AnimName = AnimationName.Null;
+        harawata3_B.EffectNum.Add(EffNum.Extra, 0);
+        harawata3_B.Cost = 0;
+        harawata3_B.Timing = AUTO;
+        harawata3_B.MinRange = 10;
+        harawata3_B.MaxRange = 10;
+        harawata3_B.Weight = 1;
 
         //脚------------------------------
 
@@ -216,33 +196,100 @@ public class PartsList : CharaBase
         hone1_L.EnemyAI.Add(2);
         hone1_L.EnemyAI.Add(10);
 
-        hone3_L.Name = "ほね";
-        hone3_L.AnimName = AnimationName.Null;
-        hone3_L.EffectNum.Add(EffNum.Move, 1);
-        hone3_L.Cost = 3;
-        hone3_L.Timing = MOVE;
-        hone3_L.MinRange = 10;
-        hone3_L.MaxRange = 10;
-        hone3_L.Weight = 1;
-        hone3_L.EnemyAI.Add(2);
-        hone3_L.EnemyAI.Add(2);
-        hone3_L.EnemyAI.Add(2);
-        hone3_L.EnemyAI.Add(2);
-        hone3_L.EnemyAI.Add(10);
+        //追加
+        shotGun_U.Name = "ショットガン";
+        shotGun_U.AnimName = AnimationName.Null;
+        shotGun_U.EffectNum.Add(EffNum.Damage, 2);
+        shotGun_U.Cost = 2;
+        shotGun_U.Timing = ACTION;
+        shotGun_U.MinRange = 0;
+        shotGun_U.MaxRange = 1;
+        shotGun_U.Weight = 1;
+        shotGun_U.Atk.isExplosion = true;
 
-        hone4_L.Name = "ほね";
-        hone4_L.AnimName = AnimationName.Null;
-        hone4_L.EffectNum.Add(EffNum.Move, 1);
-        hone4_L.Cost = 3;
-        hone4_L.Timing = MOVE;
-        hone4_L.MinRange = 10;
-        hone4_L.MaxRange = 10;
-        hone4_L.Weight = 1;
-        hone4_L.EnemyAI.Add(2);
-        hone4_L.EnemyAI.Add(2);
-        hone4_L.EnemyAI.Add(2);
-        hone4_L.EnemyAI.Add(2);
-        hone4_L.EnemyAI.Add(10);
+        doubleGun_U.Name = "二丁拳銃";
+        doubleGun_U.AnimName = AnimationName.Null;
+        doubleGun_U.EffectNum.Add(EffNum.Damage, 2);
+        doubleGun_U.Cost = 3;
+        doubleGun_U.Timing = ACTION;
+        doubleGun_U.MinRange = 1;
+        doubleGun_U.MaxRange = 1;
+        doubleGun_U.Weight = 1;
+        doubleGun_U.Atk.Num_per_Action = 1;
+
+        bearGun_U.Name = "熊撃ち銃";
+        bearGun_U.AnimName = AnimationName.Null;
+        bearGun_U.EffectNum.Add(EffNum.Damage, 3);
+        bearGun_U.Cost = 3;
+        bearGun_U.Timing = ACTION;
+        bearGun_U.MinRange = 0;
+        bearGun_U.MaxRange = 2;
+        bearGun_U.Weight = 1;
+
+        scope_H.Name = "スコープ";
+        scope_H.AnimName = AnimationName.Null;
+        scope_H.EffectNum.Add(EffNum.Judge, 2);
+        scope_H.Cost = 0;
+        scope_H.Timing = JUDGE;
+        scope_H.MinRange = 10;
+        scope_H.MaxRange = 10;
+        scope_H.Weight = 1;
+        
+        kanhu_H.Name = "カンフー";
+        kanhu_H.AnimName = AnimationName.Null;
+        kanhu_H.EffectNum.Add(EffNum.Count, 1);
+        kanhu_H.Cost = 0;
+        kanhu_H.Timing = COUNT;
+        kanhu_H.MinRange = 10;
+        kanhu_H.MaxRange = 10;
+        kanhu_H.Weight = 1;
+
+        //追加
+        meitou_U.Name = "名刀";
+        meitou_U.AnimName = AnimationName.Null;
+        meitou_U.EffectNum.Add(EffNum.Damage, 3);
+        meitou_U.Cost = 2;
+        meitou_U.Timing = ACTION;
+        meitou_U.MinRange = 0;
+        meitou_U.MaxRange = 0;
+        meitou_U.Weight = 1;
+        meitou_U.Atk.isCutting = true;
+
+        kanhu2_H.Name = "カンフー";
+        kanhu2_H.AnimName = AnimationName.Null;
+        kanhu2_H.EffectNum.Add(EffNum.Count, 1);
+        kanhu2_H.Cost = 0;
+        kanhu2_H.Timing = COUNT;
+        kanhu2_H.MinRange = 10;
+        kanhu2_H.MaxRange = 10;
+        kanhu2_H.Weight = 1;
+
+        tale_B.Name = "しっぽ";
+        tale_B.AnimName = AnimationName.Null;
+        tale_B.EffectNum.Add(EffNum.Count, 1);
+        tale_B.Cost = 0;
+        tale_B.Timing = COUNT;
+        tale_B.MinRange = 10;
+        tale_B.MaxRange = 10;
+        tale_B.Weight = 1;
+
+        uroko_B.Name = "鋼鉄";
+        uroko_B.AnimName = AnimationName.Null;
+        uroko_B.EffectNum.Add(EffNum.Guard, 2);
+        uroko_B.Cost = 0;
+        uroko_B.Timing = DAMAGE;
+        uroko_B.MinRange = 10;
+        uroko_B.MaxRange = 10;
+        uroko_B.Weight = 1;
+
+        wirelille_A.Name = "ワイヤーリール";
+        wirelille_A.AnimName = AnimationName.Null;
+        wirelille_A.EffectNum.Add(EffNum.Move, 1);
+        wirelille_A.Cost = 3;
+        wirelille_A.Timing = RAPID;
+        wirelille_A.MinRange = 10;
+        wirelille_A.MaxRange = 10;
+        wirelille_A.Weight = 1;
     }
 
 

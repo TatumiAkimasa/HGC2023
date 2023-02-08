@@ -28,6 +28,9 @@ public class GetClickedGameObject : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera MainCamera;    // 全体を映すシネマカメラ
     [SerializeField] protected BattleSystem battleSystem;              // バトルシステムとの変数受け渡し用
     [SerializeField] protected Transform childCommand;                 // プレイアブルキャラのコマンドオブジェクト
+
+    [SerializeField] protected Text timingText;                 // プレイアブルキャラのコマンドオブジェクト
+    public void SetTimingText(string set) { timingText.text = set; }
     
     // ほかスクリプトからも値を変更する変数
     protected bool isStandbyCharaSelect = false;
@@ -161,7 +164,10 @@ public class GetClickedGameObject : MonoBehaviour
             }
             else
             {
-                Destroy(CharaCamera.gameObject);
+                if(CharaCamera!=null)
+                {
+                    Destroy(CharaCamera.gameObject);
+                }
                 //priorityを元の数値にする
                 cinemaCamera.Priority = 10;
                 isSelectedChara = false;

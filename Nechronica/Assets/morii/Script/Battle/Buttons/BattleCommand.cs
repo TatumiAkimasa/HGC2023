@@ -34,8 +34,8 @@ public class BattleCommand : MonoBehaviour
 
     public GameObject GetCommands() => commands;
 
-    private Button actionButton;                    // アクションのボタン
-    private Button standbyButton;                   // 待機のボタン
+    [SerializeField] private Button actionButton;                    // アクションのボタン
+    [SerializeField] private Button standbyButton;                   // 待機のボタン
 
     [SerializeField] Text nowPageTxt;
     [SerializeField] Text maxPageTxt;
@@ -48,10 +48,8 @@ public class BattleCommand : MonoBehaviour
         // ボタンを取得
         actionButton = this.transform.Find("Canvas/Act_select/Action").gameObject.GetComponent<Button>();
         standbyButton = this.transform.Find("Canvas/Act_select/Standby").gameObject.GetComponent<Button>();
-
-        // ボタンにメソッドを加える
-        actionButton.onClick.AddListener(OnClickAction);
-        standbyButton.onClick.AddListener(OnClickStandby);
+        
+        Debug.Log(thisChara.Name);
 
         // アクション、ラピッド、待機を選ぶgameObjectを取得
         actSelect = this.transform.Find("Canvas/Act_select").gameObject;
@@ -103,12 +101,6 @@ public class BattleCommand : MonoBehaviour
     {
         // カウントを1減らして待機
         ProcessAccessor.Instance.actTiming.ExeStandby(thisChara);
-    }
-
-    public void OnClickAction()
-    {
-        // アクションのコマンドを表示
-        CommandAccessor.Instance.actCommands.GetCommands().SetActive(true);
     }
 
     /// <summary>
@@ -184,6 +176,7 @@ public class BattleCommand : MonoBehaviour
             {
                 clone.SetRange(maneuvers[i].MinRange.ToString());
             }
+            clone.ColorChange(maneuvers[i]);
             // 親を設定
             clone.transform.SetParent(parentObj[countParent].transform, false);
             AddFuncToButton(ref clone, maneuvers[i]);
@@ -236,12 +229,13 @@ public class BattleCommand : MonoBehaviour
             {
                 clone.SetRange(maneuvers[i].MinRange.ToString());
             }
+            clone.ColorChange(maneuvers[i]);
             // 親を設定
             clone.transform.SetParent(parentObj[countParent].transform, false);
             ManeuverAndParts buff;
             buff.maneuver = maneuvers[i];
             buff.parts = parts;
-            clone.GetComponent<Button>().onClick.AddListener(() => OnClickReflectDamage(buff));
+            clone.GetComponent<Button>().onClick.AddListener(() => clone.OnClickDamage());
 
             // コマンド5個区切りでコマンドの親オブジェクトを複製する。
             if ((i + 1) % 5 == 0)

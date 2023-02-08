@@ -16,6 +16,11 @@ public class ActCommands : BattleCommand
         InitCommand(CharaBase.ACTION);
     }
 
+    public void OnClickAction()
+    {
+        commands.SetActive(true);
+    }
+
     protected override void InitCommand(int timing)
     {
 

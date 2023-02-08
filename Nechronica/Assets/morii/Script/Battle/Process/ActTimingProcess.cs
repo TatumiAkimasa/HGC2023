@@ -17,6 +17,8 @@ public class ActTimingProcess : GetClickedGameObject
     private RpdCommand rpdCommand;
     private bool isAllyOrEnemy;                       // 選んだキャラが敵か味方かの判断
 
+    [SerializeField] GameObject buttons;
+
     private GameObject atkTargetEnemy;                // 攻撃する敵オブジェクトを格納場所
     public GameObject AtkTargetEnemy
     {
@@ -111,6 +113,13 @@ public class ActTimingProcess : GetClickedGameObject
                 StartCoroutine(MoveStandby(clickedObj));
             }
         }
+        else if(Input.GetMouseButtonDown(1))
+        {
+            if (saveCharaCamera != null)
+            {
+                OnClickBack();
+            }
+        }
     }
 
     /// <summary>
@@ -178,7 +187,7 @@ public class ActTimingProcess : GetClickedGameObject
     {
         // カメラを元の位置に戻し、UIを消す
         ZoomOutObj();
-        this.transform.GetChild(CANVAS).transform.GetChild(0).gameObject.SetActive(false);
+        buttons.SetActive(false);
         // childCommandの中身をなくす
         if (childCommand != null)
         {
@@ -227,7 +236,7 @@ public class ActTimingProcess : GetClickedGameObject
                 else if (move.CompareTag("EnemyChara"))
                 {
                     // ステータスを取得し、表示。後にOnClickAtkで使うのでメンバ変数に格納
-                    childCommand = move.transform.GetChild(CANVAS);
+                    childCommand = move.transform.GetChild(CANVAS).GetChild(0);
                     childCommand.gameObject.SetActive(true);
                     isAllyOrEnemy = ENEMY;
 
@@ -239,7 +248,6 @@ public class ActTimingProcess : GetClickedGameObject
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
 
-                        exeButton.onClick.AddListener(() => OnClickAtkRequest());
 
                         this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(true);
                     }
@@ -252,7 +260,7 @@ public class ActTimingProcess : GetClickedGameObject
     /// <summary>
     /// 次のジャッジタイミングに移行をリクエストするボタン
     /// </summary>
-    private void OnClickAtkRequest()
+    public void OnClickAtkRequest()
     {
         ExeAtkManeuver(atkTargetEnemy.GetComponent<Doll_blu_Nor>(), dollManeuver, actingChara);
     }
@@ -291,8 +299,9 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.ActMneuver = maneuver;
         ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
-        ProcessAccessor.Instance.rpdTiming.SetRapidButton(true);
-        if(rpdCommand!=null)
+        ProcessAccessor.Instance.rpdTiming.SetRapidButton(true); 
+        ManagerAccessor.Instance.battleSystem.SetTimingText("ラピッド");
+        if (rpdCommand!=null)
         {
             rpdCommand.GetCommands().SetActive(true);
         }

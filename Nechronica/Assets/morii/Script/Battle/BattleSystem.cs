@@ -20,11 +20,15 @@ public class BattleSystem : MonoBehaviour
     private List<Doll_blu_Nor> enemyCharaObjs = new List<Doll_blu_Nor>();
     private List<Doll_blu_Nor> allyCharaObjs = new List<Doll_blu_Nor>();
 
-    private List<GameObject> charaStatusList = new List<GameObject>();
+    private List<CharaStatusLabels> charaStatusList = new List<CharaStatusLabels>();
+
+    [SerializeField] private Text timingText;                 // プレイアブルキャラのコマンドオブジェクト
+    public void SetTimingText(string set) { timingText.text = set; }
 
     public List<Doll_blu_Nor> GetCharaObj() { return charaObjects; }
     public List<Doll_blu_Nor> GetEnemyCharaObj() { return enemyCharaObjs; }
     public List<Doll_blu_Nor> GetAllyCharaObj() { return allyCharaObjs; }
+    public List<CharaStatusLabels> GetStatusList() { return charaStatusList; }
 
     
 
@@ -117,9 +121,13 @@ public class BattleSystem : MonoBehaviour
 
         // キャラをスポーン
         charaObjects =battleSpone.CharaSpone(charaObjects);
+    }
 
+    private void Start()
+    {
+        TurnStart();
         GameObject instance = null;
-        for(int i=0;i<allyCharaObjs.Count;i++)
+        for (int i = 0; i < allyCharaObjs.Count; i++)
         {
             instance = Instantiate(charaStatus);
             instance.GetComponent<CharaStatusLabels>().SetNameText(allyCharaObjs[i].Name);
@@ -128,14 +136,17 @@ public class BattleSystem : MonoBehaviour
 
             instance.transform.SetParent(statusParent.transform);
 
-            charaStatusList.Add(instance);
+            charaStatusList.Add(instance.GetComponent<CharaStatusLabels>());
         }
-        
-    }
+        for (int i = 0; i < enemyCharaObjs.Count; i++)
+        {
+            instance = enemyCharaObjs[i].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+            instance.GetComponent<CharaStatusLabels>().SetNameText(enemyCharaObjs[i].Name);
+            instance.GetComponent<CharaStatusLabels>().SetPartsText(CharaResidueParts(enemyCharaObjs[i]));
+            instance.GetComponent<CharaStatusLabels>().SetCountText(enemyCharaObjs[i].NowCount);
 
-    private void Start()
-    {
-        TurnStart();
+            charaStatusList.Add(instance.GetComponent<CharaStatusLabels>());
+        }
     }
 
     private void FixedUpdate()
@@ -222,6 +233,7 @@ public class BattleSystem : MonoBehaviour
             if (countMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
                 ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
+                timingText.text = "アクション";
                 break;
             }
             else if (countMoveChara[i].gameObject.CompareTag("EnemyChara"))
@@ -318,10 +330,10 @@ public class BattleSystem : MonoBehaviour
     {
         for(int i=0;i<charaStatusList.Count;i++)
         {
-            if(charaStatusList[i].GetComponent<CharaStatusLabels>().GetNameText() ==chara.Name)
+            if(charaStatusList[i].GetNameText() ==chara.Name)
             {
-                charaStatusList[i].GetComponent<CharaStatusLabels>().SetPartsText(CharaResidueParts(chara));
-                charaStatusList[i].GetComponent<CharaStatusLabels>().SetCountText(chara.NowCount);
+                charaStatusList[i].SetPartsText(CharaResidueParts(chara));
+                charaStatusList[i].SetCountText(chara.NowCount);
             }
         }
     }
@@ -338,15 +350,15 @@ public class BattleSystem : MonoBehaviour
             {
                 charaObjects[i].HeadParts[j].isUse = false;
             }
-            for (int j = 0; j < charaObjects[i].HeadParts.Count; j++)
+            for (int j = 0; j < charaObjects[i].ArmParts.Count; j++)
             {
                 charaObjects[i].ArmParts[j].isUse = false;
             }
-            for (int j = 0; j < charaObjects[i].HeadParts.Count; j++)
+            for (int j = 0; j < charaObjects[i].BodyParts.Count; j++)
             {
                 charaObjects[i].BodyParts[j].isUse = false;
             }
-            for (int j = 0; j < charaObjects[i].HeadParts.Count; j++)
+            for (int j = 0; j < charaObjects[i].LegParts.Count; j++)
             {
                 charaObjects[i].LegParts[j].isUse = false;
             }
