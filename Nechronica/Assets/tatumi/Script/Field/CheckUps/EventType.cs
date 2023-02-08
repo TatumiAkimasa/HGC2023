@@ -15,5 +15,9 @@ public class EventType
         TalkStart,
         CameraMove,
         DeleteChara,
+        SetObj,
+        MusicSet,
+        Horizonposture,
+        Verticalposture,
     }
 }

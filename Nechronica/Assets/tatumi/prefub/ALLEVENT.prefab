@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4945617310779944855}
   - component: {fileID: 4945617310779944854}
   - component: {fileID: 4945617310779944857}
+  - component: {fileID: 4729794447134354059}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -60,6 +61,102 @@ MonoBehaviour:
   Talk_cs: {fileID: 0}
   Change_Scene: 
   test: {fileID: 4945617311594137813}
+--- !u!82 &4729794447134354059
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4945617310779944852}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4945617311594137809
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,11 +224,11 @@ MonoBehaviour:
       Jump_count: 4
       Move_Time: 45
       ObjChara_Num: 0
+      Target: 0
       Talk:
       - "\u3042\u308C\u306F...\u3060\u308C\u3060\uFF1F"
       - "\u304A\u308C...\u3060\u3068\uFF01\uFF1F"
       WaitTime: 1
-      OutCamera: 0
   - eventType: 5
     ordes:
       Horizon: 1
@@ -139,9 +236,9 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 45
       ObjChara_Num: 0
+      Target: 0
       Talk: []
       WaitTime: 0
-      OutCamera: 1
   - eventType: 1
     ordes:
       Horizon: -1
@@ -149,9 +246,9 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 20
       ObjChara_Num: 1
+      Target: 0
       Talk: []
       WaitTime: 3
-      OutCamera: 0
   - eventType: 4
     ordes:
       Horizon: -1
@@ -159,11 +256,11 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 45
       ObjChara_Num: 1
+      Target: 0
       Talk:
       - "\u3084\u3041"
       - "\u304A\u307E\u3048\u3060\u3088"
       WaitTime: 3
-      OutCamera: 0
   - eventType: 1
     ordes:
       Horizon: -1
@@ -171,9 +268,9 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 10
       ObjChara_Num: 0
+      Target: 0
       Talk: []
       WaitTime: 3
-      OutCamera: 0
   - eventType: 0
     ordes:
       Horizon: 4
@@ -181,9 +278,9 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 20
       ObjChara_Num: 0
+      Target: 0
       Talk: []
       WaitTime: 1
-      OutCamera: 0
   - eventType: 1
     ordes:
       Horizon: 1
@@ -191,9 +288,9 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 10
       ObjChara_Num: 0
+      Target: 0
       Talk: []
       WaitTime: 3
-      OutCamera: 0
   - eventType: 4
     ordes:
       Horizon: 4
@@ -201,11 +298,11 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 20
       ObjChara_Num: 0
+      Target: 0
       Talk:
       - "\uFF01\uFF1F\u3060\u308C\u304B\u306E\u653B\u6483\u3092\u53D7\u3051\u305F\u306E\u304B\u4FFA\u306F\uFF01\uFF01"
       - "\u4F55\u8005\u4F55\u3060\u304A\u524D\u306F\uFF01"
       WaitTime: 3
-      OutCamera: 0
   - eventType: 4
     ordes:
       Horizon: 1
@@ -213,10 +310,10 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 45
       ObjChara_Num: 1
+      Target: 0
       Talk:
       - "\u3055\u3066\u3001\u79C1\u306F\u4F55\u8005\u3060\u308D\u3046\u306D\uFF1F\u3055\u3089\u3070\u3060\u3002"
       WaitTime: 3
-      OutCamera: 0
   - eventType: 1
     ordes:
       Horizon: 4
@@ -224,9 +321,9 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 20
       ObjChara_Num: 1
+      Target: 0
       Talk: []
       WaitTime: 3
-      OutCamera: 0
   - eventType: 6
     ordes:
       Horizon: 4
@@ -234,9 +331,9 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 20
       ObjChara_Num: 1
+      Target: 0
       Talk: []
       WaitTime: 3
-      OutCamera: 0
   - eventType: 5
     ordes:
       Horizon: 4
@@ -244,9 +341,9 @@ MonoBehaviour:
       Jump_count: 0
       Move_Time: 20
       ObjChara_Num: 1
+      Target: 0
       Talk: []
       WaitTime: 3
-      OutCamera: 0
 --- !u!114 &4945617311594137808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,3 +362,6 @@ MonoBehaviour:
   ChinemaCameras:
   - {fileID: 0}
   - {fileID: 0}
+  SetObjs: []
+  Audios: []
+  audioSource: {fileID: 4729794447134354059}

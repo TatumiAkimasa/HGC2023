@@ -49,6 +49,34 @@ public class EventMoveChara : MOve_chara
         yield return null;//1フレーム待機
     }
 
+    public IEnumerator Event_Vertiposture(int Vertical, int UporDown)
+    {
+        //移動秒数分動く
+        for (int i = 0; i != Vertical; i++)
+        {
+            Vector2 animstate = new Vector2(0.0f, 2.0f * UporDown);
+
+            myanim.setStateEventToAnimator(animstate);
+            yield return null;//1フレーム待機
+        }
+
+        yield return null;//1フレーム待機
+    }
+
+    public IEnumerator Event_Horiposture(int Horizontaltime, int RightorLeft)
+    {
+        //移動秒数分動く
+        for (int i = 0; i != Horizontaltime; i++)
+        {
+            Vector2 animstate = new Vector2(2.0f * RightorLeft,0.0f);
+
+            myanim.setStateEventToAnimator(animstate);
+            yield return null;//1フレーム待機
+        }
+
+        yield return null;//1フレーム待機
+    }
+
     public IEnumerator Event_jump(int count, float time)
     {
         //移動秒数分動く

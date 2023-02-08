@@ -86,7 +86,7 @@ public class ObjEnemy : ClassData_
 
         //データから解析し、マニューバーを追加する
         //追加武装追記
-        for (int SITE = 0; SITE != 4; SITE++)
+        for (int SITE = 0; SITE != Enemy.Wepons.Count; SITE++)
         {
             for (int i = 0; i != Enemy.Wepons[SITE].Parts.Count; i++)
             {

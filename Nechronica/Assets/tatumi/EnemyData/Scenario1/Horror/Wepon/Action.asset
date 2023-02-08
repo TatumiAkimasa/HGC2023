@@ -16,7 +16,7 @@ MonoBehaviour:
   - Eff_String: 0
     Eff_int: 2
   Maneuver:
-    Name: "\u5207\u308A\u88C2\u304D\u30CF\u30B5\u30DF"
+    Name: "\u5207\u308A\u88C2\u304D\u92CF"
     AnimName: 
     AnimEffect: {fileID: 0}
     Cost: 3
@@ -30,8 +30,8 @@ MonoBehaviour:
     Atk:
       atkType: -1
       isExplosion: 0
-      isCutting: 0
+      isCutting: 1
       isAllAttack: 0
       isFallDown: 0
       Num_per_Action: 0
-    EnemyAI: 00000000000000000000
+    EnemyAI: 08000300030000000300

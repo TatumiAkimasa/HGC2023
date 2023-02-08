@@ -47,10 +47,13 @@ public class Talk_Chara : MonoBehaviour
         set.CopyTo(Talk, 0); 
     }
 
+    private string PLName;
+
     // Start is called before the first frame update
     void Start()
     {
         Max_count = Talk.Length;
+        PLName = Data_Scan.Instance.my_data[0].Name;
     }
 
     // Update is called once per frame
@@ -110,6 +113,7 @@ public class Talk_Chara : MonoBehaviour
         {
             ProText.text = Talk[Now_Count];
 
+           
             text_Len = ProText.text.Length;
             Nowvisual_Len = 0;
 
@@ -186,7 +190,24 @@ public class Talk_Chara : MonoBehaviour
 
     }
 
-   
+    //•¶‚Ì“r’†‚ÉPLName‚ğ“ü‚ê‚é
+    public void NameSetTalk()
+    {
+        for (int Now_Count = 0; Now_Count != Max_count; Now_Count++)
+        {
+            ProText.text = Talk[Now_Count];
+
+            //–¼‘O‚ğ—¬‚·ê‡’†gØ‚è‘Ö‚¦
+            for (int i = 0; i != Talk[Now_Count].Length; i++)
+            {
+                if (Talk[Now_Count][i]=='@')
+                {
+                    Talk[Now_Count].Replace("@", "");
+                    Talk[Now_Count].Insert(i, PLName);
+                }
+            }
+        }
+    }
 }
 
 

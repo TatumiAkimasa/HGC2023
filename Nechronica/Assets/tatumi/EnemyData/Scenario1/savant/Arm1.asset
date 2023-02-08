@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090cf4860d422d34093f820d7003e1b0, type: 3}
   m_Name: Arm1
   m_EditorClassIdentifier: 
-  effcrnums: []
+  effcrnums:
+  - Eff_String: 0
+    Eff_int: 3
   Maneuver:
-    Name: 
+    Name: "\u30B9\u30E9\u30B0\u6563\u5F3E\u9283"
     AnimName: 
     AnimEffect: {fileID: 0}
-    Cost: 0
-    Timing: 0
+    Cost: 4
+    Timing: 1
     MinRange: 0
-    MaxRange: 0
-    Weight: 0
+    MaxRange: 2
+    Weight: 10
     Moving: 0
     isUse: 0
     isDmage: 0
@@ -32,4 +34,4 @@ MonoBehaviour:
       isAllAttack: 0
       isFallDown: 0
       Num_per_Action: 0
-    EnemyAI: 
+    EnemyAI: 0a000300050008000100

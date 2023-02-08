@@ -11,13 +11,12 @@ public class MoveEvent_Chara : MonoBehaviour
     [System.Serializable]
     public class EventOrders
     {
-        //[System.NonSerialized]‚µ‚½‚¢‚¯‚ÇA‚µ‚½‚çŠg’£o—ˆ‚¸
-        public int Horizon,Vertical,Jump_count,Move_Time,ObjChara_Num;
+        //pub‚¶‚á‚Ë‚¥‚ÆEditor”½‰‚¹‚¸(Šg’£‚ª‚Å‚«‚È‚¢)
+        public int Horizon,Vertical,Jump_count,Move_Time,ObjChara_Num,Target;
         //‚à‚¿‚ë‚ñ’†g‚àpublic‚Å
         public string[] Talk;
         public float WaitTime;
-        //pub‚¶‚á‚Ë‚¥‚ÆEditor”½‰‚¹‚¸(Šg’£‚ª‚Å‚«‚È‚¢)
-        public int OutCamera;
+       
     }
 
     [System.Serializable]
@@ -43,8 +42,6 @@ public class MoveEvent_Chara : MonoBehaviour
     //ÀÛ‚Ìˆ—(EditorŠÖŒW‚È‚µ)
     public IEnumerator Event(System.Action<bool> action_end)
     {
-       
-
         for (int j = 0; j != Assistcs.Charas.Length; j++)
         {
             Assistcs.Charas[j].MovePlayer = false;
@@ -66,6 +63,14 @@ public class MoveEvent_Chara : MonoBehaviour
                     yield return StartCoroutine(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].Event_Vertimove(EventTypes[i].ordes.Move_Time, EventTypes[i].ordes.Vertical));
                     yield return null;
                     break;
+                case EventType.event_Type.Horizonposture:
+                    yield return StartCoroutine(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].Event_Horiposture(EventTypes[i].ordes.Move_Time, EventTypes[i].ordes.Horizon));
+                    yield return null;
+                    break;
+                case EventType.event_Type.Verticalposture:
+                    yield return StartCoroutine(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].Event_Vertiposture(EventTypes[i].ordes.Move_Time, EventTypes[i].ordes.Vertical));
+                    yield return null;
+                    break;
                 case EventType.event_Type.JumpMove:
                     yield return StartCoroutine(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].Event_jump(EventTypes[i].ordes.Jump_count, EventTypes[i].ordes.WaitTime));
                     yield return null;
@@ -73,6 +78,7 @@ public class MoveEvent_Chara : MonoBehaviour
                 case EventType.event_Type.TalkStart:
                     bool TalkEnd = false;
                     Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject.GetComponent<Talk_Chara>().Set_Talkstr(EventTypes[i].ordes.Talk);
+                    Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject.GetComponent<Talk_Chara>().NameSetTalk();
                     yield return StartCoroutine(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject.GetComponent<Talk_Chara>().Talk_Set((EndTiming=>
                     {
                         //‰½‚©‚µ‚á‚×‚è‚¨‚í‚Á‚½‚É‚µ‚½‚¢‚±‚Æ‚ ‚ê‚Î¡‚Í–³‚µ(‘½•ªPL‚Ì‘€ìó•t‹‘”Û‰ğœˆ—‚Æ‚©“ü‚é)
@@ -82,26 +88,32 @@ public class MoveEvent_Chara : MonoBehaviour
                     yield return null;
                     break;
                 case EventType.event_Type.CameraMove:
-                    if (EventTypes[i].ordes.OutCamera == 0)
+                    if (EventTypes[i].ordes.Target == 0)
                     {
-                        Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
+                        Assistcs.ChinemaCameras[EventTypes[i].ordes.Target].SetActive(true);
                       
                         yield return new WaitForSeconds(3.0f);
                         Assistcs.ChinemaCameras[InCamera].SetActive(false);
-                        InCamera = EventTypes[i].ordes.OutCamera;
+                        InCamera = EventTypes[i].ordes.Target;
                     }
                     else
                     {
-                        Assistcs.ChinemaCameras[EventTypes[i].ordes.OutCamera].SetActive(true);
+                        Assistcs.ChinemaCameras[EventTypes[i].ordes.Target].SetActive(true);
                         yield return new WaitForSeconds(0.01f); ;
                         Assistcs.ChinemaCameras[InCamera].SetActive(false);
 
                         yield return new WaitForSeconds(3.0f);
-                        InCamera = EventTypes[i].ordes.OutCamera;
+                        InCamera = EventTypes[i].ordes.Target;
                     }
                     break;
                 case EventType.event_Type.DeleteChara:
                     Destroy(Assistcs.Charas[EventTypes[i].ordes.ObjChara_Num].gameObject);
+                    break;
+                case EventType.event_Type.SetObj:
+                    Assistcs.SetObjs[EventTypes[i].ordes.Target].SetActive(true);
+                    break;
+                case EventType.event_Type.MusicSet:
+                    Assistcs.audioSource.PlayOneShot(Assistcs.Audios[EventTypes[i].ordes.Target]);
                     break;
             }
         }

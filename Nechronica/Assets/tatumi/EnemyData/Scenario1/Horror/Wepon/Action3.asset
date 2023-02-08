@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 090cf4860d422d34093f820d7003e1b0, type: 3}
-  m_Name: Leg1
+  m_Name: Action3
   m_EditorClassIdentifier: 
   effcrnums:
-  - Eff_String: 2
-    Eff_int: -2
+  - Eff_String: 3
+    Eff_int: 1
   Maneuver:
-    Name: "\u8DB3\u6255\u3044"
+    Name: "\u3042\u3057"
     AnimName: 
     AnimEffect: {fileID: 0}
-    Cost: 1
-    Timing: 4
-    MinRange: 0
-    MaxRange: 0
-    Weight: 3
+    Cost: 4
+    Timing: 1
+    MinRange: 10
+    MaxRange: 10
+    Weight: 5
     Moving: 0
     isUse: 0
     isDmage: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
       isAllAttack: 0
       isFallDown: 0
       Num_per_Action: 0
-    EnemyAI: 0300050005000a000400
+    EnemyAI: 02000500050005000500

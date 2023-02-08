@@ -15,3 +15,6 @@ MonoBehaviour:
   Wepons:
   - Parts:
     - {fileID: 11400000, guid: 9abe269b883523943828efecb0ce4ecf, type: 2}
+    - {fileID: 11400000, guid: d9c0a658baf3176438c3f33241d802cf, type: 2}
+    - {fileID: 11400000, guid: d297b4ddce1f0d64d926bc27683525d3, type: 2}
+    - {fileID: 11400000, guid: af68c3642e7a4774d89851e04249506d, type: 2}
