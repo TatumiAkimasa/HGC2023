@@ -8,5 +8,7 @@ public class Assist_MoveEvent : MonoBehaviour
     //‚¢‚©‚ñ‚¹‚ñEditorŒNList‚â‚çGameObject”F¯‚â‚ç‚µ‚ñ‚Ç‚¢‚Ì‚Å•ÊScript‚ÅŠÇ—
     public EventMoveChara[] Charas;
     public GameObject[] ChinemaCameras;
-
+    public GameObject[] SetObjs;
+    public AudioClip[] Audios;
+    public AudioSource audioSource;
 }

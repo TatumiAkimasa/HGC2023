@@ -15,20 +15,23 @@ public class Players_Item
 
 public class Talk_Chara : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject Parent3DObj,Parent2DObj, EndProText;
-
-    [SerializeField]
+    [SerializeField, Header("3D会話文")]
     private string[] Talk;
 
-    [SerializeField, Header("3D上での表示")]
+    [SerializeField, Header("3D上での表示-----------------")]
     private TextMeshPro ProText;
 
-    [SerializeField, Header("UI上での表示")]
+    [SerializeField]
+    private GameObject Parent3DObj;
+
+    [SerializeField, Header("UI上での表示---------------")]
     private string UI_str;
 
     [SerializeField]
     private TextMeshProUGUI ItemGetText,GetText;
+
+    [SerializeField]
+    private GameObject Parent2DObj, EndProText;
 
     [SerializeField, Header("会話によるアイテム入手（必須ではない")]
     private Players_Item[] Item;
@@ -47,10 +50,13 @@ public class Talk_Chara : MonoBehaviour
         set.CopyTo(Talk, 0); 
     }
 
+    private string PLName;
+
     // Start is called before the first frame update
     void Start()
     {
         Max_count = Talk.Length;
+        PLName = Data_Scan.Instance.my_data[0].Name;
     }
 
     // Update is called once per frame
@@ -61,6 +67,9 @@ public class Talk_Chara : MonoBehaviour
 
     public IEnumerator Talk_Set(System.Action<Item[]> End)
     {
+        if (GetText != null)
+            GetText.gameObject.SetActive(true);
+
         if (Parent2DObj == null)
             Parent3DObj.SetActive(true);
         if (Parent3DObj == null)
@@ -68,10 +77,13 @@ public class Talk_Chara : MonoBehaviour
         else
             Parent3DObj.SetActive(true);
 
+        EndProText.SetActive(true);
+
         StartCoroutine(Talk_Active((action=>
         {
             if (GetText != null)
                 GetText.gameObject.SetActive(false);
+           
             EndProText.SetActive(false);
           
             if (Parent2DObj == null)
@@ -110,6 +122,7 @@ public class Talk_Chara : MonoBehaviour
         {
             ProText.text = Talk[Now_Count];
 
+           
             text_Len = ProText.text.Length;
             Nowvisual_Len = 0;
 
@@ -186,7 +199,24 @@ public class Talk_Chara : MonoBehaviour
 
     }
 
-   
+    //文の途中にPLNameを入れる
+    public void NameSetTalk()
+    {
+        for (int Now_Count = 0; Now_Count != Max_count; Now_Count++)
+        {
+            ProText.text = Talk[Now_Count];
+
+            //名前を流す場合中身切り替え
+            for (int i = 0; i != Talk[Now_Count].Length; i++)
+            {
+                if (Talk[Now_Count][i]=='@')
+                {
+                    Talk[Now_Count].Replace("@", "");
+                    Talk[Now_Count].Insert(i, PLName);
+                }
+            }
+        }
+    }
 }
 
 

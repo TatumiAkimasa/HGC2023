@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83343766a2dd38478138e526f66b17f, type: 3}
+  m_Name: Trainer
+  m_EditorClassIdentifier: 
+  Wepons:
+  - Parts:
+    - {fileID: 11400000, guid: 1b8b8d6def7b7f649a92d40abdcc6941, type: 2}
+    - {fileID: 11400000, guid: a1f6a1f116d1a854a8f27ed2ee22853d, type: 2}
+  - Parts:
+    - {fileID: 11400000, guid: ba9f24380fe109d42882570cff8abcde, type: 2}
+    - {fileID: 11400000, guid: 1dca6b15848a9574fa7a0556ddce7afb, type: 2}
+  - Parts:
+    - {fileID: 11400000, guid: d5ab5958ff30dcf43bbf33696a70c2e3, type: 2}
+  - Parts:
+    - {fileID: 11400000, guid: 8cca2d04d5b2c1449bf17823446ac07b, type: 2}

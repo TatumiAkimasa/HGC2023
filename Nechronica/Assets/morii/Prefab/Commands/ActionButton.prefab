@@ -66,7 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -141,6 +141,9 @@ MonoBehaviour:
   name: {fileID: 1179347318773740013}
   cost: {fileID: 1179347319262798096}
   range: {fileID: 1179347318039733410}
+  image: {fileID: 1179347317746501255}
+  dmgCheckBox: {fileID: 1179347318391792867}
+  useCheckBox: {fileID: 1179347317981221041}
 --- !u!1 &1179347317793677871
 GameObject:
   m_ObjectHideFlags: 0

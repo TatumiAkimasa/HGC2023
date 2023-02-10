@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4296816783014661553}
   m_Layer: 0
   m_Name: Save_data_Obj
-  m_TagString: AllyChara
+  m_TagString: SaveData
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +54,7 @@ MonoBehaviour:
     Armament: 0
     Variant: 0
     Alter: 0
-    potition: 0
+    InitArea: 0
     Item: []
     CharaBase_data:
       HeadParts: []
@@ -62,13 +62,52 @@ MonoBehaviour:
       BodyParts: []
       LegParts: []
       Skill: []
+      CharaImg: {fileID: 0}
+      CharaName: {fileID: 0}
     CharaField_data:
       Scene_Name: 
       Pos:
       - 0
       - 0
       - 0
+      PosStr: 
       Event: []
+      Time:
+      - 
+      - 
+  bb:
+    Name: 
+    hide_hint: 
+    Death_year: 
+    temper: 
+    Memory: 
+    MainClass: 
+    SubClass: 
+    Armament: 0
+    Variant: 0
+    Alter: 0
+    InitArea: 0
+    Item: []
+    CharaBase_data:
+      HeadParts: []
+      ArmParts: []
+      BodyParts: []
+      LegParts: []
+      Skill: []
+      CharaImg: {fileID: 0}
+      CharaName: {fileID: 0}
+    CharaField_data:
+      Scene_Name: 
+      Pos:
+      - 0
+      - 0
+      - 0
+      PosStr: 
+      Event:
+      - str: 
+        flag: 0
+      - str: 
+        flag: 0
       Time:
       - 
       - 

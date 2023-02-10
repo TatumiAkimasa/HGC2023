@@ -9,10 +9,16 @@ public class RpdTimingProcess : GetClickedGameObject
     List<MoveCharaList> standbyManeuver = new List<MoveCharaList>();
 
     private GameObject atkTargetEnemy;      // 攻撃する敵オブジェクトを格納場所
-    private BattleCommand charaCommand;     // 選んだキャラのコマンド格納用
+    private GameObject charaCommand;     // 選んだキャラのコマンド格納用
 
-    Doll_blu_Nor selectedAllyChara;
-    Doll_blu_Nor selectedTargetChara;
+
+
+    Doll_blu_Nor selectedAllyChara;         // 選択した味方キャラ
+    Doll_blu_Nor selectedTargetChara;       // 選択した敵キャラ
+
+    bool moveDirection;
+    public void SetDirection(bool isDirection) => moveDirection = isDirection;
+
 
     bool exeManeuverProcess = false;
     public bool ExemaneuverProcess
@@ -39,7 +45,7 @@ public class RpdTimingProcess : GetClickedGameObject
     [SerializeField] private GameObject confirmatButton;    // 最後に発動するか確認するボタン
     [SerializeField] private GameObject rapidButtons;       // ジャッジタイミングで扱うボタンの親オブジェクト
     public GameObject GetConfirmatButton() => confirmatButton;
-    public GameObject GetRapidButton() => rapidButtons;
+    public void SetRapidButton(bool isActive) => rapidButtons.SetActive(isActive);
 
     void Awake()
     {
@@ -57,14 +63,15 @@ public class RpdTimingProcess : GetClickedGameObject
         {
             EnemySelectStandby();
         }
+        else if (exeManeuverProcess)
+        {
+            startExeManeuverListProcess();
+        }
         else if (isStandbyCharaSelect)
         {
             CharaSelectStandby();
         }
-        else if(exeManeuverProcess)
-        {
-
-        }
+        
     }
 
     /// <summary>
@@ -103,10 +110,9 @@ public class RpdTimingProcess : GetClickedGameObject
             //クリックしたゲームオブジェクトが味方キャラなら
             if (clickedObj.CompareTag("AllyChara"))
             {
-                clickedObj.GetComponent<BattleCommand>().SetNowSelect(true);
                 ZoomUpObj(clickedObj);
                 isSelectedChara = true;
-                charaCommand = clickedObj.transform.GetChild(CANVAS).transform.GetChild(RAPID).GetComponent<BattleCommand>();
+                childCommand = clickedObj.transform.GetChild(CANVAS).transform.GetChild(RAPID);
                 
                 // ここでコマンド表示
                 StartCoroutine(MoveStandby(clickedObj));
@@ -133,9 +139,10 @@ public class RpdTimingProcess : GetClickedGameObject
                 {
                     if (move.CompareTag("AllyChara"))
                     {
+                        // コマンドを表示する
                         isStandbyCharaSelect = false;
                         selectedAllyChara = move.GetComponent<Doll_blu_Nor>();
-                        charaCommand.gameObject.SetActive(true);
+                        childCommand.gameObject.SetActive(true);
                     }
                 }
                 else if(isStandbyEnemySelect)
@@ -149,7 +156,15 @@ public class RpdTimingProcess : GetClickedGameObject
                         (!dollManeuver.isUse && !dollManeuver.isDmage))
                     {
                         selectedTargetChara = selectedChara;
-                        confirmatButton.SetActive(true);
+                        if(dollManeuver.EffectNum.ContainsKey(EffNum.Move))
+                        {
+                            ProcessAccessor.Instance.actTimingMove.GetMoveButtons().SetActive(true);
+                            ProcessAccessor.Instance.actTimingMove.IsRapid = true;
+                        }
+                        else
+                        {
+                            confirmatButton.SetActive(true);
+                        }
                     }
                     else
                     {
@@ -157,6 +172,18 @@ public class RpdTimingProcess : GetClickedGameObject
                     }
                 }
             }
+        }
+    }
+
+    protected override void SkillSelectStandby()
+    {
+        // 右クリックで
+        if ((Input.GetMouseButtonDown(1) || skillSelected) && CharaCamera != null)
+        {
+            // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
+            ZoomOutObj();
+            // キャラ選択待機状態にする
+            isSelectedChara = false;
         }
     }
 
@@ -201,11 +228,13 @@ public class RpdTimingProcess : GetClickedGameObject
     public void AddRapidManeuver(Doll_blu_Nor moveChara, Doll_blu_Nor targetChara, CharaManeuver maneuver)
     {
         // 処理順リストに格納
-        MoveCharaList buff = null;
+        MoveCharaList buff = new MoveCharaList();
         buff.moveChara = moveChara;
         buff.targetChara = targetChara;
         buff.moveManeuver = maneuver;
+        if (maneuver.EffectNum.ContainsKey(EffNum.Move)) buff.direction = moveDirection;
         standbyManeuver.Add(buff);
+        isStandbyCharaSelect = true;
     }
 
     protected override void ZoomOutObj()
@@ -231,29 +260,54 @@ public class RpdTimingProcess : GetClickedGameObject
     /// <summary>
     /// リストの中にあるマニューバーの処理を開始
     /// </summary>
-    public void startManeuverListProcess()
+    public void startExeManeuverListProcess()
     {
         if(standbyManeuver.Count!=0)
         {
             ProcessDivide(standbyManeuver.Last());
             // 一気に処理しないようにする
-            exeManeuverProcess = false;
+            //exeManeuverProcess = false;
             // 末尾の要素を削除
             standbyManeuver.RemoveAt(standbyManeuver.Count - 1);
         }
         else
         {
-            //ここでジャッジタイミングへ移行
-            ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
-            ProcessAccessor.Instance.jdgTiming.ActMneuver = actManeuver;
-            ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
-            ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy.gameObject;
-            ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
-            ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
-            if (actingChara.gameObject.CompareTag("EnemyChara")/*||自動ダイスロール的な？設定参照用*/)
+            rapidButtons.SetActive(false);
+            exeManeuverProcess = false;
+            isStandbyEnemySelect = false;
+            isStandbyCharaSelect = false;
+
+            Doll_blu_Nor cashedChara = atkTargetEnemy.GetComponent<Doll_blu_Nor>();
+
+            // 攻撃されるキャラが射程外に出たりしていなければジャッジタイミングへ移行
+            if ((Mathf.Abs(cashedChara.area) <= Mathf.Abs(actManeuver.MaxRange + actingChara.area) &&
+                 Mathf.Abs(cashedChara.area) >= Mathf.Abs(actManeuver.MinRange + actingChara.area)) &&
+                        !actManeuver.isDmage)
             {
-                ProcessAccessor.Instance.jdgTiming.OnClickDiceRoll();
+                //ここでジャッジタイミングへ移行
+                ProcessAccessor.Instance.jdgTiming.SetActChara(actingChara);
+                ProcessAccessor.Instance.jdgTiming.ActMneuver = actManeuver;
+                ProcessAccessor.Instance.jdgTiming.IsStandbyDiceRoll = true;
+                ProcessAccessor.Instance.jdgTiming.AtkTargetEnemy = atkTargetEnemy.gameObject;
+                ProcessAccessor.Instance.jdgTiming.GetDiceRollButton().gameObject.SetActive(true);
+                ManagerAccessor.Instance.battleSystem.SetTimingText("ジャッジ");
+                if (actingChara.gameObject.CompareTag("EnemyChara")/*||自動ダイスロール的な？設定参照用*/)
+                {
+                    ProcessAccessor.Instance.jdgTiming.OnClickDiceRoll();
+                }
+                else if(actingChara.gameObject.CompareTag("AllyChara"))
+                {
+                    ProcessAccessor.Instance.jdgTiming.GetJudgeButton().SetActive(true);
+                }
             }
+            else
+            {
+                // ここ、アニメーション終わってからの処理にしたいなぁ
+                // 行動したキャラを表示から消す
+                ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
+                ManagerAccessor.Instance.battleSystem.BattleExe = true;
+            }
+            
 
         }
     }
@@ -262,7 +316,8 @@ public class RpdTimingProcess : GetClickedGameObject
     {
         if(charaList.moveManeuver.EffectNum.ContainsKey(EffNum.Move))
         {
-            
+            ProcessAccessor.Instance.actTimingMove.MoveChara(charaList.direction, charaList.targetChara, true);
+            charaList.moveChara.NowCount -= charaList.moveManeuver.Cost;
         }
         else if (charaList.moveManeuver.EffectNum.ContainsKey(EffNum.YobunnnaUde))
         {
@@ -278,4 +333,7 @@ public class MoveCharaList
     public Doll_blu_Nor  moveChara;
     public Doll_blu_Nor  targetChara;
     public CharaManeuver moveManeuver;
+
+    // 移動マニューバ用
+    public bool direction;
 }

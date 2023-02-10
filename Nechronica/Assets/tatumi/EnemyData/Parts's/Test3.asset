@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090cf4860d422d34093f820d7003e1b0, type: 3}
   m_Name: Test3
   m_EditorClassIdentifier: 
-  Eff_String: 0
-  Eff_int: 0
+  effcrnums:
+  - Eff_String: 3
+    Eff_int: 1
   Maneuver:
     Name: "\u3089\u3074\u3063\u3069\u3067\u306B\u3052\u308B\u3084\u3064"
+    AnimName: 
+    AnimEffect: {fileID: 0}
     Cost: 0
     Timing: 3
     MinRange: 0
-    MaxRange: 1
+    MaxRange: 0
     Weight: 0
-    Moving: 2
+    Moving: 0
     isUse: 0
     isDmage: 0
     Atk:
@@ -29,6 +32,6 @@ MonoBehaviour:
       isExplosion: 0
       isCutting: 0
       isAllAttack: 0
-      isSuccession: 0
+      isFallDown: 0
       Num_per_Action: 0
-    EnemyAI: 
+    EnemyAI: 01000100040004000600

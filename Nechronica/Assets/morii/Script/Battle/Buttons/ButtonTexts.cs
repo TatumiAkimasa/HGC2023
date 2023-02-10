@@ -11,8 +11,78 @@ public class ButtonTexts : MonoBehaviour
     private Text cost;
     [SerializeField]
     private Text range;
+    [SerializeField]
+    private Image image;
+
+    [SerializeField]
+    private Toggle dmgCheckBox;
+    [SerializeField]
+    private Toggle useCheckBox;
+    [SerializeField]
+    private CharaManeuver myManeuver;
+
+    [SerializeField]
+    private Button myButton;
+
 
     public void SetName(string text) { name.text = text; }
     public void SetCost(string text) { cost.text = text; }
     public void SetRange(string text) { range.text = text; }
+
+    private void Update()
+    {
+        if (myManeuver.isUse)
+        {
+            useCheckBox.isOn = true;
+        }
+        else
+        {
+            useCheckBox.isOn = false;
+        }
+    }
+
+    public void OnClickDamage()
+    {
+        if (!myManeuver.isDmage)
+        {
+            ProcessAccessor.Instance.dmgTiming.DamageSelectCnt++;
+        }
+        myManeuver.isDmage = true;
+        dmgCheckBox.isOn = true;
+    }
+
+    public void ColorChange(CharaManeuver maneuver)
+    {
+        Color col;
+        col.a = 1.0f;
+        myManeuver = maneuver;
+        if (maneuver.EffectNum.ContainsKey(EffNum.Damage))
+        {
+            col.r = 1.0f;
+            col.g = 0.8f;
+            col.b = 0.8f;
+            image.color = col;
+        }
+        else if (maneuver.EffectNum.ContainsKey(EffNum.Move))
+        {
+            col.r = 1.0f;
+            col.g = 1.0f;
+            col.b = 0.65f;
+            image.color = col;
+        }
+        else if (maneuver.EffectNum.ContainsKey(EffNum.Judge))
+        {
+            col.r = 0.8f;
+            col.g = 0.8f;
+            col.b = 1.0f;
+            image.color = col;
+        }
+        else if (maneuver.EffectNum.ContainsKey(EffNum.Guard))
+        {
+            col.r = 0.8f;
+            col.g = 1.0f;
+            col.b = 0.8f;
+            image.color = col;
+        }
+    }
 }

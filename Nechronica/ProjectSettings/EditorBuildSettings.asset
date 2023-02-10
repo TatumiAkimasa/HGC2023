@@ -11,13 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/tatumi/Scene/Title.unity
     guid: 812aabfaeb2e0874a85ea7729ef62782
-  - enabled: 1
+  - enabled: 0
     path: Assets/yaotani/New Scene.unity
     guid: 6544d0fe4ea9f9846ac7bf60218fe669
-  - enabled: 1
+  - enabled: 0
     path: Assets/tatumi/Scene/tatumi_dataSet.unity
     guid: 7f7c94e9c69f32845a1b2c14cc007db1
-  - enabled: 1
+  - enabled: 0
     path: Assets/tatumi/Scene/tatumi_world.unity
     guid: e399367e1db9ac14ca33f3927da3bdfd
   - enabled: 1

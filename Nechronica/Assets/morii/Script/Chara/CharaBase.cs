@@ -26,18 +26,34 @@ public class CharaBase : MonoBehaviour
     public int GetMaxCount() => maxCount;
     public int GetNowCount() => nowCount;
     public int GetWeight() => allWeight;
-
-    public List<CharaManeuver> GetHeadParts() => HeadParts; // 頭パーツ参照
-    public List<CharaManeuver> GetArmParts() => ArmParts;   // 腕パーツ参照
-    public List<CharaManeuver> GetBodyParts() => BodyParts; // 胴体パーツ参照
-    public List<CharaManeuver> GetLegParts() => LegParts;   // 脚パーツ参照
     public List<CharaManeuver> GetPotisionSkill() => positionSkill; // ポジションスキル参照
     public List<CharaManeuver> GetClassSkill() => classSkill;   // クラススキル
 
-    public List<CharaManeuver> HeadParts;       // 頭のパーツ
-    public List<CharaManeuver> ArmParts;        // 腕のパーツ
-    public List<CharaManeuver> BodyParts;       // 胴のパーツ
-    public List<CharaManeuver> LegParts;        // 脚のパーツ
+    [SerializeField] protected List<CharaManeuver> headParts;       // 頭のパーツ
+    [SerializeField] protected List<CharaManeuver> armParts;        // 腕のパーツ
+    [SerializeField] protected List<CharaManeuver> bodyParts;       // 胴のパーツ
+    [SerializeField] protected List<CharaManeuver> legParts;        // 脚のパーツ
+
+    public List<CharaManeuver> HeadParts
+    {
+        get { return headParts; }
+        set { headParts = value; }
+    }
+    public List<CharaManeuver> ArmParts
+    {
+        get { return armParts; }
+        set { armParts = value; }
+    }
+    public List<CharaManeuver> BodyParts
+    {
+        get { return bodyParts; }
+        set { bodyParts = value; }
+    }
+    public List<CharaManeuver> LegParts
+    {
+        get { return legParts; }
+        set { legParts = value; }
+    }
 
     public List<CharaManeuver> positionSkill;   // ポジションスキル
 
@@ -114,8 +130,9 @@ public class CharaBase : MonoBehaviour
 [System.Serializable]
 public class CharaManeuver
 {
-
-    public string Name;            // パーツ名
+    public string Name;            // パーツ名 /
+    public string AnimName;        // アニメーションID
+    public GameObject AnimEffect;  // アニメーション再生用
     //public int EffectNum;        // 効果値
     public Dictionary<string, int> EffectNum = new Dictionary<string, int>();          // 効果値
     public int Cost;               // コスト
@@ -127,7 +144,7 @@ public class CharaManeuver
     public bool isUse;             // 使用したかどうか
     public bool isDmage;           // 破損したかどうか
     public ManeuverEffectsAtk Atk; // 攻撃系
-    [NamedArrayAttribute(new string[] { "攻撃", "防御", "支援・回復", "妨害" ,"BOSS"})]
+    [NamedArrayAttribute(new string[] { "攻撃", "防御", "支援・回復", "妨害" ,"損傷優先度"})]
     public List<short> EnemyAI; //敵行動優先順位
 }
 
@@ -138,7 +155,7 @@ public class ManeuverEffectsAtk
     public bool isExplosion;   // 爆発攻撃かどうか
     public bool isCutting;     // 切断攻撃かどうか
     public bool isAllAttack;   // 全体攻撃かどうか
-    public bool isSuccession;  // 連撃かどうか
+    public bool isFallDown;    // 転倒かどうか
     public int Num_per_Action; // 連撃回数
 }
 
@@ -157,8 +174,35 @@ public class EffNum
     // オンリーワンの効果
     public const string Protect  = "Protect";       // かばうの効果はこれで認識
     public const string YobunnnaUde = "YobunnnaUde";   // 余分な腕、死の手はこれで認識
+    public const string Nikunotate = "Nikunotate";  // 肉の盾はこれで認識
 
 
 }
 
+[System.Serializable]
+public class AnimationName
+{
+    public const string Null = "Null";
+    public const string Ago  = "Ago";
+    public const string Kobushi = "Kobushi";
+
+}
+
+/// <summary>
+/// 狂気の種類
+/// </summary>
+[System.Serializable]
+public class InsanityElement
+{
+    public const string disgust = "disgust";            // 嫌悪
+    public const string monopoly = "monopoly";          // 独占
+    public const string reliance = "reliance";          // 依存
+    public const string obsession = "obsession";        // 執着   
+    public const string love = "love";                  // 恋心
+    public const string opposition = "opposition";      // 対抗
+    public const string friendship = "friendship";      // 友情   
+    public const string protection = "protection";      // 保護
+    public const string admiration = "admiration";      // 憧憬
+    public const string trust = "trust";                // 信頼
+}
 

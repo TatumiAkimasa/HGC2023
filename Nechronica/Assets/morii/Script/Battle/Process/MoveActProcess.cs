@@ -12,6 +12,15 @@ public class MoveActProcess : GetClickedGameObject
 
     [SerializeField] private GameObject moveButtons;            // 移動させるボタンを表示するためのもの
 
+    public GameObject GetMoveButtons() => moveButtons;          // ラピッドタイミングで使用、移動させるボタンを表示する為の物
+
+    bool isRapid;         // ラピッドタイミングかどうか判断する用
+    public bool IsRapid
+    {
+        get { return isRapid; }
+        set { isRapid = value; }
+    }
+
 
     private void Awake()
     {
@@ -110,18 +119,38 @@ public class MoveActProcess : GetClickedGameObject
     // 楽園方向に移動するボタン用のメソッド
     public void OnClickParadiseMove()
     {
-        MoveChara(true,moveChara,false);
-        ProcessAccessor.Instance.actTiming.SkillSelected = true;
+        if (isRapid == true)
+        {
+            ProcessAccessor.Instance.rpdTiming.SetDirection(true);
+            ProcessAccessor.Instance.rpdTiming.StandbyEnemySelect = false;
+            ProcessAccessor.Instance.rpdTiming.OnClickManeuver();
+            isRapid = false;
+            moveButtons.SetActive(false);
+        }
+        else
+        {
+            MoveChara(true, moveChara, false);
+            ProcessAccessor.Instance.actTiming.SkillSelected = true;
+        }
     }
 
     // 奈落方向に移動するボタン用のメソッド
     public void OnClickAbyssMove()
     {
-        MoveChara(false,moveChara,false);
-        ProcessAccessor.Instance.actTiming.SkillSelected = true;
+        if(isRapid==true)
+        {
+            ProcessAccessor.Instance.rpdTiming.SetDirection(false);
+            ProcessAccessor.Instance.rpdTiming.StandbyEnemySelect = false;
+            ProcessAccessor.Instance.rpdTiming.OnClickManeuver();
+            isRapid = false;
+            moveButtons.SetActive(false);
+        }
+        else
+        {
+            MoveChara(false, moveChara, false);
+            ProcessAccessor.Instance.actTiming.SkillSelected = true;
+        }
     }
-
-
 
     /// <summary>
     /// 
@@ -139,19 +168,19 @@ public class MoveActProcess : GetClickedGameObject
         else
         {
             // このクラスに入る前にActTimingProcessクラスでカメラの処理をしているのでActTimingProcessクラスでズームアウトの処理を行う
-            ProcessAccessor.Instance.actTiming.ZoomOutRequest();
+            
             // 実際にキャラを動かす
             if(direction)
             {
-                ManagerAccessor.Instance.battleSpone.CharaMove(moveChara, 1);
+                ManagerAccessor.Instance.battleSpone.CharaMove(beMovedChara, 1);
             }
             else
             {
-                ManagerAccessor.Instance.battleSpone.CharaMove(moveChara, -1);
+                ManagerAccessor.Instance.battleSpone.CharaMove(beMovedChara, -1);
             }
             
             moveButtons.SetActive(false);
-            actingChara.NowCount -= dollManeuver.Cost;
+            
             // ここ、アニメーション終わってからの処理にしたいなぁ
             // 行動したキャラを表示から消す
             if(isRapid)
@@ -160,9 +189,10 @@ public class MoveActProcess : GetClickedGameObject
             }
             else
             {
-
+                actingChara.NowCount -= dollManeuver.Cost;
                 ManagerAccessor.Instance.battleSystem.DeleteMoveChara();
                 ManagerAccessor.Instance.battleSystem.BattleExe = true;
+                ProcessAccessor.Instance.actTiming.ZoomOutRequest();
             }
         }
     }

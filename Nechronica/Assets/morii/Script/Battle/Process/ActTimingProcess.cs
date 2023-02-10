@@ -13,7 +13,11 @@ public class ActTimingProcess : GetClickedGameObject
 
     // キャラクターのアクションコマンドを取得
     private BattleCommand actCharaCommand;
+    private ActCommands actCommand;
+    private RpdCommand rpdCommand;
     private bool isAllyOrEnemy;                       // 選んだキャラが敵か味方かの判断
+
+    [SerializeField] GameObject buttons;
 
     private GameObject atkTargetEnemy;                // 攻撃する敵オブジェクトを格納場所
     public GameObject AtkTargetEnemy
@@ -67,11 +71,18 @@ public class ActTimingProcess : GetClickedGameObject
         {
             GameObject clickedObj = ShotRay();
 
+
+            if(clickedObj==null)
+            {
+                return;
+            }
             //クリックしたゲームオブジェクトが味方キャラなら
-            if (clickedObj.CompareTag("AllyChara")　|| clickedObj.CompareTag("EnemyChara"))
+            else if (clickedObj.CompareTag("AllyChara")　|| clickedObj.CompareTag("EnemyChara"))
             {
                 // コマンドを表示し、選んだキャラに近づく
                 actCharaCommand = clickedObj.GetComponent<BattleCommand>();
+                actCommand = clickedObj.GetComponent<ActCommands>();
+                rpdCommand = clickedObj.GetComponent<RpdCommand>();
                 ZoomUpObj(clickedObj);
                 // ここでコマンド表示
                 StartCoroutine(MoveStandby(clickedObj));
@@ -102,6 +113,13 @@ public class ActTimingProcess : GetClickedGameObject
                 StartCoroutine(MoveStandby(clickedObj));
             }
         }
+        else if(Input.GetMouseButtonDown(1))
+        {
+            if (saveCharaCamera != null)
+            {
+                OnClickBack();
+            }
+        }
     }
 
     /// <summary>
@@ -117,9 +135,17 @@ public class ActTimingProcess : GetClickedGameObject
             if(isAllyOrEnemy==ALLY)
             {
                 // マニューバを選ぶコマンドまで表示されていたらそのコマンドだけ消す
-                if (actCharaCommand.GetActCommands().activeSelf)
+                if (ProcessAccessor.Instance.actTimingMove.GetMoveButtons().activeSelf)
                 {
-                    actCharaCommand.GetActCommands().SetActive(false);
+                    ProcessAccessor.Instance.actTimingMove.GetMoveButtons().SetActive(false);
+                }
+                else if (actCommand.GetCommands().activeSelf)
+                {
+                    actCommand.GetCommands().SetActive(false);
+                }
+                else if(rpdCommand.GetCommands().activeSelf)
+                { 
+                    rpdCommand.GetCommands().SetActive(false);
                 }
                 else
                 {
@@ -161,7 +187,7 @@ public class ActTimingProcess : GetClickedGameObject
     {
         // カメラを元の位置に戻し、UIを消す
         ZoomOutObj();
-        this.transform.GetChild(CANVAS).transform.GetChild(0).gameObject.SetActive(false);
+        buttons.SetActive(false);
         // childCommandの中身をなくす
         if (childCommand != null)
         {
@@ -195,28 +221,33 @@ public class ActTimingProcess : GetClickedGameObject
             {
                 if (move.CompareTag("AllyChara"))
                 {
-                    // 技コマンドもろもろを表示
-                    actCharaCommand.GetActSelect().SetActive(true);
                     isAllyOrEnemy = ALLY;
+                    for (int j=0;j< ManagerAccessor.Instance.battleSystem.GetMoveChara().Count;j++)
+                    {
+                        if (move.name == ManagerAccessor.Instance.battleSystem.GetMoveChara()[j].name)
+                        {
+                            // 技コマンドもろもろを表示
+                            actCharaCommand.GetActSelect().SetActive(true);
+                            break;
+                        }
+                    }
+                    
                 }
                 else if (move.CompareTag("EnemyChara"))
                 {
                     // ステータスを取得し、表示。後にOnClickAtkで使うのでメンバ変数に格納
-                    childCommand = move.transform.GetChild(CANVAS);
+                    childCommand = move.transform.GetChild(CANVAS).GetChild(0);
                     childCommand.gameObject.SetActive(true);
                     isAllyOrEnemy = ENEMY;
 
                     // 敵キャラのエリアと選択されたマニューバの射程を絶対値で比べて、射程内であれば攻撃するか選択するコマンドを表示する
                     // 敵キャラのエリアの絶対値が攻撃の最大射程以下且つ、
                     // 敵キャラのエリアの絶対値が攻撃の最小射程以上なら攻撃する
-                    if (isStandbyEnemySelect && dollManeuver.MinRange != 10 && 
-                        (Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) <= Mathf.Abs(dollManeuver.MaxRange + actingChara.area) &&
-                         Mathf.Abs(move.GetComponent<Doll_blu_Nor>().area) >= Mathf.Abs(dollManeuver.MinRange + actingChara.area)))
+                    if (isStandbyEnemySelect && dollManeuver.MinRange != 10 && RangeCheck(move.GetComponent<Doll_blu_Nor>(), dollManeuver, actingChara))
                     {
                         atkTargetEnemy = move;
                         atkTargetEnemy.transform.GetChild(CANVAS).gameObject.SetActive(true);
 
-                        exeButton.onClick.AddListener(() => OnClickAtkRequest());
 
                         this.transform.GetChild(CANVAS).transform.GetChild(ATKBUTTONS).gameObject.SetActive(true);
                     }
@@ -229,11 +260,18 @@ public class ActTimingProcess : GetClickedGameObject
     /// <summary>
     /// 次のジャッジタイミングに移行をリクエストするボタン
     /// </summary>
-    private void OnClickAtkRequest()
+    public void OnClickAtkRequest()
     {
         ExeAtkManeuver(atkTargetEnemy.GetComponent<Doll_blu_Nor>(), dollManeuver, actingChara);
     }
 
+    /// <summary>
+    /// 待機をするボタン
+    /// </summary>
+    public void OnClickStandby()
+    {
+        ExeStandby(actingChara);
+    }
 
 
     /// <summary>
@@ -261,9 +299,32 @@ public class ActTimingProcess : GetClickedGameObject
         ProcessAccessor.Instance.rpdTiming.ActMneuver = maneuver;
         ProcessAccessor.Instance.rpdTiming.AtkTargetEnemy = enemy.gameObject;
         ProcessAccessor.Instance.rpdTiming.StandbyCharaSelect = true;
+        ProcessAccessor.Instance.rpdTiming.SetRapidButton(true); 
+        ManagerAccessor.Instance.battleSystem.SetTimingText("ラピッド");
+        if (rpdCommand!=null)
+        {
+            rpdCommand.GetCommands().SetActive(true);
+        }
+        
+        //actChara.GetComponent<RpdCommand>
+
+        // ここでラピッドタイミングのマニューバーを敵が発動するかどうか判断
+        //enemy.GetComponent<ObjEnemy>().EnemyAI_Rapid(maneuver, actChara);
 
         // 要if分分け。特殊なコストでなければコストを減少させる
         // 行動値を減少させる
         actChara.NowCount -= maneuver.Cost;
     }
+
+    /// <summary>
+    /// 待機をおこなう処理
+    /// </summary>
+    public void ExeStandby(Doll_blu_Nor chara)
+    {
+        ManagerAccessor.Instance.battleSystem.DeleteMoveChara(chara.Name);
+        chara.NowCount -= 1;
+        MyZoomOutObj(actCharaCommand.GetActSelect());
+        ManagerAccessor.Instance.battleSystem.BattleExe = true;
+    }
+
 }

@@ -72,6 +72,7 @@ public class Chara_data_input : CharaBase
         //QÆ“n‚µ‚Å‚¢‚Á‚½‚ñ‰ğŒˆiCopy‚ª‚¤‚Ü‚­‚¢‚©‚È‚¢...j
         Doll_data.Memory = Memory_;
         Treasure = ALL_Base_Parts.Treasure_parts;
+        Treasure.Name = "‚¨‚½‚©‚ç";
 
         Maneger_Accessor.Instance.chara_Data_Input_cs = this;
         ErrorData = new bool[(int)ErrorStr.MAX];
@@ -183,7 +184,7 @@ public class Chara_data_input : CharaBase
                 for (int k = 0; k != 3; k++)
                 {
                     //Noneî•ñ‚ğ”²‚«‚É‚µ‚Ä®—
-                    if (WE_Maneger.Site_[SITE].Step[i].Text[k].GetComponent<Wepon_Data_SaveSet>().GetName()!="None")
+                    if (WE_Maneger.Site_[SITE].Step[i].Text[k].text/*GetComponent<Wepon_Data_SaveSet>().GetName()*/!="None")
                     {
                         if (SITE == HEAD)
                         {

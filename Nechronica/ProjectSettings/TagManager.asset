@@ -14,6 +14,7 @@ TagManager:
   - ActionCommands
   - RapidCommands
   - BattleManager
+  - SaveData
   layers:
   - Default
   - TransparentFX

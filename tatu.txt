@@ -5,15 +5,21 @@ MINIMAP→LINER移植で〇
 不足データ構築設定時、LOAD不可→〇
 会話時、PL動き×→〇
 FADE演出→Animのみ〇SC管理は多分パッとできる
-敵のAI→BattleSystemのBattle.exeにて処理（ダメージまで)
-あとジャッジのRoll処理をいれとこう
-FOREST→傾きをただす。Event、NPCの置き方見直し
+敵のAI→DebugTIME！！,
+
+FOREST→Event、NPCの置き方見直し
 
 複雑EVENT機能↓
 複数人会話実装→〇
 エリアに入ると勝手に独り言→〇
 エリアに入ると勝手に移動→〇
 カメラ移動→〇
+
+マニューバー
+移動、ダメ与,ダメ受,不随効果（切断、連撃等。)防御、妨害、支援、肉の盾。
+
+敵の種類
+PL2,悪意点20前後
 
 Story
 

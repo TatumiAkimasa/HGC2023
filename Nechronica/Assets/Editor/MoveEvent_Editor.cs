@@ -68,6 +68,20 @@ public class MoveEvent_Editor : Editor
                 target_.EventTypes[i].ordes.Move_Time = EditorGUILayout.IntField("移動時間", target_.EventTypes[i].ordes.Move_Time);
                 target_.EventTypes[i].ordes.ObjChara_Num = EditorGUILayout.IntField("対象キャラ番号", target_.EventTypes[i].ordes.ObjChara_Num);
             }
+            else if (target_.EventTypes[i].eventType == EventType.event_Type.Horizonposture)
+            {
+                EditorGUILayout.LabelField("左右の向き設定");
+                target_.EventTypes[i].ordes.Horizon = EditorGUILayout.IntField("左:1～-右:-1", target_.EventTypes[i].ordes.Horizon);
+                target_.EventTypes[i].ordes.Move_Time = EditorGUILayout.IntField("向き変更時間", target_.EventTypes[i].ordes.Move_Time);
+                target_.EventTypes[i].ordes.ObjChara_Num = EditorGUILayout.IntField("対象キャラ番号", target_.EventTypes[i].ordes.ObjChara_Num);
+            }
+            else if (target_.EventTypes[i].eventType == EventType.event_Type.Verticalposture)
+            {
+                EditorGUILayout.LabelField("上下の向き設定");
+                target_.EventTypes[i].ordes.Vertical = EditorGUILayout.IntField("上:1～-下:-1", target_.EventTypes[i].ordes.Vertical);
+                target_.EventTypes[i].ordes.Move_Time = EditorGUILayout.IntField("向き変更時間", target_.EventTypes[i].ordes.Move_Time);
+                target_.EventTypes[i].ordes.ObjChara_Num = EditorGUILayout.IntField("対象キャラ番号", target_.EventTypes[i].ordes.ObjChara_Num);
+            }
             else if (target_.EventTypes[i].eventType == EventType.event_Type.JumpMove)
             {
                 EditorGUILayout.LabelField("ジャンプの設定");
@@ -78,7 +92,7 @@ public class MoveEvent_Editor : Editor
             else if (target_.EventTypes[i].eventType == EventType.event_Type.TalkStart)
             {
                 //string(配列)の場合（疑似的）※上の(25行目)Listのやり方のやつはClassなりなんなりの中に入ってるやつはできない
-                EditorGUILayout.LabelField("トークの設定");
+                EditorGUILayout.LabelField("トークの設定(@=Plの名前になる)");
 
                 //要素数分回す
                 for (int k=0;k!= target_.EventTypes[i].ordes.Talk.Length;k++)
@@ -89,7 +103,15 @@ public class MoveEvent_Editor : Editor
             }
             else if (target_.EventTypes[i].eventType == EventType.event_Type.CameraMove)
             {
-                target_.EventTypes[i].ordes.OutCamera = EditorGUILayout.IntField("移り変わり先カメラ番号", target_.EventTypes[i].ordes.OutCamera);
+                target_.EventTypes[i].ordes.Target = EditorGUILayout.IntField("移り変わり先カメラ番号", target_.EventTypes[i].ordes.Target);
+            }
+            else if (target_.EventTypes[i].eventType == EventType.event_Type.SetObj)
+            {
+                target_.EventTypes[i].ordes.Target = EditorGUILayout.IntField("表示OBJ番号", target_.EventTypes[i].ordes.Target);
+            }
+            else if (target_.EventTypes[i].eventType == EventType.event_Type.MusicSet)
+            {
+                target_.EventTypes[i].ordes.Target = EditorGUILayout.IntField("流す音楽番号", target_.EventTypes[i].ordes.Target);
             }
             else if (target_.EventTypes[i].eventType == EventType.event_Type.DeleteChara)
             {

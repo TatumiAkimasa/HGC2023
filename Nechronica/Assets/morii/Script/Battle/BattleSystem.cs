@@ -15,22 +15,32 @@ public class BattleSystem : MonoBehaviour
 
     // キャラのオブジェクトを実際に使用するためのクラス
     [SerializeField]
-    private List<Doll_blu_Nor> charaObject = new List<Doll_blu_Nor>();
+    private List<Doll_blu_Nor> charaObjects = new List<Doll_blu_Nor>();
 
-    public List<Doll_blu_Nor> GetCharaObj()
-    {
-        return charaObject;
-    }
+    private List<Doll_blu_Nor> enemyCharaObjs = new List<Doll_blu_Nor>();
+    private List<Doll_blu_Nor> allyCharaObjs = new List<Doll_blu_Nor>();
+
+    private List<CharaStatusLabels> charaStatusList = new List<CharaStatusLabels>();
+
+    [SerializeField] private Text timingText;                 // プレイアブルキャラのコマンドオブジェクト
+    public void SetTimingText(string set) { timingText.text = set; }
+
+    public List<Doll_blu_Nor> GetCharaObj() { return charaObjects; }
+    public List<Doll_blu_Nor> GetEnemyCharaObj() { return enemyCharaObjs; }
+    public List<Doll_blu_Nor> GetAllyCharaObj() { return allyCharaObjs; }
+    public List<CharaStatusLabels> GetStatusList() { return charaStatusList; }
+
+    
 
     // キャラスポーンスクリプト参照用
     [SerializeField]
     private BattleSpone battleSpone;
 
-    // クリックされたプレイアブルキャラを受け取るようの変数
-    private GameObject clickedChara;
-
     // カウント中に動くキャラをこのリストに入れる
-    private List<Doll_blu_Nor> CountMoveChara = new List<Doll_blu_Nor>();
+    private List<Doll_blu_Nor> countMoveChara = new List<Doll_blu_Nor>();
+
+    public List<Doll_blu_Nor> GetMoveChara() { return countMoveChara; }
+
 
     // カウント処理パートに移行するかの成否
     private bool battleExe = false;
@@ -50,9 +60,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private GameObject clickGuard;
 
-    // レイガード用オブジェクト
-    [SerializeField]
-    private GameObject rayGuard;
+    [SerializeField] private GameObject charaStatus;
+    [SerializeField] private GameObject statusParent;
 
 
     // -----------------------------------------------------------------
@@ -99,22 +108,45 @@ public class BattleSystem : MonoBehaviour
         charaObjectsBuffer = GameObject.FindGameObjectsWithTag("AllyChara");
         for (int i = 0; i < charaObjectsBuffer.Length; i++)
         {
-            charaObject.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+            charaObjects.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+            allyCharaObjs.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
         // EnemyCharaというタグがついたキャラをすべて取得
         charaObjectsBuffer = GameObject.FindGameObjectsWithTag("EnemyChara");
         for (int i = 0; i < charaObjectsBuffer.Length; i++)
         {
-            charaObject.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+            charaObjects.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
+            enemyCharaObjs.Add(charaObjectsBuffer[i].GetComponent<Doll_blu_Nor>());
         }
 
         // キャラをスポーン
-        charaObject =battleSpone.CharaSpone(charaObject);
+        charaObjects =battleSpone.CharaSpone(charaObjects);
     }
 
     private void Start()
     {
         TurnStart();
+        GameObject instance = null;
+        for (int i = 0; i < allyCharaObjs.Count; i++)
+        {
+            instance = Instantiate(charaStatus);
+            instance.GetComponent<CharaStatusLabels>().SetNameText(allyCharaObjs[i].Name);
+            instance.GetComponent<CharaStatusLabels>().SetPartsText(CharaResidueParts(allyCharaObjs[i]));
+            instance.GetComponent<CharaStatusLabels>().SetCountText(allyCharaObjs[i].NowCount);
+
+            instance.transform.SetParent(statusParent.transform);
+
+            charaStatusList.Add(instance.GetComponent<CharaStatusLabels>());
+        }
+        for (int i = 0; i < enemyCharaObjs.Count; i++)
+        {
+            instance = enemyCharaObjs[i].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+            instance.GetComponent<CharaStatusLabels>().SetNameText(enemyCharaObjs[i].Name);
+            instance.GetComponent<CharaStatusLabels>().SetPartsText(CharaResidueParts(enemyCharaObjs[i]));
+            instance.GetComponent<CharaStatusLabels>().SetCountText(enemyCharaObjs[i].NowCount);
+
+            charaStatusList.Add(instance.GetComponent<CharaStatusLabels>());
+        }
     }
 
     private void FixedUpdate()
@@ -135,10 +167,13 @@ public class BattleSystem : MonoBehaviour
     public void TurnStart()
     {
         // 最大行動値分、行動値を回復。
-        for (int i = 0; i < charaObject.Count; i++)
+        for (int i = 0; i < charaObjects.Count; i++)
         {
-            charaObject[i].IncreaseNowCount();
-            Debug.Log(charaObject[i].NowCount);
+            charaObjects[i].IncreaseNowCount();
+            if(charaObjects[i].gameObject.CompareTag("AllyChara"))
+            {
+                StatusLabelUpdate(charaObjects[i]);
+            }
         }
 
         CountStart();
@@ -153,13 +188,13 @@ public class BattleSystem : MonoBehaviour
         CountText.text = nowCount.ToString();
 
         // 現在のカウントと同じ行動値のキャラを取得し、スクロールビューに表示
-        for (int i = 0; i < charaObject.Count; i++)
+        for (int i = 0; i < charaObjects.Count; i++)
         {
-            if (nowCount == charaObject[i].NowCount)
+            if (nowCount == charaObjects[i].NowCount)
             {
-                IndicateMoveChara(charaObject[i]);
+                IndicateMoveChara(charaObjects[i]);
                 // 表示カウントで行動できるキャラをこのリストに格納
-                CountMoveChara.Add(charaObject[i]);
+                countMoveChara.Add(charaObjects[i]);
                 battleExe = true;
             }
         }
@@ -167,16 +202,20 @@ public class BattleSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ターン終了時に入るメソッド
+    /// count内に入るキャラがいなければに入るメソッド
     /// </summary>
     public void CountLast()
     {
         nowCount--;
-        CountMoveChara.Clear();
+        countMoveChara.Clear();
+
+        // countが0以下ならcountを回復する。
         if (nowCount<=0)
         {
-            nowCount += 20;
+            nowCount += 30;
             TurnStart();
+
+            UsedManeuverReset();
         }
 
         CountStart();
@@ -189,16 +228,22 @@ public class BattleSystem : MonoBehaviour
     {
         //for文でweightが小さい順に処理していく
         //プレイアブルキャラになったらクリックガードを外す
-        for (int i = 0; i < CountMoveChara.Count; i++)
+        for (int i = 0; i < countMoveChara.Count; i++)
         {
-            if (CountMoveChara[i].gameObject.CompareTag("AllyChara"))
+            if (countMoveChara[i].gameObject.CompareTag("AllyChara"))
             {
                 ProcessAccessor.Instance.actTiming.StandbyCharaSelect = true;
-                battleExe = false;
+                timingText.text = "アクション";
+                break;
             }
-            //else if(敵キャラなら…)
+            else if (countMoveChara[i].gameObject.CompareTag("EnemyChara"))
+            {
+                countMoveChara[i].gameObject.GetComponent<ObjEnemy>().EnemyAI_Action();
+                break;
+            }
             // else(味方NPCなら…)
         }
+        battleExe = false;
     }
 
     /// <summary>
@@ -215,21 +260,21 @@ public class BattleSystem : MonoBehaviour
         clone.transform.parent = parent.transform;
 
         //リストに保存
-        CloneCntPrefab.Add(Instance);
+        CloneCntPrefab.Add(clone.gameObject);
     }
 
 
     void CharaCountSort()
     {
-        for (int i = 0; i < CountMoveChara.Count; i++) 
+        for (int i = 0; i < countMoveChara.Count; i++) 
         {
-            for (int j = i + 1; j < CountMoveChara.Count; j++) 
+            for (int j = i + 1; j < countMoveChara.Count; j++) 
             {
-                if(CountMoveChara[i].GetWeight()>CountMoveChara[j].GetWeight())
+                if(countMoveChara[i].GetWeight()>countMoveChara[j].GetWeight())
                 {
-                    Doll_blu_Nor buff = CountMoveChara[i];
-                    CountMoveChara[i] = CountMoveChara[j];
-                    CountMoveChara[j] = buff;
+                    Doll_blu_Nor buff = countMoveChara[i];
+                    countMoveChara[i] = countMoveChara[j];
+                    countMoveChara[j] = buff;
                 }
             }
         }
@@ -248,25 +293,76 @@ public class BattleSystem : MonoBehaviour
     {
         for (int i=0;i<CloneCntPrefab.Count;i++)
         {
-            if(name==CloneCntPrefab[i].GetComponent<IndiCountChara>().GetName())
+            IndiCountChara aaaa = CloneCntPrefab[i].GetComponent<IndiCountChara>();
+            if (name==CloneCntPrefab[i].GetComponent<IndiCountChara>().GetName())
             {
                 Destroy(CloneCntPrefab[i]);
+                CloneCntPrefab.RemoveAt(i);
+                break;
+            }
+        }
+        for (int i = 0; i < countMoveChara.Count; i++)
+        {
+            if(name==countMoveChara[i].Name)
+            {
+                countMoveChara.RemoveAt(i);
+                break;
             }
         }
     }
 
+    /// <summary>
+    /// キャラの残りパーツを計算するだけのメソッド
+    /// </summary>
+    /// <returns></returns>
+    public int CharaResidueParts(Doll_blu_Nor chara)
+    {
+        int num = 0;
+        num += chara.HeadParts.Count;
+        num += chara.ArmParts.Count;
+        num += chara.BodyParts.Count;
+        num += chara.LegParts.Count;
 
+        return num;
+    }
 
+    public void StatusLabelUpdate(Doll_blu_Nor chara)
+    {
+        for(int i=0;i<charaStatusList.Count;i++)
+        {
+            if(charaStatusList[i].GetNameText() ==chara.Name)
+            {
+                charaStatusList[i].SetPartsText(CharaResidueParts(chara));
+                charaStatusList[i].SetCountText(chara.NowCount);
+            }
+        }
+    }
 
-
-
-
-
-
-
-
-    // ClickedGameObject
-
-
+    /// <summary>
+    /// 一度使用したマニューバをもう一度扱えるように回復.
+    /// ターン終了時に周る
+    /// </summary>
+    public void UsedManeuverReset()
+    {
+        for(int i=0;i<charaObjects.Count;i++)
+        {
+            for (int j = 0; j < charaObjects[i].HeadParts.Count; j++)
+            {
+                charaObjects[i].HeadParts[j].isUse = false;
+            }
+            for (int j = 0; j < charaObjects[i].ArmParts.Count; j++)
+            {
+                charaObjects[i].ArmParts[j].isUse = false;
+            }
+            for (int j = 0; j < charaObjects[i].BodyParts.Count; j++)
+            {
+                charaObjects[i].BodyParts[j].isUse = false;
+            }
+            for (int j = 0; j < charaObjects[i].LegParts.Count; j++)
+            {
+                charaObjects[i].LegParts[j].isUse = false;
+            }
+        }
+    }
 }
 
