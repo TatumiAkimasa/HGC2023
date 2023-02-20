@@ -156,18 +156,17 @@ public class JdgTimingProcess : GetClickedGameObject
         StartCoroutine(RollAnimStandby(diceRollAnim,callBack => 
         {
             rollResult = randoms.NextInt(1, 11);
-            rollResult = 8;
             rollResultText.text = rollResult.ToString();
             isDiceRoll = true;
 
-            //if(atkTargetEnemy.CompareTag("EnemyChara"))
-            //{
-            //    atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Judge(actManeuver, actingChara, rollResult, 0, 0);
-            //}
-            //else if(rollResult<=5&&actingChara.CompareTag("EnemyChara"))
-            //{
-            //    actingChara.GetComponent<ObjEnemy>().EnemyAI_Judge(actManeuver, actingChara, rollResult, 0);
-            //}
+            if (atkTargetEnemy.CompareTag("EnemyChara"))
+            {
+                atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Judge(actManeuver, actingChara, rollResult, 0, 0);
+            }
+            else if (rollResult <= 5 && actingChara.CompareTag("EnemyChara"))
+            {
+                actingChara.GetComponent<ObjEnemy>().EnemyAI_Judge(actManeuver, actingChara, rollResult, 0);
+            }
 
         }));
         
@@ -262,14 +261,14 @@ public class JdgTimingProcess : GetClickedGameObject
             ProcessAccessor.Instance.dmgTiming.SetRollResult(rollResult);
             ProcessAccessor.Instance.dmgTiming.GetDamageButtons().SetActive(true);
             ManagerAccessor.Instance.battleSystem.SetTimingText("É_ÉÅÅ[ÉW");
-            //if (atkTargetEnemy.CompareTag("EnemyChara"))
-            //{
-            //    atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, true);
-            //}
-            //if(atkTargetEnemy.CompareTag("AllyChara"))
-            //{
-            //    actingChara.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, false);
-            //}
+            if (atkTargetEnemy.CompareTag("EnemyChara"))
+            {
+                atkTargetEnemy.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, true);
+            }
+            if (atkTargetEnemy.CompareTag("AllyChara"))
+            {
+                actingChara.GetComponent<ObjEnemy>().EnemyAI_Damage(actManeuver, actingChara, false);
+            }
             diceRollButton.gameObject.SetActive(false);
             
         }
