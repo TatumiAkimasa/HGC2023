@@ -24,12 +24,14 @@ public class UI_Chara_SaveLoad : MonoBehaviour
 
     private void Start()
     {
-        SaveObj = GameObject.FindGameObjectWithTag("AllyChara").GetComponent<Save_Load_data>();
+        
         //Set_SaveCell();
     }
 
     public void Set_SaveCell()
     {
+        SaveObj = GameObject.FindGameObjectWithTag("SaveData").GetComponent<Save_Load_data>();
+
         // すべての子オブジェクトを取得
         foreach (Transform n in SaveData_ParentView_obj.transform)
         {
@@ -54,6 +56,8 @@ public class UI_Chara_SaveLoad : MonoBehaviour
 
     public void Set_LoadCell()
     {
+        SaveObj = GameObject.FindGameObjectWithTag("SaveData").GetComponent<Save_Load_data>();
+
         // すべての子オブジェクトを取得
         foreach (Transform n in LoadData_ParentView_obj.transform)
         {

@@ -16,6 +16,7 @@ public static class NonResources
     /// </summary>
     public static T Load<T>(string path) where T : Object
     {
+      
         return Resources.Load<T>(path);
     }
 
@@ -24,8 +25,10 @@ public static class NonResources
     /// </summary>
     public static Object Load(string path)
     {
+      
         return Load<Object>(path);
     }
+
 
     //=================================================================================
     //•¡”ƒ[ƒh

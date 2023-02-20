@@ -45,6 +45,6 @@ public class SaveData_CellSet : MonoBehaviour
 
     public void Click_Load()
     {
-        SaveObj.ClickButtonLoad("SaveData(Clone)"+myint.ToString(),true);
+        Data_Scan.Instance.save_Load_Data_cs.ClickButtonLoad("SaveData(Clone)"+myint.ToString(),true);
     }
 }

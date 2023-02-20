@@ -29,7 +29,9 @@ public class PartsList : CharaBase
         //ì™ÉpÅ[Éc-------------------
         ago_H.Name = "Ç†Ç≤";
         ago_H.AnimName = AnimationName.Ago;
-        ago_H.AnimEffect = NonResources.Load<GameObject>("Assets/morii/Prefab/Anim/"+ ago_H.AnimName + ".prefab");
+        ago_H.AnimEffect = (GameObject)Resources.Load("Ago(Clone)");
+        
+       
         ago_H.EffectNum.Add(EffNum.Damage, 3);
         ago_H.Cost = 2;
         ago_H.Timing = ACTION;

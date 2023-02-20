@@ -5,7 +5,9 @@ using UnityEngine;
 public class CheckUp_Save : CheckUp_Base
 {
     [SerializeField]
-    private GameObject SaveRoad,UI;
+    private GameObject SaveRoad;
+
+    public UI_Chara_SaveLoad UI;
 
     void Update()
     {
