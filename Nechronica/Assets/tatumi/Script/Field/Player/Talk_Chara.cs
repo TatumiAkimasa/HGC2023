@@ -131,12 +131,23 @@ public class Talk_Chara : MonoBehaviour
             while (true)
             {
                 if (Input.GetKeyDown(KeyCode.T) && Nowvisual_Len == text_Len)
+                {
+                    yield return null;
                     break;
+                }
 
                 if (Nowvisual_Len < text_Len)
                 {
                     Nowvisual_Len++;
                     ProText.maxVisibleCharacters = Nowvisual_Len; // •\Ž¦‚ð1•¶Žš‚¸‚Â‘‚â‚·
+
+                    if (Input.GetKey(KeyCode.T) && Nowvisual_Len > 5)
+                    {
+                        Nowvisual_Len = text_Len;
+                        ProText.maxVisibleCharacters = text_Len;
+                       
+                    }
+
                     yield return new WaitForSeconds(FeedTime);
 
                 }
